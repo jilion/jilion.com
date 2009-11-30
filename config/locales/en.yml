@@ -2,4 +2,17 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  title: "Jilion"
+  footer: "Copyright © 2009 Jime™ SA — Jilion™ is the consulting group of Jime™ SA"
+  home:
+    headline: "We help people and companies create quality web products."
+    intro_p1: "Jilion is a group of .... {{link}} start-up campus..."
+    intro_p2: "We pride ourselves on delivering impactful and state-of-the-art solutions to your online business goals."
+    newsletter:
+      label: "Stay updated on what we're up to:"
+      placeholder: "Your Email address"
+      add_button: "Add me"
+    email_flash:
+      thankyou: "Thank you for subscribing"
+      confirmed: "Subscription verified"
+      unsubscribed: "Successfully unsubscribed"

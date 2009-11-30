@@ -1,0 +1,66 @@
+!!! strict
+%html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
+  %head
+    %title= t 'title'
+    
+    %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
+    ==<![if !(lte IE 7)]>
+    %meta{ "http-equiv" => "Refresh", :content => "0;url=/" }
+    %style{ :type => "text/css", :media => "screen" }
+      == body {
+      ==   display:none;
+      == }
+    ==<![endif]>
+    /[if lte IE 6]
+      %style{ :type => "text/css", :media => "screen" }
+        == body {
+        ==   font-family:Arial, sans-serif;
+        ==   font-size:14px;
+        ==   background:#222830;
+        ==   color:#fff;
+        ==   line-height:20px;
+        == }
+        == 
+        == #main {
+        ==   width:500px;
+        ==   margin:100px auto;
+        ==   padding:20px;
+        ==   background:#424D5D;
+        ==   border:1px solid #8094B3;
+        == }
+        == 
+        == a {
+        ==   color:#B1E2FC;
+        ==   font-weight:bold;
+        == }
+        ==
+        == #footer {
+        ==   font-size:12px;
+        == }
+  %body
+    #main
+      %h2= "Unsupported browser."
+      %p= "Internet Explorer 6 and lower have known compatibility issues with modern web standards. We chose to stop supporting your browser as many other websites (like YouTube, Facebook or Twitter) are doing."
+      %p= "We recommend one of the following supported browsers:"
+      %ul
+        %li
+          %a{ :href => "http://www.microsoft.com/windows/internet-explorer/default.aspx" }= "Internet Explorer 7 or 8"
+        %li
+          %a{ :href => "http://www.mozilla.com/firefox/" }= "Firefox"
+        %li
+          %a{ :href => "http://google.com/chrome" }= "Google Chrome"
+        %li
+          %a{ :href => "http://apple.com/safari/download" }= "Safari"
+      
+      #footer= t 'footer'
+      
+  == <script type="text/javascript">
+  == var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  == document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  == </script>
+  == <script type="text/javascript">
+  == try {
+  == pageTracker._setDomainName(".jilion.com");
+  == var pageTracker = _gat._getTracker("UA-10280941-1");
+  == pageTracker._trackPageview();
+  == } catch(err) {}</script>
