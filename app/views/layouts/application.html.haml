@@ -14,12 +14,23 @@
         == body {background:#fff;display:none;}
   %body
     #global
-      #header
-      #content
+      #logo_backlights
+      #back
+      #main
+        #header
+          %h1
+            - link_to index_path do
+              %span= 'Jilion'
+          %ul#menu
+            %li.blog
+              - link_to "http://blog.jilion.com" do
+                %strong
+                  %span.icon= 'Blog'
+                %span.corner
         = yield
         .spacer
-        #footer
-          = t 'footer'
+    #footer
+      = t 'footer'
     
     #map_overlay{ :style => "display:none" }
       #map_wrap

@@ -21,12 +21,13 @@ document.observe("dom:loaded", function() {
     placeholder.observe("click", function(e){ emailField.focus(); });
     $('new_subscriber').observe("submit", function(e){
       if (!validateEmail($F(emailField))) {
-        $('email_field_wrap').shake({distance:15, duration:0.4});
+        // $('email_field_wrap').shake({distance:15, duration:0.4});
         e.stop();
       }
     });
   }
   if (emailFlash) {
+    emailFlash.scrollTo();
     setTimeout(function(){ emailFlash.pulsate({pulses:3, duration:1.4}); }, 500);
     
     // if unsubscribed... make email_field re-appear ;-)
