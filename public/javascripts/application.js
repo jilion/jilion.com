@@ -1,5 +1,3 @@
-var imagesPreloader = null;
-
 Element.addMethods({
   shake: function(element, options) {
     S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
@@ -43,6 +41,7 @@ document.observe("dom:loaded", function() {
     };
     var divObj = $("back"); 
     curvyCorners(settings, divObj);
+    divObj.style.filter="alpha(opacity=60)";
   }
   
   //Google Map

@@ -1,1 +1,7 @@
 *+html #logo_backlights {left:-110px;}
+*+html #back {filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);}
+
+#map_background {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+}
