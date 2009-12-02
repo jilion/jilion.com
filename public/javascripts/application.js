@@ -1,4 +1,34 @@
 var imagesPreloader = null;
+
+
+Element.addMethods({
+  shake: function(element, options) {
+    S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
+    
+    var originalLeft = parseFloat(element.getStyle('left') || '0');
+    var oldStyle = { left:originalLeft };
+    element.makePositioned();
+    
+    var opts = { distance:15, duration:0.6 };
+    Object.extend(opts, options);
+    var distance = opts.distance;
+    var duration = opts.duration;
+
+    var split = parseFloat(duration) / 10.0;
+
+    var shakeEffect = element.morph('left:' + (originalLeft+distance) + 'px', { duration:split 
+      }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
+        }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
+          }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
+            }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
+              }).morph('left:' + (originalLeft) + 'px', { duration:split, after: function() {
+                element.undoPositioned().setStyle(oldStyle);
+                }});
+
+    return shakeEffect;
+  }
+});
+
 document.observe("dom:loaded", function() {
   // var imagesToPreload = ["/images/jilion.png", "/images/header_back.jpg"];
   // imagesPreloader = new ImagesPreloader(imagesToPreload, showHeader);
@@ -21,7 +51,50 @@ document.observe("dom:loaded", function() {
     placeholder.observe("click", function(e){ emailField.focus(); });
     $('new_subscriber').observe("submit", function(e){
       if (!validateEmail($F(emailField))) {
-        $('email_field_wrap').shake({distance:15, duration:0.4});
+        
+        // $('email_field_wrap').shake({distance:15, duration:0.6});
+        // $('email_field_wrap').shake({distance:35, duration:2.6});
+        
+        // ===========================================
+        // = Implementing Shake effect with scripty2 =
+        
+        $('email_field_wrap').shake();
+        
+
+        // var emailFieldWrap = $('email_field_wrap');
+        // var originalLeft = parseFloat(emailFieldWrap.getStyle('left') || '0');
+        // var oldStyle = { left:originalLeft };
+        // emailFieldWrap.makePositioned();
+        // 
+        // var distance = 15;
+        // var duration = 0.6;
+        // 
+        // var split = parseFloat(duration) / 10.0;
+        // 
+        // emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split 
+        //   }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
+        //     }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
+        //       }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
+        //         }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
+        //           }).morph('left:' + (originalLeft) + 'px', { duration:split, after: function() {
+        //             emailFieldWrap.undoPositioned().setStyle(oldStyle);
+        //             }});
+        
+        // emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split, after: function() {
+        //   emailFieldWrap.morph('left:' + (originalLeft-distance) + 'px', { duration:split*2, after: function() {
+        //     emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split*2, after: function() {
+        //       emailFieldWrap.morph('left:' + (originalLeft-distance) + 'px', { duration:split*2, after: function() {
+        //         emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split*2, after: function() {
+        //           emailFieldWrap.morph('left:' + (originalLeft) + 'px', { duration:split, after: function() {
+        //             emailFieldWrap.undoPositioned().setStyle(oldStyle);
+        //           }});
+        //         }});
+        //       }});
+        //     }});
+        //   }});
+        // }});
+        // ===========================================
+        
         e.stop();
       }
     });
