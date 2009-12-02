@@ -577,6 +577,8 @@ button::-moz-focus-inner { border: 0; }
   bottom:0;
   background:#000;
   opacity:0.6;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   z-index:100;
 }
 
