@@ -3,6 +3,19 @@ document.observe("dom:loaded", function() {
   // var imagesToPreload = ["/images/jilion.png", "/images/header_back.jpg"];
   // imagesPreloader = new ImagesPreloader(imagesToPreload, showHeader);
   
+  //Curvy Corners (IE)
+  if (Prototype.Browser.IE) {
+    var settings = {
+      tl: { radius: 10 },
+      tr: { radius: 10 },
+      bl: { radius: 10 },
+      br: { radius: 10 },
+      antiAlias: true
+    };
+    var divObj = $("back"); 
+    curvyCorners(settings, divObj);
+  }
+  
   //Google Map
   $('show_location').observe("click", showMap);
   var dropPin = new Image();
@@ -83,7 +96,7 @@ function showMap(event) {
   else {
     mapOverlay.show();
     // mapOverlay.setStyle({opacity:"1"});
-    $('map_overlay').setStyle({top:window.scrollY+50+'px'})
+    $('map_overlay').setStyle({top:window.scrollY+50+'px'});
     googleMapInitialize();
     hideGArrow();
     $('map_background').observe("click", bodyClick);

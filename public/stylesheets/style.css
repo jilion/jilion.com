@@ -24,6 +24,8 @@ body {
   margin:0 auto;
   background:#000 url(/images/texture.png);
   opacity:0.6;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
   position:absolute;
   left:0;
   right:0;
@@ -181,13 +183,14 @@ h2.headline {
 }
 
 #latest_work a.post_link {
-  font-size:23px;
+  font-size:22px;
   font-weight:bold;
   color:#000;
+  display:block;
   line-height:30px;
   padding:0 25px 0 0;
   text-shadow:#eee 0 1px 0;
-  background:url(/images/home/arrow_black.png) no-repeat 100% 70%;
+  background:url(/images/home/arrow_black.png) no-repeat 94% 88%;
 }
 
 /*#latest_work a.post_link:hover {color:#960200;}*/
@@ -527,7 +530,7 @@ h3.title.contact {color:#a7b1c1;}
   text-shadow:#4E5771 0 1px 0;
   position:relative;
   z-index:1;
-  top:-40px;
+  top:30px;
 }
 
 .spacer {clear:both;}
