@@ -25,13 +25,13 @@ Element.addMethods({
                 }});
 
     return shakeEffect;
+  },
+  pulsate: function(element, options) {
+
   }
 });
 
 document.observe("dom:loaded", function() {
-  // var imagesToPreload = ["/images/jilion.png", "/images/header_back.jpg"];
-  // imagesPreloader = new ImagesPreloader(imagesToPreload, showHeader);
-  
   //Curvy Corners (IE)
   if (Prototype.Browser.IE) {
     var settings = {
@@ -165,7 +165,13 @@ function showMap(event) {
   else {
     mapOverlay.show();
     // mapOverlay.setStyle({opacity:"1"});
-    $('map_overlay').setStyle({top:window.scrollY+50+'px'});
+    
+    var scrollPositionY =  window.pageYOffset
+                        || document.documentElement.scrollTop
+                        || document.body.scrollTop
+                        || 0;
+    var marginTop = scrollPositionY + 90;
+    $('map_overlay').setStyle({ top:marginTop+'px' });
     googleMapInitialize();
     hideGArrow();
     $('map_background').observe("click", bodyClick);
@@ -177,7 +183,7 @@ function hideGArrow() {
   
   if (gmPane.size() > 0) {
     var gmnoprint = gmPane.first();
-    var closeButton = Prototype.Browser.IE ? gmnoprint.select('img')[5] : gmnoprint.down('img');
+    var closeButton = Prototype.Browser.IE ? gmnoprint.select('img')[15] : gmnoprint.down('img');
     if (closeButton) {
       closeButton.remove();
       // do not loop anymore
@@ -202,70 +208,5 @@ function bodyClick(event) {
     event.stop();
   }
 }
-
-
-// ====================
-// = Images preloader =
-// ====================
-var ImagesPreloader = Class.create({
-  initialize: function(images, callback) { 
-    this.callback = callback || null;
-    this.imagesSrc = images;
-    
-    this.loaded = 0;
-    this.processed = 0;
-    this.images = $A([]);
-    this.nImages = this.imagesSrc.length;
-    
-    // ddd("Preloading "+this.nImages+" images...");
-    for (var i = 0; i < this.nImages; i++) {
-      this.preload(this.imagesSrc[i]);
-    }
-  },
-  allLoaded: function() { //callback called when all images are loaded
-    //ddd("All images loaded");
-    if (this.callback) {
-      this.callback();
-    }
-    else {
-      alert('not calling callback');
-    }
-  },
-  preload: function(imageSrc) {
-    var oImage = new Image();
-    this.images.push(oImage);
-    
-    // set up event handlers for the Image object
-    oImage.onload = this.onload.bind(this);
-    oImage.onerror = this.onerror.bind(this);
-    oImage.onabort = this.onabort.bind(this);
-    
-    // assign the .src property of the Image object
-    oImage.src = imageSrc;
-    // ddd(oImage.complete) //true if already in browser's cache
-  },
-  onload: function() {
-    this.loaded++;
-    //ddd('image preloaded')
-    this.onComplete();
-  },
-  onerror: function() {
-    this.bError = true;
-    // ddd('error preloading image');
-    this.onComplete();
-  },
-  onabort: function() {
-    this.bAbort = true;
-    // ddd('abort preloading image');
-    this.onComplete();
-  },
-  onComplete: function() {
-     this.processed++;
-     //ddd(this.processed)
-     if (this.processed === this.nImages) {
-        this.allLoaded();
-     }
-  }
-});
 
 function ddd(){console.log.apply(console, arguments);}
