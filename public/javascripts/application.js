@@ -76,16 +76,17 @@ function googleMapInitialize() {
 
 function showMap(event) {
   event.stop();
-  var mapOverlay = $('map_overlay');
+  var mapOverlay = $('map_global');
   if (mapOverlay.visible()) {
     hideMap();
   }
   else {
     mapOverlay.show();
-    mapOverlay.setStyle({opacity:"1"});
+    // mapOverlay.setStyle({opacity:"1"});
+    $('map_overlay').setStyle({top:window.scrollY+50+'px'})
     googleMapInitialize();
     hideGArrow();
-    $(document.body).observe("click", bodyClick);
+    $('map_background').observe("click", bodyClick);
   }
 }
 
@@ -106,7 +107,7 @@ function hideGArrow() {
 
 function hideMap() {
   // $('map_overlay').fade();
-  $('map_overlay').hide();
+  $('map_global').hide();
 }
 
 function bodyClick(event) {
@@ -115,7 +116,7 @@ function bodyClick(event) {
   var clickInsideMap = el.match('#map_overlay') || el.up('#map_overlay');
   if (!clickInsideMap) {
     hideMap();
-    $(document.body).stopObserving("click", bodyClick);
+    $('map_background').stopObserving("click", bodyClick);
     event.stop();
   }
 }
@@ -186,4 +187,3 @@ var ImagesPreloader = Class.create({
 });
 
 function ddd(){console.log.apply(console, arguments);}
-
