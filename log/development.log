@@ -1,7 +1,0 @@
-
-
-Processing PagesController#home (for 127.0.0.1 at 2009-12-02 17:40:55) [GET]
-Rendering template within layouts/application
-Rendering pages/home
-Rendered pages/_subscribe_form (7.3ms)
-Completed in 53ms (View: 51, DB: 0) | 200 OK [http://jilion.local/]
