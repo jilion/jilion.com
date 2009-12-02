@@ -22,6 +22,11 @@
  * @param bool $translate Optional. Default is true. Will switch format to locale.
  * @return string Date formated by $dateformatstring or locale (if available).
  */
+ 
+// HACK TO MAKE THIS FUCKING WORDPRESS RUNNING ON THIS FUCKING SNOW LEOPARD MACBOOK PRO POWERED
+date_default_timezone_set('UTC');
+// HERE END THE NIGHTMARE
+ 
 function mysql2date( $dateformatstring, $mysqlstring, $translate = true ) {
 	global $wp_locale;
 	$m = $mysqlstring;

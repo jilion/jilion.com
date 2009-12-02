@@ -123,10 +123,10 @@ body {
 h2.headline {
   text-indent:-99999px;
   display:block;
-  width:850px;
-  height:21px;
+  width:778px;
+  height:24px;
   background:url(/images/we_help.png) no-repeat;
-  margin:8px 52px 36px;
+  margin:7px auto 36px;
 }
 
 #latest_work {
@@ -286,8 +286,9 @@ h2.headline {
   padding-bottom:6px;
 }
 
-#content .section.people li p.desc {
+#content .section.people li p.desc span {
   font-style:italic;
+  background:;
 }
 
 #content .section.jobs {
