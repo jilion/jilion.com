@@ -1,6 +1,5 @@
 var imagesPreloader = null;
 
-
 Element.addMethods({
   shake: function(element, options) {
     S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
@@ -51,7 +50,6 @@ document.observe("dom:loaded", function() {
     placeholder.observe("click", function(e){ emailField.focus(); });
     $('new_subscriber').observe("submit", function(e){
       if (!validateEmail($F(emailField))) {
-        
         // $('email_field_wrap').shake({distance:15, duration:0.6});
         // $('email_field_wrap').shake({distance:35, duration:2.6});
         
@@ -60,7 +58,6 @@ document.observe("dom:loaded", function() {
         
         $('email_field_wrap').shake();
         
-
         // var emailFieldWrap = $('email_field_wrap');
         // var originalLeft = parseFloat(emailFieldWrap.getStyle('left') || '0');
         // var oldStyle = { left:originalLeft };
@@ -94,12 +91,12 @@ document.observe("dom:loaded", function() {
         //   }});
         // }});
         // ===========================================
-        
         e.stop();
       }
     });
   }
   if (emailFlash) {
+    emailFlash.scrollTo();
     setTimeout(function(){ emailFlash.pulsate({pulses:3, duration:1.4}); }, 500);
     
     // if unsubscribed... make email_field re-appear ;-)
@@ -148,16 +145,17 @@ function googleMapInitialize() {
 
 function showMap(event) {
   event.stop();
-  var mapOverlay = $('map_overlay');
+  var mapOverlay = $('map_global');
   if (mapOverlay.visible()) {
     hideMap();
   }
   else {
     mapOverlay.show();
-    mapOverlay.setStyle({opacity:"1"});
+    // mapOverlay.setStyle({opacity:"1"});
+    $('map_overlay').setStyle({top:window.scrollY+50+'px'});
     googleMapInitialize();
     hideGArrow();
-    $(document.body).observe("click", bodyClick);
+    $('map_background').observe("click", bodyClick);
   }
 }
 
@@ -178,7 +176,7 @@ function hideGArrow() {
 
 function hideMap() {
   // $('map_overlay').fade();
-  $('map_overlay').hide();
+  $('map_global').hide();
 }
 
 function bodyClick(event) {
@@ -187,7 +185,7 @@ function bodyClick(event) {
   var clickInsideMap = el.match('#map_overlay') || el.up('#map_overlay');
   if (!clickInsideMap) {
     hideMap();
-    $(document.body).stopObserving("click", bodyClick);
+    $('map_background').stopObserving("click", bodyClick);
     event.stop();
   }
 }
@@ -258,4 +256,3 @@ var ImagesPreloader = Class.create({
 });
 
 function ddd(){console.log.apply(console, arguments);}
-
