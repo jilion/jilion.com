@@ -1,8 +1,9 @@
 - style ||= ''
 - form_tag "http://email.jilion.com/t/r/s/trklud/", :id => "new_subscriber", :style => style do
-  = label_tag 'subscriber_email', t('home.newsletter.label')
-  %span.wrap#email_field_wrap
-    = text_field_tag 'cm-trklud-trklud', nil, :class => "text", :id => 'subscriber_email'
-    %span#email_placeholder{ :style => "display:none" }= t 'home.newsletter.placeholder'
-    %button.submit{ :type => "submit" }
-      %span= t 'home.newsletter.add_button'
+  %div
+    = label_tag 'subscriber_email', t('home.newsletter.label')
+    .wrap#email_field_wrap
+      = text_field_tag 'cm-trklud-trklud', nil, :class => "text", :id => 'subscriber_email'
+      %span#email_placeholder{ :style => "display:none" }= t 'home.newsletter.placeholder'
+      %button.submit{ :type => "submit" }
+        %span= t 'home.newsletter.add_button'
