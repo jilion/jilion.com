@@ -46,7 +46,13 @@ document.observe("dom:loaded", function() {
   }
   
   //Google Map
-  $('show_location').observe("click", showMap);
+  if (Prototype.Browser.MobileSafari) {
+    $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A";
+  }
+  else {
+    $('show_location').observe("click", showMap);
+  }
+  
   var dropPin = new Image();
   dropPin.src = "/images/map_drop_pin.png";
   
