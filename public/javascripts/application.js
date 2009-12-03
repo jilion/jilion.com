@@ -31,6 +31,7 @@ Element.addMethods({
 
 document.observe("dom:loaded", function() {
   //Curvy Corners (IE)
+  // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
   if (Prototype.Browser.IE) {
     var settings = {
       tl: { radius: 10 },

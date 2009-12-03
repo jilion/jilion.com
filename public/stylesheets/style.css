@@ -91,6 +91,7 @@ body {
   text-transform:uppercase;
   letter-spacing:1px;
   position:relative;
+  display:none;
 }
 
 #menu li a strong {
@@ -153,10 +154,13 @@ h2.headline {
 }
 
 #latest_work .right {
-  width:250px;
+/*  width:250px;*/
+  width:190px;
   position:absolute;
-  top:168px;
-  right:34px;
+/*  top:168px;*/
+  top:200px;
+/*  right:34px;*/
+  right:0;
 }
 
 #latest_work a.view_btn {
@@ -292,6 +296,7 @@ h2.headline {
   color:#69707a;
   padding:1px 6px;
   margin:0 4px 4px 0;
+  white-space:nowrap;
   float:left;
   font-size:12px;
   text-transform:lowercase;
