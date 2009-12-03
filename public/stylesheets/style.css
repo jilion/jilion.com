@@ -296,6 +296,7 @@ h2.headline {
   color:#69707a;
   padding:1px 6px;
   margin:0 4px 4px 0;
+  white-space:nowrap;
   float:left;
   font-size:12px;
   text-transform:lowercase;
