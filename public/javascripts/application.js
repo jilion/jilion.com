@@ -2,6 +2,7 @@ Element.addMethods({
   shake: function(element, options) {
     S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
     
+    element = $(element);
     var originalLeft = parseFloat(element.getStyle('left') || '0');
     var oldStyle = { left:originalLeft };
     element.makePositioned();
@@ -25,7 +26,6 @@ Element.addMethods({
     return shakeEffect;
   },
   pulsate: function(element, options) {
-
   }
 });
 
@@ -108,8 +108,10 @@ document.observe("dom:loaded", function() {
     });
   }
   if (emailFlash) {
-    emailFlash.scrollTo();
-    setTimeout(function(){ emailFlash.pulsate({pulses:3, duration:1.4}); }, 500);
+    setTimeout(function(){ 
+      emailFlash.scrollTo();
+      emailFlash.pulsate({pulses:3, duration:1.4});
+    }, 500);
     
     // if unsubscribed... make email_field re-appear ;-)
     if (emailFlash.hasClassName('unsubscribed')) {
