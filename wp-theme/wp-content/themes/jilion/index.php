@@ -8,7 +8,7 @@
 		  <div class="entry_header">
   		  <div class="entry_title">
     			<h2 id="post_<?php print $post->ID ?>"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
-    			<style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#post_<?php print $post->ID ?>:after {content:'<?php the_title(); ?>';}}</style>
+    			<style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#post_<?php print $post->ID ?>:after {content:'<?php echo html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8'); ?>';}}</style>
   		  </div>
   			<div class="entry_meta">
   			  <span class="date"><?php the_time('F jS, Y') ?></span>

@@ -264,16 +264,16 @@ body {
   font-size:18px;
   font-weight:100;
   letter-spacing:1px;
-  line-height:30px;
+  line-height:34px;
   color:#91a1bb;
 }
 
 .entry_body p {
-  padding:0 0 10px;
+  padding:0 0 20px;
 }
 
 .entry_body a {
-  color:#e22dc0;
+  color:#ba00ff;
   font-weight:500;
 }
 

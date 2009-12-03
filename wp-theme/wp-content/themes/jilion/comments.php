@@ -20,9 +20,9 @@
 <!-- You can start editing here. -->
 <div id="comments">
 
+	<h3>There are <?php comments_number('no comments', 'one comment', '% comments' );?></h3>
 <?php if ($comments) : ?>
 
-	<h3>There are <?php comments_number('no comments', 'one comment', '% comments' );?></h3>
 
 	<ol id="comments_list">
 
@@ -100,7 +100,7 @@
     <div class="entry_form">
       <!--<p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
       <label for="comment_form_comment">Comment <em class="required">*</em></label>
-      <textarea name="comment" id="comment_form_comment" cols="70%" rows="10" tabindex="4"></textarea>    
+      <textarea name="comment" id="comment_form_comment" cols="70%" rows="10"></textarea>    
     </div>    
   </div>
   <div class="spacer"></div>

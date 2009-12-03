@@ -7,7 +7,7 @@ body {
   font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:18px;
   font-weight:100;
-  color:#8b929f;
+  color:#91a1bb;
   background:url(/images/background.png);
 }
 
@@ -213,7 +213,7 @@ h2.headline {
 #content .section.jilion {
   font-size:20px;
   letter-spacing:1px;
-  line-height:40px;
+  line-height:38px;
 }
 
 #content .section.what_we_do {
@@ -307,7 +307,8 @@ h2.headline {
 #content .section.jobs {
   font-size:15px;
   text-align:justify;
-  font-weight:200;
+  font-weight:100;
+  letter-spacing:1px;
   width:290px;
   float:left;
 }
