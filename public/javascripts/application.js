@@ -1,5 +1,3 @@
-var imagesPreloader = null;
-
 Element.addMethods({
   shake: function(element, options) {
     S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
@@ -8,7 +6,7 @@ Element.addMethods({
     var oldStyle = { left:originalLeft };
     element.makePositioned();
     
-    var opts = { distance:15, duration:0.6 };
+    var opts = { distance:15, duration:0.5 };
     Object.extend(opts, options);
     var distance = opts.distance;
     var duration = opts.duration;
@@ -20,7 +18,7 @@ Element.addMethods({
         }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
           }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
             }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
-              }).morph('left:' + (originalLeft) + 'px', { duration:split, after: function() {
+              }).morph('left:' + (originalLeft) + 'px', { duration:split*2, after: function() {
                 element.undoPositioned().setStyle(oldStyle);
                 }});
 
@@ -43,6 +41,7 @@ document.observe("dom:loaded", function() {
     };
     var divObj = $("back"); 
     curvyCorners(settings, divObj);
+    divObj.style.filter="alpha(opacity=60)";
   }
   
   //Google Map
