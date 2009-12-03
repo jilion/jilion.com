@@ -491,7 +491,7 @@ h3.title.contact {color:#a7b1c1;}
   h3.title {
     position:relative;
     text-shadow:0 0 1px #000;
-    height:25px;
+    height:35px;
     width:200px;
   }
   
@@ -512,19 +512,19 @@ h3.title.contact {color:#a7b1c1;}
   h3.title.what_we_do span {color:#cc86ff;}
   
   h3.title.our_strength:after {content:'Our strength';}
-  h3.title.our_strength {color:#910070;}
+  h3.title.our_strength {height:25px;color:#910070;}
   h3.title.our_strength span {color:#ff72df;}
   
   h3.title.people:after {content:'People';}
-  h3.title.people {color:#b7223e;}
+  h3.title.people {height:25px;color:#b7223e;}
   h3.title.people span {color:#ff718b;}
   
   h3.title.jobs:after {content:'Jobs';}
-  h3.title.jobs {color:#a92400;}
+  h3.title.jobs {height:25px;color:#a92400;}
   h3.title.jobs span {color:#ff9579;}
   
   h3.title.contact:after {content:'Contact';}
-  h3.title.contact {color:#737a85;}
+  h3.title.contact {height:25px;color:#737a85;}
   h3.title.contact span {color:#bfc9d8;-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));}
   
 }
