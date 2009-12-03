@@ -22,17 +22,21 @@
 
 <?php if ($comments) : ?>
 
-	<h3><?php comments_number('No Comments', 'One Comment', '% Comments' );?> on &#8220;<?php the_title(); ?>&#8221;</h3>
+	<h3>There are <?php comments_number('no comments', 'one comment', '% comments' );?></h3>
 
-	<ol class="commentlist">
+	<ol id="comments_list">
 
 	<?php $count_pings = 1; foreach ($comments as $comment) : ?>
 
 		<li <?php echo $oddcomment; ?>id="comment-<?php comment_ID() ?>">
-			<div style="float:left;padding-right:5px;"><?php echo get_avatar( $comment, 26 ); ?></div>
-			<span><?php echo $count_pings; $count_pings++; ?></span>
-			<cite><?php comment_author_link() ?>&nbsp;said at <?php comment_time() ?> on <?php comment_date('F jS, Y') ?>:</cite>
-			<?php comment_text() ?>
+			<div class="comment_header">
+			  <?php echo get_avatar( $comment, 40 ); ?>
+			  <h4><?php comment_author_link() ?> says:</h4>
+			  <em class="date"><?php comment_date('F jS, Y') ?> at <?php comment_time() ?></em>
+			</div>
+			<div class="comment_body">
+  			<?php comment_text() ?>			 
+			</div>
 			<?php if ($comment->comment_approved == '0') : ?>
 			<p><b>Your comment is awaiting moderation.</b></p>
 			<?php endif; ?>
@@ -61,46 +65,55 @@
 
 
 <?php if ('open' == $post->comment_status) : ?>
+<div id="comments_form">
+  <h4>Leave a reply</h4>
 
-<hr/>
+  <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
+  <p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p>
+  <?php else : ?>
 
-<h4 class="center">Leave a Reply</h4>
+  <form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
 
-<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
-<p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p>
-<?php else : ?>
+  <?php if ( $user_ID ) : ?>
 
-<form action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method="post" id="commentform">
-
-<ul class="formlist">
-
-<?php if ( $user_ID ) : ?>
-
-<p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="Log out of this account">Log out &raquo;</a></p>
+  <p>Logged in as <a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>. <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?action=logout" title="Log out of this account">Log out &raquo;</a></p>
 
 
-<?php else : ?>
+  <?php else : ?>
+  <div class="left_box">
+    <div class="entry_form">
+      <label for="comment_form_author">Name <em class="required">*</em></label>
+      <input type="text" name="author" class="text" id="comment_form_author" />
+    </div>
+    <div class="entry_form">
+      <label for="comment_form_email">Email <em class="required">*</em></label>
+      <input type="text" name="email" class="text" id="comment_form_email"  />
+    </div>
+    <div class="entry_form">
+      <label for="comment_form_url">Website</label>
+      <input type="text" name="url" class="text" id="comment_form_url" />
+    </div>    
+  </div>
 
-<li><input type="text" name="author" id="author" value="Name <?php if ($req) echo "(required)"; ?>" size="22" tabindex="1" <?php if ($req) echo "aria-required='true'"; ?> onblur="if(this.value.length == 0) this.value='Name <?php if ($req) echo "(required)"; ?>';" onclick="if(this.value == 'Name <?php if ($req) echo "(required)"; ?>') this.value='';" /></li>
+  <?php endif; ?>
+  <div class="right_box">
+    <div class="entry_form">
+      <!--<p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
+      <label for="comment_form_comment">Comment <em class="required">*</em></label>
+      <textarea name="comment" id="comment_form_comment" cols="70%" rows="10" tabindex="4"></textarea>    
+    </div>    
+  </div>
+  <div class="spacer"></div>
+  <div class="entry_form">
+    <input name="submit" type="submit" class="submit" tabindex="5" value="Submit" />
+    <input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />    
+  </div>
 
-<li><input type="text" name="email" id="email" value="Mail (will not be published) <?php if ($req) echo "(required)"; ?>" size="22" tabindex="2" <?php if ($req) echo "aria-required='true'"; ?> onblur="if(this.value.length == 0) this.value='Mail (will not be published) <?php if ($req) echo "(required)"; ?>';" onclick="if(this.value == 'Mail (will not be published) <?php if ($req) echo "(required)"; ?>') this.value='';" /></li>
+  <?php do_action('comment_form', $post->ID); ?>
 
-<li><input type="text" name="url" id="url" value="Website" size="22" tabindex="3" onblur="if(this.value.length == 0) this.value='Website';" onclick="if(this.value == 'Website') this.value='';" /></li>
+  </form>  
+</div>
 
-<?php endif; ?>
-
-<!--<p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
-
-<li><textarea name="comment" id="comment" cols="70%" rows="10" tabindex="4" value="Enter comment here."></textarea></li>
-
-<li class="submitbutton"><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" /></li>
-<input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />
-
-<?php do_action('comment_form', $post->ID); ?>
-
-</ul>
-
-</form>
 
 <?php endif; // If registration required and not logged in ?>
 
