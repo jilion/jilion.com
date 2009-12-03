@@ -23,10 +23,17 @@
   <div id="back"></div>
   <div id="main">    
   	<div id="header">
-  		<h1><a href="<?php echo get_option('home'); ?>"><span><?php bloginfo('name'); ?></span></a></h1>
-  		<ul id="menu">
+  		<h1><a href="http://jilion.com"><span>Jilion</span></a></h1>
+      <div id="blog_label">
+        <div class="wrap">
+          <h2><a href="<?php echo get_option('home'); ?>"><span>Blog</span></a></h2>
+        </div>
+        <div class="shadow"></div>
+      </div>
+      <!-- <ul id="menu">
         <li>
           <a href="http://jilion.com"><strong><span>Home</span></strong><span class='corner'></span></a>
         </li>
-      </ul>
+      </ul> -->
   	</div>
+  	<div class="breakline1"></div>

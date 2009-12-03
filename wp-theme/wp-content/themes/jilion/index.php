@@ -1,16 +1,34 @@
 <?php get_header(); ?>
-
 	<div id="content">
 	<?php if (have_posts()) : ?>
 
 		<?php while (have_posts()) : the_post(); ?>
 		
-		<div class="post">
-			<h1><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h1>
-			<small><b>Posted:</b> <?php the_time('F jS, Y') ?> | <b>Author:</b> <?php the_author_posts_link();?> | <b>Filed under:</b> <?php the_category(', ') ?> <?php the_tags(' | <b>Tags:</b> ', ', ', ''); ?> <?php if ( $user_ID ) : 
-			?> | <b>Modify:</b> <?php edit_post_link(); ?> <?php endif; ?>| <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></small>
-			<?php the_content('Read the rest of this entry &raquo;'); ?>
-			 <hr/>
+		<div class="entry">
+		  <div class="entry_header">
+  		  <div class="entry_title">
+    			<h2 id="post_<?php print $post->ID ?>"><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+    			<style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#post_<?php print $post->ID ?>:after {content:'<?php the_title(); ?>';}}</style>
+  		  </div>
+  			<div class="entry_meta">
+  			  <span class="date"><?php the_time('F jS, Y') ?></span>
+  			  <span class="authors">by <?php the_author_posts_link();?></span> 
+			  
+  			  <?php //the_category(', ') ?> 
+  			  <?php //the_tags(' | <b>Tags:</b> ', ', ', ''); ?> 
+  			  <?php //if ( $user_ID ) : ?>
+  			    <?php //edit_post_link(); ?> 
+  			  <?php //endif; ?> 
+			  
+        </div>
+        <div class="entry_comments_count" id="entry_comments_count_<?php print $post->ID ?>">
+  			  <?php comments_popup_link('<span>0</span>', '<span>1</span>', '<span>%</span>'); ?>
+  			  <style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#entry_comments_count_<?php print $post->ID ?> a:after {content:'<?php comments_number('0', '1', '%'); ?>';}}</style>
+        </div>		    
+		  </div>
+      <div class="entry_body">
+  			<?php the_content('Read more &raquo;'); ?>
+      </div>
 		</div>
 		
 		<?php comments_template(); ?>

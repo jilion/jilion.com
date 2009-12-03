@@ -17,7 +17,7 @@ body {
   font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:18px;
   font-weight:100;
-  color:#8b929f;
+  color:#91a1bb;
   background:url(images/background.png);
 }
 
@@ -32,7 +32,7 @@ body {
 #back {
   width:960px;
   margin:0 auto;
-  background:#000 url(images/texture.png);
+  background:#000 url(/images/texture.png);
   opacity:0.6;
   position:absolute;
   left:0;
@@ -77,6 +77,39 @@ body {
 }
 
 #header h1 a span {display:none;}
+
+#blog_label {
+  width:262px;
+  height:173px;
+  position:absolute;
+  top:0;
+  right:0;
+  overflow:hidden;
+}
+
+#blog_label .wrap {
+  width:304px;
+  height:173px;
+  background:url(images/blog_label.png) no-repeat;
+  position:relative;
+}
+
+#blog_label h2 a {
+  width:304px;
+  height:173px;
+  display:block;
+}
+
+#blog_label h2 a span {display:none;}
+
+#blog_label .shadow {
+  width:251px;
+  height:7px;
+  background:url(images/blog_label_shadow.png) no-repeat;
+  position:absolute;
+  top:0;
+  right:0;
+}
 
 #menu {
   list-style-type:none;
@@ -130,8 +163,158 @@ body {
   background:url(images/blog_icon.png) no-repeat 100% 0;
 }
 
+.breakline1 {
+  width:649px;
+  height:2px;
+  background:url(images/break_line1.png) no-repeat;
+  margin:20px auto 35px;
+}
+
+#content {
+  width:580px;
+  float:left;
+  padding:0 0 40px 45px;
+}
+
+.entry {
+  padding:0 0 40px;
+}
+
+.entry_header {
+  position:relative;
+  padding:0 0 24px;
+}
+
+.entry_title h2 {
+  font-size:38px;
+  font-weight:500;
+}
+
+.entry_title h2 a {
+  color:#7c96bf;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  .entry_title h2 {
+    position:relative;
+    text-shadow:0 0 1px #000;
+    height:45px;
+    width:580px;
+    color:#30415c;
+  }
+  
+  .entry_title h2 a {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    color:#c6dafc;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  }
+}
+
+.entry_meta {
+  padding:5px 0 0;
+  font-size:15px;
+  font-weight:100;
+  letter-spacing:1px;
+  color:#9eb3d3;
+}
+
+.entry_meta .authors {
+  font-style:italic;
+}
+
+.entry_meta a {
+  color:#9eb3d3;
+}
+
+.entry_comments_count {
+  background:#101318 url(images/comments_icon.png) no-repeat 80% 50%;
+  position:absolute;
+  top:20px;
+  right:0;
+  padding:3px 35px 2px 8px;
+  font-size:21px;
+  font-weight:500;
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
+}
+
+.entry_comments_count a {color:#7c96bf;}
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
+  .entry_comments_count a {
+    position:relative;
+    text-shadow:0 0 1px #000;
+    color:#30415c;
+  }
+  
+  .entry_comments_count a span {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    color:#b8c9e5;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  }
+}
+
+.entry_body {
+  font-size:18px;
+  font-weight:100;
+  letter-spacing:1px;
+  line-height:30px;
+  color:#91a1bb;
+}
+
+.entry_body p {
+  padding:0 0 10px;
+}
+
+.entry_body a {
+  color:#e22dc0;
+  font-weight:500;
+}
+
+#sidebar {
+  width:260px;
+  float:left;
+  padding:0 45px 40px 30px;
+}
+
+#sidebar .box {
+  font-size:16px;
+  line-height:30px;
+  letter-spacing:1px;
+  padding:0 0 25px;
+}
+
+#sidebar .box.intro a {
+  font-weight:500;
+  border-bottom: 1px solid #2B3446;
+}
+
+#sidebar .box.links ul {
+  list-style-type:none;
+}
+
+#sidebar .box.links li {
+  font-size:19px;
+  font-weight:400;
+  padding:0 0 10px;
+}
+
+#sidebar .box.links li a {
+  display:block;
+  padding:0 0 0 40px;
+}
+
+#sidebar .box.links li.rss a {background:url(images/rss_icon.png) no-repeat 0 2px;}
+#sidebar .box.links li.twitter a {background:url(images/twitter_icon.png) no-repeat 0 5px;}
+
 #footer {
-  width:960px;
+  width:840px;
   height:88px;
   background:url(images/footer_back.png) no-repeat center top;
   padding:60px;
@@ -151,8 +334,7 @@ body {
 
 a {
   text-decoration:none;
-  color:#8b929f;
-  font-weight:400;
+  color:#91a1bb;
   outline:0;
   -webkit-transition:color 0.5s;
 }
@@ -160,5 +342,7 @@ a {
 a:hover {
   color:#fff;
 }
+
+strong {font-weight:500;}
 
 button::-moz-focus-inner { border: 0; }
