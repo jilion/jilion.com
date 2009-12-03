@@ -6,8 +6,6 @@ en:
   footer: "Copyright © 2009 Jime™ SA — Jilion™ is the consulting group of Jime™ SA"
   home:
     headline: "We help you create high quality web &amp; iPhone products."
-    intro_p1: "Jilion is a group of .... {{link}} start-up campus..."
-    intro_p2: "We pride ourselves on delivering impactful and state-of-the-art solutions to your online business goals."
     newsletter:
       label: "Stay updated on what we're up to:"
       placeholder: "Your email address"
