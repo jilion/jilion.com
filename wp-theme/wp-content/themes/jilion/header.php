@@ -10,7 +10,32 @@
   <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
   <link rel="alternate" type="application/rss+xml" title="Jilion Blog" href="http://feeds.feedburner.com/jilion" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+  <!--[if gte IE 7]>
+    <script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
+    <script type="text/javascript" src="wp-content/themes/jilion/curvycorners.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        var settings = {
+          tl: { radius: 10 },
+          tr: { radius: 10 },
+          bl: { radius: 10 },
+          br: { radius: 10 },
+          antiAlias: true
+        };
+        var divObj = document.getElementById("back"); 
+        curvyCorners(settings, divObj);
+        divObj.style.filter="alpha(opacity=60)";
+      }
+    </script>
+    <link href='wp-content/themes/jilion/ie.css' media='screen' rel='stylesheet' type='text/css' />
 
+  <![endif]-->
+  <!--[if lte IE 6]>
+    <meta content='0;url=http://jilion.com/ie' http-equiv='Refresh' />
+    <style media='screen' type='text/css'>
+      body {background:#fff;display:none;}
+    </style>
+  <![endif]-->
   <?php //wp_head(); ?>
 
 </head>
