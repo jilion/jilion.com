@@ -33,7 +33,7 @@ body {
   width:960px;
   margin:0 auto;
   background:#000 url(/images/texture.png);
-  opacity:0.6;
+  opacity:0.7;
   position:absolute;
   left:0;
   right:0;
@@ -230,18 +230,22 @@ body {
 }
 
 .entry_comments_count {
-  background:#101318 url(images/comments_icon.png) no-repeat 80% 50%;
+  background:#101318 url(images/comments_icon.png) no-repeat 94% 50%;
   position:absolute;
-  top:20px;
+  top:45px;
   right:0;
-  padding:3px 35px 2px 8px;
-  font-size:21px;
+  padding:3px 0px 2px 8px;
+  font-size:18px;
   font-weight:500;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
 }
 
-.entry_comments_count a {color:#7c96bf;}
+.entry_comments_count a {
+  color:#7c96bf;
+  display:block;
+  padding-right:30px;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio:0){
   .entry_comments_count a {

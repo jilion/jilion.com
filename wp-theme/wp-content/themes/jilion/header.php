@@ -24,7 +24,7 @@
         };
         var divObj = document.getElementById("back"); 
         curvyCorners(settings, divObj);
-        divObj.style.filter="alpha(opacity=60)";
+        divObj.style.filter="alpha(opacity=70)";
       }
     </script>
     <link href='wp-content/themes/jilion/ie.css' media='screen' rel='stylesheet' type='text/css' />

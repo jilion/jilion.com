@@ -42,7 +42,7 @@ document.observe("dom:loaded", function() {
     };
     var divObj = $("back"); 
     curvyCorners(settings, divObj);
-    divObj.style.filter="alpha(opacity=60)";
+    divObj.style.filter="alpha(opacity=70)";
   }
   
   //Google Map

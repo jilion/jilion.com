@@ -22,8 +22,11 @@
 			  
         </div>
         <div class="entry_comments_count" id="entry_comments_count_<?php print $post->ID ?>">
-  			  <?php comments_popup_link('<span>0</span>', '<span>1</span>', '<span>%</span>'); ?>
-  			  <style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#entry_comments_count_<?php print $post->ID ?> a:after {content:'<?php comments_number('0', '1', '%'); ?>';}}</style>
+  			  <?php //comments_popup_link('<span>0</span>', '<span>1</span>', '<span>%</span>'); ?>
+  			  <a href="<?php comments_link(); ?>">
+  			   <span><?php comments_number('0 comment', '1 comment', '% comments'); ?></span>
+  			  </a>
+  			  <style type="text/css">@media screen and (-webkit-min-device-pixel-ratio:0){#entry_comments_count_<?php print $post->ID ?> a:after {content:'<?php comments_number('0 comment', '1 comment', '% comments'); ?>';}}</style>
         </div>		    
 		  </div>
       <div class="entry_body">
