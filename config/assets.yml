@@ -1,0 +1,16 @@
+package_assets: on
+embed_images: on
+javascript_compressor: closure
+compressor_options:
+  compilation_level: "SIMPLE_OPTIMIZATIONS"
+
+javascripts:
+  sublime:
+    - public/javascripts/sublime/video/prototype.js
+    - public/javascripts/sublime/video/application.js
+    - public/javascripts/sublime/video/s2.js
+    - public/javascripts/sublime/video/drag.js
+
+stylesheets:
+  sublime:
+    - public/stylesheets/sublime/video/style.css
