@@ -30,11 +30,9 @@ var SublimeVideo = Class.create({
     $(document.body).setStyle({ overflow:'hidden' });
   },
   prepareSublimeVideosMobileSafari: function() {
-    $$("video.sublime source").each(function(source, index){
-      source.writeAttribute({
-        src: source.readAttribute('title'),
-        title: ""
-      });
+    $$("video.sublime source").each(function(source, index) {
+      source.up().writeAttribute({ src: source.readAttribute('title').replace('.mp4', '_iphone.mp4') });
+      source.remove();
     }.bind(this));
   },
   prepareSublimeVideos: function(supportedBrowser) {
