@@ -31,10 +31,8 @@ var SublimeVideo = Class.create({
   },
   prepareSublimeVideosMobileSafari: function() {
     $$("video.sublime source").each(function(source, index){
-      source.writeAttribute({
-        src: source.readAttribute('title'),
-        title: ""
-      });
+      source.up().writeAttribute({ src: source.readAttribute('title').replace('.mp4', '_iphone.mp4') });
+      source.remove();
     }.bind(this));
   },
   prepareSublimeVideos: function(supportedBrowser) {
