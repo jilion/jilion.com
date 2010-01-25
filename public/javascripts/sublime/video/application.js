@@ -178,6 +178,7 @@ var SublimeVideo = Class.create({
     
     // Play button
     var playPauseButton = new Element("span", { 'class':'play_pause_button pause' }).observe("click", this.playPause.bind(this));
+    this.hasAlreadyClickedPlayPause = false;
     
     // Show new video element with sublime controls
     this.controls = new Element("div", { 'class':'controls small' });
@@ -202,8 +203,12 @@ var SublimeVideo = Class.create({
       }
     }.bind(this));
     this.video.observe("progress", function(event){
-      // if (this.video.buffered.end(0) > 10) {
-      // }
+      // force playing if enough buffered (10secs)
+      if (this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
+        setTimeout(this.playPause.bind(this), 0);
+        setTimeout(this.playPause.bind(this), 200);
+        setTimeout(this.playPause.bind(this), 400);
+      }
       
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
     }.bind(this));
@@ -270,6 +275,7 @@ var SublimeVideo = Class.create({
     // $(wrapperId).insert(enterFullWindowButton);
   },
   playPause: function() {
+    this.hasAlreadyClickedPlayPause = true;
     if (this.video.ended) {
       this.video.currentTime = 0;
       this.video.play();
