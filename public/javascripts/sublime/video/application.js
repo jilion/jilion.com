@@ -375,12 +375,12 @@ var SublimeVideo = Class.create({
     
     ////////////////////////////////////////////////////////////////////////////////////////////
     // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
-    if (navigator.userAgent.indexOf("Macintosh") > -1 
-        && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
-      setTimeout(function(){
-        this.video.setStyle({ position:"absolute" });
-      }.bind(this),100);
-    }
+    // if (navigator.userAgent.indexOf("Macintosh") > -1 
+    //     && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
+    //   setTimeout(function(){
+    //     this.video.setStyle({ position:"absolute" });
+    //   }.bind(this),100);
+    // }
     ////////////////////////////////////////////////////////////////////////////////////////////
     
     // Fades-out controls after delay
@@ -478,12 +478,12 @@ var SublimeVideo = Class.create({
     
     ////////////////////////////////////////////////////////////////////////////////////////////
     // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
-    if (navigator.userAgent.indexOf("Macintosh") > -1 
-        && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
-      setTimeout(function(){
-        this.video.setStyle({ position:"relative" });
-      }.bind(this),100);
-    }
+    // if (navigator.userAgent.indexOf("Macintosh") > -1 
+    //     && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
+    //   setTimeout(function(){
+    //     this.video.setStyle({ position:"relative" });
+    //   }.bind(this),100);
+    // }
     ////////////////////////////////////////////////////////////////////////////////////////////
   },
   fullWindowKeyDown: function(event) {
@@ -525,6 +525,18 @@ var SublimeVideo = Class.create({
     // }
     // else { //entering/exiting fullScreen
     // ... so I have to keep computing the transformOrigin (event if I dont't use it while in fs) just to prepare the transform origin for the exit fs transition:
+    
+    if (isResizing) {
+      ////////////////////////////////////////////////////////////////////////////////////////////
+      // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
+      if (navigator.userAgent.indexOf("Macintosh") > -1 
+          && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
+        setTimeout(function(){
+          this.video.setStyle({ position:"absolute" });
+        }.bind(this),100);
+      }
+      ////////////////////////////////////////////////////////////////////////////////////////////
+    }
     
     var originPercentX = videoLeft / (browserSize.width - videoWidth);
     var originPercentY = videoTop / (browserSize.height - videoHeight);
