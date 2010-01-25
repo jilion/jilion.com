@@ -15,6 +15,18 @@
       %style{ :type => "text/css", :media => "screen" }
         == body {background:#fff;display:none;}
   %body
+    
+    
+    == <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"> </script>
+    #google_frame_plugin
+    == <script>
+    ==  CFInstall.check({
+    ==     node: "google_frame_plugin",
+    ==     destination: "http://www.waikiki.com"
+    ==   });
+    == </script>
+    
+    
     #global
       #logo_backlights
       #back
