@@ -526,9 +526,14 @@ var SublimeVideo = Class.create({
       // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
       if (navigator.userAgent.indexOf("Macintosh") > -1 
           && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
+        
+        setTimeout(function(){
+          this.video.setStyle({ position:"relative" });
+        }.bind(this),10);
+        
         setTimeout(function(){
           this.video.setStyle({ position:"absolute" });
-        }.bind(this),100);
+        }.bind(this),20);
       }
       ////////////////////////////////////////////////////////////////////////////////////////////
     }
