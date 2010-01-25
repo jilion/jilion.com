@@ -4,24 +4,14 @@ document.observe("dom:loaded", function() {
 });
 
 // TODOs
-// - play max 1 video at a time in firefox
-// - when entering fullscreen, stop all other playing videos (even in safari)
 // - MobileSafari support / Directly show video tag and bypass observers
-// - Firefox support
 // - improve secondsToTime to support hours
-
-
-// Beta release:
-// - unsupported browswer div to stylize
-
-// BUGS
-// - drag to end of video while buffering
  
 var SublimeVideo = Class.create({
   initialize: function() {
     
     this.webKitTransitionSupported = (typeof WebKitTransitionEvent === "object" || typeof WebKitTransitionEvent === "function");
-    this.fullscreenTransitionDuration = 0.5;
+    this.fullwindowTransitionDuration = 0.5;
     
     if (Prototype.Browser.MobileSafari) {
       this.prepareSublimeVideosMobileSafari();
@@ -116,7 +106,7 @@ var SublimeVideo = Class.create({
       this.unlooadVideo();
     }
     
-    this.videoWebkitTransitionValue = this.fullscreenTransitionDuration+"s -webkit-transform";
+    this.videoWebkitTransitionValue = this.fullwindowTransitionDuration+"s -webkit-transform";
     
     // Create new video element
     var originalVideoTag = $(wrapperId).next('video');
@@ -179,10 +169,10 @@ var SublimeVideo = Class.create({
     // Fullscreen button
     var fullScreenButton = new Element("span", { 'class':'fullscreen_button' }).observe("click", function(event){
       if (this.controls.hasClassName('small')) {
-        this.enterFullScreen(event);
+        this.enterFullWindow(event);
       }
       else {
-        this.exitFullScreen(event);
+        this.exitFullWindow(event);
       }
     }.bind(this));
     
@@ -250,7 +240,7 @@ var SublimeVideo = Class.create({
     this.video.observe("ended", function(event){
       this.video.pause();
       if (playPauseButton.hasClassName('pause')) playPauseButton.removeClassName('pause');
-      if (this.video.next(".controls").hasClassName('full')) this.exitFullScreen();
+      if (this.video.next(".controls").hasClassName('full')) this.exitFullWindow();
     }.bind(this));
     
     
@@ -315,7 +305,7 @@ var SublimeVideo = Class.create({
       this.video.playbackRate = this.video.playbackRate*0.5;
     }
   },
-  enterFullScreen: function(event) {
+  enterFullWindow: function(event) {
     event.stop();
     
     // if (fullscreen) {
@@ -334,7 +324,7 @@ var SublimeVideo = Class.create({
       this.controls.removeClassName('small').addClassName('full');
       this.controls.down('.progress_bar').writeAttribute('style','');
       
-      // Add fullscreen-specific controls (if not already done)
+      // Add fullwindow-specific controls (if not already done)
       if (!this.controls.retrieve('hasFullscreenControls')) {
         var fastBackward = new Element("span", { 'class':'fast_backward' }).observe("click", this.fastForward.bind(this));
         var fastForward = new Element("span", { 'class':'fast_forward' }).observe("click", this.fastBackward.bind(this));
@@ -344,44 +334,44 @@ var SublimeVideo = Class.create({
         this.controls.store("hasFullscreenControls", true);
       }
       
-      // Make fullscreen controls pane draggable
+      // Make fullwindow controls pane draggable
       this.controlsDragger = new S2.UI.Behavior.WebkitTransformDrag(this.controls);
       
       this.hideScrollbars();
       
-      // Enter fullscreen
+      // Enter fullwindow
       this.computeAndSetFullscreenWidth();
       
       // Observe browser's window resizing
       Event.observe(document.onresize ? document : window, "resize", this.computeAndSetFullscreenWidth.bind(this, true)); 
-      // Observe keydown to play/pause and exit fullscreen
-      this.fsKeydownListener = this.fullScreenKeyDown.bind(this);
-      document.observe("keydown", this.fsKeydownListener);
+      // Observe keydown to play/pause and exit fullwindow
+      this.fwKeydownListener = this.fullWindowKeyDown.bind(this);
+      document.observe("keydown", this.fwKeydownListener);
       
       if (this.webKitTransitionSupported) {
         this.video.setStyle({ WebkitTransition: this.videoWebkitTransitionValue });
         
-        // Observe webkit "scaling to fullscreen" transition end
+        // Observe webkit "scaling to fullwindow" transition end
         this.video.observe("webkitTransitionEnd", function(e){
           this.video.stopObserving("webkitTransitionEnd");
-          // to remove the scaling transition during window resizing (when in fullscreen)
+          // to remove the scaling transition during window resizing (when in fullwindow)
           this.video.setStyle({ WebkitTransition: 'none' });
-          this.finishEnteringFullScreen();
+          this.finishEnteringFullWindow();
         }.bind(this));
       }
       else {
-        this.finishEnteringFullScreen();
+        this.finishEnteringFullWindow();
       }
       
       this.showOverlay();
     }
   },
-  finishEnteringFullScreen: function() { 
+  finishEnteringFullWindow: function() { 
     this.showControls();
-    this.controls.setStyle({bottom:'10%'});
+    this.controls.setStyle({bottom:'8%'});
     
     ////////////////////////////////////////////////////////////////////////////////////////////
-    // WORKAROUND for make the live fullscreen-resizing work on current Safari for Mac (v4.0.4)
+    // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
     if (navigator.userAgent.indexOf("Macintosh") > -1 
         && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
       setTimeout(function(){
@@ -391,23 +381,23 @@ var SublimeVideo = Class.create({
     ////////////////////////////////////////////////////////////////////////////////////////////
     
     // Fades-out controls after delay
-    this.fsMouseMoveListener = this.fullScreenMouseMove.bind(this);
-    document.observe("mousemove", this.fsMouseMoveListener);
+    this.fwMouseMoveListener = this.fullWindowMouseMove.bind(this);
+    document.observe("mousemove", this.fwMouseMoveListener);
     this.pollingTime = 500;
-    this.poller = setInterval(this.fullScreenPoll.bind(this), 500);
+    this.poller = setInterval(this.fullWindowPoll.bind(this), 500);
     this.mouseFrozenDuration = 0;
   },
-  fullScreenMouseMove: function(event) {
+  fullWindowMouseMove: function(event) {
     this.mousePosition = event.pointerY();
   },
   showControls: function() {
-    // Fade-in fullscreen controls
+    // Fade-in fullwindow controls
     this.controls.show().morph('opacity:1', { duration: 0.5 });
   },
   hideFullControls: function() {
     this.controls.morph('opacity:0', { duration: 0.5 });
   },
-  fullScreenPoll: function() {
+  fullWindowPoll: function() {
     if (this.latestPolledMousePosition === this.mousePosition) {
       this.mouseFrozenDuration += this.pollingTime;
     }
@@ -431,11 +421,11 @@ var SublimeVideo = Class.create({
       }
     }
   },
-  exitFullScreen: function(event) {
+  exitFullWindow: function(event) {
     // Stop observers & timers
     Event.stopObserving(document.onresize ? document : window, "resize"); 
-    document.stopObserving("keydown", this.fsKeydownListener);
-    document.stopObserving("mousemove", this.fsMouseMoveListener);
+    document.stopObserving("keydown", this.fwKeydownListener);
+    document.stopObserving("mousemove", this.fwMouseMoveListener);
     clearInterval(this.poller);
     
     this.controls.setStyle({ 
@@ -453,14 +443,14 @@ var SublimeVideo = Class.create({
     this.video.next('.controls').down('.progress_bar').setStyle({ width:this.video.width-40+'px' });
     
     if (this.webKitTransitionSupported) {
-      // the following line is for "security reasons" (in case the user immediately presses the Esc key WHILE the video was entering ENTERING fullscreen)
+      // the following line is for "security reasons" (in case the user immediately presses the Esc key WHILE the video was entering ENTERING fullwindow)
       this.video.stopObserving("webkitTransitionEnd");
       
       // Restore webkit transition 
       this.video.setStyle({ WebkitTransition: this.videoWebkitTransitionValue });
       this.video.observe("webkitTransitionEnd", function(e) {
         this.video.stopObserving("webkitTransitionEnd");
-        this.finishExitingFullScreen();
+        this.finishExitingFullWindow();
       }.bind(this));
     }
     
@@ -472,17 +462,17 @@ var SublimeVideo = Class.create({
     });
     
     if (!this.webKitTransitionSupported) {
-      this.finishExitingFullScreen();
+      this.finishExitingFullWindow();
     }
   },
-  finishExitingFullScreen: function() {
+  finishExitingFullWindow: function() {
     // called at the end of the transition (for webkit)
     this.video.up().setStyle({ zIndex: "auto" });
     this.showControls();
     this.showScrollbars();
     
     ////////////////////////////////////////////////////////////////////////////////////////////
-    // WORKAROUND for make the live fullscreen-resizing work on current Safari for Mac (v4.0.4)
+    // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
     if (navigator.userAgent.indexOf("Macintosh") > -1 
         && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
       setTimeout(function(){
@@ -491,13 +481,13 @@ var SublimeVideo = Class.create({
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
   },
-  fullScreenKeyDown: function(event) {
+  fullWindowKeyDown: function(event) {
     switch(event.keyCode) {
       case 32: //spacebar
         this.playPause();
         break;
       case Event.KEY_ESC: //27
-        this.exitFullScreen();
+        this.exitFullWindow();
         event.stop();
         break;
     }
@@ -522,7 +512,7 @@ var SublimeVideo = Class.create({
     var videoTop = videoOffset.top - scrollOffset.top;
     var videoLeft = videoOffset.left - scrollOffset.left;
     
-    //// Nope, I can't do this, 'cause I won't have the transformOrigin computed to properly exit fullscreen IF the browser window was resized while in fullscreen
+    //// Nope, I can't do this, 'cause I won't have the transformOrigin computed to properly exit fullwindow IF the browser window was resized while in fullwindow
     // if (isResizing) { //resizing browser's window
     //   translateX = ( browserSize.width/2 - (videoOffset.left + videoWidth/2) + scrollOffset.left) / scaleFactor;
     //   translateY = ( browserSize.height/2 - (videoOffset.top + videoHeight/2) + scrollOffset.top) / scaleFactor;
@@ -555,7 +545,7 @@ var SublimeVideo = Class.create({
   },
   showOverlay: function(sublime_video_wrapper) {
     if (!this.overlay) {
-      this.opacityWebkitTransitionValue = this.fullscreenTransitionDuration+"s opacity";
+      this.opacityWebkitTransitionValue = this.fullwindowTransitionDuration+"s opacity";
       
       this.overlay = new Element("div").setStyle({
         position: "fixed",
