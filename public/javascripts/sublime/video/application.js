@@ -30,7 +30,7 @@ var SublimeVideo = Class.create({
     $(document.body).setStyle({ overflow:'hidden' });
   },
   prepareSublimeVideosMobileSafari: function() {
-    $$("video.sublime_video source").each(function(source, index){
+    $$("video.sublime source").each(function(source, index){
       source.writeAttribute({
         src: source.readAttribute('title'),
         title: ""
@@ -38,7 +38,7 @@ var SublimeVideo = Class.create({
     }.bind(this));
   },
   prepareSublimeVideos: function(supportedBrowser) {
-    $$("video.sublime_video").each(function(video, index){
+    $$("video.sublime").each(function(video, index){
       video.hide();
       
       var wrapperId = 'sublime_video_wrapper_'+index;
