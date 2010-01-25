@@ -135,9 +135,9 @@ var SublimeVideo = Class.create({
     }.bind(this));
     originalVideoTag.remove();
     
-    // ===============================================
-    // = Create sublime controls and handling :hover =
-    // ===============================================
+    // ===========================
+    // = Create sublime controls =
+    // ===========================
     
     // Progress bar
     var progressBar = new Element("div", { 'class':'progress_bar' }).setStyle({ width:this.video.width-40+'px' });
@@ -202,6 +202,9 @@ var SublimeVideo = Class.create({
       }
     }.bind(this));
     this.video.observe("progress", function(event){
+      // if (this.video.buffered.end(0) > 10) {
+      // }
+      
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
     }.bind(this));
     
