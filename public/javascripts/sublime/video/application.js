@@ -206,8 +206,10 @@ var SublimeVideo = Class.create({
       // force playing if enough buffered (10secs)
       if (this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
         setTimeout(this.playPause.bind(this), 0);
-        setTimeout(this.playPause.bind(this), 200);
-        setTimeout(this.playPause.bind(this), 400);
+        setTimeout(function(){
+          this.video.play();
+          if (this.video.up().hasClassName("paused")) this.video.up().removeClassName("paused");
+        }.bind(this), 200);
       }
       
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
