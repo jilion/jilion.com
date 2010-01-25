@@ -32,7 +32,7 @@ body {
 #back {
   width:960px;
   margin:0 auto;
-  background:#000 url(/images/texture.png);
+  background:#000 url(images/texture.png);
   opacity:0.7;
   position:absolute;
   left:0;
@@ -102,14 +102,14 @@ body {
 
 #blog_label h2 a span {display:none;}
 
-#blog_label .shadow {
+/*#blog_label .shadow {
   width:251px;
   height:7px;
   background:url(images/blog_label_shadow.png) no-repeat;
   position:absolute;
   top:0;
   right:0;
-}
+}*/
 
 #menu {
   list-style-type:none;
@@ -171,7 +171,7 @@ body {
 }
 
 #content {
-  width:580px;
+  width:600px;
   float:left;
   padding:0 0 40px 45px;
 }
@@ -194,6 +194,10 @@ body {
   color:#7c96bf;
 }
 
+.entry_title h2 a:hover {
+  color:#fff;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0){
   .entry_title h2 {
     position:relative;
@@ -201,7 +205,10 @@ body {
     height:45px;
     width:580px;
     color:#30415c;
+    -webkit-transition:color 0.5s;
   }
+  
+  .entry_title h2:hover {color:#fff;}
   
   .entry_title h2 a {
     position:absolute;
@@ -214,11 +221,12 @@ body {
 }
 
 .entry_meta {
-  padding:5px 0 0;
+  padding:10px 0 15px;
   font-size:15px;
   font-weight:100;
   letter-spacing:1px;
   color:#9eb3d3;
+  border-bottom:1px solid #2a323f;
 }
 
 .entry_meta .authors {
@@ -230,12 +238,12 @@ body {
 }
 
 .entry_comments_count {
-  background:#101318 url(images/comments_icon.png) no-repeat 94% 50%;
+  background: url(images/comments_icon.png) no-repeat 94% 50%;
   position:absolute;
-  top:45px;
+  top:50px;
   right:0;
   padding:3px 0px 2px 8px;
-  font-size:18px;
+  font-size:16px;
   font-weight:500;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
@@ -281,8 +289,143 @@ body {
   font-weight:500;
 }
 
+.entry_body h3 {
+  font-size:20px;
+  font-weight:500;
+}
+
+.entry_body img {
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+}
+
+.entry_body img.no_rounded {
+  -webkit-border-radius:0px;
+  -moz-border-radius:0px;
+}
+
+.entry_body p.center {text-align:center;}
+
+.entry_body em.caption {
+  display:block;
+  text-align:center;
+  font-size:14px;
+}
+
+.entry_body ul {
+  list-style-type:none;
+  padding:0 0 20px;
+}
+
+.entry_body li {
+  padding:0 0 10px 24px;
+  background:url(images/li.png) no-repeat 0 12px;
+}
+
+.entry_body a.show_image {
+  display:block;
+  position:relative;
+  float:left;
+  padding:3px;
+  background:#838e9b;
+  line-height:0;
+  margin:10px 15px 50px 0;
+  -webkit-border-radius:12px;
+  -moz-border-radius:12px;
+}
+
+.entry_body a.show_image.transparent {
+  background:none;
+  padding:0;
+}
+
+.entry_body a.show_image.right {
+  float:right;
+  margin:10px 0 50px 15px;
+}
+
+.entry_body a.show_image span.glass {
+  display:block;
+  position:absolute;
+  width:auto;
+  height:auto;
+  top:3px;
+  left:3px;
+  right:3px;
+  bottom:3px;
+  opacity:0;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  -webkit-transition:0.5s opacity;
+}
+
+.entry_body a.show_image:hover span.glass {
+  background:rgba(0,0,0,0.3) url(images/magnifying_glass.png) no-repeat 98% 98%;
+  opacity:1;
+}
+
+.entry_body a.show_image em.caption {
+  position:absolute;
+  bottom:-45px;
+  left:0;
+  right:0;
+  display:block;
+  text-align:center;
+  color:#475061;
+  font-weight:100;
+  letter-spacing:1px;
+  font-size:14px;
+  line-height:22px;
+  height:40px;
+}
+
+.entry_body p.center em.caption {
+  display:block;
+  padding:5px 0;
+  text-align:center;
+  color:#475061;
+  font-weight:100;
+  letter-spacing:1px;
+  font-size:14px;
+  line-height:22px;
+}
+
+.entry_body a.video {
+  display:block;
+  position:relative;
+  padding:3px;
+  background:#838e9b;
+  line-height:0;
+  -webkit-border-radius:12px;
+  -moz-border-radius:12px;
+}
+
+.entry_body a.video.right {
+  float:right;
+  margin:10px 0 50px 15px;
+}
+
+.entry_body a.video span.play {
+  display:block;
+  position:absolute;
+  width:auto;
+  height:auto;
+  top:3px;
+  left:3px;
+  right:3px;
+  bottom:3px;
+  background:rgba(0,0,0,0.4) url(images/play_button.png) no-repeat 50% 50%;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  -webkit-transition:0.5s background-color;
+}
+
+.entry_body a.video:hover span.play {
+  background-color:rgba(0,0,0,0);
+}
+
 #sidebar {
-  width:260px;
+  width:240px;
   float:left;
   padding:0 45px 40px 30px;
 }
@@ -465,6 +608,8 @@ a {
 a:hover {
   color:#fff;
 }
+
+img {border:none;}
 
 strong {font-weight:500;}
 

@@ -1,1 +1,67 @@
-%h1 Video
+#global
+  #header
+    %h1= "Sublime Video"
+    %h2= "HTML5 Video Player"
+    - link_to "http://jilion.com", :class => "jilion" do
+      %span= "Jilion"
+    - link_to "http://twitter.com/jilion", :class => "twitter" do
+      %span= "Twitter"
+  
+  #video_wrap
+    %video.sublime_video{ :width => "600", :height => "255", :poster => "/images/sublime/video/poster.jpg" }
+      %source{ :title => "http://jilion.com.nyud.net/medias/dartmoor.mp4", :type => "video/mp4" }
+      
+  #caption
+    %p
+      %em= "Dartmoor - Philip Bloom Comp"
+      = "by" 
+      = link_to "James Watson", "http://james-watson.net"
+  #content
+    .left
+      %h3
+        = "Current features" 
+        %em= "(in this demo)"
+      %ul
+        %li
+          %strong= "HTML5 video goodness:"
+          %ul
+            %li= "no browser plugin, no Flash dependencies"
+            %li= "jump anywhere in the video and it'll start buffering from that point"
+        %li= "Custom styled controls"
+        %li
+          %strong= "Full-window mode:"
+        %ul
+          %li= "Sleek zoom-in/out transitions"
+          %li= "Live-resizing (when resizing the browser window)"
+          %li= "More advanced controls on a floating and draggable pane"
+          %li= "Space bar keyboard shortcut to play/pause video"
+        %li
+          %strong= "Full-screen mode"
+          = "by alt-clicking on the full-window button (currently only supported in latest"
+          = link_to "WebKit Nightly Builds", "http://webkit.org/"
+          = ")"
+    .right
+      %h3
+        = "Features we plan to add"
+        %em= "(in the public release)"
+      %ul
+        %li= "Firefox support"
+        %li= "Volume controls"
+        %li= "IE support by falling back to Flash (Mother Teresa of Calcutta would be proud of us)"
+      
+      %h3= "Supported Browsers"
+      %ul
+        %li= "Safari (v4.0.4+)"
+        %li= "Google Chrome (v4.0+)"
+        %li= "Internet Explorer with Chrome Frame installed (not tested)"
+
+      %h3= "Note"
+      %p
+        = "SublimeVideo will be soon released for free for anyone to use."
+        %strong
+          = link_to "Follow us", "http://twitter.com/Jilion"
+        = "to be notified when it'll be ready!"
+    .spacer
+  #footer
+    = "© 2009"
+    = link_to "Jilion","http://jilion.com"
