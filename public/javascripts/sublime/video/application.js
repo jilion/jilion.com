@@ -270,13 +270,16 @@ var SublimeVideo = Class.create({
     if (this.video.ended) {
       this.video.currentTime = 0;
       this.video.play();
+      if (this.video.up().hasClassName("paused")) this.video.up().removeClassName("paused");
     }
     else if (this.video.paused) {
       this.video.play();
+      if (this.video.up().hasClassName("paused")) this.video.up().removeClassName("paused");
     }
     else {
       this.showControls();
       this.video.pause();
+      this.video.up().addClassName("paused");
     }
   },
   fastForward: function() {
@@ -398,26 +401,28 @@ var SublimeVideo = Class.create({
     this.controls.morph('opacity:0', { duration: 0.5 });
   },
   fullWindowPoll: function() {
-    if (this.latestPolledMousePosition === this.mousePosition) {
-      this.mouseFrozenDuration += this.pollingTime;
-    }
-    else {
-      this.mouseFrozenDuration = 0;
-    }
-    this.latestPolledMousePosition = this.mousePosition;
-    
-    if (this.mouseFrozenDuration > 3000) {
-      if (!this.controlsDidHide) {
-        this.hideFullControls();
-        this.controlsDidHide = true;
-        this.controlsDidShow = false;
+    if (!this.video.paused) {
+      if (this.latestPolledMousePosition === this.mousePosition) {
+        this.mouseFrozenDuration += this.pollingTime;
       }
-    }
-    else {
-      if (!this.controlsDidShow) {
-        this.showControls();
-        this.controlsDidShow = true;
-        this.controlsDidHide = false;
+      else {
+        this.mouseFrozenDuration = 0;
+      }
+      this.latestPolledMousePosition = this.mousePosition;
+      
+      if (this.mouseFrozenDuration > 3000) {
+        if (!this.controlsDidHide) {
+          this.hideFullControls();
+          this.controlsDidHide = true;
+          this.controlsDidShow = false;
+        }
+      }
+      else {
+        if (!this.controlsDidShow) {
+          this.showControls();
+          this.controlsDidShow = true;
+          this.controlsDidHide = false;
+        }
       }
     }
   },

@@ -138,9 +138,9 @@ body {
 
 #content ul li li {
 /*    padding:5px 0 5px;*/
-  background:url(/images/embed/sublime/video/li_alt.png) no-repeat 0 9px;
+  background:url(/images/embed/sublime/video/li_alt.png) no-repeat 1px 11px;
   position:relative;
-  left:-20px;
+  left:0px;
 }
 
 #footer {
@@ -242,7 +242,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 /*    -webkit-transition-delay:0.3s;*/
 }
 
-.sublime_video_wrapper video:hover + .controls.small, .sublime_video_wrapper .controls.small:hover {
+.sublime_video_wrapper video:hover + .controls.small, .sublime_video_wrapper .controls.small:hover, .sublime_video_wrapper.paused .controls {
   opacity:1;
 /*    -webkit-transition-delay:0;*/
 }
