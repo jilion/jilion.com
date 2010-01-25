@@ -19,7 +19,7 @@
 }
 
 body {
-  background:#5d6778 url(/images/sublime/video/halo.png) 50% 0 no-repeat;
+  background:#5d6778 url(/images/embed/sublime/video/halo.png) 50% 0 no-repeat;
   font-family:"Museo", Helvetica, Arial, sans-serif;
   color:#31333e;
   text-shadow:#6F7784 0 1px 0;
@@ -43,7 +43,7 @@ body {
   left:0;
   width:54px;
   height:72px;
-  background:url(/images/sublime/video/jilion.png) no-repeat;
+  background:url(/images/embed/sublime/video/jilion.png) no-repeat;
 }
 
 #header a.jilion:active {background-position:0 -72px;}
@@ -56,7 +56,7 @@ body {
   right:0;
   width:38px;
   height:33px;
-  background:url(/images/sublime/video/twitter.png) no-repeat;
+  background:url(/images/embed/sublime/video/twitter.png) no-repeat;
 }
 
 #header a.twitter:active {background-position:0 -33px;}
@@ -67,7 +67,7 @@ body {
   display:block;
   width:330px;
   height:101px;
-  background:url(/images/sublime/video/sublime_video.png) no-repeat;
+  background:url(/images/embed/sublime/video/sublime_video.png) no-repeat;
   margin:0 auto;
   position:relative;
   top:50px;
@@ -129,7 +129,7 @@ body {
 #content ul li {
   padding:5px 0 5px 20px;
 /*    color:#31333e;*/
-  background:url(/images/sublime/video/li.png) no-repeat 0 9px;
+  background:url(/images/embed/sublime/video/li.png) no-repeat 0 9px;
 }
 
 #content ul li ul {
@@ -138,7 +138,7 @@ body {
 
 #content ul li li {
 /*    padding:5px 0 5px;*/
-  background:url(/images/sublime/video/li_alt.png) no-repeat 0 9px;
+  background:url(/images/embed/sublime/video/li_alt.png) no-repeat 0 9px;
   position:relative;
   left:-20px;
 }
@@ -178,7 +178,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   right:0;
   opacity:0.5;
   z-index:3;
-  background:#000 url(/images/sublime/video/not_supported.png) no-repeat 50% 40%;
+  background:#000 url(/images/embed/sublime/video/not_supported.png) no-repeat 50% 40%;
   text-shadow:none;
   color:#fff;
   text-align:center;
@@ -203,7 +203,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   cursor:pointer;
   opacity:1;
   z-index:3;
-  background:rgba(0,0,0,0.4) url(/images/sublime/video/play_button.png) no-repeat 50% 50%;
+  background:rgba(0,0,0,0.4) url(/images/embed/sublime/video/play_button.png) no-repeat 50% 50%;
   -webkit-transition:0.5s background-color;
 }
 
@@ -211,7 +211,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   background-color:rgba(0,0,0,0);
 }
 
-.sublime_video_wrapper span.pause_button {background-image:url(/images/sublime/video/pause_button.png);}
+.sublime_video_wrapper span.pause_button {background-image:url(/images/embed/sublime/video/pause_button.png);}
 
 .sublime_video_wrapper span.enter_fullwindow_button, .sublime_video_wrapper span.exit_fullwindow_button {
   display:block;
@@ -222,10 +222,10 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   right:10px;
   cursor:pointer;
   z-index:3;
-  background:url(/images/sublime/video/enter_fullwindow_button.png) no-repeat;
+  background:url(/images/embed/sublime/video/enter_fullwindow_button.png) no-repeat;
 }
 
-.sublime_video_wrapper span.exit_fullwindow_button {background-image:url(/images/sublime/video/exit_fullwindow_button.png);}
+.sublime_video_wrapper span.exit_fullwindow_button {background-image:url(/images/embed/sublime/video/exit_fullwindow_button.png);}
 
 /*SMALL*/
 
@@ -235,7 +235,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   position:absolute;
   bottom:0;
   left:0;
-  background:url(/images/sublime/video/controls/small/bar_back.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/small/bar_back.png) repeat-x;
   opacity:0;
   -webkit-user-select:none;
   -webkit-transition:0.5s opacity;
@@ -251,12 +251,12 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   display:block;
   width:15px;
   height:15px;
-  background:url(/images/sublime/video/controls/small/play.png) no-repeat 1px 0;
+  background:url(/images/embed/sublime/video/controls/small/play.png) no-repeat 1px 0;
   margin:7px 0 0 5px;
   float:left;
 }
 
-.sublime_video_wrapper .controls.small .play_pause_button.pause {background:url(/images/sublime/video/controls/small/pause.png) no-repeat;}
+.sublime_video_wrapper .controls.small .play_pause_button.pause {background:url(/images/embed/sublime/video/controls/small/pause.png) no-repeat;}
 
 .sublime_video_wrapper .controls.small .progress_bar {
   position:absolute;
@@ -286,7 +286,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   padding:0 0 0 8px;
   height:8px;
   position:relative;
-  background:url(/images/sublime/video/controls/small/progress_back.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/small/progress_back.png) repeat-x;
   border: 1px solid rgba(0,0,0,0.7);
   -webkit-border-radius:20px;
   -moz-border-radius:20px;
@@ -299,7 +299,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   top:0;
   left:0;
   overflow:hidden;
-  background:url(/images/sublime/video/controls/small/progress_buffered.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/small/progress_buffered.png) repeat-x;
   -webkit-border-radius:20px;
   -moz-border-radius:20px;
   -webkit-transition:1s width;
@@ -312,7 +312,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   position:relative;
   left:-8px;
   padding:0 2px 0 0;
-  background:url(/images/sublime/video/controls/small/progress_elapsed.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/small/progress_elapsed.png) repeat-x;
   -webkit-border-radius:20px;
   -webkit-border-top-right-radius:0;
   -webkit-border-bottom-right-radius:0;
@@ -325,7 +325,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   position:absolute;
   top:-1px;
   right:-7px;
-  background:url(/images/sublime/video/controls/small/progress_indicator.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/small/progress_indicator.png) no-repeat;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
   -webkit-transition:0.2s -webkit-box-shadow;
@@ -354,7 +354,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   width:10px;
   height:10px;
   display:block;
-  background:url(/images/sublime/video/controls/small/progress_indicator.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/small/progress_indicator.png) no-repeat;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
   -webkit-transition:0.2s -webkit-box-shadow;
@@ -373,7 +373,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   display:block;
   width:14px;
   height:14px;
-  background:url(/images/sublime/video/controls/small/fullwindow.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/small/fullwindow.png) no-repeat;
   float:right;
   margin:7px 5px 0 0;
 }
@@ -400,7 +400,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   right:0;
   margin:0 auto;
   z-index:4;
-  background:url(/images/sublime/video/controls/full/pane_back.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/full/pane_back.png) repeat-x;
   -webkit-transform:translate(1px,1px);
   -webkit-transform-origin:0 0;
   -webkit-transition:0.5s opacity;
@@ -411,17 +411,17 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   display:block;
   width:27px;
   height:27px;
-  background:url(/images/sublime/video/controls/full/play.png) no-repeat 0 0;
+  background:url(/images/embed/sublime/video/controls/full/play.png) no-repeat 0 0;
   margin:22px auto 0;
 }
 
-.sublime_video_wrapper .controls.full .play_pause_button.pause {background:url(/images/sublime/video/controls/full/pause.png) no-repeat 50% 0;}
+.sublime_video_wrapper .controls.full .play_pause_button.pause {background:url(/images/embed/sublime/video/controls/full/pause.png) no-repeat 50% 0;}
 
 .sublime_video_wrapper .controls.full span.fast_backward {
   display:block;
   width:31px;
   height:17px;
-  background:url(/images/sublime/video/controls/full/backward.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/full/backward.png) no-repeat;
   position:absolute;
   top:27px;
   left:100px;
@@ -431,7 +431,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   display:block;
   width:31px;
   height:17px;
-  background:url(/images/sublime/video/controls/full/forward.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/full/forward.png) no-repeat;
   position:absolute;
   top:27px;
   right:100px;
@@ -441,7 +441,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   display:block;
   width:18px;
   height:18px;
-  background:url(/images/sublime/video/controls/full/close_fullwindow.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/full/close_fullwindow.png) no-repeat;
   position:absolute;
   top:26px;
   right:32px;
@@ -454,7 +454,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   width:27px;
   height:10px;
   padding-top:9px;
-  background:url(/images/sublime/video/controls/full/playback_display.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/full/playback_display.png) no-repeat;
   position:absolute;
   top:26px;
   left:30px;

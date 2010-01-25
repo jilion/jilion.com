@@ -55,6 +55,13 @@ role :db, domain, :primary => true
 # end
 
 after "deploy:symlink", "db:symlink"
+before "deploy:restart", "asset:prepare"
+
+namespace :asset do
+  task :prepare do
+    run "cd #{current_release}; jammit"
+  end
+end
 
 namespace :db do
   task :symlink do

@@ -12,4 +12,5 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :sublime, :only => [:index, :show]
   
+  Jammit::Routes.draw(map)
 end
