@@ -133,9 +133,9 @@ var SublimeVideo = Class.create({
     }.bind(this));
     originalVideoTag.remove();
     
-    // ===============================================
-    // = Create sublime controls and handling :hover =
-    // ===============================================
+    // ===========================
+    // = Create sublime controls =
+    // ===========================
     
     // Progress bar
     var progressBar = new Element("div", { 'class':'progress_bar' }).setStyle({ width:this.video.width-40+'px' });
@@ -200,6 +200,9 @@ var SublimeVideo = Class.create({
       }
     }.bind(this));
     this.video.observe("progress", function(event){
+      // if (this.video.buffered.end(0) > 10) {
+      // }
+      
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
     }.bind(this));
     
@@ -529,9 +532,14 @@ var SublimeVideo = Class.create({
       // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
       if (navigator.userAgent.indexOf("Macintosh") > -1 
           && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
+        
+        setTimeout(function(){
+          this.video.setStyle({ position:"relative" });
+        }.bind(this),10);
+        
         setTimeout(function(){
           this.video.setStyle({ position:"absolute" });
-        }.bind(this),100);
+        }.bind(this),20);
       }
       ////////////////////////////////////////////////////////////////////////////////////////////
     }
