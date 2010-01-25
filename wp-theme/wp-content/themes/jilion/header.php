@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
   <link rel="alternate" type="application/rss+xml" title="Jilion Blog" href="http://feeds.feedburner.com/jilion" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.jilion.com/xmlrpc.php?rsd" />
   <!--[if gte IE 7]>
     <script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
     <script type="text/javascript" src="wp-content/themes/jilion/curvycorners.js"></script>
@@ -36,11 +37,13 @@
       body {background:#fff;display:none;}
     </style>
   <![endif]-->
+  <script src="http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/js/FancyZoom.js" type="text/javascript"></script>
+  <script src="http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/js/FancyZoomHTML.js" type="text/javascript"></script>
   <?php //wp_head(); ?>
 
 </head>
 
-<body>
+<body onload="setupZoom()">
 
 <div id="global">
   
@@ -53,7 +56,7 @@
         <div class="wrap">
           <h2><a href="<?php echo get_option('home'); ?>"><span>Blog</span></a></h2>
         </div>
-        <div class="shadow"></div>
+        <!-- <div class="shadow"></div> -->
       </div>
       <!-- <ul id="menu">
         <li>
