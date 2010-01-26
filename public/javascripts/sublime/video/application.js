@@ -186,7 +186,6 @@ var SublimeVideo = Class.create({
     $(wrapperId).addClassName('playing').insert(this.video).insert(this.controls);
     
     // Hide poster
-    // this.video.previous('img').setStyle({ visibility : 'hidden' }); 
     this.video.previous('img').hide();
     this.video.previous('.play_button').hide();
     
@@ -330,10 +329,6 @@ var SublimeVideo = Class.create({
   },
   enterFullWindow: function(event) {
     event.stop();
-    
-    // if (fullscreen) {
-    //   //TODO exit fullscreen
-    // }
     
     if (event.altKey) {
       if (this.video.webkitSupportsFullscreen) {
