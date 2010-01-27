@@ -61,7 +61,7 @@ body {
 
 #header a.twitter:active {background-position:0 -33px;}
 
-#header h1, #header h2 {text-indent:-999999px;}
+#header h1 span, #header h2 {display:none;}
 
 #header h1 {
   display:block;
@@ -143,6 +143,16 @@ body {
   left:0px;
 }
 
+#faq {
+  border-top:1px solid #5d6778;
+  padding:20px 0 0;
+}
+
+#faq h4 {
+  font-family:"Museo-Bold", Helvetica, Arial, sans-serif;
+  padding:0 0 10px;
+}
+
 #footer {
   padding:0 0 20px 0;
   font-size:12px;
@@ -152,7 +162,13 @@ body {
 a {
   text-decoration:none;
   color:#000;
+  text-shadow:#9BADCE 0 0 25px;
   outline:0;
+  -webkit-transition:0.5s text-shadow;
+}
+
+a:hover {
+  text-shadow:#fff 0 0 25px;
 }
 
 img {border:none;}

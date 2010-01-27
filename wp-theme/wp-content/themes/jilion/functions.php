@@ -33,7 +33,7 @@ function jilion_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; ?>
    <li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
       <div class="comment_header">
-         <?php echo get_avatar( $comment, 40); ?>
+         <?php echo get_avatar( $comment, $size = '40', $default = 'http://blog.jilion.com/assets/images/avatar.png') ?>
          <h4><?php comment_author_link() ?> says:</h4>
          <em class="date"><?php comment_date('F jS, Y') ?> at <?php comment_time() ?></em>
       </div>
