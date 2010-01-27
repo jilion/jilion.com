@@ -61,6 +61,7 @@ var SublimeVideo = Class.create({
   },
   unlooadVideo: function() {
     // Stop observers
+    this.video.stopObserving("loadedmetadata");
     this.video.stopObserving("load");
     this.video.stopObserving("progress");
     this.video.stopObserving("play");
@@ -185,7 +186,6 @@ var SublimeVideo = Class.create({
     $(wrapperId).addClassName('playing').insert(this.video).insert(this.controls);
     
     // Hide poster
-    // this.video.previous('img').setStyle({ visibility : 'hidden' }); 
     this.video.previous('img').hide();
     this.video.previous('.play_button').hide();
     
@@ -194,20 +194,21 @@ var SublimeVideo = Class.create({
     // var style = new Element("style", {'type':'text/css'}).update('#'+$(wrapperId).id+' video::-webkit-media-controls-fullscreen-button{top:'+fullscreenButtonY+'px;left:'+fullscreenButtonX+'px}');
     // $(wrapperId).insert(style);
     
-    // Buffered Time Observer
-    this.video.observe("load", function(event){
+    this.video.observe("load", function(event) {
+      // Note: apparently this is not fired by Chrome...hence the loadedmetadata below...
       if (this.video.buffered.length === 1) { // because this method is also called once even if the video is NOT fully loaded
         progressBarBuffered.setStyle({ width:'100%' });
       }
     }.bind(this));
+    
+    this.video.observe("loadedmetadata", function(event) {
+      this.tryPlaying();
+      progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+    }.bind(this));
+    
+    // Buffered Time Observer
     this.video.observe("progress", function(event){
-      // force playing if enough buffered (10secs)
-      if (this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
-        setTimeout(this.playPause.bind(this), 0);
-        setTimeout(this.playPause.bind(this), 200);
-        setTimeout(this.playPause.bind(this), 400);
-      }
-      
+      this.tryPlaying();
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
     }.bind(this));
     
@@ -272,6 +273,17 @@ var SublimeVideo = Class.create({
     // var enterFullWindowButton = new Element("span", {'class':'enter_fullwindow_button'});
     // $(wrapperId).insert(enterFullWindowButton);
   },
+  tryPlaying: function() {
+    // try force playing, if enough buffered (10secs)
+    if (this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
+      this.hasAlreadyClickedPlayPause = true; //be sure this is called only once
+      setTimeout(this.playPause.bind(this), 0);
+      setTimeout(function(){
+        this.video.play();
+        if (this.video.up().hasClassName("paused")) this.video.up().removeClassName("paused");
+      }.bind(this), 200);
+    }
+  },
   playPause: function() {
     this.hasAlreadyClickedPlayPause = true;
     if (this.video.ended) {
@@ -317,10 +329,6 @@ var SublimeVideo = Class.create({
   },
   enterFullWindow: function(event) {
     event.stop();
-    
-    // if (fullscreen) {
-    //   //TODO exit fullscreen
-    // }
     
     if (event.altKey) {
       if (this.video.webkitSupportsFullscreen) {
