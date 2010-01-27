@@ -37,13 +37,13 @@
       body {background:#fff;display:none;}
     </style>
   <![endif]-->
-  <script src="http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/js/FancyZoom.js" type="text/javascript"></script>
-  <script src="http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/js/FancyZoomHTML.js" type="text/javascript"></script>
+  <script type='text/javascript' src='http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/js/comment-reply.js'></script>
+  <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' );?>
   <?php //wp_head(); ?>
 
 </head>
 
-<body onload="setupZoom()">
+<body>
 
 <div id="global">
   

@@ -25,30 +25,7 @@
 
 
 	<ol id="comments_list">
-
-	<?php $count_pings = 1; foreach ($comments as $comment) : ?>
-
-		<li <?php echo $oddcomment; ?>id="comment-<?php comment_ID() ?>">
-			<div class="comment_header">
-			  <?php echo get_avatar( $comment, 40 ); ?>
-			  <h4><?php comment_author_link() ?> says:</h4>
-			  <em class="date"><?php comment_date('F jS, Y') ?> at <?php comment_time() ?></em>
-			</div>
-			<div class="comment_body">
-  			<?php comment_text() ?>			 
-			</div>
-			<?php if ($comment->comment_approved == '0') : ?>
-			<p><b>Your comment is awaiting moderation.</b></p>
-			<?php endif; ?>
-		</li>
-
-	<?php
-		/* Changes every other comment to a different class */
-		$oddcomment = ( empty( $oddcomment ) ) ? 'class="alt" ' : '';
-	?>
-
-	<?php endforeach; /* end for each comment */ ?>
-
+    <?php wp_list_comments('type=comment&callback=jilion_comment'); ?>
 	</ol>
 
  <?php else : // this is displayed if there are no comments so far ?>
@@ -67,6 +44,10 @@
 <?php if ('open' == $post->comment_status) : ?>
 <div id="comments_form">
   <h4>Leave a reply</h4>
+  
+  <div class="cancel-comment-reply">
+  	<small><?php cancel_comment_reply_link('cancel reply'); ?></small>
+  </div>
 
   <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
   <p>You must be <a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>">logged in</a> to post a comment.</p>
@@ -96,17 +77,17 @@
   </div>
 
   <?php endif; ?>
-  <div class="right_box">
+  <div class="right_box" <?php if ( $user_ID ) : ?>style="width:100%"<?php endif; ?>>
     <div class="entry_form">
       <!--<p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
       <label for="comment_form_comment">Comment <em class="required">*</em></label>
-      <textarea name="comment" id="comment_form_comment" cols="70%" rows="10"></textarea>    
+      <textarea name="comment" id="comment_form_comment" cols="70%" rows="10" <?php if ( $user_ID ) : ?>style="width:100%"<?php endif; ?>></textarea>    
     </div>    
   </div>
   <div class="spacer"></div>
   <div class="entry_form">
     <input name="submit" type="submit" class="submit" tabindex="5" value="Submit" />
-    <input type="hidden" name="comment_post_ID" value="<?php echo $id; ?>" />    
+    <?php comment_id_fields(); ?>
   </div>
 
   <?php do_action('comment_form', $post->ID); ?>

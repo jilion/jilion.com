@@ -462,7 +462,7 @@ body {
 #sidebar .box.links li.twitter a {background:url(images/twitter_icon.png) no-repeat 0 5px;}
 
 #comments {
-  padding:40px 0 20px;
+  padding:40px 0 0;
   border-top:1px solid #242b36;
 }
 
@@ -525,9 +525,34 @@ body {
   padding:10px 0 0;
 }
 
+.comment_reply {
+  padding:8px 0 0;
+  text-align:right;
+}
+
+.comment_reply a {
+  padding:6px 10px 6px 35px;
+  background:rgba(0,0,0,0.8) url(images/comments_icon.png) no-repeat 10px 50%;
+  font-size:13px;
+  font-weight:100;
+  letter-spacing:1px;
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
+}
+
+#comments_list li ul.children {
+  padding:20px 0 0;
+  margin-bottom:-20px;
+}
+
+#comments_list li ul.children li {
+  background:rgba(0,0,0,0.8);
+}
+
 #comments_form {
   padding:20px;
-  margin:30px 0 0;
+  margin:30px 0;
+  position:relative;
   background:rgba(0,0,0,0.2);
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
@@ -578,6 +603,23 @@ body {
   height:126px;
   font-size:13px;
   padding:2px;
+}
+
+.cancel-comment-reply {
+  position:absolute;
+  top:26px;
+  right:20px;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.cancel-comment-reply small {
+  font-size:11px;
+}
+
+.cancel-comment-reply a {
+  background:url(images/small_cross.png) no-repeat 0 65%;
+  padding:0 0 0 14px;
 }
 
 #footer {
