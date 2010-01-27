@@ -30,36 +30,16 @@ role :db, domain, :primary => true
 # = DB =
 # ======
 
-# namespace :sqlite3 do
-#   desc "Generate a database configuration file"
-#   task :build_configuration, :roles => :db do
-#     db_options = {
-#       "adapter"  => "sqlite3",
-#       "database" => "#{shared_database_path}/production.sqlite3"
-#     }
-#     config_options = {"production" => db_options}.to_yaml
-#     put config_options, "#{shared_config_path}/sqlite_config.yml"
-#   end
-#  
-#   desc "Links the configuration file"
-#   task :link_configuration_file, :roles => :db do
-#     run "ln -nsf #{shared_config_path}/sqlite_config.yml #{release_path}/config/database.yml"
-#     # run "ln -nsf #{shared_database_path}/production.sqlite3 #{release_path}/db/production.sqlite3" 
-#   end
-#  
-#   desc "Make a shared folders"
-#   task :make_shared_folders, :roles => :db do
-#     run "mkdir -p #{shared_database_path}"
-#     run "mkdir -p #{shared_config_path}"
-#   end
-# end
-
 after "deploy:symlink", "db:symlink"
-before "deploy:restart", "asset:prepare"
+before "deploy:restart", "asset:prepare", "asset:copyright"
 
 namespace :asset do
   task :prepare do
     run "cd #{current_release}; jammit"
+  end
+  
+  task :copyright do
+    run "cd #{current_release}; rake copyright:add_to_top"
   end
 end
 
