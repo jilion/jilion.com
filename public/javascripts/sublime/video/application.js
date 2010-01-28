@@ -196,19 +196,22 @@ var SublimeVideo = Class.create({
     
     this.video.observe("load", function(event) {
       // Note: apparently this is not fired by Chrome...hence the loadedmetadata below...
-      if (this.video.buffered.length === 1) { // because this method is also called once even if the video is NOT fully loaded
+      if (this.video.buffered && this.video.buffered.length === 1) { // because this method is also called once even if the video is NOT fully loaded
         progressBarBuffered.setStyle({ width:'100%' });
       }
     }.bind(this));
     
     this.video.observe("loadedmetadata", function(event) {
-      this.tryPlaying();
-      progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+      if (this.video.buffered) { //firefox didn't implement the buffered attribute
+        this.tryPlaying();
+        progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+      }
     }.bind(this));
     
     // Buffered Time Observer
     this.video.observe("progress", function(event){
       this.tryPlaying();
+      // progressBarBuffered.setStyle({ width:(event.loaded/event.total)*100+'%' });
       progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
     }.bind(this));
     
@@ -275,7 +278,7 @@ var SublimeVideo = Class.create({
   },
   tryPlaying: function() {
     // try force playing, if enough buffered (10secs)
-    if (this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
+    if (this.video.buffered && this.video.buffered.end(0) > 10 && !this.hasAlreadyClickedPlayPause) {
       this.hasAlreadyClickedPlayPause = true; //be sure this is called only once
       setTimeout(this.playPause.bind(this), 0);
       setTimeout(function(){

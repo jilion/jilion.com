@@ -12,14 +12,23 @@
       %span= "Twitter"
   
   #video_wrap
-    %video.sublime{ :width => "600", :height => "255", :poster => "/images/embed/sublime/video/poster.jpg" }
-      %source{ :title => "http://d31j8lt3uybmqs.cloudfront.net/sublimevideo/dartmoor.mp4", :type => "video/mp4" }/
-      
+    - if params[:v] == "ipad"
+      %video.sublime{ :width => "600", :height => "340", :poster => "http://images.apple.com/ipad/ipad-video/images/apple-ipad-video-us-20100127_848x480.jpg" }
+        %source{ :title => "http://movies.apple.com/media/us/ipad/2010/tours/apple-ipad-video-us-20100127_r848-9cie.mov", :type => "video/mp4" }/
+        -#%source{ :title => "http://jilion.local/~zeno/Jilion/videos/apple-ipad-video-us-20100127_r848-9cie.mov", :type => "video/mp4" }/
+    - else
+      %video.sublime{ :width => "600", :height => "255", :poster => "/images/embed/sublime/video/poster.jpg" }
+        %source{ :title => "http://d31j8lt3uybmqs.cloudfront.net/sublimevideo/dartmoor.mp4", :type => "video/mp4" }/
+        -#%source{ :title => "http://jilion.local/~zeno/Jilion/videos/dartmoor.ogv", :type => "video/ogg" }/
   #caption
     %p
-      %em= "Dartmoor"
-      = "by" 
-      = link_to "James Watson", "http://james-watson.net"
+      - if params[:v] == "ipad"
+        %em= "iPad Video,"
+        = link_to "Apple.com/ipad", "http://www.apple.com/ipad/"
+      - else
+        %em= "Dartmoor"
+        = "by" 
+        = link_to "James Watson", "http://james-watson.net"
   #content
     .left
       %h3
