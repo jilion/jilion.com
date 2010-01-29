@@ -17,9 +17,9 @@ S2.UI.Behavior.TransformDrag = Class.create(S2.UI.Behavior, {
   },
 
   "handle/onmousedown": function(event) {
-    var element = this.element;
-    // Jilion
-    if (element.hasClassName('ui-draggable')) {
+    if (event.element().hasClassName('ui-draggable')) {
+      var element = this.element;
+      // Jilion
       var matrixRegexp = /.*translate\(\s*(-*[0-9]*)px\s*,*\s*(-*[0-9]*)px\s*\)/;
       var tranformMatrix = element.getStyle('WebkitTransform') || element.getStyle("MozTransform");
       this._startPointer  = event.pointer();
@@ -29,7 +29,6 @@ S2.UI.Behavior.TransformDrag = Class.create(S2.UI.Behavior, {
         // left: window.parseInt(element.getStyle('left'), 10),
         // top:  window.parseInt(element.getStyle('top'),  10)
       };
-      ddd(this._startPosition)
       document.observe('mousemove', this.__onmousemove);
     }
   },
