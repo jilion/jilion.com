@@ -106,10 +106,8 @@ var SublimeVideo = Class.create({
     }
     
     this.videoWebkitTransitionValue = this.fullwindowTransitionDuration+"s -webkit-transform";
-    
     // Create new video element
     var originalVideoTag = $(wrapperId).next('video');
-    
     this.video = new Element("video", {
       width: originalVideoTag.readAttribute('width'), 
       height: originalVideoTag.readAttribute('height'),
@@ -196,7 +194,7 @@ var SublimeVideo = Class.create({
     
     this.video.observe("load", function(event) {
       // Note: apparently this is not fired by Chrome...hence the loadedmetadata below...
-      if (this.video.buffered && this.video.buffered.length === 1) { // because this method is also called once even if the video is NOT fully loaded
+      if (this.video.buffered && this.video.buffered.length > 0) { // because this method is also called once even if the video is NOT fully loaded
         progressBarBuffered.setStyle({ width:'100%' });
       }
     }.bind(this));
@@ -211,8 +209,14 @@ var SublimeVideo = Class.create({
     // Buffered Time Observer
     this.video.observe("progress", function(event){
       this.tryPlaying();
-      // progressBarBuffered.setStyle({ width:(event.loaded/event.total)*100+'%' });
-      progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+      if (this.video.buffered) { // Safar/Chrome
+        progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+      }
+      else if (event.lengthComputable && event.total) {
+        // progressBarBuffered.setStyle({ width:parseInt( (event.loaded/event.total)*100, 10 ) +'%' });
+        progressBarBuffered.setStyle({ width:(event.loaded/event.total)*100 +'%' });
+      }
+      
     }.bind(this));
     
     // Play Observer
@@ -330,6 +334,9 @@ var SublimeVideo = Class.create({
       this.video.playbackRate = this.video.playbackRate*0.5;
     }
   },
+  isPlaybackRateSupported: function() {
+    return Math.abs(sublimeVideo.video.playbackRate) > 0;
+  },
   enterFullWindow: function(event) {
     event.stop();
     
@@ -347,16 +354,19 @@ var SublimeVideo = Class.create({
       
       // Add fullwindow-specific controls (if not already done)
       if (!this.controls.retrieve('hasFullscreenControls')) {
-        var fastBackward = new Element("span", { 'class':'fast_backward' }).observe("click", this.fastForward.bind(this));
-        var fastForward = new Element("span", { 'class':'fast_forward' }).observe("click", this.fastBackward.bind(this));
-        var playbackDisplay = new Element("span", { 'class':'playback_display ui-draggable' }).setOpacity(0);
-        this.controls.insert(playbackDisplay).insert({top:fastForward}).insert({top:fastBackward});
+        
+        if (this.isPlaybackRateSupported()) {
+          var fastBackward = new Element("span", { 'class':'fast_backward' }).observe("click", this.fastForward.bind(this));
+          var fastForward = new Element("span", { 'class':'fast_forward' }).observe("click", this.fastBackward.bind(this));
+          var playbackDisplay = new Element("span", { 'class':'playback_display ui-draggable' }).setOpacity(0);
+          this.controls.insert(playbackDisplay).insert({top:fastForward}).insert({top:fastBackward});
+        }
         
         this.controls.store("hasFullscreenControls", true);
       }
       
       // Make fullwindow controls pane draggable
-      this.controlsDragger = new S2.UI.Behavior.WebkitTransformDrag(this.controls);
+      this.controlsDragger = new S2.UI.Behavior.TransformDrag(this.controls);
       
       this.hideScrollbars();
       
@@ -454,6 +464,7 @@ var SublimeVideo = Class.create({
     this.controls.setStyle({ 
       WebkitTransition: "none",
       WebkitTransform:'translate(0px,0px)',
+      MozTransform:'translate(0px,0px)',
       opacity:0,
       bottom:'0px'
     });
@@ -505,14 +516,22 @@ var SublimeVideo = Class.create({
     ////////////////////////////////////////////////////////////////////////////////////////////
   },
   fullWindowKeyDown: function(event) {
+    event.stop();
     switch(event.keyCode) {
+      case Event.KEY_ESC: //27
+        this.exitFullWindow();
+        break;
       case 32: //spacebar
         this.playPause();
         break;
-      case Event.KEY_ESC: //27
-        this.exitFullWindow();
-        event.stop();
-        break;
+      // case Event.KEY_LEFT: //37
+      //   this.fastBackward.bind(this);
+      //   this.showControls();
+      //   break;
+      // case Event.KEY_RIGHT: //39
+      //   this.fastForward.bind(this);
+      //   this.showControls();
+      //   break;
     }
   },
   computeAndSetFullscreenWidth: function(isResizing) {
