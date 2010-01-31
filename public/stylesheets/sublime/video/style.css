@@ -336,7 +336,8 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -moz-border-radius:20px 0 0 20px;
 }
 
-/*  .sublime_video_wrapper .controls .progress_back .progress_indicator {
+/* firefox slider */
+.sublime_video_wrapper .controls .progress_back span.progress_indicator {
   width:10px;
   height:10px;
   position:absolute;
@@ -349,14 +350,14 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -webkit-user-select: none;
   -webkit-user-drag: element;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator:hover {
+.sublime_video_wrapper .controls .progress_back span.progress_indicator:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
 }
-*/
 
-.sublime_video_wrapper .controls .progress_back .progress_indicator {
+
+/* webkit slider */
+.sublime_video_wrapper .controls .progress_back input.progress_indicator {
   -webkit-appearance:none;
   background:none;
   width:100%;
@@ -365,8 +366,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   top:0;
   left:0;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator::-webkit-slider-thumb {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator::-webkit-slider-thumb {
   -webkit-appearance:none;
   width:10px;
   height:10px;
@@ -376,15 +376,14 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -moz-border-radius:10px;
   -webkit-transition:0.2s -webkit-box-shadow;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator::-webkit-slider-thumb:hover {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator::-webkit-slider-thumb:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator:focus {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator:focus {
   outline: none;
 }
+
 
 .sublime_video_wrapper .controls.small span.fullscreen_button {
   display:block;
