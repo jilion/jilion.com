@@ -246,11 +246,14 @@ h2.headline {
 }
 
 #content .section.people {
-  font-size:14px;
   line-height:18px;
   text-align:left;
-  font-weight:300;
-  color:#4a505a;
+  font-size:15px;
+  text-align:left;
+  font-weight:100;
+  letter-spacing:1px;
+/*  color:#4a505a;*/
+  color:#7d889b;
   width:580px;
   float:left;
 }
@@ -264,11 +267,10 @@ h2.headline {
 #content .section.people li {
   display:block;
   float:left;
-  margin:0 20px 20px 0;
-  width:240px;
+  margin:0 30px 40px 0;
+  width:260px;
   height:81px;
-  background:url(/images/home/people_back.png) no-repeat;
-  padding:15px;
+/*  background:url(/images/home/people_back.png) no-repeat;*/
   position:relative;
 }
 
@@ -278,29 +280,21 @@ h2.headline {
 
 #content .section.people li img {
   position:absolute;
-  top:15px;
-  left:15px;
+  top:0;
+  left:0;
 }
 
 #content .section.people li h4 {
-  font-size:18px;
-  font-weight:500;
-  color:#7d889b;
+  font-size:16px;
+  font-weight:400;
+  color:#91a1bb;
   padding-bottom:6px;
 }
 
-#content .section.people li p.desc span {
-  font-weight:400;
-  background:#1c2026;
-  color:#69707a;
-  padding:1px 6px;
-  margin:0 4px 4px 0;
-  white-space:nowrap;
-  float:left;
-  font-size:12px;
-  text-transform:lowercase;
-  -webkit-border-radius:4px;
-  -moz-border-radius:4px;
+#content .section.people li p.desc {
+  line-height:20px;
+  font-style:italic;
+  font-size:13px;
 }
 
 #content .section.jobs {
