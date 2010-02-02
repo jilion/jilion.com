@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
   <link rel="alternate" type="application/rss+xml" title="Jilion Blog" href="http://feeds.feedburner.com/jilion" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.jilion.com/xmlrpc.php?rsd" />
   <!--[if gte IE 7]>

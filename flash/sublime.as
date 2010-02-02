@@ -38,11 +38,21 @@ pauseBtn.y = stage.stageHeight-18;
 
 var videoElapsedTime:TextField = elapsedTime_txt;  //  targets the dynamic text layer that will display the elapsed time played
 videoElapsedTime.text = "00:00";  
-videoElapsedTime.x = 23;
+videoElapsedTime.x = 19;
 videoElapsedTime.y = stage.stageHeight-20;
 
-//var videoThumb:MovieClip = player_mc.videoTrack_mc.videoThumb_mc;  //  targets the video scrubber thumb  
+var videoProgressBarBackground:MovieClip = progress_bar_back_mc;  //  targets the progress bar background
+videoProgressBarBackground.width = stage.stageWidth-132;
+videoProgressBarBackground.x = 66;
+videoProgressBarBackground.y = stage.stageHeight-16;
+
+var videoProgressBarBuffered:MovieClip = progress_bar_buffered_mc;  //  targets the progress bar buffered
+videoProgressBarBuffered.width = 40;
+videoProgressBarBuffered.x = 66;
+videoProgressBarBuffered.y = stage.stageHeight-16;
+
 //var videoTrackProgress:MovieClip = player_mc.videoTrack_mc.videoTrackProgress_mc;  //  targets the video progress bar  
+//var videoThumb:MovieClip = player_mc.videoTrack_mc.videoThumb_mc;  //  targets the video scrubber thumb  
 //var videoTrackDownload:MovieClip = player_mc.videoTrack_mc.videoTrackDownload_mc;  //  targets the video download percentage bar  
 //var volumeThumb:MovieClip = player_mc.volumeSlider_mc.volumeThumb_mc;  // targets the volume scrubber thumb  
 //var volumeTrack:MovieClip = player_mc.volumeSlider_mc.volumeTrackFull_mc;  //  targets the volume scrubber track percentage bar
