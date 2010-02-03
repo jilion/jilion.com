@@ -31,7 +31,7 @@ role :db, domain, :primary => true
 # ======
 
 after "deploy:symlink", "db:symlink"
-before "deploy:restart", "asset:prepare", "asset:copyright"
+before "deploy:restart", "asset:prepare", "asset:copyright", "asset:upload"
 
 namespace :asset do
   task :prepare do
@@ -40,6 +40,10 @@ namespace :asset do
   
   task :copyright do
     run "cd #{current_release}; rake copyright:add_to_top"
+  end
+  
+  task :upload do
+    run "cd #{current_release}; rake cdn:assets:upload"
   end
 end
 
