@@ -5,6 +5,7 @@ namespace :cdn do
     desc "Upload static assets to S3"
     task :upload => :environment do
       timestamp = Time.now.strftime("%m%d%Y%H%M%S")
+      puts timestamp
       s3 = RightAws::S3.new(
         S3_CONFIG['access_key_id'],
         S3_CONFIG['secret_access_key']
@@ -29,8 +30,9 @@ namespace :cdn do
         end
       end
       puts "Finished uploaded assets on Amazon S3"
-      
+      puts timestamp
       config_file = File.open( File.join( RAILS_ROOT , 'config/environments', 'production.rb' ), "a+" )
+      puts File.join( RAILS_ROOT , 'config/environments', 'production.rb' )
       config_file << 
 <<-EOT
 
@@ -41,6 +43,7 @@ ActionController::Base.asset_host = Proc.new { |source|
 EOT
       config_file.close
       puts "Successfully added the new assets CDN location to production.rb"
+      puts timestamp
     end
   end
 end
