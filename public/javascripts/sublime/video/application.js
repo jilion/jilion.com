@@ -5,7 +5,6 @@ document.observe("dom:loaded", function() {
 
 // TODOs
 // - MobileSafari support / Directly show video tag and bypass observers
-// - improve secondsToTime to support hours
  
 var SublimeVideo = Class.create({
   initialize: function() {
@@ -674,32 +673,30 @@ var SublimeVideo = Class.create({
     }
   },
   secondsToTime: function(secs) {
-    // TODO: improve this to support hours
+    var h = Math.floor(secs / 3600);
+    secs %= 3600;
+    var m = Math.floor(secs / 60);
+    var s = Math.floor(secs % 60);
     
-    // var h = Math.floor(secs / 3600);
-    // secs %= 3600;
-    // var m = Math.floor(secs / 60);
-    // var s = Math.floor(secs % 60);
-    // 
-    // h = h>0 ? ( h<10 ? '0'+h : h )+':' : '';
-    // m = m>0 ? ( m<10 ? '0'+m : m )+':' : '';
-    // s = s>0 ? ( s<10 ? '0'+s : s ) : '';
-    // ddd(h+m+s)
-    // return h+m+s;
-
+    h = h>0 ? ( h<10 ? '0'+h : h )+':' : '';
+    m = m>0 ? ( m<10 ? '0'+m : m )+':' : '00:';
+    s = s>0 ? ( s<10 ? '0'+s : s ) : '00';
+    
+    return h+m+s;
+    
     // OLD
-    var hours = Math.floor(secs / (60 * 60));
-    var minDivisor = secs % (60 * 60);
-    var minutes = Math.floor(minDivisor / 60);
-    var secDivisor = minDivisor % 60;
-    var seconds = Math.ceil(secDivisor);
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-    return minutes + ":" + seconds;
+    // var hours = Math.floor(secs / (60 * 60));
+    // var minDivisor = secs % (60 * 60);
+    // var minutes = Math.floor(minDivisor / 60);
+    // var secDivisor = minDivisor % 60;
+    // var seconds = Math.ceil(secDivisor);
+    // if (minutes < 10) {
+    //   minutes = "0" + minutes;
+    // }
+    // if (seconds < 10) {
+    //   seconds = "0" + seconds;
+    // }
+    // return minutes + ":" + seconds;
   }
 });
 

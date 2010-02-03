@@ -3,7 +3,7 @@
 </div>
 
 <div id="footer">
-  <p>Copyright © 2009 Jime™ SA — Jilion™ is the consulting group of Jime™ SA</p>
+  <p>Copyright © 2010 Jime™ SA — Jilion™ is the consulting group of Jime™ SA</p>
 </div>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
