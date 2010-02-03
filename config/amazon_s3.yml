@@ -1,0 +1,12 @@
+development:
+  access_key_id: 0BNK5HS36QFNVCVRBBG2
+  secret_access_key: zGODjlVgFrfcvNfqDo7aMBMUrpQsvY+mIBwpf+lQ
+  bucket: jilion.com
+test:
+  access_key_id: 0BNK5HS36QFNVCVRBBG2
+  secret_access_key: zGODjlVgFrfcvNfqDo7aMBMUrpQsvY+mIBwpf+lQ
+  bucket: jilion.com 
+production:
+  access_key_id: 0BNK5HS36QFNVCVRBBG2
+  secret_access_key: zGODjlVgFrfcvNfqDo7aMBMUrpQsvY+mIBwpf+lQ
+  bucket: jilion.com

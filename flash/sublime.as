@@ -21,7 +21,7 @@ controlsSmall.width = stage.stageWidth;
 controlsSmall.height = 25;
 controlsSmall.x = 0;
 controlsSmall.y = stage.stageHeight;
-
+	
 var playBtn:MovieClip = playBtn_mc;  //  targets the play button in the player
 playBtn.mouseChildren = false;  //  makes the elements inside the targeted movie clip unselectable  
 playBtn.buttonMode = true;  // gives the hand cursor when you hover over the movieclip
@@ -47,13 +47,20 @@ videoProgressBarBackground.x = 66;
 videoProgressBarBackground.y = stage.stageHeight-16;
 
 var videoProgressBarBuffered:MovieClip = progress_bar_buffered_mc;  //  targets the progress bar buffered
-videoProgressBarBuffered.width = 40;
+videoProgressBarBuffered.width = 0;
 videoProgressBarBuffered.x = 66;
 videoProgressBarBuffered.y = stage.stageHeight-16;
 
-//var videoTrackProgress:MovieClip = player_mc.videoTrack_mc.videoTrackProgress_mc;  //  targets the video progress bar  
+var videoProgressBarElapsedTime:MovieClip = progress_bar_elapsed_time_mc;  //  targets the progress bar elapsed time
+videoProgressBarElapsedTime.width = 0;
+videoProgressBarElapsedTime.x = 66;
+videoProgressBarElapsedTime.y = stage.stageHeight-16;
+
+var progressBarIndicator:MovieClip = progress_bar_indicator_mc; //  targets the progress bar indicator
+progressBarIndicator.x = 62;
+progressBarIndicator.y = stage.stageHeight-17;
+
 //var videoThumb:MovieClip = player_mc.videoTrack_mc.videoThumb_mc;  //  targets the video scrubber thumb  
-//var videoTrackDownload:MovieClip = player_mc.videoTrack_mc.videoTrackDownload_mc;  //  targets the video download percentage bar  
 //var volumeThumb:MovieClip = player_mc.volumeSlider_mc.volumeThumb_mc;  // targets the volume scrubber thumb  
 //var volumeTrack:MovieClip = player_mc.volumeSlider_mc.volumeTrackFull_mc;  //  targets the volume scrubber track percentage bar
 
@@ -118,6 +125,7 @@ function myStatusHandler(event:NetStatusEvent):void  {
 }
 
 ns.play("video.mp4");  //  tell the netstream what video to play and play it
+//ns.play("http://mirror.bigbuckbunny.de/peach/bigbuckbunny_movies/big_buck_bunny_480p_h264.mov");  //  tell the netstream what video to play and play it
 
 function onMetaData(newMeta:Object):void {  
     //trace("Metadata: duration=" + newMeta.duration + " width=" + newMeta.width + " height=" + newMeta.height + " framerate=" + newMeta.framerate);  // traces what it says  
@@ -144,10 +152,10 @@ function stopBtnClick(event:MouseEvent):void {
 function videoStatus():void {
     amountLoaded = ns.bytesLoaded / ns.bytesTotal;
 	checkTime();
-/*    videoTrackDownload.width = amountLoaded * 340;
-    videoThumb.x = ns.time / duration * 340;
-    videoTrackProgress.width = videoThumb.x;
-*/}
+	videoProgressBarBuffered.width = amountLoaded * videoProgressBarBackground.width;
+	videoProgressBarElapsedTime.width = ns.time / duration * videoProgressBarBackground.width + 5;
+	progressBarIndicator.x = ns.time / duration * videoProgressBarBackground.width + 66;
+}
 
 function checkTime():void {
 	
