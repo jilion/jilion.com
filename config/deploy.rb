@@ -46,6 +46,7 @@ namespace :asset do
   
   task :upload do
     run "cd #{current_release}; rake cdn:assets:upload RAILS_ENV=production"
+    run "cd #{current_release}; rm public/sublime/*"
   end
 end
 
