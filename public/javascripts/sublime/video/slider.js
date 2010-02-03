@@ -124,7 +124,7 @@
         length = (dim !== 0) ? dim :
          window.parseInt(this.element.getStyle('width'), 10);
       }
-
+    
       this._trackLength = length;
       return length;
     },
@@ -315,7 +315,7 @@
         || !event.findElement('.ui-slider-handle')) { //Jilion add
         
         var trackOffset = this.element.cumulativeOffset();
-
+        
         var newPosition = {
           x: Math.round((pointer.x - trackOffset.left) +
            (this._handleLength / 4)),

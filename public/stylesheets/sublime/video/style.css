@@ -297,10 +297,10 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 
 .sublime_video_wrapper .controls em.remaining_time {width:9%;}
 
-.sublime_video_wrapper .controls .progress_back_wrap {
+.sublime_video_wrapper .controls .progress_back {
   float:left;
   width:80%;
-  padding:0 0 0 8px;
+  padding:0;
   height:8px;
   position:relative;
   background:url(/images/embed/sublime/video/controls/small/progress_back.png) repeat-x;
@@ -323,17 +323,19 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 }
 
 .sublime_video_wrapper .controls .progress_back .progress_elapsed_time {
-  width:0%;
-/*    min-width:8px;*/
+  width:0;
+  min-width:5px;
   height:8px;
   position:relative;
-  left:-8px;
-  padding:0 2px 0 0;
+  left:0;
   background:url(/images/embed/sublime/video/controls/small/progress_elapsed.png) repeat-x;
   -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+/*  -webkit-border-radius:20px;
   -webkit-border-top-right-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:20px 0 0 20px;
+*/
 }
 
 /* firefox slider */
@@ -342,7 +344,8 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   height:10px;
   position:absolute;
   top:-1px;
-  right:-7px;
+  left:0;
+/*  right:-7px;*/
   background:url(/images/embed/sublime/video/controls/small/progress_indicator.png) no-repeat;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
@@ -350,11 +353,10 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -webkit-user-select: none;
   -webkit-user-drag: element;
 }
-.sublime_video_wrapper .controls .progress_back span.progress_indicator:hover {
+/*.sublime_video_wrapper .controls .progress_back span.progress_indicator:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
-}
-
+}*/
 
 /* webkit slider */
 .sublime_video_wrapper .controls .progress_back input.progress_indicator {
@@ -499,6 +501,6 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 
 .sublime_video_wrapper .controls.full em.remaining_time {text-align:left;padding:0 0 0 6px;}
 
-.sublime_video_wrapper .controls.full .progress_back_wrap {
+.sublime_video_wrapper .controls.full .progress_back {
   width:200px;
 }

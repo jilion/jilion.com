@@ -139,52 +139,20 @@ var SublimeVideo = Class.create({
     // Progress bar
     var progressBar = new Element("div", { 'class':'progress_bar' }).setStyle({ width:this.video.width-40+'px' });
     var elapsedTime = new Element("em", { 'class':'elapsed_time' }).update("00:00");
-    var progressBarBackWrap = new Element("div", { 'class':'progress_back_wrap' });
+    var remainingTime = new Element("em", { 'class':'remaining_time' }).update("00:00");
     var progressBarBackground = new Element("div", { 'class':'progress_back' });
     var progressBarBuffered = new Element("div", { 'class':'progress_buffered' });
     var progressBarElapsedTime = new Element("div", { 'class':'progress_elapsed_time' });
-    
     var progressBarIndicator;
     if (Prototype.Browser.Gecko) {
       progressBarIndicator = new Element('span', { 'class':'progress_indicator' });
-      
-      new S2.UI.BetterSlider(progressBarBackground, {
-        handle: progressBarIndicator,
-        onSlide: function(values, slider) {
-          // progressBarElapsedTime.setStyle({ width:values[0]+'%'});
-          // this.video.currentTime = (this.video.duration/100)*values[0];
-        },
-        
-        onChange: function(values, slider) {
-          // if (this.video.duration) {
-          //   progressBarElapsedTime.setStyle({ width:values[0]+'%'});
-          //   this.video.currentTime = (this.video.duration/100)*values[0];
-          // }
-        }
-      });
     }
     else {
-      progressBarIndicator = new Element("input", { 'class':'progress_indicator', type:'range', min:0, max:this.video.width, value:0 }).observe("change", function(event){
-        var newTime = this.video.duration * progressBarIndicator.value/this.video.width;
-        if (newTime < 0) {
-          newTime = 0;
-        }
-        else if (newTime > this.video.duration) {
-          newTime = this.video.duration;
-        }
-        // NO!!
-        // else if (newTime > this.video.buffered.end(0)) {
-        //   newTime = this.video.buffered.end(0);
-        // }
-        this.video.currentTime = newTime;
-      }.bind(this));
+      progressBarIndicator = new Element("input", { 'class':'progress_indicator', type:'range', min:0, value:0 }); //max value will be set to progressBarBackground's width (and I'll have to do this later)
     }
     
     progressBarBackground.insert(progressBarBuffered).insert(progressBarElapsedTime).insert(progressBarIndicator);
-    progressBarBackWrap.insert(progressBarBackground);
-    var remainingTime = new Element("em", { 'class':'remaining_time' }).update("00:00");
-    
-    progressBar.insert(elapsedTime).insert(progressBarBackWrap).insert(remainingTime);
+    progressBar.insert(elapsedTime).insert(progressBarBackground).insert(remainingTime);
     
     // Fullscreen button
     var fullScreenButton = new Element("span", { 'class':'fullscreen_button' }).observe("click", function(event){
@@ -200,11 +168,17 @@ var SublimeVideo = Class.create({
     var playPauseButton = new Element("span", { 'class':'play_pause_button pause' }).observe("click", this.playPause.bind(this));
     this.hasAlreadyClickedPlayPause = false;
     
-    // Show new video element with sublime controls
+    // ================================================
+    // = Show new video element with sublime controls =
+    // ================================================
     this.controls = new Element("div", { 'class':'controls small' });
     this.controls.insert(playPauseButton).insert(progressBar).insert(fullScreenButton);
     // controlsWrapper.insert(this.controls);
     $(wrapperId).addClassName('playing').insert(this.video).insert(this.controls);
+    
+    // now I can set the progress slider max value (I couldn't do this before because I can't get the width until the element is in the DOM)
+    this.sliderWidthAndMaxValue = progressBarBackground.getWidth();
+    progressBarIndicator.writeAttribute('max', this.sliderWidthAndMaxValue);
     
     // Hide poster
     this.video.previous('img').hide();
@@ -215,6 +189,43 @@ var SublimeVideo = Class.create({
     // var style = new Element("style", {'type':'text/css'}).update('#'+$(wrapperId).id+' video::-webkit-media-controls-fullscreen-button{top:'+fullscreenButtonY+'px;left:'+fullscreenButtonX+'px}');
     // $(wrapperId).insert(style);
     
+    // setup progress bar "slider"
+    if (Prototype.Browser.Gecko) {
+      this.progressSlider = new S2.UI.BetterSlider(progressBarBackground, {
+        handle: progressBarIndicator,
+        onSlide: function(values, slider) {
+          progressBarElapsedTime.setStyle({ width:values[0]+'%'});
+          // this.video.currentTime = (this.video.duration/100)*values[0];
+        },
+        onChange: function(values, slider) {
+          // if (this.video.duration) {
+          //   ddd("codio")
+          //   progressBarElapsedTime.setStyle({ width:values[0]+'%'});
+          //   // this.video.currentTime = (this.video.duration/100)*values[0];
+          // }
+        }
+      });
+    }
+    else {
+      progressBarIndicator.observe("change", function(event){
+        var newTime = this.video.duration * progressBarIndicator.value/this.sliderWidthAndMaxValue;
+        if (newTime < 0) {
+          newTime = 0;
+        }
+        else if (newTime > this.video.duration) {
+          newTime = this.video.duration;
+        }
+        // NO!!
+        // else if (newTime > this.video.buffered.end(0)) {
+        //   newTime = this.video.buffered.end(0);
+        // }
+        this.video.currentTime = newTime;
+      }.bind(this));
+    }
+    
+    // =======================
+    // = Video tag observers =
+    // =======================
     this.video.observe("load", function(event) {
       // Note: apparently this is not fired by Chrome...hence the loadedmetadata below...
       if (this.video.buffered && this.video.buffered.length > 0) { // because this method is also called once even if the video is NOT fully loaded
@@ -257,8 +268,14 @@ var SublimeVideo = Class.create({
     // Elapsed Time Observer
     this.video.observe("timeupdate", function(event){
       elapsedTime.update(this.secondsToTime(this.video.currentTime));
-      progressBarElapsedTime.setStyle({ width:(this.video.currentTime/this.video.duration)*100+'%' });
-      progressBarIndicator.value = (this.video.currentTime/this.video.duration)*this.video.width;
+      
+      
+      progressBarIndicator.value = (this.video.currentTime/this.video.duration)*this.sliderWidthAndMaxValue;
+      progressBarElapsedTime.setStyle({ 
+        // width:(this.video.currentTime/this.video.duration)*100+'%'
+        width:this.computeElapsedTimeWidth()+'px'
+      });
+      
       remainingTime.update('-'+this.secondsToTime(this.video.duration-this.video.currentTime));
     }.bind(this));
     
@@ -302,6 +319,21 @@ var SublimeVideo = Class.create({
     // For Firefox
     // var enterFullWindowButton = new Element("span", {'class':'enter_fullwindow_button'});
     // $(wrapperId).insert(enterFullWindowButton);
+  },
+  computeElapsedTimeWidth: function() {
+    
+    // y = f(x) = Ax + B, where x = slider value (from 0 to MAX) and y = pixel width of elapsed progress,
+    // A = ( (MAX-hWidth/2) - hWidth/2 )/MAX = (MAX - hWidth)/MAX  (hWidth is the width of the progressIndicator aka the slider handle)
+    // B = hWidth/2
+    // t = videoDuration*(x/MAX) => x = (t/videoDuration)*MAX
+    // y = f(t) = (MAX - hWidth)/MAX * (t/videoDuration)*MAX + hWidth/2 = ((MAX-hWidth)/videoDuration) t + hWidth/2
+    
+    var hWidth = 10;
+    var MAX = this.sliderWidthAndMaxValue;
+    var videoDuration = this.video.duration;
+    var t = this.video.currentTime;
+    
+    return ((MAX-hWidth)/videoDuration) * t + hWidth/2;
   },
   tryPlaying: function() {
     // try force playing, if enough buffered (10secs)
