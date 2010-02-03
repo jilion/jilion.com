@@ -17,6 +17,8 @@ namespace :cdn do
       files.each do |file|
         filekey = file.gsub(/.*public\//, "#{timestamp}/")
         key = bucket.key(filekey)
+        $stdout.print('.')
+        $stdout.flush
         begin
           File.open(file) do |f|
             key.data = f
