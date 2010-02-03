@@ -17,8 +17,8 @@ namespace :cdn do
       files.each do |file|
         filekey = file.gsub(/.*public\//, "#{timestamp}/")
         key = bucket.key(filekey)
-        $stdout.print('.')
-        $stdout.flush
+        # $stdout.print('.')
+        # $stdout.flush
         begin
           File.open(file) do |f|
             key.data = f
@@ -42,7 +42,6 @@ ActionController::Base.asset_host = Proc.new { |source|
 EOT
       config_file.close
       puts "Successfully added the new assets CDN location to production.rb"
-      puts timestamp
     end
   end
 end
