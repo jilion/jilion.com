@@ -69,6 +69,11 @@ var SublimeVideo = Class.create({
     this.video.stopObserving("timeupdate");
     this.video.stopObserving("ratechange");
     this.video.stopObserving("ended");
+    
+    if (this.progressSliderForCrappyBrowsers) {
+      this.progressSliderForCrappyBrowsers.dispose();
+    }
+    
     this.controls.down(".progress_indicator").stopObserving("change").remove();
     this.controls.down(".fullscreen_button").stopObserving("click").remove();
     this.controls.down(".play_pause_button").stopObserving("click").remove();
