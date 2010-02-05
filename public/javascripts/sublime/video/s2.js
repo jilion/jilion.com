@@ -1,6 +1,6 @@
 /*!
  *  script.aculo.us version 2.0.0_a5
- *  (c) 2005-2009 Thomas Fuchs
+ *  (c) 2005-2010 Thomas Fuchs
  *
  *  script.aculo.us is freely distributable under the terms of an MIT-style license.
  *----------------------------------------------------------------------------------*/
@@ -372,7 +372,9 @@ S2.FX.Base = Class.create({
 
   inspect: function() {
     return '#<S2.FX:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
-  }
+  },
+
+  update: Prototype.emptyFunction
 });
 
 S2.FX.Element = Class.create(S2.FX.Base, {
@@ -1685,6 +1687,7 @@ S2.Extensions.webkitCSSTransitions = false;
         return new Element.Offset(rect.left, rect.top);
       },
 
+      // Jilion
       // cumulativeOffset: function(element) {
       //   element = $(element);
       //   var docOffset = $(document.documentElement).viewportOffset(),
@@ -4257,7 +4260,6 @@ document.observe('dom:loaded',function(){
 
   return setupGenericEvent();
 });
-
 
 Element.__scrollTo = Element.scrollTo;
 Element.addMethods({

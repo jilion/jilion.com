@@ -78,6 +78,10 @@ var SublimeVideo = Class.create({
     }
     this.controls.remove();
     
+    // ===================================
+    // = TODO, UNLOAD FF PROGRESS SLIDER =
+    // ===================================
+    
     var wrapper = this.video.up();
     this.video.removeAttribute("style");
     this.video.removeAttribute("autoplay");
@@ -111,7 +115,7 @@ var SublimeVideo = Class.create({
     // Create new video element
     var originalVideoTag = $(wrapperId).next('video');
     this.video = new Element("video", {
-      width: originalVideoTag.readAttribute('width'), 
+      width: originalVideoTag.readAttribute('width'),
       height: originalVideoTag.readAttribute('height'),
       autoplay: 'autoplay',
       poster: originalVideoTag.readAttribute('poster')
@@ -152,9 +156,11 @@ var SublimeVideo = Class.create({
     // and 'cause we know the progressbar will in most cases be > than this, otherwise (for really small videos) we set it to 200 (which is ~ the width of the progressbar in fullwindow mode)
     if (Prototype.Browser.Gecko) {
       progressBarIndicator = new Element('span', { 'class':'progress_indicator' });
+      this.progressSliderForCrappyBrowsers = true;
     }
     else {
       progressBarIndicator = new Element("input", { 'class':'progress_indicator', type:'range', min:0, max:this.sliderMaxValue, value:0 }); //max value will be set to progressBarBackground's width (and I'll have to do this later)
+      this.progressSliderForCuteBrowsers = progressBarIndicator;
     }
     
     progressBarBackground.insert(progressBarBuffered).insert(this.progressBarElapsedTime).insert(progressBarIndicator);
@@ -198,20 +204,23 @@ var SublimeVideo = Class.create({
     // $(wrapperId).insert(style);
     
     // setup progress bar "slider"
-    if (Prototype.Browser.Gecko) {
-      this.progressSlider = new S2.UI.BetterSlider(progressBarBackground, {
-        handle: progressBarIndicator,
-        onSlide: function(values, slider) {
-          // this.progressBarElapsedTime.setStyle({ width:values[0]+'%'});
-          // this.video.currentTime = (this.video.duration/100)*values[0];
-        },
-        onChange: function(values, slider) {
-          // if (this.video.duration) {
-          //   ddd("codio")
-          //   this.progressBarElapsedTime.setStyle({ width:values[0]+'%'});
-          //   // this.video.currentTime = (this.video.duration/100)*values[0];
-          // }
-        }
+    if (this.progressSliderForCrappyBrowsers) {
+      this.progressSliderForCrappyBrowsers = new Sublime.Slider(progressBarIndicator, progressBarBackground, {
+        range: $R(0, this.sliderMaxValue),
+        onSlide: function(value) {
+          // do not "live update" the video (just the progress UI) => we do not set this.video.currentTime = newTime;
+          var newTime = this.video.duration * value/this.sliderMaxValue;
+          elapsedTime.update(this.secondsToTime(newTime));
+          remainingTime.update('-'+this.secondsToTime(this.video.duration-newTime));
+          this.updateProgressBarElapsedTime(newTime);
+        }.bind(this),
+        onChange: function(value) { 
+          var newTime = this.video.duration * value/this.sliderMaxValue;
+          this.video.currentTime = newTime;
+          this.updateProgressBarElapsedTime(newTime);
+          
+          this.crappySliderJustChangedTo = newTime;
+        }.bind(this)
       });
     }
     else {
@@ -223,10 +232,6 @@ var SublimeVideo = Class.create({
         else if (newTime > this.video.duration) {
           newTime = this.video.duration;
         }
-        // NO!!
-        // else if (newTime > this.video.buffered.end(0)) {
-        //   newTime = this.video.buffered.end(0);
-        // }
         this.video.currentTime = newTime;
       }.bind(this));
     }
@@ -274,10 +279,27 @@ var SublimeVideo = Class.create({
         
     // Elapsed Time Observer
     this.video.observe("timeupdate", function(event){
-      elapsedTime.update(this.secondsToTime(this.video.currentTime));
-      progressBarIndicator.value = (this.video.currentTime/this.video.duration)*this.sliderMaxValue;
-      this.updateProgressBarElapsedTime();
-      remainingTime.update('-'+this.secondsToTime(this.video.duration-this.video.currentTime));
+      if (this.progressSliderForCrappyBrowsers && !this.progressSliderForCrappyBrowsers.dragging) {
+        
+        if (this.crappySliderJustChangedTo && Math.abs(this.video.currentTime - this.crappySliderJustChangedTo) > 0.5) {
+          this.crappySliderJustChangedTo = null;
+        }
+        else {
+          elapsedTime.update(this.secondsToTime(this.video.currentTime));
+          remainingTime.update('-'+this.secondsToTime(this.video.duration-this.video.currentTime));
+          this.updateProgressBarElapsedTime();
+          this.updateProgressBarIndicator();
+        }
+      }
+      
+      // on browsers that don't support input range (like Firefox), do not "live update" the video while dragging
+      if (this.progressSliderForCuteBrowsers) {
+        elapsedTime.update(this.secondsToTime(this.video.currentTime));
+        remainingTime.update('-'+this.secondsToTime(this.video.duration-this.video.currentTime));
+        this.updateProgressBarElapsedTime();
+        this.updateProgressBarIndicator();
+      }
+      
     }.bind(this));
     
     // Playback Rate Observer
@@ -321,13 +343,22 @@ var SublimeVideo = Class.create({
     // var enterFullWindowButton = new Element("span", {'class':'enter_fullwindow_button'});
     // $(wrapperId).insert(enterFullWindowButton);
   },
-  updateProgressBarElapsedTime: function() {
+  updateProgressBarIndicator: function() {
+    var newValue = (this.video.currentTime/this.video.duration)*this.sliderMaxValue;
+    if (this.progressSliderForCrappyBrowsers) {
+      this.progressSliderForCrappyBrowsers.setValueBase(newValue); // set slider value without firing change
+    }
+    else {
+      this.progressSliderForCuteBrowsers.value = newValue;
+    }
+  },
+  updateProgressBarElapsedTime: function(time) { //time is optional, but on Firefox is a good idea to pass it to speed up the update
     this.progressBarElapsedTime.setStyle({ 
       // width:(this.video.currentTime/this.video.duration)*100+'%'
-      width:this.computeElapsedTimePercentWidth()+'%'
+      width:this.computeElapsedTimePercentWidth(time)+'%'
     });
   },
-  computeElapsedTimePercentWidth: function() {
+  computeElapsedTimePercentWidth: function(time) {
     ///////////////
     // EQUATIONS //
     ///////////////
@@ -338,9 +369,8 @@ var SublimeVideo = Class.create({
     // y [px] = f(t) = (W - hWidth)/MAX * (t/videoDuration)*MAX + hWidth/2 = ((W-hWidth)/videoDuration) t + hWidth/2
     // yp [%] = f(t) = y * 100/W
     // var hWidth = 10;
-    
     var W = this.progressBarWidths[this.mode];
-    var t = this.video.currentTime;
+    var t = time || this.video.currentTime;
     return (((W-10)/this.video.duration) * t + 5)*(100/W);
   },
   tryPlaying: function() {
@@ -404,6 +434,7 @@ var SublimeVideo = Class.create({
     event.stop();
     
     if (event.altKey) {
+      this.video.fullScreenVideo();
       if (this.video.webkitSupportsFullscreen) {
         this.video.webkitEnterFullScreen();
       }
@@ -466,15 +497,9 @@ var SublimeVideo = Class.create({
     this.showControls();
     this.controls.setStyle({bottom:'8%'});
     
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
-    // if (navigator.userAgent.indexOf("Macintosh") > -1 
-    //     && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
-    //   setTimeout(function(){
-    //     this.video.setStyle({ position:"absolute" });
-    //   }.bind(this),100);
-    // }
-    ////////////////////////////////////////////////////////////////////////////////////////////
+    if (this.progressSliderForCrappyBrowsers) {
+      this.progressSliderForCrappyBrowsers.recomputeTrackLength();
+    }
     
     // Fades-out controls after delay
     this.fwMouseMoveListener = this.fullWindowMouseMove.bind(this);
@@ -573,15 +598,9 @@ var SublimeVideo = Class.create({
     this.showControls();
     this.showScrollbars();
     
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
-    // if (navigator.userAgent.indexOf("Macintosh") > -1 
-    //     && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
-    //   setTimeout(function(){
-    //     this.video.setStyle({ position:"relative" });
-    //   }.bind(this),100);
-    // }
-    ////////////////////////////////////////////////////////////////////////////////////////////
+    if (this.progressSliderForCrappyBrowsers) {
+      this.progressSliderForCrappyBrowsers.recomputeTrackLength();
+    }
   },
   fullWindowKeyDown: function(event) {
     event.stop();
@@ -633,7 +652,8 @@ var SublimeVideo = Class.create({
     
     if (isResizing) {
       ////////////////////////////////////////////////////////////////////////////////////////////
-      // WORKAROUND for make the live fullwindow-resizing work on current Safari for Mac (v4.0.4)
+      // WORKAROUND for make the live fullwindow-resizing work
+      //  on current Safari for Mac (v4.0.4)
       if (navigator.userAgent.indexOf("Macintosh") > -1 
           && navigator.userAgent.indexOf("532") === -1) { //but don't do this on WebKit nightly
         
