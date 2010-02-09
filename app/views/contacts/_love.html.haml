@@ -1,0 +1,10 @@
+%h2 Love
+
+- semantic_form_for :contact, contact(Contact::Love), :url => contacts_path, :html => { :multipart => true } do |f|
+  - f.inputs do
+    = f.input :_type, :as => :hidden
+    = f.input :email, :required => true
+    -#= f.input :file, :as => :file
+    
+  - f.buttons do
+    = f.commit_button "Submit"

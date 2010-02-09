@@ -19,10 +19,14 @@
     #global
       #logo_backlights
       #back
+      -# !!!!!!!!!!!! TODO !!!!!!!!!!!!!!!!!
+      - flash.each do |key,value|
+        #flash{ :class => "alert #{key}" }
+          %p= value
       #main
         #header
           %h1
-            - link_to index_path do
+            - link_to root_path do
               %span= 'Jilion'
           %ul#menu
             %li.blog
