@@ -225,6 +225,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   z-index:3;
   background:rgba(0,0,0,0.4) url(/images/embed/sublime/video/play_button.png) no-repeat 50% 50%;
   -webkit-transition:0.5s background-color;
+  -moz-transition:0.5s background-color;
 }
 
 .sublime_video_wrapper span.play_button:hover, .sublime_video_wrapper span.pause_button:hover {
@@ -259,6 +260,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   opacity:0;
   -webkit-user-select:none;
   -webkit-transition:0.5s opacity;
+  -moz-transition:0.5s opacity;
 /*    -webkit-transition-delay:0.3s;*/
 }
 
@@ -300,10 +302,10 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 
 .sublime_video_wrapper .controls em.remaining_time {width:9%;}
 
-.sublime_video_wrapper .controls .progress_back_wrap {
+.sublime_video_wrapper .controls .progress_back {
   float:left;
   width:80%;
-  padding:0 0 0 8px;
+  padding:0;
   height:8px;
   position:relative;
   background:url(/images/embed/sublime/video/controls/small/progress_back.png) repeat-x;
@@ -323,28 +325,33 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -webkit-border-radius:20px;
   -moz-border-radius:20px;
   -webkit-transition:1s width;
+  -moz-transition:1s width;
 }
 
 .sublime_video_wrapper .controls .progress_back .progress_elapsed_time {
-  width:0%;
-/*    min-width:8px;*/
+  width:0;
+  min-width:5px;
   height:8px;
   position:relative;
-  left:-8px;
-  padding:0 2px 0 0;
+  left:0;
   background:url(/images/embed/sublime/video/controls/small/progress_elapsed.png) repeat-x;
   -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+/*  -webkit-border-radius:20px;
   -webkit-border-top-right-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:20px 0 0 20px;
+*/
 }
 
-/*  .sublime_video_wrapper .controls .progress_back .progress_indicator {
+/* firefox slider */
+.sublime_video_wrapper .controls .progress_back span.progress_indicator {
   width:10px;
   height:10px;
   position:absolute;
   top:-1px;
-  right:-7px;
+  left:0;
+/*  right:-7px;*/
   background:url(/images/embed/sublime/video/controls/small/progress_indicator.png) no-repeat;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
@@ -352,14 +359,13 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -webkit-user-select: none;
   -webkit-user-drag: element;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator:hover {
+/*.sublime_video_wrapper .controls .progress_back span.progress_indicator:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
-}
-*/
+}*/
 
-.sublime_video_wrapper .controls .progress_back .progress_indicator {
+/* webkit slider */
+.sublime_video_wrapper .controls .progress_back input.progress_indicator {
   -webkit-appearance:none;
   background:none;
   width:100%;
@@ -368,8 +374,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   top:0;
   left:0;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator::-webkit-slider-thumb {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator::-webkit-slider-thumb {
   -webkit-appearance:none;
   width:10px;
   height:10px;
@@ -379,17 +384,16 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -moz-border-radius:10px;
   -webkit-transition:0.2s -webkit-box-shadow;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator::-webkit-slider-thumb:hover {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator::-webkit-slider-thumb:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
 }
-
-.sublime_video_wrapper .controls .progress_back .progress_indicator:focus {
+.sublime_video_wrapper .controls .progress_back input.progress_indicator:focus {
   outline: none;
 }
 
-.sublime_video_wrapper .controls.small span.fullscreen_button {
+
+.sublime_video_wrapper .controls.small span.fullwindow_button {
   display:block;
   width:14px;
   height:14px;
@@ -424,6 +428,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   -webkit-transform:translate(1px,1px);
   -webkit-transform-origin:0 0;
   -webkit-transition:0.5s opacity;
+  -moz-transition:0.5s opacity;
   -webkit-user-select:none;
 }
 
@@ -457,7 +462,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   right:100px;
 }
 
-.sublime_video_wrapper .controls.full span.fullscreen_button {
+.sublime_video_wrapper .controls.full span.fullwindow_button {
   display:block;
   width:18px;
   height:18px;
@@ -486,6 +491,7 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   text-align:center;
   text-shadow:#000 1px 1px 1px;
   -webkit-transition:0.5s opacity;
+  -moz-transition:0.5s opacity;
 }
 
 .sublime_video_wrapper .controls.full .progress_bar {
@@ -503,6 +509,6 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
 
 .sublime_video_wrapper .controls.full em.remaining_time {text-align:left;padding:0 0 0 6px;}
 
-.sublime_video_wrapper .controls.full .progress_back_wrap {
+.sublime_video_wrapper .controls.full .progress_back {
   width:200px;
 }
