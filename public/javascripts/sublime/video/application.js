@@ -1,12 +1,11 @@
+var Sublime = {};
+
 var sublimeVideo;
 document.observe("dom:loaded", function() {
- sublimeVideo = new SublimeVideo();
+ sublimeVideo = new Sublime.Video();
 });
 
-// TODOs
-// - MobileSafari support / Directly show video tag and bypass observers
- 
-var SublimeVideo = Class.create({
+Sublime.Video = Class.create({
   initialize: function() {
     this.webKitTransitionSupported = (typeof WebKitTransitionEvent === "object" || typeof WebKitTransitionEvent === "function");
     this.html5VideoSupported = (typeof HTMLVideoElement === "object" || typeof HTMLVideoElement === "function");

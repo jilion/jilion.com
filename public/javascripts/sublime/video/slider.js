@@ -5,7 +5,7 @@
 // script.aculo.us is freely distributable under the terms of an MIT-style license.
 // For details, see the script.aculo.us web site: http://script.aculo.us/
 
-if (!Sublime) var Sublime = { };
+if (!Sublime) var Sublime = {};
 
 // options:
 //  axis: 'vertical', or 'horizontal' (default)
