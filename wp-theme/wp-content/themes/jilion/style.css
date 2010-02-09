@@ -605,6 +605,21 @@ body {
   padding:2px;
 }
 
+p.comment_mail_notify {
+  position:absolute;
+  right:20px;
+  bottom:24px;
+  font-size:13px;
+  font-weight:500;
+  color:#50637A;
+}
+
+p.comment_mail_notify label {
+  padding:0 0 0 6px;
+  position:relative;
+  top:1px;
+}
+
 .cancel-comment-reply {
   position:absolute;
   top:26px;

@@ -1,16 +1,19 @@
 @font-face {
   font-family: "Museo";
-  src: url(/fonts/Museo300.otf);
+  src: url('/fonts/embed/Museo300.eot');
+  src: local('Museo 300'), local('Museo-300'), url('/fonts/embed/Museo300.otf') format('opentype');
 }
 
 @font-face {
   font-family: "Museo-Bold";
-  src: url(/fonts/Museo500.otf);
+  src: url('/fonts/embed/Museo500.eot');
+  src: local('Museo 500'), local('Museo-500'), url('/fonts/embed/Museo500.otf') format('opentype');
 }
 
 @font-face {
   font-family: "Museo-Extra";
-  src: url(/fonts/Museo700.otf);
+  src: url('/fonts/embed/Museo700.eot');
+	src: local('Museo 700'), local('Museo-700'), url('/fonts/embed/Museo700.otf') format('opentype');
 }
 
 * {

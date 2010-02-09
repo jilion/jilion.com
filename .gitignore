@@ -10,3 +10,4 @@ db/*.sqlite3
 config/database.yml
 public/assets/*
 wp-theme/wp-content/uploads/*
+public/sublime/*
