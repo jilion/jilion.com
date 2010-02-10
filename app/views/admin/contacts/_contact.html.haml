@@ -1,0 +1,11 @@
+%li{ :class => "#{contact.type_name} #{contact.state}" }
+  =h contact.type
+  =h contact.email
+  =h contact.state
+  - if contact.deal?
+    =h contact.budget
+  =l contact.created_at, :format => :long
+    
+  = link_to "show", admin_contact_path(contact)
+  = archive_button(contact) unless contact.archived?
+  = reply_link(contact)
