@@ -2,27 +2,28 @@ var Sublime = {};
 
 var sublimeVideo;
 document.observe("dom:loaded", function() {
- sublimeVideo = new Sublime.Video();
+  sublimeVideo = new Sublime.Video();
 });
 
 Sublime.Video = Class.create({
   initialize: function() {
-    this.webKitTransitionSupported = (typeof WebKitTransitionEvent === "object" || typeof WebKitTransitionEvent === "function");
-    this.html5VideoSupported = (typeof HTMLVideoElement === "object" || typeof HTMLVideoElement === "function");
-    
-    this.fullwindowTransitionDuration = 0.5;
-    
     if (Prototype.Browser.MobileSafari) {
       this.prepareSublimeVideosMobileSafari();
     }
     else {
+      this.webKitTransitionSupported = (typeof WebKitTransitionEvent === "object" || typeof WebKitTransitionEvent === "function");
+      this.html5VideoSupported = (typeof HTMLVideoElement === "object" || typeof HTMLVideoElement === "function");
+      
+      this.fullwindowTransitionDuration = 0.5;
+      this.videoWebkitTransitionValue = this.fullwindowTransitionDuration+"s -webkit-transform";
+      
       this.prepareSublimeVideos(this.html5VideoSupported);
+      
+      this.fwKeydownListener = this.fullWindowKeyDown.bind(this);
+      this.fwMouseMoveListener = this.fullWindowMouseMove.bind(this);
+      this.globalKeyDownListener = this.globalKeyDown.bind(this);
+      this.globalKeyUpListener = this.globalKeyUp.bind(this);
     }
-    
-    this.fwKeydownListener = this.fullWindowKeyDown.bind(this);
-    this.fwMouseMoveListener = this.fullWindowMouseMove.bind(this);
-    this.globalKeyDownListener = this.globalKeyDown.bind(this);
-    this.globalKeyUpListener = this.globalKeyUp.bind(this);
   },
   showScrollbars: function() {
     $(document.body).setStyle({ overflow:'auto' });
@@ -50,10 +51,47 @@ Sublime.Video = Class.create({
     return i.type !== "text";
   },
   prepareSublimeVideosMobileSafari: function() {
-    $$("video.sublime source").each(function(source, index) {
-      source.up().writeAttribute({ src: source.readAttribute('title').replace('.mp4', '_iphone.mp4') });
-      source.remove();
-    }.bind(this));
+    // iPad MobileSafari needs the "controls" attribute inside the <video> tag, 
+    // and I can't just set this attribute I actually have to recreated a new video element
+    
+    var supportedExtensionsRegexp = /.mp4$|.m4v$|.mov$/;
+    var supportedSuffixesRegexp = /_iphone.mp4$|_iphone.m4v$|_iphone.mov$/;
+    $$("video.sublime").each(function(originalVideoTag, index) {
+      // look for iPhone/iPad compatible <source>'s src
+      
+      var iphoneSrc = null;
+      var sources = originalVideoTag.select('source');
+      // First, we look for a <source> with a src ending with "_iphone.xxx"... 
+      sources.each(function(source){
+        var src = source.readAttribute('title');
+        if (supportedSuffixesRegexp.test(src)) {
+          iphoneSrc = src;
+        }
+      });
+      // ...if we don't find it, we'll take the first .mp4, .m4v or .mov
+      if (!iphoneSrc) {
+        // ddd("couldn't find src ending with '_iphone.xxx'");
+        sources.each(function(source){
+          var src = source.readAttribute('title');
+          if (supportedExtensionsRegexp.test(src)) {
+            iphoneSrc = src;
+          }
+        });
+      }
+      
+      // at this point, if iphoneSrc is still null, it means no iPhone/iPad compatible video was found 
+      // => MobileSafari will show the play button with a stroke (unclickable)
+      var newVideo = new Element("video", {
+        width: originalVideoTag.readAttribute('width'),
+        height: originalVideoTag.readAttribute('height'),
+        poster: originalVideoTag.readAttribute('poster'),
+        src: iphoneSrc,
+        controls: "controls"
+      });
+      
+      originalVideoTag.insert({before:newVideo});
+      originalVideoTag.remove();
+    });
   },
   prepareSublimeVideos: function(supportedBrowser) {
     $$("video.sublime").each(function(video, index){
@@ -69,7 +107,7 @@ Sublime.Video = Class.create({
       
       var playButton;
       if (supportedBrowser) {
-        playButton = new Element("span", {'class':'play_button'}).observe("click", this.showVideo.bindAsEventListener(this, wrapperId));
+        playButton = new Element("span", {'class':'play_button'}).observe("click", this.loadVideo.bindAsEventListener(this, wrapperId));
       }
       else {
         playButton = new Element("div", { 'class':'unsupported' }).insert(new Element('p').update("browser not supported")); //unsupported div
@@ -126,7 +164,7 @@ Sublime.Video = Class.create({
     
     this.video = null;
   },
-  showVideo: function(event, wrapperId) {
+  loadVideo: function(event, wrapperId) {
     event.stop();
     
     if (this.video) {
@@ -135,9 +173,11 @@ Sublime.Video = Class.create({
     
     this.mode = "normal"; // can be "normal" or "fullwindow"
     
-    this.videoWebkitTransitionValue = this.fullwindowTransitionDuration+"s -webkit-transform";
-    // Create new video element
-    var originalVideoTag = $(wrapperId).next('video');
+    // ============================
+    // = Create new video element =
+    // ============================
+    var videoWrapper = $(wrapperId);
+    var originalVideoTag = videoWrapper.next('video');
     this.video = new Element("video", {
       width: originalVideoTag.readAttribute('width'),
       height: originalVideoTag.readAttribute('height'),
@@ -162,9 +202,31 @@ Sublime.Video = Class.create({
     }.bind(this));
     originalVideoTag.remove();
     
-    // ===========================
-    // = Create sublime controls =
-    // ===========================
+    // ===================================
+    // = Add new <video> to DOM (hidden) =
+    // ===================================
+    this.video.hide();
+    videoWrapper.addClassName('playing').insert(this.video);
+    
+    // ============================================================
+    // = Show Sublime Spinner and observer <video> loadedmetadata =
+    // ============================================================
+    // Hide play button
+    this.video.previous('.play_button').hide();
+    
+    // Sublime Spinner
+    this.sublimeSpinner = new Sublime.Spinner(videoWrapper, videoWrapper.getWidth(), videoWrapper.getHeight());
+    this.sublimeSpinner.showAfterDelayOf(300);
+    
+    // observe loadedmetadata
+    this.video.observe("loadedmetadata", function(event) {
+      this.finishLoadingVideo();
+    }.bind(this));
+  },
+  finishLoadingVideo: function() {
+    // ==================================
+    // = Create Sublime custom controls =
+    // ==================================
     
     // Progress bar
     var progressBar = new Element("div", { 'class':'progress_bar' }).setStyle({ width:this.video.width-40+'px' });
@@ -204,13 +266,13 @@ Sublime.Video = Class.create({
     var playPauseButton = new Element("span", { 'class':'play_pause_button pause' }).observe("click", this.playPause.bind(this));
     this.hasAlreadyClickedPlayPause = false;
     
-    // ================================================
-    // = Show new video element with sublime controls =
-    // ================================================
+    // =======================================
+    // = Show video and add Sublime controls =
+    // =======================================
     this.controls = new Element("div", { 'class':'controls small' });
     this.controls.insert(playPauseButton).insert(progressBar).insert(fullWindowButton);
-    // controlsWrapper.insert(this.controls);
-    $(wrapperId).addClassName('playing').insert(this.video).insert(this.controls);
+    this.video.show();
+    this.video.up().insert(this.controls);
     
     // I couldn't do this before because I can't get the width until the element is in the DOM)
     this.progressBarWidths = { 
@@ -218,9 +280,9 @@ Sublime.Video = Class.create({
       fullwindow: 202
     }; // it'll be used to precisely compute the progress elapsed bar
     
-    // Hide poster
+    // Hide Sublime Spinner and poster
+    this.sublimeSpinner.hide();
     this.video.previous('img').hide();
-    this.video.previous('.play_button').hide();
     
     // setup progress bar "slider"
     if (this.progressSliderForAntiqueBrowsers) {
@@ -255,22 +317,33 @@ Sublime.Video = Class.create({
       }.bind(this));
     }
     
+    // WORKAROUND to make Chrome start playing after loadedmetadata
+    if (this.video.buffered) { //firefox didn't implement the buffered attribute
+      this.tryPlaying();
+      progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+    }
+    
     // =====================
     // = <video> observers =
     // =====================
     this.video.observe("load", function(event) {
-      // Note: apparently this is not fired by Chrome...hence the loadedmetadata below...
+      // Note: apparently this is not fired by Chrome
+      //
+      // Confirmed on this thread: http://code.google.com/p/chromium/issues/detail?id=19923
+      // "<video> in chromium will not fire "load" event because we don't have disk cache to support it.
+      // For now since we don't cache everything (we only cache a portion of the file in memory), we never will be "loaded"."
+      // => shame!!
       if (this.video.buffered && this.video.buffered.length > 0) { // because this method is also called once even if the video is NOT fully loaded
         progressBarBuffered.setStyle({ width:'100%' });
       }
     }.bind(this));
     
-    this.video.observe("loadedmetadata", function(event) {
-      if (this.video.buffered) { //firefox didn't implement the buffered attribute
-        this.tryPlaying();
-        progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
-      }
-    }.bind(this));
+    // this.video.observe("loadedmetadata", function(event) {
+    //   if (this.video.buffered) { //firefox didn't implement the buffered attribute
+    //     this.tryPlaying();
+    //     progressBarBuffered.setStyle({ width:(this.video.buffered.end(0)/this.video.duration)*100+'%' });
+    //   }
+    // }.bind(this));
     
     // Buffered Time Observer
     this.video.observe("progress", function(event){
@@ -338,7 +411,6 @@ Sublime.Video = Class.create({
       if (playPauseButton.hasClassName('pause')) playPauseButton.removeClassName('pause');
       if (this.video.next(".controls").hasClassName('full')) this.exitFullWindow();
     }.bind(this));
-    
     
     // ====================
     // = Global observers =
@@ -437,7 +509,6 @@ Sublime.Video = Class.create({
     event.stop();
     
     if (event.altKey) {
-      this.video.fullScreenVideo();
       if (this.video.webkitSupportsFullscreen) {
         this.video.webkitEnterFullScreen();
       }
@@ -606,12 +677,13 @@ Sublime.Video = Class.create({
     }
   },
   fullWindowKeyDown: function(event) {
-    event.stop();
     switch(event.keyCode) {
       case Event.KEY_ESC: //27
+        event.stop();
         this.exitFullWindow();
         break;
       case 32: //spacebar
+        event.stop();
         this.playPause();
         break;
       // case Event.KEY_LEFT: //37

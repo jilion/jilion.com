@@ -13,6 +13,12 @@ S2.UI.Behavior.TransformDrag = Class.create(S2.UI.Behavior, {
 
   destroy: function($super) {
     this.element.removeClassName('ui-draggable');
+
+    // Jilion (necessary to avoid issue when exiting full-window mode [Esc] while dragging the controls)
+    this._startPointer  = null;
+    this._startPosition = null;
+    document.stopObserving('mousemove', this.__onmousemove);
+
     $super();
   },
 
