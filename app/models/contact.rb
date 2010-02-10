@@ -33,10 +33,10 @@ class Contact
   end
   
   def self.search(params)
-    options = {:state => 'new', :order => "created_at"}
+    options = {:state => 'new', :order => "created_at", :page => params[:page]}
     options[:_type] = params[:type] if params[:type].present?
     options[:state] = params[:state] if params[:state].present?
-    all(options)
+    paginate(options.merge(:per_page => 25))
   end
   
 end
