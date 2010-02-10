@@ -13,5 +13,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contacts, :only => :create
   map.new_contact 'contact', :controller => 'contacts', :action => 'new', :condiction => { :method => :get }
   
+  map.redirect 'admin', :controller => 'admin/contacts'
+  map.namespace :admin do |admin|
+    admin.resources :contacts
+  end
+  
   Jammit::Routes.draw(map)
 end

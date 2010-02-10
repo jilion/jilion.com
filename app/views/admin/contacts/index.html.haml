@@ -1,0 +1,12 @@
+%ul
+  %li= link_to "Recent", url_for(params.merge(:state => "new"))
+  %li= link_to "Archived", url_for(params.merge(:state => "archived"))
+  %li
+    - form_tag url_for(params), :method => :get do
+      = select_tag :type, options_for_select([["All",nil]] + Contact::TYPES.map { |t| [t,t] }, params[:type])
+      = submit_tag "filter"
+  
+
+%ul= render :partial => "contact", :collection => @contacts
+
+= will_paginate @contacts

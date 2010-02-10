@@ -1,0 +1,13 @@
+= link_to "Back", :back
+%h2=h @contact.type
+
+=h @contact.issue
+=h @contact.email
+=h @contact.state
+- if @contact.deal?
+  =h @contact.budget
+=l @contact.created_at, :format => :long
+
+
+= archive_button(@contact) unless @contact.archived?
+= reply_link(@contact)
