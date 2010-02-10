@@ -4,7 +4,17 @@
   - f.inputs do
     = f.input :_type, :as => :hidden
     = f.input :email, :required => true
+    = f.input :name
+    = f.input :organization
+    = f.input :url
+    = f.input :activity
+    = f.input :project_description, :as => :text
     = f.input :budget, :required => true
+    = f.input :goal
+    = f.input :metrics
+    = f.input :challenge
+    = f.input :deadline
+    = f.input :comment, :as => :text
     = f.input :file, :as => :file
     
   - f.buttons do
