@@ -215,7 +215,7 @@ Sublime.Video = Class.create({
     this.video.previous('.play_button').hide();
     
     // Sublime Spinner
-    this.sublimeSpinner = new Sublime.Spinner(videoWrapper, videoWrapper.getWidth(), videoWrapper.getHeight());
+    this.sublimeSpinner = new Sublime.SquareSpinner(videoWrapper, videoWrapper.getWidth(), videoWrapper.getHeight());
     this.sublimeSpinner.showAfterDelayOf(300);
     
     // observe loadedmetadata
