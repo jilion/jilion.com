@@ -4,6 +4,7 @@ class Contact
   key :_type, String
   key :email, String, :required => true
   key :state, String, :default => 'new'
+  key :issue, Integer
   timestamps!
   
   # CarrierWave
@@ -17,6 +18,9 @@ class Contact
   
   validates_length_of :email, :within => 6..100, :message => "is too short"
   validates_format_of :email, :with => RegEmailOk
+  
+  before_save :set_issue
+  after_create :deliver_notification
   
   TYPES.each do |klass|
     define_method "#{klass.gsub(/Contact::/, '').underscore}?" do
@@ -33,10 +37,22 @@ class Contact
   end
   
   def self.search(params)
-    options = {:state => 'new', :order => "created_at", :page => params[:page]}
+    options = {:state => 'new', :order => "created_at desc", :page => params[:page]}
     options[:_type] = params[:type] if params[:type].present?
     options[:state] = params[:state] if params[:state].present?
     paginate(options.merge(:per_page => 25))
+  end
+  
+protected
+  
+  # before_save
+  def set_issue
+    self.issue = Contact.count
+  end
+  
+  # after_create
+  def deliver_notification
+    ContactMailer.deliver_notification(self)
   end
   
 end

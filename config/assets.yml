@@ -10,6 +10,7 @@ javascripts:
     - public/javascripts/sublime/video/application.js
     - public/javascripts/sublime/video/s2.js
     - public/javascripts/sublime/video/drag.js
+    - public/javascripts/sublime/video/spinner.js
     - public/javascripts/sublime/video/slider.js
 
 stylesheets:
