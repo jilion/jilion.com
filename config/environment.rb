@@ -19,8 +19,8 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on and have them installed with rake gems:install
   config.gem 'haml'
   config.gem "jammit"
-  config.gem "mongo", :version => "0.18.2"
-  config.gem "mongo_ext", :lib => false, :version => "0.18.2"
+  config.gem "mongo"
+  config.gem "mongo_ext", :lib => false
   config.gem "mongo_mapper"
   config.gem "formtastic"
   config.gem "carrierwave"
