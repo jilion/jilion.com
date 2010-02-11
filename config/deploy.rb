@@ -37,7 +37,7 @@ after "asset:copyright", "asset:upload"
 
 namespace :asset do
   task :prepare do
-    run "cd #{release_path}; jammit"
+    run "cd #{release_path}; jammit -u http://jilion.com"
   end
   
   task :copyright do
