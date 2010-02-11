@@ -53,12 +53,15 @@
           %strong= "Full-screen mode"
           - link = link_to("WebKit Nightly Builds", "http://nightly.webkit.org")
           = "by alt-clicking on the full-window button (currently only supported in latest #{link})"
+        %li
+          = "iPhone & "
+          %span.new= "iPad"
+          = "support"
     .right
       %h3
         = "Features we plan to add"
         %em= "(in the public release)"
       %ul
-        %li= "Firefox support"
         %li= "Volume controls"
         %li= "IE support by falling back to Flash"
       
@@ -66,6 +69,9 @@
       %ul
         %li= "Safari (v4.0.4+)"
         %li= "Google Chrome (v4.0+)"
+        %li
+          %span.new= "Firefox (v3.6+)"
+          = link_to "(read more)", "", :class => "small_link"
         %li= "Internet Explorer with Chrome Frame installed"
 
       %h3= "Note"
