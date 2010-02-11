@@ -272,7 +272,7 @@ Sublime.Video = Class.create({
     }.bind(this));
     
     // Play button
-    var playPauseButton = new Element("span", { 'class':'play_pause_button pause' }).observe("click", this.playPause.bind(this));
+    var playPauseButton = new Element("span", { 'class':'play_pause_button' }).observe("click", this.playPause.bind(this));
     this.hasAlreadyClickedPlayPause = false;
     
     // =======================================
@@ -289,8 +289,7 @@ Sublime.Video = Class.create({
       fullwindow: 202
     }; // it'll be used to precisely compute the progress elapsed bar
     
-    // Hide Sublime Spinner and poster
-    this.sublimeSpinner.hide();
+    // Hide poster (Sublime Spinner continue to animate...)
     this.video.previous('img').hide();
     
     // setup progress bar "slider"
@@ -335,6 +334,22 @@ Sublime.Video = Class.create({
     // =====================
     // = <video> observers =
     // =====================
+    
+    // Play Observer
+    this.video.observe("play", function(event){
+      playPauseButton.addClassName('pause');
+      
+      // Let's hide the Sublime Spinner only when the video really starts playing
+      this.sublimeSpinner.hide();
+    }.bind(this));
+    
+    // Pause Observer
+    this.video.observe("pause", function(event){
+      playPauseButton.removeClassName('pause');
+      var playbackDisplay = this.video.next().down('.playback_display');
+      if (playbackDisplay) playbackDisplay.setOpacity(0);
+    }.bind(this));
+    
     this.video.observe("load", function(event) {
       // Note: apparently this is not fired by Chrome
       //
@@ -366,18 +381,6 @@ Sublime.Video = Class.create({
       }
     }.bind(this));
     
-    // Play Observer
-    this.video.observe("play", function(event){
-      playPauseButton.addClassName('pause');
-    });
-    
-    // Pause Observer
-    this.video.observe("pause", function(event){
-      playPauseButton.removeClassName('pause');
-      var playbackDisplay = this.video.next().down('.playback_display');
-      if (playbackDisplay) playbackDisplay.setOpacity(0);
-    }.bind(this));
-        
     // Elapsed Time Observer
     this.video.observe("timeupdate", function(event){
       if (this.progressSliderForAntiqueBrowsers && !this.progressSliderForAntiqueBrowsers.dragging) {

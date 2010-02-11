@@ -179,6 +179,7 @@ if (!Sublime) var Sublime = {};
 //       {
 //         position:"absolute",
 //         background: this.options.color,
+//         zIndex: 2,
 //         opacity: this.options.opacity,
 //         
 //         top:"-40px",
@@ -437,6 +438,7 @@ Sublime.SquareSpinner = Class.create({
       {
         position:"absolute",
         background: this.options.color,
+        zIndex: 2,
         opacity: this.options.opacity
       },
       spinnerStyle )
