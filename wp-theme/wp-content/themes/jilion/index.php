@@ -31,6 +31,7 @@
 		  </div>
       <div class="entry_body">
   			<?php the_content('Read more &raquo;'); ?>
+  			<div class="spacer"></div>
       </div>
 		</div>
 		
