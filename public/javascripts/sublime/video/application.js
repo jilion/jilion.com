@@ -34,14 +34,18 @@ Sublime.Video = Class.create({
   globalKeyDown: function(event) {
     switch(event.keyCode) {
       case 18: // Alt key
-        $$(".sublime_video_wrapper .fullwindow_button").invoke("addClassName","fullscreen");
+        if (this.isFullScreenSupported(this.video)) {
+          $$(".sublime_video_wrapper .fullwindow_button").invoke("addClassName","fullscreen");
+        }
         break;
     }
   },
   globalKeyUp: function(event) {
     switch(event.keyCode) {
       case 18: // Alt key
-        $$(".sublime_video_wrapper .fullwindow_button").invoke("removeClassName","fullscreen");
+        if (this.isFullScreenSupported(this.video)) {
+          $$(".sublime_video_wrapper .fullwindow_button").invoke("removeClassName","fullscreen");
+        }
         break;
     }
   },
@@ -49,6 +53,10 @@ Sublime.Video = Class.create({
     var i = document.createElement("input");
     i.setAttribute("type", inputType);
     return i.type !== "text";
+  },
+  isFullScreenSupported: function(video) {
+    // todo: update to add other browsers compatibility (when thye add this feature)
+    return video.webkitSupportsFullscreen ? true : false;
   },
   prepareSublimeVideosMobileSafari: function() {
     // iPad MobileSafari needs the "controls" attribute inside the <video> tag, 
@@ -253,7 +261,8 @@ Sublime.Video = Class.create({
     progressBar.insert(elapsedTime).insert(progressBarBackground).insert(remainingTime);
     
     // Fullscreen button
-    var fullWindowButton = new Element("span", { 'class':'fullwindow_button' }).observe("click", function(event){
+    var fullWindowButtonClass = this.isFullScreenSupported(this.video) ? 'fullwindow_button supports_fullscreen' : 'fullwindow_button';
+    var fullWindowButton = new Element("span", { 'class':fullWindowButtonClass }).observe("click", function(event){
       if (this.controls.hasClassName('small')) {
         this.enterFullWindow(event);
       }
@@ -509,8 +518,10 @@ Sublime.Video = Class.create({
     event.stop();
     
     if (event.altKey) {
-      if (this.video.webkitSupportsFullscreen) {
+      if (this.isFullScreenSupported(this.video)) {
         this.video.webkitEnterFullScreen();
+        // prepare/restore full-window button (for when existing full-screen)
+        $$(".sublime_video_wrapper .fullwindow_button").invoke("removeClassName","fullscreen");
       }
     }
     else {

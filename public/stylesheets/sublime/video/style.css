@@ -392,15 +392,24 @@ strong {font-family:"Museo-Bold", Helvetica, Arial, sans-serif;}
   outline: none;
 }
 
-
 .sublime_video_wrapper .controls.small span.fullwindow_button {
   display:block;
   width:14px;
   height:14px;
-  background:url(/images/embed/sublime/video/controls/small/fullwindow.png) no-repeat;
+  background:url(/images/embed/sublime/video/controls/small/fullscreen.png) no-repeat;
   float:right;
   margin:7px 5px 0 0;
 }
+
+.sublime_video_wrapper .controls.small span.fullwindow_button.supports_fullscreen {
+  background:url(/images/embed/sublime/video/controls/small/fullwindow.png) no-repeat;
+}
+
+.sublime_video_wrapper .controls.small span.fullwindow_button.supports_fullscreen.fullscreen {
+  background:url(/images/embed/sublime/video/controls/small/fullscreen.png) no-repeat;
+}
+
+
 
 /*FULL*/
 
