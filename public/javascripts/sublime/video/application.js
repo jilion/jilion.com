@@ -62,29 +62,33 @@ Sublime.Video = Class.create({
     // iPad MobileSafari needs the "controls" attribute inside the <video> tag, 
     // and I can't just set this attribute I actually have to recreated a new video element
     
-    var supportedExtensionsRegexp = /.mp4$|.m4v$|.mov$/;
-    var supportedSuffixesRegexp = /_iphone.mp4$|_iphone.m4v$|_iphone.mov$/;
     $$("video.sublime").each(function(originalVideoTag, index) {
       // look for iPhone/iPad compatible <source>'s src
       
       var iphoneSrc = null;
-      var sources = originalVideoTag.select('source');
-      // First, we look for a <source> with a src ending with "_iphone.xxx"... 
-      sources.each(function(source){
-        var src = source.readAttribute('title');
-        if (supportedSuffixesRegexp.test(src)) {
-          iphoneSrc = src;
-        }
+      var sourceUrls = [];
+      originalVideoTag.select('source').each(function(source){
+        sourceUrls.push(source.readAttribute('title'));
       });
-      // ...if we don't find it, we'll take the first .mp4, .m4v or .mov
-      if (!iphoneSrc) {
-        // ddd("couldn't find src ending with '_iphone.xxx'");
-        sources.each(function(source){
-          var src = source.readAttribute('title');
-          if (supportedExtensionsRegexp.test(src)) {
-            iphoneSrc = src;
+      
+      // First, we look for a <source> with a src ending with "_iphone.xxx"... 
+      var results = sourceUrls.grep(/_iphone.mp4$|_iphone.m4v$|_iphone.mov$/i);
+      if (results.length > 0) {
+        iphoneSrc = results.first();
+      }
+      else {
+        // ...if we don't find it, we look for a .mov file (there's a good change it's the QT ref movie pointing to the iphone version)
+        results = sourceUrls.grep(/.mov$/i);
+        if (results.length > 0) {
+          iphoneSrc = results.first();
+        }
+        else {
+          // finally we'll look for an mp4 or m4v (hoping it'll be iphone compatible)
+          results = sourceUrls.grep(/.mp4$|.m4v$/i);
+          if (results.length > 0) {
+            iphoneSrc = results.first();
           }
-        });
+        }
       }
       
       // at this point, if iphoneSrc is still null, it means no iPhone/iPad compatible video was found 
