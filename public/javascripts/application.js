@@ -47,10 +47,12 @@ document.observe("dom:loaded", function() {
   
   //Google Map
   if (Prototype.Browser.MobileSafari) {
-    $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A";
+    if ($('show_location'))
+      $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A";
   }
   else {
-    $('show_location').observe("click", showMap);
+    if ($('show_location'))
+      $('show_location').observe("click", showMap);
   }
   
   var dropPin = new Image();
@@ -127,6 +129,51 @@ document.observe("dom:loaded", function() {
       }, 3000);
     }
   }
+  
+  $$('#contact_topics textarea').each(function(textarea){
+    var wrap = new Element('div', { 'class':'textarea_wrapper' });
+    textarea.insert({before:wrap});
+    wrap.insert(textarea);
+  });
+  
+  $$('input[type=file]').each(function(input){
+    var fakeFileInput = new Element('div', { 'class':'fake_file_input' });
+    var fakeFileInputButton = new Element('div', { 'class':'fake_file_input_button' });
+    var fakeFileInputButtonIcon = new Element('span').update('Browse');
+    var fakeFileInputValue = new Element('div', { 'class':'fake_file_input_value' });
+    fakeFileInput.insert(fakeFileInputButton.insert(fakeFileInputButtonIcon)).insert(fakeFileInputValue);
+    if (!input.value.blank()) fakeFileInputValue.update(input.value);
+    input.insert({before:fakeFileInput});
+    input.observe('change', function(e){
+      fakeFileInputValue.update(input.value);
+    });
+  });
+  
+  $$("#contact_topics li a").each(function(a){
+    // if (a.href === window.location.href) {
+    //   a.addClassName('expanded');
+    //   a.next('.form_box').setStyle({display:"block"});
+    // } else {
+    //   a.next('.form_box').hide();
+    // }
+    if (a.next('.form_box').hasClassName('errors')) a.addClassName('expanded');
+    a.observe("click",function(e){
+      // $$("ul#contact_topics li .form_box").invoke("hide");
+      var form_box = a.next('.form_box');
+      if (form_box.visible()) {
+        a.removeClassName('expanded');
+        form_box.hide();
+      } else {
+        $$("#contact_topics li .form_box").invoke("hide");
+        $$("#contact_topics li a").invoke("removeClassName", "expanded");
+        a.addClassName('expanded');
+        form_box.setStyle({display:"block"});
+        // window.location.hash = a.href.match(/#(.*)/)[0];
+      }
+      e.stop();
+    });
+  });
+  
 });
 
 function validateEmail(email) {

@@ -1,5 +1,5 @@
 class Contact::TeamUp < Contact
   
-  key :message, String
+  key :message, String, :required => true
   
 end

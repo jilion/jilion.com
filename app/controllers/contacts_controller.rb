@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
   before_filter :admin_required
-  caches_page :new
+  # caches_page :new
   ssl_required :new, :create
   
   # GET /contact
@@ -12,8 +12,8 @@ class ContactsController < ApplicationController
     @contact = contact_class.new(params[:contact])
     
     if @contact.save
-      flash[:notice] = 'Thanks!'
-      redirect_to root_url
+      flash[:notice] = 'Thank you very much for your submission!'
+      redirect_to new_contact_url
     else
       render :new
     end

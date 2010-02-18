@@ -1,11 +1,23 @@
-%h2 Team Up
+- contact = contact(Contact::TeamUp)
+.form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
+  %h2 Team Up
+  .intro
+    %p= "Not only we believe it's great to team up with other companies on ambitious projects, but it's often simply mandatory."
+    %p= "Our values:"
+    %ul
+      %li= "We always try to know our own limits and not start on projects that are too big for us alone;"
+      %li= "We believe in building lasting and valuable relationships with our partners, not single shots;"
+      %li= "We will never compromise quality;"
+      %li= "We'll always try to outperform our customer's expectations;"
+      %li= "We will prioritize projects we use as references publicly."
 
-- semantic_form_for :contact, contact(Contact::TeamUp), :url => contacts_path, :html => { :multipart => true } do |f|
-  - f.inputs do
-    = f.input :_type, :as => :hidden
-    = f.input :email, :required => true
-    = f.input :message, :as => :text, :required => true
-    = f.input :file, :as => :file
+    %p= "In good knowledge of our values, if you believe you organization is compatible with ours, we would love to hear from you:"
+  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
+    - f.inputs do
+      = f.input :_type, :as => :hidden
+      = f.input :email, :required => true
+      = f.input :message, :as => :text, :required => true
+      = f.input :file, :as => :file, :label => "Attach a file"
     
-  - f.buttons do
-    = f.commit_button "Submit"
+    - f.buttons do
+      = f.commit_button "Submit"

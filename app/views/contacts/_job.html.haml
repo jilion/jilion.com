@@ -1,10 +1,22 @@
-%h2 Job
+- contact = contact(Contact::Job)
+.form_box#job{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
+  %h2 Job
+  .intro
+    %p= "Working together at Jilion is so cool."
+    %p= "It's very precious to maintain this quality of human relationship. It takes time to build."
+    %p= "We don't want to grow too fast and becoming lame quickly."
 
-- semantic_form_for :contact, contact(Contact::Job), :url => contacts_path, :html => { :multipart => true } do |f|
-  - f.inputs do
-    = f.input :_type, :as => :hidden
-    = f.input :email, :required => true
-    = f.input :file, :as => :file, :required => true
+    %p= "At the moment we are looking for:"
+    %ul
+      %li= "iPhone dev"
+      %li= "JavaScript dev"
+      %li= "Ruby on Rails dev"
+  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
+    - f.inputs do
+      = f.input :_type, :as => :hidden
+      = f.input :email, :required => true
+      = f.input :message, :as => :text
+      = f.input :file, :as => :file, :required => true, :label => "Attach a file (cv,...)"
     
-  - f.buttons do
-    = f.commit_button "Submit"
+    - f.buttons do
+      = f.commit_button "Submit"

@@ -4,5 +4,5 @@
   :port: 587
   :domain: jilion.com
   :user_name: noreply@jilion.com 
-  :password: XXXXX
+  :password: grij6b
   :authentication: :plain

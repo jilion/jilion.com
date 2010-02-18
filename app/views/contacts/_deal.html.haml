@@ -1,21 +1,28 @@
-%h2 Deal
-
-- semantic_form_for :contact, contact(Contact::Deal), :url => contacts_path, :html => { :multipart => true } do |f|
-  - f.inputs do
-    = f.input :_type, :as => :hidden
-    = f.input :email, :required => true
-    = f.input :name
-    = f.input :organization
-    = f.input :url
-    = f.input :activity
-    = f.input :project_description, :as => :text
-    = f.input :budget, :required => true
-    = f.input :goal
-    = f.input :metrics
-    = f.input :challenge
-    = f.input :deadline
-    = f.input :comment, :as => :text
-    = f.input :file, :as => :file
+- contact = contact(Contact::Deal)
+.form_box#deal{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
+  %h2 Deal
+  .intro
+    %p= "In order we can start discussing your needs efficiently, thank you to fill the following secure request form with the information that is relevant to your particular case:"
+  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
+    - f.inputs do
+      = f.input :_type, :as => :hidden
+      %h4= "About You"
+      = f.input :name, :label => "Contact Person"
+      = f.input :email, :required => true
+      = f.input :phone, :label => "Phone number"
+      = f.input :organization, :label => "Organization or Company name"
+      = f.input :url, :label => "URL (web address)"
+      = f.input :activity, :label => "What is your domain of activity / industry?"
+      %h4= "About your Project"
+      = f.input :project_description, :as => :text, :label => "Please describe the project you would like us to work on", :hint => "The more details, the better: let us know if you already have wireframes, a navigation map, the visual identity, back-end infrastructure requirements, etc."
+      = f.input :budget, :required => true, :label => "What is the budget for this project?"
+      %p.inline-hints= "Important: we'll not reply to requests with no budget indication."
+      = f.input :goal, :as => :text, :label => "What is the general goal or specific achievements you have for this project?"
+      = f.input :metrics, :label => "Do you have metrics for such achievements?"
+      = f.input :challenge, :label => "Is there any particular challenge (technical, business, organizational, etc.) you want to highlight?"
+      = f.input :deadline, :label => "Are deadlines already set?"
+      = f.input :comment, :as => :text, :hint => "Feel free to add any comment you think would be helpful"
+      = f.input :file, :as => :file, :label => "Attach a file"
     
-  - f.buttons do
-    = f.commit_button "Submit"
+    - f.buttons do
+      = f.commit_button "Submit"

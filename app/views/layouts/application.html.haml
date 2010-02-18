@@ -14,15 +14,13 @@
       %meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
       %style{ :type => "text/css", :media => "screen" }
         == body {background:#fff;display:none;}
+    == <script type="text/javascript" src="http://use.typekit.com/ibz5qib.js"></script>
+    == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
   %body
     #global
       #logo_backlights
       #back
-      -# !!!!!!!!!!!! TODO !!!!!!!!!!!!!!!!!
-      - flash.each do |key,value|
-        #flash{ :class => "alert #{key}" }
-          %p= value
       #main
         #header
           %h1

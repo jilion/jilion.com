@@ -1,8 +1,41 @@
-%h1 Contact
+#contact
+  %h3.title.contact.alt
+    %span= "Contact"
+  
+  %ul#contact_topics
+    %li
+      %a.title{ :href => "#deal" }
+        = "You would like Jilion to <strong>work for you</strong>."
+        %span.arrow
+      = render 'deal'      
+    %li
+      %a.title{ :href => "#team_up" }
+        = "You would like to <strong>team up</strong> with us."
+        %span.arrow
+      = render 'team_up'
+    %li
+      %a.title{ :href => "#job" }
+        = "You are a talented individual and would like to <strong>join the company</strong>."
+        %span.arrow
+      = render 'job'
+    %li
+      %a.title{ :href => "#press" }
+        = "You're a journalist and would like to <strong>talk to us</strong>."
+        %span.arrow
+      = render 'press'
+    %li
+      %a.title{ :href => "#request" }
+        = "You have a <strong>feature request</strong> or a great suggestion to tell us."
+        %span.arrow
+      = render 'request'
+    %li
+      %a.title{ :href => "#love" }
+        = "You have an urgent need to share your love for life and want to <strong>send us some good vibes</strong>."
+        %span.arrow
+      = render 'love'
 
-= render 'deal'
-= render 'team_up'
-= render 'job'
-= render 'press'
-= render 'request'
-= render 'love'
+  - flash.each do |key,value|
+    #flash{ :class => "alert #{key}" }
+      %p= value
+      %a.remove{ :href => "", :onclick => "this.up().fade(); return false" }
+        %span= "Remove"

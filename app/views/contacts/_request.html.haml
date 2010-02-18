@@ -1,10 +1,19 @@
-%h2 Request
+- contact = contact(Contact::Request)
+.form_box#request{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
+  %h2 Request
+  .intro
+    %p= "This is where you can share with us some great suggestions for improving what we do, ask for new features and propose us crazy stuff."
 
-- semantic_form_for :contact, contact(Contact::Request), :url => contacts_path, :html => { :multipart => true } do |f|
-  - f.inputs do
-    = f.input :_type, :as => :hidden
-    = f.input :email, :required => true
-    = f.input :file, :as => :file
+    %p= "Now you must read this before going further:"
+    %p= "We are in the business of sharing good vibes, not in vampirizing other people inspiration!"
+    %p= "That said, please consider that if you transmit us information here, you accept that we will consider it public information, meaning basically you and us are completely free to do whatever we want based on what you shared without accounting the other one."
+    %p= "If you agree with this basic rule, please contact us here:"
+
+  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
+    - f.inputs do
+      = f.input :_type, :as => :hidden
+      = f.input :email, :required => true
+      = f.input :message, :as => :text, :required => true
     
-  - f.buttons do
-    = f.commit_button "Submit"
+    - f.buttons do
+      = f.commit_button "Submit"

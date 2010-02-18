@@ -1,6 +1,7 @@
 class Contact::Deal < Contact
   
   key :name, String
+  key :phone, String
   key :organization, String
   key :url, String
   key :activity, String
