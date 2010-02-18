@@ -610,6 +610,14 @@ Sublime.Video = Class.create({
   hideFullControls: function() {
     this.controls.morph('opacity:0', { duration: 0.5 });
   },
+  // showFullWindowCursor: function() {
+  //   this.video.setStyle({ cursor:"auto" });
+  //   this.overlay.setStyle({ cursor:"auto" });
+  // },
+  // hideFullWindowCursor: function() {
+  //   this.video.setStyle({ cursor:"none" });
+  //   this.overlay.setStyle({ cursor:"none" });
+  // },
   fullWindowPoll: function() {
     if (!this.video.paused) {
       if (this.latestPolledMousePosition === this.mousePosition) {
@@ -623,6 +631,7 @@ Sublime.Video = Class.create({
       if (this.mouseFrozenDuration > 3000) {
         if (!this.controlsDidHide) {
           this.hideFullControls();
+          // this.hideFullWindowCursor(); // still cannot make this work on webkit
           this.controlsDidHide = true;
           this.controlsDidShow = false;
         }
@@ -630,6 +639,7 @@ Sublime.Video = Class.create({
       else {
         if (!this.controlsDidShow) {
           this.showControls();
+          // this.showFullWindowCursor();
           this.controlsDidShow = true;
           this.controlsDidHide = false;
         }
