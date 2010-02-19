@@ -17,6 +17,7 @@
       = f.input :email, :required => true, :label => "Your email"
       = f.input :message, :as => :text
       = f.input :file, :as => :file, :required => true, :label => "Please attach your Resume (pdf, zip, etc.)"
+      = f.input :file_cache, :as => :hidden
     
     - f.buttons do
       = f.commit_button "Submit"

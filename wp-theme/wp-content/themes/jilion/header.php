@@ -7,7 +7,7 @@
 
   <title><?php bloginfo('name'); ?> <?php wp_title('-'); ?></title>
 
-  <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
+  <link rel="stylesheet" href="http://octave.local/~octavez/jilion/blog/wp-content/themes/jilion/production/assets/style-datauri.css" type="text/css" media="screen" />
   <link rel="alternate" type="application/rss+xml" title="Jilion Blog" href="http://feeds.feedburner.com/jilion" />
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />

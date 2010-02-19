@@ -18,7 +18,7 @@ body {
   font-size:18px;
   font-weight:100;
   color:#91a1bb;
-  background:url(images/background.png);
+  background:url(http://blog.jilion.com/assets/images/background.png);
 }
 
 #global {
@@ -32,7 +32,7 @@ body {
 #back {
   width:960px;
   margin:0 auto;
-  background:#000 url(images/texture.png);
+  background:#000 url(images/embed/texture.png);
   opacity:0.7;
   position:absolute;
   left:0;
@@ -49,7 +49,7 @@ body {
 #logo_backlights {
   width:960px;
   height:292px;
-  background:url(images/logo_backlights.png) no-repeat;
+  background:url(images/embed/logo_backlights.png) no-repeat;
   position:absolute;
   margin:0 auto;
   top:-80px;
@@ -73,7 +73,7 @@ body {
   width:234px;
   height:54px;
   margin:10px 10px 0;
-  background:url(images/jilion.png) no-repeat;
+  background:url(images/embed/jilion.png) no-repeat;
 }
 
 #header h1 a span {display:none;}
@@ -90,7 +90,7 @@ body {
 #blog_label .wrap {
   width:304px;
   height:173px;
-  background:url(images/blog_label.png) no-repeat;
+  background:url(images/embed/blog_label.png) no-repeat;
   position:relative;
 }
 
@@ -105,7 +105,7 @@ body {
 /*#blog_label .shadow {
   width:251px;
   height:7px;
-  background:url(images/blog_label_shadow.png) no-repeat;
+  background:url(images/embed/blog_label_shadow.png) no-repeat;
   position:absolute;
   top:0;
   right:0;
@@ -137,7 +137,7 @@ body {
 }
 
 #menu li a strong {
-  background:url(images/black_btn_left.png) no-repeat;
+  background:url(images/embed/black_btn_left.png) no-repeat;
   height:30px;
   font-weight:500;
   padding:9px 3px 0 12px;
@@ -147,7 +147,7 @@ body {
 #menu li a:active strong {background-position:0 -39px;}
 
 #menu li a span.corner {
-  background:url(images/black_btn_right.png) no-repeat;
+  background:url(images/embed/black_btn_right.png) no-repeat;
   display:block;
   width:6px;
   height:39px;
@@ -158,15 +158,15 @@ body {
 
 #menu li a:active span.corner {background-position:0 -39px;}
 
-#menu li.blog a span.icon {
+/*#menu li.blog a span.icon {
   padding:0 26px 0 0;
-  background:url(images/blog_icon.png) no-repeat 100% 0;
-}
+  background:url(images/embed/blog_icon.png) no-repeat 100% 0;
+}*/
 
 .breakline1 {
   width:649px;
   height:2px;
-  background:url(images/break_line1.png) no-repeat;
+  background:url(images/embed/break_line1.png) no-repeat;
   margin:20px auto 35px;
 }
 
@@ -208,9 +208,13 @@ body {
     color:#30415c;
     -webkit-transition:color 0.5s;
   }
-  
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
   .entry_title h2:hover {color:#fff;}
-  
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0){
   .entry_title h2 a {
     position:absolute;
     top:0;
@@ -240,7 +244,7 @@ body {
 
 .entry_comments_count {
   font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-  background: url(images/comments_icon.png) no-repeat 94% 50%;
+  background: url(images/embed/comments_icon.png) no-repeat 94% 50%;
   position:absolute;
   top:52px;
   right:0;
@@ -263,7 +267,9 @@ body {
     text-shadow:0 0 1px #000;
     color:#30415c;
   }
-  
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0){ 
   .entry_comments_count a span {
     position:absolute;
     top:0;
@@ -288,7 +294,7 @@ body {
 
 .entry_body a {
   color:#ba00ff;
-  font-weight:500;
+/*  font-weight:500;*/
 }
 
 .entry_body h3 {
@@ -326,7 +332,7 @@ body {
 
 .entry_body li {
   padding:0 0 10px 24px;
-  background:url(images/li.png) no-repeat 0 10px;
+  background:url(images/embed/li.png) no-repeat 0 10px;
 }
 
 .entry_body a.show_image {
@@ -367,7 +373,7 @@ body {
 }
 
 .entry_body a.show_image:hover span.glass {
-  background:rgba(0,0,0,0.3) url(images/magnifying_glass.png) no-repeat 98% 98%;
+  background:rgba(0,0,0,0.3) url(images/embed/magnifying_glass.png) no-repeat 98% 98%;
   opacity:1;
 }
 
@@ -421,7 +427,7 @@ body {
   left:3px;
   right:3px;
   bottom:3px;
-  background:rgba(0,0,0,0.4) url(images/play_button.png) no-repeat 50% 50%;
+  background:rgba(0,0,0,0.4) url(images/embed/play_button.png) no-repeat 50% 50%;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
   -webkit-transition:0.5s background-color;
@@ -464,8 +470,8 @@ body {
   padding:0 0 0 40px;
 }
 
-#sidebar .box.links li.rss a {background:url(images/rss_icon.png) no-repeat 0 2px;}
-#sidebar .box.links li.twitter a {background:url(images/twitter_icon.png) no-repeat 0 5px;}
+#sidebar .box.links li.rss a {background:url(images/embed/rss_icon.png) no-repeat 0 2px;}
+#sidebar .box.links li.twitter a {background:url(images/embed/twitter_icon.png) no-repeat 0 5px;}
 
 #comments {
   padding:40px 0 0;
@@ -532,6 +538,10 @@ body {
   padding:10px 0 0;
 }
 
+.comment_body a {
+  color:#ba00ff;
+}
+
 .comment_reply {
   padding:8px 0 0;
   text-align:right;
@@ -539,7 +549,7 @@ body {
 
 .comment_reply a {
   padding:6px 34px 6px 10px;
-  background:rgba(0,0,0,0.8) url(images/comments_icon.png) no-repeat 95% 50%;
+  background:rgba(0,0,0,0.8) url(images/embed/comments_icon.png) no-repeat 95% 50%;
   font-size:13px;
   font-weight:100;
   letter-spacing:1px;
@@ -613,7 +623,7 @@ body {
   padding:2px;
 }
 
-p.comment_mail_notify {
+p.subscribe-to-comments {
   position:absolute;
   right:20px;
   bottom:24px;
@@ -622,7 +632,7 @@ p.comment_mail_notify {
   color:#50637A;
 }
 
-p.comment_mail_notify label {
+p.subscribe-to-comments label {
   padding:0 0 0 6px;
   position:relative;
   top:1px;
@@ -641,14 +651,14 @@ p.comment_mail_notify label {
 }
 
 .cancel-comment-reply a {
-  background:url(images/small_cross.png) no-repeat 0 65%;
+  background:url(images/embed/small_cross.png) no-repeat 0 65%;
   padding:0 0 0 14px;
 }
 
 #footer {
   width:840px;
   height:88px;
-  background:url(images/footer_back.png) no-repeat center top;
+  background:url(images/embed/footer_back.png) no-repeat center top;
   padding:60px;
   margin:0 auto;
   text-align:center;
