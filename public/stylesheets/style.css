@@ -659,7 +659,7 @@ ul#contact_topics li a.title:hover {
   background-color:#3d0e3c;
 }
 
-ul#contact_topics li a.expanded:hover {
+ul#contact_topics li.expanded a:hover {
   background-color:transparent;
 }
 
@@ -674,7 +674,7 @@ ul#contact_topics li a.title span.arrow {
 /*  -webkit-transition:-webkit-transform 0.5s;*/
 }
 
-ul#contact_topics li a.title.expanded span.arrow {
+ul#contact_topics li.expanded a.title span.arrow {
   -webkit-transform:rotate(90deg);
 }
 
@@ -764,6 +764,7 @@ ul#contact_topics .form_box .intro ul li {
   padding:3px 2px;
   font-size:14px;
   border:none;
+  resize:vertical;
 }
 
 #contact form .string input, #contact form textarea {
