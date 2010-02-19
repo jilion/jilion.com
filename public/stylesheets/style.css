@@ -620,6 +620,7 @@ button::-moz-focus-inner { border: 0; }
 #contact {
   padding:20px 45px 35px;
   position:relative;
+  color:#fff;
 }
 
 ul#contact_topics {
@@ -632,6 +633,9 @@ ul#contact_topics > li {
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
 }
+
+
+ul#contact_topics > li.expanded, ul#contact_topics li a.title:hover {background-color:#400038;}
 
 ul#contact_topics li a.title {
   font-size:19px;
@@ -651,20 +655,24 @@ ul#contact_topics li a.title strong {
   -webkit-transition: color 1s;
 }
 
-ul#contact_topics li a.title:hover strong {
+ul#contact_topics li a.title:hover strong, ul#contact_topics li.expanded a.title strong {
   color:#fff;
 }
 
-ul#contact_topics li a.title:hover {
-  background-color:#3d0e3c;
-}
+/*ul#contact_topics li.expanded a.title:hover {
+  background-color:rgba(0,0,0,0.5);
+}*/
 
-ul#contact_topics li.expanded a:hover {
-  background-color:transparent;
+ul#contact_topics li.expanded a.title, ul#contact_topics li.expanded a.title:hover {
+  color:#fff;
+  background-color:rgba(0,0,0,0.3);
+  -webkit-border-bottom-left-radius:0;
+  -webkit-border-bottom-right-radius:0;
+  -moz-border-radius:6px 6px 0 0;
 }
 
 ul#contact_topics li a.title span.arrow {
-  display:block;
+  display:none;
   width:21px;
   height:21px;
   background:url(/images/contact/arrow.png) no-repeat;
@@ -698,11 +706,16 @@ ul#contact_topics .form_box h2 {display:none;}
 
 ul#contact_topics .form_box .intro {
   font-size:16px;
+  padding:30px 0 0;
 }
 
 ul#contact_topics .form_box .intro p {
   line-height:26px;
   padding:4px 0;
+}
+
+ul#contact_topics .form_box .intro p:last-child {
+  padding-bottom:0;
 }
 
 ul#contact_topics .form_box .intro ul {
@@ -731,7 +744,7 @@ ul#contact_topics .form_box .intro ul li {
 #contact form h4 {
   font-weight:300;
   font-size:26px;
-  padding:20px 0 0;
+  padding:40px 0 0;
 }
 
 #contact form label {
@@ -741,6 +754,14 @@ ul#contact_topics .form_box .intro ul li {
 /*  color:#7691b3;*/
   padding:0 0 3px;
   margin:22px 0 0;
+  color:#fff;
+}
+
+#contact label em {
+  display:block;
+  font-weight:100;
+  font-size:14px;
+  color:rgba(255,255,255,0.5);
 }
 
 #contact form label abbr {
@@ -752,7 +773,7 @@ ul#contact_topics .form_box .intro ul li {
 #contact form .string input {
   width:99%;
   font-size:16px;
-  padding:3px 2px;
+  padding:5px 2px;
   border:none;
 }
 
@@ -768,13 +789,23 @@ ul#contact_topics .form_box .intro ul li {
 }
 
 #contact form .string input, #contact form textarea {
-  background:#b2bfd7;
-  border: 1px solid #fff;
+  background:#ffd3f9;
+  border:none;
+  font-family:Courier,Monaco,monospace;
+  font-size:13px;
   -webkit-transition:0.5s background-color;
+  -webkit-border-radius:4px;
+}
+
+#contact form .string.error input, #contact form .error textarea {
+  -webkit-border-bottom-left-radius:0;
+  -webkit-border-bottom-right-radius:0;
+  -moz-border-radius:6px 6px 0 0;
 }
 
 #contact form .string input:focus, #contact form textarea:focus {
   background:#fff;
+  outline-color:#ff70ed;
 }
 
 #contact form .inline-hints {
@@ -786,8 +817,8 @@ ul#contact_topics .form_box .intro ul li {
 }
 
 #contact form .inline-errors {
-  background:#8a0027;
-  width:584px;
+  background:#e06300;
+  width:582px;
   padding:4px 8px;
   color:#fff;
   font-size:13px;
@@ -802,17 +833,19 @@ ul#contact_topics .form_box .intro ul li {
 }
 
 #contact form li.file .fake_file_input {
-  height:27px;
+  height:28px;
   position:relative;
 }
 
 #contact form li.file .fake_file_input_button {
   width:115px;
-  height:27px;
-  background:url(/images/contact/file_gradient.png) repeat-x;
+  height:28px;
+  background:url(/images/contact/file_button_back.png) no-repeat;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
 }
+
+#contact form li.file .fake_file_input_button.active {background-position:0 -28px;}
 
 #contact form li.file .fake_file_input_button span {
   display:block;
@@ -826,7 +859,7 @@ ul#contact_topics .form_box .intro ul li {
 
 #contact form li.file .fake_file_input_value {
   width:400px;
-  height:27px;
+  height:28px;
   position:absolute;
   top:6px;
   left:122px;
@@ -841,7 +874,7 @@ ul#contact_topics .form_box .intro ul li {
   bottom:0;
   left:0;
   width:115px;
-  height:27px;
+  height:28px;
   z-index:2;
 }
 
@@ -858,8 +891,8 @@ ul#contact_topics .form_box .intro ul li {
   font-family:"proxima-nova-1","proxima-nova-2","Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size:18px;
   font-weight:600;
-  color:#212731;
-  text-shadow:#89909a 0 1px 0;
+  color:#302131;
+  text-shadow:#9a899a 0 1px 0;
 }
 
 #contact .commit input:active {background-position:0 -39px;}

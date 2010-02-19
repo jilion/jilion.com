@@ -147,6 +147,9 @@ document.observe("dom:loaded", function() {
     input.observe('change', function(e){
       fakeFileInputValue.update(input.value);
     });
+    // input.observe('click', function(e){
+    //   fakeFileInputButton.addClassName('active');
+    // });
   });
   
   $$("#contact_topics li a").each(function(a){
@@ -168,7 +171,10 @@ document.observe("dom:loaded", function() {
         $$("#contact_topics li").invoke("removeClassName", "expanded");
         a.up().addClassName('expanded');
         form_box.setStyle({display:"block"});
-        a.up().scrollTo();
+        
+        var elementToScrollTo = a.up();
+        var scrollPos = elementToScrollTo.cumulativeOffset().top;
+        scrollTo(0,scrollPos-11);
         // window.location.hash = a.href.match(/#(.*)/)[0];
       }
       e.stop();

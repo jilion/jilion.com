@@ -15,9 +15,9 @@
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
-      = f.input :email, :required => true
+      = f.input :email, :required => true, :label => "Your email"
       = f.input :message, :as => :text, :required => true
-      = f.input :file, :as => :file, :label => "Attach a file"
+      = f.input :file, :as => :file, :label => "Attach a file with this form (pdf, zip, etc.)"
     
     - f.buttons do
       = f.commit_button "Submit"
