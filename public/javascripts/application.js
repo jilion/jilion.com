@@ -156,18 +156,19 @@ document.observe("dom:loaded", function() {
     // } else {
     //   a.next('.form_box').hide();
     // }
-    if (a.next('.form_box').hasClassName('errors')) a.addClassName('expanded');
+    if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
     a.observe("click",function(e){
       // $$("ul#contact_topics li .form_box").invoke("hide");
       var form_box = a.next('.form_box');
       if (form_box.visible()) {
-        a.removeClassName('expanded');
+        a.up().removeClassName('expanded');
         form_box.hide();
       } else {
         $$("#contact_topics li .form_box").invoke("hide");
-        $$("#contact_topics li a").invoke("removeClassName", "expanded");
-        a.addClassName('expanded');
+        $$("#contact_topics li").invoke("removeClassName", "expanded");
+        a.up().addClassName('expanded');
         form_box.setStyle({display:"block"});
+        a.up().scrollTo();
         // window.location.hash = a.href.match(/#(.*)/)[0];
       }
       e.stop();
