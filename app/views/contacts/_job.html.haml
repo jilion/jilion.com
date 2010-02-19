@@ -17,6 +17,7 @@
       = f.input :email, :required => true
       = f.input :message, :as => :text
       = f.input :file, :as => :file, :required => true, :label => "Attach a file (cv,...)"
+      = f.input :file_cache, :as => :hidden
     
     - f.buttons do
       = f.commit_button "Submit"
