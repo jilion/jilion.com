@@ -30,6 +30,9 @@ Element.addMethods({
 });
 
 document.observe("dom:loaded", function() {
+  // Windows XP Disable Typekit
+  if ((navigator.userAgent.indexOf("Windows NT 5.1")!=-1) || (navigator.userAgent.indexOf("Windows XP")!=-1)) $(document.body).addClassName('winxp');
+
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
   if (Prototype.Browser.IE) {
@@ -40,7 +43,7 @@ document.observe("dom:loaded", function() {
       br: { radius: 10 },
       antiAlias: true
     };
-    var divObj = $("back"); 
+    var divObj = $("back").addClassName("curvyRedraw"); //class curvyRedraw to be able to call curvyCorners.redraw()
     curvyCorners(settings, divObj);
     divObj.style.filter="alpha(opacity=70)";
   }
@@ -153,29 +156,30 @@ document.observe("dom:loaded", function() {
   });
   
   $$("#contact_topics li a").each(function(a){
-    // if (a.href === window.location.href) {
-    //   a.addClassName('expanded');
-    //   a.next('.form_box').setStyle({display:"block"});
-    // } else {
-    //   a.next('.form_box').hide();
-    // }
     if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
     a.observe("click",function(e){
-      // $$("ul#contact_topics li .form_box").invoke("hide");
       var form_box = a.next('.form_box');
       if (form_box.visible()) {
         a.up().removeClassName('expanded');
         form_box.hide();
+        
+        if (Prototype.Browser.IE) {
+          curvyCorners.redraw();
+        }
+        
       } else {
         $$("#contact_topics li .form_box").invoke("hide");
         $$("#contact_topics li").invoke("removeClassName", "expanded");
         a.up().addClassName('expanded');
         form_box.setStyle({display:"block"});
+
+        if (Prototype.Browser.IE) {
+          curvyCorners.redraw();
+        }
         
         var elementToScrollTo = a.up();
         var scrollPos = elementToScrollTo.cumulativeOffset().top;
         scrollTo(0,scrollPos-11);
-        // window.location.hash = a.href.match(/#(.*)/)[0];
       }
       e.stop();
     });

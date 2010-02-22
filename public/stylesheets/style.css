@@ -11,6 +11,8 @@ body {
   background:url(/images/background.png);
 }
 
+body.winxp {font-family:Arial, sans-serif;}
+
 #global {
   width:960px;
   margin:0 auto;
@@ -910,8 +912,23 @@ ul#contact_topics .form_box .intro ul li {
 #contact #flash.notice p {
   text-align:center;
   height:434px;
-  line-height:434px;
+  line-height:370px;
   font-size:28px;
+}
+
+#contact #flash.notice a.pdf {
+  display:block;
+  width:270px;
+  height:55px;
+  line-height:55px;
+  background:url(/images/contact/pdf_icon.png) no-repeat;
+  margin:0 auto;
+  position:absolute;
+  bottom:140px;
+  left:0;
+  right:0;
+  text-align:right;
+  font-size:20px;
 }
 
 #contact #flash.notice a.remove {
