@@ -2,7 +2,7 @@ class Contact
   include MongoMapper::Document
   
   key :_type, String
-  key :email, String, :required => true
+  key :email, String
   key :state, String, :default => 'new'
   key :issue, Integer
   timestamps!
@@ -16,8 +16,9 @@ class Contact
   RegEmailOk     = /\A#{RegEmailName}@#{RegDomainHead}#{RegDomainTLD}\z/i
   TYPES = %w[Contact::Deal Contact::Job Contact::Love Contact::Press Contact::Request Contact::TeamUp]
   
-  validates_length_of :email, :within => 6..100, :message => "is too short"
-  validates_format_of :email, :with => RegEmailOk
+  validates_presence_of :email, :message => "can't be blank"
+  validates_length_of   :email, :within  => 6..100, :message => "is too short"
+  validates_format_of   :email, :with    => RegEmailOk, :message => "is not valid"
   
   before_save :set_issue
   after_create :deliver_notification
