@@ -36,6 +36,9 @@
 
   - flash.each do |key,value|
     #flash{ :class => "alert #{key}" }
-      %p= value
+      %p
+        = value
+        - if session[:contact_id]
+          = link_to "download the pdf copy", contact_pdf_path
       %a.remove{ :href => "", :onclick => "this.up().fade(); return false" }
         %span= "Remove"

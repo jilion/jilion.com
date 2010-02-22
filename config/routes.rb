@@ -11,8 +11,9 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :sublime, :only => [:index, :show]
-  map.resources :contacts, :only => :create
+  map.resources :contacts, :only => [:create]
   map.new_contact 'contact', :controller => 'contacts', :action => 'new', :condiction => { :method => :get }
+  map.contact_pdf "contact/Jilion-contact.pdf", :controller => 'contacts', :action => 'show', :condiction => { :method => :get }
   
   map.redirect 'admin', :controller => 'admin/contacts'
   map.namespace :admin do |admin|
