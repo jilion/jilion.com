@@ -3,7 +3,7 @@ class ContactsController < ApplicationController
   # caches_page :new
   ssl_required :new, :create
   
-  # GET /contacts/:id
+  # GET /contact/Jilion-contact.pdf
   def show
     @contact = Contact.find(session[:contact_id])
     
