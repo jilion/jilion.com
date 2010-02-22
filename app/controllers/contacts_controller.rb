@@ -3,6 +3,19 @@ class ContactsController < ApplicationController
   # caches_page :new
   ssl_required :new, :create
   
+  # GET /contacts/:id
+  def show
+    @contact = Contact.find(session[:contact_id])
+    
+    respond_to do |format|
+      if @contact
+        format.pdf
+      else
+        format.html { redirect_to new_contact_path }
+      end
+    end
+  end
+  
   # GET /contact
   def new
   end
@@ -13,6 +26,7 @@ class ContactsController < ApplicationController
     
     if @contact.save
       flash[:notice] = 'Thank you very much for your submission!'
+      session[:contact_id] = @contact.id if @contact.deal?
       redirect_to new_contact_url
     else
       render :new

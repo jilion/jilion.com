@@ -5,8 +5,8 @@ class Contact::Deal < Contact
   key :organization, String
   key :url, String
   key :activity, String
-  key :project_description, String
   key :budget, String, :required => true
+  key :project_description, String
   key :goal, String
   key :metrics, String
   key :challenge, String
