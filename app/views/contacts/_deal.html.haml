@@ -2,8 +2,8 @@
 .form_box#deal{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Deal
   .intro
-    %p= "In order we can start discussing your needs efficiently, thank you to fill the following secure request form with the information that is relevant to your particular case."
-    %p= "You will get the opportunity to download a secure PDF of your submission."
+    %p= "In order to start considering your needs efficiently, we ask you to fill the following secure request form with the information relevant to your case"
+    %p= "At the end of the process, you will be offered the opportunity to download a secure PDF copy of your submission."
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
@@ -16,12 +16,12 @@
       = f.input :activity, :label => "What is your domain of activity / industry?"
       %h4= "About your Project"
       = f.input :budget, :label => "What is your budget for this project?<abbr title='required'>*</abbr> <em>IMPORTANT: we'll not reply to requests with no budget indication.</em>"
-      = f.input :project_description, :as => :text, :label => "Please describe the project you would like us to work on <em>(The more details, the better: let us know if you already have wireframes, a navigation map, the visual identity, back-end infrastructure requirements, etc.)</em>"
+      = f.input :project_description, :as => :text, :label => "Please describe the project you would like us to work on <em>(The more details, the better: let us know if you already have wireframes, a navigation map, visual identity, back-end infrastructure requirements, etc.)</em>"
       = f.input :goal, :as => :text, :label => "What is the general goal or specific achievements you have for this project?"
       = f.input :metrics, :label => "Do you have metrics for such achievements?"
       = f.input :challenge, :label => "Is there any particular challenge (technical, business, organizational, etc.) you want to highlight?"
-      = f.input :deadline, :label => "Are deadlines already set?"
-      = f.input :comment, :as => :text, :label => "Comment <em>Feel free to add any additional information you think would be helpful</em>"
+      = f.input :deadline, :label => "Are there already set deadlines?"
+      = f.input :comment, :as => :text, :label => "Additional comments <em>Are there any additional information you believe would be helpful?</em>"
       = f.input :file, :as => :file, :label => "Attach a file with this form (pdf, zip, etc.)"
     
     - f.buttons do

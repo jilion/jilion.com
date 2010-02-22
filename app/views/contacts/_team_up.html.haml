@@ -2,21 +2,20 @@
 .form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Team Up
   .intro
-    %p= "Not only we believe it's great to team up with other companies on ambitious projects, but it's often simply mandatory."
-    %p= "Our values:"
+    %p= "Not only do we believe it's great to team up with other companies on ambitious projects, but it's also often mandatory."
+    %p= "Our guidelines when we team-up:"
     %ul
-      %li= "We always try to know our own limits and not start on projects that are too big for us alone;"
-      %li= "We believe in building lasting and valuable relationships with our partners, not single shots;"
-      %li= "We will never compromise quality;"
-      %li= "We'll always try to outperform our customer's expectations;"
-      %li= "We will prioritize projects we use as references publicly."
+      %li= "We always focus on and put quality first"
+      %li= "We believe in building lasting relationships where all parties are valued"
+      %li= "We do our best to establish clear rules of collaboration to avoid any possible frustration"
+      %li= "We try to be aware of our own limits and will only start projects that are within our capacity"
 
-    %p= "In good knowledge of our values, if you believe you organization is compatible with ours, we would love to hear from you:"
+    %p= "If your organization is interested in teaming-up with us, we would love to hear from you:"
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
       = f.input :email, :required => true, :label => "Your email"
-      = f.input :message, :as => :text, :required => true
+      = f.input :message, :as => :text, :required => true, :label => "Your message"
       = f.input :file, :as => :file, :label => "Attach a file with this form (pdf, zip, etc.)"
     
     - f.buttons do

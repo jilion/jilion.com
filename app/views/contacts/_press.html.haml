@@ -7,7 +7,7 @@
     - f.inputs do
       = f.input :_type, :as => :hidden
       = f.input :email, :required => true
-      = f.input :message, :as => :text, :required => true
+      = f.input :message, :as => :text, :required => true, :label => "Your message"
     
     - f.buttons do
       = f.commit_button "Submit"

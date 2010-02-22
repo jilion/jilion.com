@@ -2,20 +2,20 @@
 .form_box#job{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Job
   .intro
-    %p= "Working together at Jilion is so cool."
-    %p= "It's very precious to maintain this quality of human relationship. It takes time to build."
-    %p= "We don't want to grow too fast and becoming lame quickly."
+    %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
+    %p= "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to always amaze the team, while the team is functioning as your talents' amplifier."
 
     %p= "At the moment we are looking for:"
     %ul
-      %li= "iPhone software engineer"
+      %li= "iPhone / iPad software engineer"
       %li= "JavaScript software engineer"
       %li= "Ruby on Rails software engineer"
+    %p= "If you'd love to work with us, don't be shy, send us your Resume!"
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
       = f.input :email, :required => true, :label => "Your email"
-      = f.input :message, :as => :text
+      = f.input :message, :as => :text, :label => "Your message"
       = f.input :file, :as => :file, :required => true, :label => "Please attach your Resume (pdf, zip, etc.)"
       = f.input :file_cache, :as => :hidden
     
