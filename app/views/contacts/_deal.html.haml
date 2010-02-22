@@ -2,13 +2,13 @@
 .form_box#deal{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Deal
   .intro
-    %p= "In order to start considering your needs efficiently, we ask you to fill the following secure request form with the information relevant to your case"
+    %p= "In order to start considering your needs efficiently, we ask you to fill the following secure request form with the information relevant to your case."
     %p= "At the end of the process, you will be offered the opportunity to download a secure PDF copy of your submission."
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
       %h4= "About You"
-      = f.input :name, :label => "Contact Person, name and last name"
+      = f.input :name, :label => "Contact Person: name and last name"
       = f.input :email, :required => true, :label => "Your email address"
       = f.input :phone, :label => "Phone number"
       = f.input :organization, :label => "Organization or Company name"
@@ -22,7 +22,7 @@
       = f.input :challenge, :label => "Is there any particular challenge (technical, business, organizational, etc.) you want to highlight?"
       = f.input :deadline, :label => "Are there already set deadlines?"
       = f.input :comment, :as => :text, :label => "Additional comments <em>Are there any additional information you believe would be helpful?</em>"
-      = f.input :file, :as => :file, :label => "Attach a file with this form (pdf, zip, etc.)"
+      = f.input :file, :as => :file, :label => "Attach a file to this form (pdf, zip, etc.)"
     
     - f.buttons do
       = f.commit_button "Submit"

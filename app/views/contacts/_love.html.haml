@@ -2,7 +2,7 @@
 .form_box#love{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Love
   .intro
-    %p= "Feel free to send us your encouragement, this is what make us smile, even cry sometimes:"
+    %p= "Feel free to send us your encouragements, it really matters to us. We will publish some of them:"
   - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
     - f.inputs do
       = f.input :_type, :as => :hidden
