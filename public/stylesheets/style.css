@@ -871,7 +871,7 @@ ul#contact_topics .form_box .intro ul li {
   -moz-opacity:0;
   filter:alpha(opacity:0);
   position:absolute;
-  bottom:0;
+  top:20px;
   left:0;
   width:115px;
   height:28px;

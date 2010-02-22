@@ -8,14 +8,14 @@
     - f.inputs do
       = f.input :_type, :as => :hidden
       %h4= "About You"
-      = f.input :name, :label => "Contact Person: name and last name"
-      = f.input :email, :required => true, :label => "Your email address"
+      = f.input :name, :label => "Contact Person: first and last name"
+      = f.input :email, :required => true, :label => "Email address"
       = f.input :phone, :label => "Phone number"
       = f.input :organization, :label => "Organization or Company name"
       = f.input :url, :label => "URL (web address)"
       = f.input :activity, :label => "What is your domain of activity / industry?"
       %h4= "About your Project"
-      = f.input :budget, :label => "What is your budget for this project?<abbr title='required'>*</abbr> <em>IMPORTANT: we'll not reply to requests with no budget indication.</em>"
+      = f.input :budget, :label => "What is your budget for this project?<abbr title='required'>*</abbr> <em>IMPORTANT: We won't reply to requests with no budget indication.</em>"
       = f.input :project_description, :as => :text, :label => "Please describe the project you would like us to work on <em>(The more details, the better: let us know if you already have wireframes, a navigation map, visual identity, back-end infrastructure requirements, etc.)</em>"
       = f.input :goal, :as => :text, :label => "What is the general goal or specific achievements you have for this project?"
       = f.input :metrics, :label => "Do you have metrics for such achievements?"
