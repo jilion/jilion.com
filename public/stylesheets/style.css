@@ -912,8 +912,12 @@ ul#contact_topics .form_box .intro ul li {
 #contact #flash.notice p {
   text-align:center;
   height:434px;
-  line-height:370px;
+  line-height:434px;
   font-size:28px;
+}
+
+#contact #flash.notice.attachment p {
+  line-height:370px;
 }
 
 #contact #flash.notice a.pdf {

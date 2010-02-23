@@ -35,7 +35,7 @@
       = render 'love'
 
   - flash.each do |key,value|
-    #flash{ :class => "alert #{key}" }
+    #flash{ :class => "alert #{key} #{session[:contact_id] ? 'attachment':''}" }
       %p
         = value
       - if session[:contact_id]
