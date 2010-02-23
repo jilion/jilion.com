@@ -8,7 +8,7 @@
     %link{ :href => "/stylesheets/style.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
     %link{ :href => "/stylesheets/admin.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
-    == <script type="text/javascript" src="http://use.typekit.com/ibz5qib.js"></script>
+    == <script type="text/javascript" src="http#{ request.ssl? ? 's':'' }://use.typekit.com/ibz5qib.js"></script>
     == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   %body
     #global
