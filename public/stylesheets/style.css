@@ -899,6 +899,19 @@ ul#contact_topics .form_box .intro ul li {
 
 #contact .commit input:active {background-position:0 -39px;}
 
+#contact fieldset.buttons li.left {float:left;margin-right:10px;}
+
+#contact fieldset.buttons li.info {
+  padding:34px 0 20px 0;
+  font-size:15px;
+  color:rgba(255,255,255,0.6);
+}
+
+#contact fieldset.buttons li.spinner {
+  float:left;
+  padding:34px 10px 0 0;
+}
+
 #contact #flash.notice {
   position:absolute;
   top:55px;

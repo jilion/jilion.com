@@ -185,6 +185,11 @@ document.observe("dom:loaded", function() {
     });
   });
   
+  $$(".commit input").each(function(input){
+    input.observe("click", function(event){
+      input.up().next(".spinner").show();
+    })
+  });
 });
 
 function validateEmail(email) {

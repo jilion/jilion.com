@@ -19,4 +19,5 @@
       = f.input :file, :as => :file, :label => "Attach a file to this form (pdf, zip, etc.)"
     
     - f.buttons do
-      = f.commit_button "Submit"
+      = f.commit_button "Submit", :class => "left"
+      %li.spinner{ :style => "display:none" }= image_tag "/images/contact/spinner.gif", :alt => ""

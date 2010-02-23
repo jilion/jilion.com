@@ -15,4 +15,5 @@
       = f.input :message, :as => :text, :required => true, :label => "Your message"
     
     - f.buttons do
-      = f.commit_button "Submit"
+      = f.commit_button "Submit", :class => "left"
+      %li.spinner{ :style => "display:none" }= image_tag "/images/contact/spinner.gif", :alt => ""

@@ -52,8 +52,10 @@
     %li
       %strong= "Message:"
       =h @contact.message
-      
-  
+  - if !@contact.file_url.nil?
+    %li
+      %strong= "Attachment:"
+      = link_to @contact.file_filename, @contact.file_url
   %li
     %strong= "Submitted on:"
     =l @contact.created_at, :format => :long

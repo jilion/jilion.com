@@ -1,5 +1,9 @@
-%tr{ :class => cycle("#{contact.type_name} #{contact.state}", "#{contact.type_name} #{contact.state} alt") }
-  %td=h contact.issue
+%tr{ :class => cycle("alt", "") }
+  %td
+    - if !contact.file_url.nil?
+      = link_to "&diams;", admin_contact_path(contact)
+  %td
+    =h contact.issue
   %td=h contact.type.to_s.gsub(/Contact::/,'')
   %td=h contact.email
   %td=h contact.state

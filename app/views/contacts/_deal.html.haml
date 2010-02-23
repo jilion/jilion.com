@@ -25,5 +25,6 @@
       = f.input :file, :as => :file, :label => "Attach a file to this form (pdf, zip, etc.)"
     
     - f.buttons do
-      = f.commit_button "Submit"
-      -#%p= "After submitting, you will get the opportunity to download a secure PDF copy of your submission."
+      = f.commit_button "Submit", :class => "left"
+      %li.spinner{ :style => "display:none" }= image_tag "/images/contact/spinner.gif", :alt => ""
+      %li.info= "After submitting, you will get the opportunity to<br /> download a secure PDF copy of your submission."
