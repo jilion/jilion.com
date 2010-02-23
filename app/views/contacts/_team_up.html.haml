@@ -20,4 +20,6 @@
     
     - f.buttons do
       = f.commit_button "Submit", :class => "left"
-      %li.spinner{ :style => "display:none" }= image_tag "/images/contact/spinner.gif", :alt => ""
+      %li.spinner{ :style => "display:none" }
+        -#= image_tag "/images/contact/spinner.gif", :alt => ""
+        %img{ :src => "/images/contact/spinner.gif", :alt => "" }

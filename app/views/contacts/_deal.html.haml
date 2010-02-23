@@ -26,5 +26,7 @@
     
     - f.buttons do
       = f.commit_button "Submit", :class => "left"
-      %li.spinner{ :style => "display:none" }= image_tag "/images/contact/spinner.gif", :alt => ""
+      %li.spinner{ :style => "display:none" }
+        -#= image_tag "/images/contact/spinner.gif", :alt => ""
+        %img{ :src => "/images/contact/spinner.gif", :alt => "" }
       %li.info= "After submitting, you will get the opportunity to<br /> download a secure PDF copy of your submission."
