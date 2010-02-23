@@ -23,6 +23,7 @@ class ContactsController < ApplicationController
   # POST /contacts
   def create
     @contact = contact_class.new(params[:contact])
+    session.delete(:contact_id)
     
     if @contact.save
       flash[:notice] = 'Thank you for your message.'
