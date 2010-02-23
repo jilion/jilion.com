@@ -1,28 +1,19 @@
 !!! strict
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
   %head
-    %title ADMIN
+    %title Jilion Admin
     
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
     
     %link{ :href => "/stylesheets/style.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
-    /[if gte IE 7]
-      %link{ :href => "/stylesheets/ie.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
-      == <script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
-      %script{ :src => "/javascripts/curvycorners.js", :type => "text/javascript" }
-    /[if lte IE 6]
-      %meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
-      %style{ :type => "text/css", :media => "screen" }
-        == body {background:#fff;display:none;}
+    %link{ :href => "/stylesheets/admin.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
+    == <script type="text/javascript" src="http://use.typekit.com/ibz5qib.js"></script>
+    == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   %body
     #global
       #logo_backlights
       #back
-      -# !!!!!!!!!!!! TODO !!!!!!!!!!!!!!!!!
-      - flash.each do |key,value|
-        #flash{ :class => "alert #{key}" }
-          %p= value
       #main
         #header
           %h1
@@ -34,7 +25,7 @@
                 %strong
                   %span.icon= 'Blog'
                 %span.corner
-        = yield
+        #admin= yield
         .spacer
     #footer
       = t 'footer'

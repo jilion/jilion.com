@@ -25,7 +25,7 @@ class ContactsController < ApplicationController
     @contact = contact_class.new(params[:contact])
     
     if @contact.save
-      flash[:notice] = 'Thank you very much for your submission!'
+      flash[:notice] = 'Thank you for your message.'
       session[:contact_id] = @contact.id if @contact.deal?
       redirect_to new_contact_url
     else
