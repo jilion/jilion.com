@@ -3,14 +3,20 @@
   %h2 Press
   .intro
     %p= "Use the form below to contact us:"
-  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
-    - f.inputs do
-      = f.input :_type, :as => :hidden
-      = f.input :email, :required => true, :label => "Your email"
-      = f.input :message, :as => :text, :required => true, :label => "Your message"
-    
-    - f.buttons do
-      = f.commit_button "Submit", :class => "left"
-      %li.spinner{ :style => "display:none" }
+        
+  - form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+    = f.hidden_field :_type
+    .entry
+      = f.label :email, "Your email", :require => true
+      = f.text_field :email, :class => "text"
+    .entry
+      = f.label :message, "Your message", :require => true
+      .textarea_wrapper
+        = f.text_area :message, :class => "text"
+
+    .entry.submit
+      = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
+      .spinner{ :style => "display:none" }
         -#= image_tag "/images/contact/spinner.gif", :alt => ""
         %img{ :src => "/images/contact/spinner.gif", :alt => "" }
+      .spacer

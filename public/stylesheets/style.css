@@ -735,14 +735,6 @@ ul#contact_topics .form_box .intro ul li {
 /*  width:600px;*/
 }
 
-#contact form fieldset {
-  border:none;
-}
-
-#contact form ol {
-  list-style-type:none;
-}
-
 #contact form h4 {
   font-weight:300;
   font-size:26px;
@@ -772,14 +764,14 @@ ul#contact_topics .form_box .intro ul li {
   border:none;
 }
 
-#contact form .string input {
+#contact form input.text {
   width:99%;
   font-size:16px;
   padding:5px 2px;
   border:none;
 }
 
-#contact form .textarea_wrapper {line-height:0;}
+#contact form .textarea_wrapper .fieldWithErrors {line-height:0;}
 
 #contact form textarea {
   width:99%;
@@ -790,7 +782,7 @@ ul#contact_topics .form_box .intro ul li {
   resize:vertical;
 }
 
-#contact form .string input, #contact form textarea {
+#contact form input.text, #contact form textarea {
   background:#ffd3f9;
   border:none;
   font-family:Courier,Monaco,monospace;
@@ -799,26 +791,18 @@ ul#contact_topics .form_box .intro ul li {
   -webkit-border-radius:4px;
 }
 
-#contact form .string.error input, #contact form .error textarea {
+#contact form .fieldWithErrors input, #contact form .fieldWithErrors textarea {
   -webkit-border-bottom-left-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:6px 6px 0 0;
 }
 
-#contact form .string input:focus, #contact form textarea:focus {
+#contact form input.text:focus, #contact form textarea:focus {
   background:#fff;
   outline-color:#ff70ed;
 }
 
-#contact form .inline-hints {
-  font-size:14px;
-  line-height:20px;
-  font-style:italic;
-  font-weight:300;
-  padding:2px 0 10px;
-}
-
-#contact form .inline-errors {
+#contact form .inline_errors {
   background:#e06300;
   width:582px;
   padding:4px 8px;
@@ -830,16 +814,16 @@ ul#contact_topics .form_box .intro ul li {
   -moz-border-radius:0 0 6px 6px;
 }
 
-#contact form li.file {
+#contact form .entry.file {
   position:relative;
 }
 
-#contact form li.file .fake_file_input {
+#contact form .entry.file .fake_file_input {
   height:28px;
   position:relative;
 }
 
-#contact form li.file .fake_file_input_button {
+#contact form .entry.file .fake_file_input_button {
   width:115px;
   height:28px;
   background:url(/images/contact/file_button_back.png) no-repeat;
@@ -847,9 +831,9 @@ ul#contact_topics .form_box .intro ul li {
   -moz-border-radius:6px;
 }
 
-#contact form li.file .fake_file_input_button.active {background-position:0 -28px;}
+#contact form .entry.file .fake_file_input_button.active {background-position:0 -28px;}
 
-#contact form li.file .fake_file_input_button span {
+#contact form .entry.file .fake_file_input_button span {
   display:block;
   padding:6px 8px;
   font-size:14px;
@@ -859,7 +843,7 @@ ul#contact_topics .form_box .intro ul li {
   background:url(/images/contact/file_icon.png) no-repeat 8px 6px;
 }
 
-#contact form li.file .fake_file_input_value {
+#contact form .entry.file .fake_file_input_value {
   width:400px;
   height:28px;
   position:absolute;
@@ -868,7 +852,7 @@ ul#contact_topics .form_box .intro ul li {
   font-size:14px;
 }
 
-#contact form li.file input {
+#contact form .entry.file input {
   opacity:0;
   -moz-opacity:0;
   filter:alpha(opacity:0);
@@ -880,11 +864,11 @@ ul#contact_topics .form_box .intro ul li {
   z-index:2;
 }
 
-#contact .commit {
+#contact .entry.submit {
   padding:30px 0 20px;
 }
 
-#contact .commit input {
+#contact .entry.submit input {
   width:115px;
   height:39px;
   background:url(/images/contact/button.png) no-repeat;
@@ -897,19 +881,19 @@ ul#contact_topics .form_box .intro ul li {
   text-shadow:#9a899a 0 1px 0;
 }
 
-#contact .commit input:active {background-position:0 -39px;}
+#contact .entry.submit input:active {background-position:0 -39px;}
 
-#contact fieldset.buttons li.left {float:left;margin-right:10px;}
+#contact .entry.submit input {float:left;margin-right:10px;}
 
-#contact fieldset.buttons li.info {
-  padding:34px 0 20px 0;
+#contact .entry.submit p.info {
+  padding:4px 0 0 0;
   font-size:15px;
   color:rgba(255,255,255,0.6);
 }
 
-#contact fieldset.buttons li.spinner {
+#contact .entry.submit .spinner {
   float:left;
-  padding:34px 10px 0 0;
+  padding:4px 10px 0 0;
 }
 
 #contact #flash.notice {
