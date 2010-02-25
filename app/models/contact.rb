@@ -4,6 +4,7 @@ class Contact
   key :_type, String
   key :email, String
   key :state, String, :default => 'new'
+  key :replied, Boolean
   key :issue, Integer
   timestamps!
   
