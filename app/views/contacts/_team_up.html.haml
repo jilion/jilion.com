@@ -2,7 +2,7 @@
 .form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Team Up
   .intro
-    %p= "Not only do we believe it is great to team up with other companies on ambitious projects, but it's also often mandatory."
+    %p= "Not only do we believe it is great to team up with other companies on ambitious projects, but it's also often required."
     %p= "Our guidelines when we team-up:"
     %ul
       %li= "We always focus on and put quality first"
@@ -34,3 +34,4 @@
         -#= image_tag "/images/contact/spinner.gif", :alt => ""
         %img{ :src => "/images/contact/spinner.gif", :alt => "" }
       .spacer
+  .required_mention= "<abbr title='required'>*</abbr> required"

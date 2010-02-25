@@ -632,6 +632,7 @@ ul#contact_topics {
 ul#contact_topics > li {
   margin:10px 0;
   background-color:rgba(0,0,0,0.7);
+  position:relative;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
 }
@@ -731,6 +732,14 @@ ul#contact_topics .form_box .intro ul li {
   background:url(/images/contact/li.png) no-repeat 0 11px;
 }
 
+#contact .required_mention {
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  font-size:14px;
+  font-weight:500;
+}
+
 #contact form {
 /*  width:600px;*/
 }
@@ -751,6 +760,11 @@ ul#contact_topics .form_box .intro ul li {
   color:#fff;
 }
 
+#contact form label.checkbox {
+  margin:10px 0 0;
+  line-height:18px;
+}
+
 #contact label em {
   display:block;
   font-weight:100;
@@ -758,9 +772,10 @@ ul#contact_topics .form_box .intro ul li {
   color:rgba(255,255,255,0.5);
 }
 
-#contact form label abbr {
-  color:#e22dc0;
+#contact form label abbr, #contact .required_mention abbr {
+  color:#ce0038;
   font-style:normal;
+  font-size:20px;
   border:none;
 }
 

@@ -10,7 +10,17 @@
     %h4= "About your Request"
     .intro
       %p= "Please be aware we do not have the time and resources to answer all Requests for Proposal we receive, especially if they are generic and not addressed to us only (for a limited time of course)."
-    
+    .entry
+      = f.label :exclusive_request, "Please indicate:", :require => true
+      %label.checkbox
+        = f.radio_button :exclusive_request, true, :onclick => "if (this.checked) this.next('select').enable();"
+        = "You are sending this request to Jilion only.<br />"
+        = "Exclusive for the following nr. of business days:"
+        - logger.debug contact.exclusive_request_business_days
+        = f.select :exclusive_request_business_days, [[ "unspecified", "0"], ["10 days", "10"], ["20 days", "20"], ["30 days", "30"]], {}, :disabled => !contact.exclusive_request?
+      %label.checkbox
+        = f.radio_button :exclusive_request, false, :checked => false, :onclick => "if (this.checked) this.up('.entry').down('select').disable();"
+        = "You are planning to submit this request simultaneously to several providers"
     %h4= "About You"
     .entry
       = f.label :name, "Contact person: first and last name", :require => true
@@ -68,5 +78,7 @@
         -#= image_tag "/images/contact/spinner.gif", :alt => ""
         %img{ :src => "/images/contact/spinner.gif", :alt => "" }
       %p.info= "After submitting, you will get the opportunity to<br /> download a secure PDF copy of your submission."
+      
+  .required_mention= "<abbr title='required'>*</abbr> required"
     
     
