@@ -7,7 +7,7 @@ pdf.font "Helvetica"
 pdf.font_size 11
 
 pdf.text "Jilion Contact - Would you like us to work for you?", h1
-pdf.text "Copy of your submission on https://jilion.com/contact on #{I18n.l(@contact.created_at, :format => :long)}", p.merge(:style => :italic)
+pdf.text "This is a copy of your submission on https://jilion.com/contact on #{I18n.l(@contact.created_at, :format => :long)}", p.merge(:style => :italic)
 
 pdf.pad_top(20) do
   pdf.text "About You", h2
@@ -41,6 +41,8 @@ pdf.pad_top(30) do
   pdf.indent(p_indent) { pdf.text @contact.deadline, p }
   pdf.text "Additional comments", h3
   pdf.indent(p_indent) { pdf.text @contact.comment, p }
+  pdf.text "Attach a file to this form (pdf, zip, etc.)", h3
+  pdf.indent(p_indent) { pdf.text @contact.filename, p }
 end
 
 pdf.number_pages "<page>/<total>", [pdf.bounds.right - 20, 0]

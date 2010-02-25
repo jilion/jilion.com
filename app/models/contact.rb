@@ -38,6 +38,10 @@ class Contact
     state == "archived"
   end
   
+  def filename
+    file? ? file.file.filename : ""
+  end
+  
   def self.search(params)
     options = {:state => 'new', :order => "created_at desc", :page => params[:page]}
     options[:_type] = params[:type] if params[:type].present?
