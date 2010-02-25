@@ -1,12 +1,64 @@
 = link_to "Back", :back
-%h2=h @contact.type
+%h2=h @contact.type.to_s.gsub(/Contact::/,'')
 
-=h @contact.issue
-=h @contact.email
-=h @contact.state
-- if @contact.deal?
-  =h @contact.budget
-=l @contact.created_at, :format => :long
+%ul.contact
+  %li
+    %strong= "Issue:"
+    =h @contact.issue
+  %li
+    %strong= "Email:"
+    =h @contact.email
+  %li
+    %strong= "Status:"
+    =h @contact.state
+  - if @contact.deal?
+    %li
+      %strong= "Name:"    
+      =h @contact.name
+    %li
+      %strong= "Phone:"
+      =h @contact.phone
+    %li
+      %strong= "Organization:"
+      =h @contact.organization
+    %li
+      %strong= "Url:"
+      = link_to h(@contact.url), @contact.url
+    %li
+      %strong= "Activity:"
+      =h @contact.activity
+    %li
+      %strong= "Budget:"
+      =h @contact.budget
+    %li
+      %strong= "Project Description:"
+      =h @contact.project_description
+    %li
+      %strong= "Goal:"
+      =h @contact.goal
+    %li
+      %strong= "Metrics:"
+      =h @contact.metrics
+    %li
+      %strong= "Challenge:"
+      =h @contact.challenge
+    %li
+      %strong= "Deadline:"
+      =h @contact.deadline
+    %li
+      %strong= "Comment:"
+      =h @contact.comment
+  - if !@contact.deal?
+    %li
+      %strong= "Message:"
+      =h @contact.message
+  - if !@contact.file_url.nil?
+    %li
+      %strong= "Attachment:"
+      = link_to @contact.file_filename, @contact.file_url
+  %li
+    %strong= "Submitted on:"
+    =l @contact.created_at, :format => :long
 
 
 = archive_button(@contact) unless @contact.archived?

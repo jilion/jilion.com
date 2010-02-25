@@ -2,28 +2,83 @@
 .form_box#deal{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Deal
   .intro
-    %p= "In order to start considering your needs efficiently, we ask you to fill the following secure request form with the information relevant to your case."
+    %p= "In order to start considering your needs efficiently, we ask you to fill the following <br />secure request form with the information relevant to your case."
     %p= "At the end of the process, you will be offered the opportunity to download a secure PDF copy of your submission."
-  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
-    - f.inputs do
-      = f.input :_type, :as => :hidden
-      %h4= "About You"
-      = f.input :name, :label => "Contact Person: first and last name"
-      = f.input :email, :required => true, :label => "Email address"
-      = f.input :phone, :label => "Phone number"
-      = f.input :organization, :label => "Organization or Company name"
-      = f.input :url, :label => "URL (web address)"
-      = f.input :activity, :label => "What is your domain of activity / industry?"
-      %h4= "About your Project"
-      = f.input :budget, :label => "What is your budget for this project?<abbr title='required'>*</abbr> <em>IMPORTANT: We won't reply to requests with no budget indication.</em>"
-      = f.input :project_description, :as => :text, :label => "Please describe the project you would like us to work on <em>(The more details, the better: let us know if you already have wireframes, a navigation map, visual identity, back-end infrastructure requirements, etc.)</em>"
-      = f.input :goal, :as => :text, :label => "What is the general goal or specific achievements you have for this project?"
-      = f.input :metrics, :label => "Do you have metrics for such achievements?"
-      = f.input :challenge, :label => "Is there any particular challenge (technical, business, organizational, etc.) you want to highlight?"
-      = f.input :deadline, :label => "Are there already set deadlines?"
-      = f.input :comment, :as => :text, :label => "Additional comments <em>Are there any additional information you believe would be helpful?</em>"
-      = f.input :file, :as => :file, :label => "Attach a file to this form (pdf, zip, etc.)"
+      
+  - form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+    = f.hidden_field :_type
+    %h4= "About your Request"
+    .intro
+      %p= "Please be aware we do not have the time and resources to answer all Requests for Proposal we receive, especially if they are generic and not addressed to us only (for a limited time of course)."
+    .entry
+      = f.label :exclusive_request, "Please indicate:", :require => true
+      %label.checkbox
+        = f.radio_button :exclusive_request, true, :onclick => "if (this.checked) this.next('select').enable();"
+        = "You are sending this request to Jilion only.<br />"
+        = "Exclusive for the following nr. of business days:"
+        - logger.debug contact.exclusive_request_business_days
+        = f.select :exclusive_request_business_days, [[ "unspecified", "0"], ["10 days", "10"], ["20 days", "20"], ["30 days", "30"]], {}, :disabled => !contact.exclusive_request?
+      %label.checkbox
+        = f.radio_button :exclusive_request, false, :checked => false, :onclick => "if (this.checked) this.up('.entry').down('select').disable();"
+        = "You are planning to submit this request simultaneously to several providers"
+    %h4= "About You"
+    .entry
+      = f.label :name, "Contact person: first and last name", :require => true
+      = f.text_field :name, :class => "text"
+    .entry
+      = f.label :email, "Email address", :require => true
+      = f.text_field :email, :class => "text"
+    .entry
+      = f.label :phone, "Phone number"
+      = f.text_field :phone, :class => "text"
+    .entry
+      = f.label :organization, "Organization or Company name"
+      = f.text_field :organization, :class => "text"
+    .entry
+      = f.label :url, "URL (web address)"
+      = f.text_field :phone, :class => "text"
+    .entry
+      = f.label :activity, "What is your domain of activity / industry?", :require => true
+      = f.text_field :activity, :class => "text"
+    %h4= "About your Project"
+    .entry
+      = f.label :budget, "What is your budget for this project?", :require => true, :notice => "IMPORTANT: We won't reply to requests with no budget indication."
+      = f.text_field :budget, :class => "text"
+    .entry
+      = f.label :project_description, "Please describe the project you would like us to work on", :require => true, :notice => "(The more details, the better: let us know if you already have wireframes, a navigation map, visual identity, back-end infrastructure requirements, etc.)"
+      .textarea_wrapper
+        = f.text_area :project_description, :class => "text"
+    .entry
+      = f.label :goal, "What is the general goal or specific achievements you have for this project?"
+      .textarea_wrapper
+        = f.text_area :goal, :class => "text"
+    .entry
+      = f.label :metrics, "Do you have metrics for such achievements?"
+      = f.text_field :metrics, :class => "text"
+    .entry
+      = f.label :challenge, "Is there any particular challenge (technical, business, organizational, etc.) you want to highlight?"
+      = f.text_field :challenge, :class => "text"
+    .entry
+      = f.label :deadline, "Are there already set deadlines?"
+      = f.text_field :deadline, :class => "text"
+    .entry
+      = f.label :comment, "Additional comments", :notice => "Are there any additional information you believe would be helpful?"
+      .textarea_wrapper
+        = f.text_area :comment, :class => "text"
+    .entry.file
+      = f.label :file, "Attach a file to this form (pdf, zip, etc.)"
+      .fake_file_input
+        .fake_file_input_button
+          %span= "Browse"
+        .fake_file_input_value
+      = f.file_field :file
+    .entry.submit
+      = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
+      .spinner{ :style => "display:none" }
+        -#= image_tag "/images/contact/spinner.gif", :alt => ""
+        %img{ :src => "/images/contact/spinner.gif", :alt => "" }
+      %p.info= "After submitting, you will get the opportunity to<br /> download a secure PDF copy of your submission."
+      
+  .required_mention= "<abbr title='required'>*</abbr> required"
     
-    - f.buttons do
-      = f.commit_button "Submit"
-      -#%p= "After submitting, you will get the opportunity to download a secure PDF copy of your submission."
+    

@@ -3,7 +3,7 @@
   %h2 Job
   .intro
     %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
-    %p= "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to always amaze the team, while the team is functioning as your talents' amplifier."
+    %p= "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to continuously amaze the team, while the team is functioning as your talents' amplifier."
 
     %p= "At the moment we are looking for:"
     %ul
@@ -11,13 +11,28 @@
       %li= "JavaScript software engineer"
       %li= "Ruby on Rails software engineer"
     %p= "If you'd love to work with us, don't be shy, send us your Resume!"
-  - semantic_form_for :contact, contact, :url => contacts_path, :html => { :multipart => true } do |f|
-    - f.inputs do
-      = f.input :_type, :as => :hidden
-      = f.input :email, :required => true, :label => "Your email"
-      = f.input :message, :as => :text, :label => "Your message"
-      = f.input :file, :as => :file, :required => true, :label => "Please attach your Resume (pdf, zip, etc.)"
-      = f.input :file_cache, :as => :hidden
-    
-    - f.buttons do
-      = f.commit_button "Submit"
+        
+  - form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+    = f.hidden_field :_type
+    .entry
+      = f.label :email, "Your email", :require => true
+      = f.text_field :email, :class => "text"
+    .entry
+      = f.label :message, "Your message", :require => true
+      .textarea_wrapper
+        = f.text_area :message, :class => "text"
+    .entry.file
+      = f.label :file, "Please attach your Resume (pdf, zip, etc.)", :require => true
+      .fake_file_input
+        .fake_file_input_button
+          %span= "Browse"
+        .fake_file_input_value
+      = f.file_field :file
+      = f.hidden_field :file_cache
+    .entry.submit
+      = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
+      .spinner{ :style => "display:none" }
+        -#= image_tag "/images/contact/spinner.gif", :alt => ""
+        %img{ :src => "/images/contact/spinner.gif", :alt => "" }
+      .spacer
+  .required_mention= "<abbr title='required'>*</abbr> required"

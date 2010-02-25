@@ -1,0 +1,26 @@
+#admin {
+  padding:20px 45px 35px;
+}
+
+#admin table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+#admin table tr td {
+  padding:0 6px;
+  text-align:center;
+}
+
+#admin table tr.alt td {
+  background:rgba(0,0,0,0.7);
+}
+
+#admin ul.contact {
+  padding:20px;
+  line-height:30px;
+}
+
+#admin ul.contact li strong {
+  font-weight:500;
+}

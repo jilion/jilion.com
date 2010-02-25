@@ -133,22 +133,9 @@ document.observe("dom:loaded", function() {
     }
   }
   
-  $$('#contact_topics textarea').each(function(textarea){
-    var wrap = new Element('div', { 'class':'textarea_wrapper' });
-    textarea.insert({before:wrap});
-    wrap.insert(textarea);
-  });
-  
   $$('input[type=file]').each(function(input){
-    var fakeFileInput = new Element('div', { 'class':'fake_file_input' });
-    var fakeFileInputButton = new Element('div', { 'class':'fake_file_input_button' });
-    var fakeFileInputButtonIcon = new Element('span').update('Browse');
-    var fakeFileInputValue = new Element('div', { 'class':'fake_file_input_value' });
-    fakeFileInput.insert(fakeFileInputButton.insert(fakeFileInputButtonIcon)).insert(fakeFileInputValue);
-    if (!input.value.blank()) fakeFileInputValue.update(input.value);
-    input.insert({before:fakeFileInput});
     input.observe('change', function(e){
-      fakeFileInputValue.update(input.value);
+      input.previous().down('.fake_file_input_value').update(input.value);
     });
     // input.observe('click', function(e){
     //   fakeFileInputButton.addClassName('active');
@@ -184,7 +171,6 @@ document.observe("dom:loaded", function() {
       e.stop();
     });
   });
-  
 });
 
 function validateEmail(email) {
