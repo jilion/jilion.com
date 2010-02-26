@@ -22,7 +22,7 @@ class Contact
   validates_format_of   :email, :with    => RegEmailOk, :message => "is not valid"
   
   before_save :set_issue
-  # after_create :deliver_notification
+  after_create :deliver_notification
   
   TYPES.each do |klass|
     define_method "#{klass.gsub(/Contact::/, '').underscore}?" do
