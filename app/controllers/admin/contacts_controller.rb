@@ -19,7 +19,7 @@ class Admin::ContactsController < ApplicationController
     
     if @contact.update_attributes(params[:contact])
       flash[:notice] = 'Updated.'
-      redirect_to :back
+      redirect_to admin_contacts_path
     else
       render :show
     end

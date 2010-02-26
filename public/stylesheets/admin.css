@@ -2,19 +2,89 @@
   padding:20px 45px 35px;
 }
 
+#admin ul.filter {
+  list-style-type:none;
+  width:360px;
+  margin:0 0 20px;
+  float:left;
+  text-align:center;
+  background:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+  border:1px solid #000;
+  -webkit-border-radius:8px;
+}
+
+#admin ul.filter li {
+  float:left;
+  width:120px;
+  text-transform:uppercase;
+  font-size:14px;
+  letter-spacing:2px;
+  line-height:20px;
+}
+
+#admin ul.filter li a, #admin ul.filter li form {
+  display:block;
+  padding:15px 0;
+  color:#fff;
+  border-top:1px solid rgba(255,255,255,0.2);
+  border-left:1px solid rgba(255,255,255,0.1);
+  border-right:1px solid #000;
+}
+
+#admin ul.filter li:first-child a {
+  border-left:none;
+  -webkit-border-top-left-radius:8px;
+}
+
+#admin ul.filter li a:active {
+  background:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+}
+
+#admin ul.filter li.active a {
+  color:#fc0088;
+  text-shadow:#fd6ac4 0 0 4px;
+}
+
+#admin ul.filter li form {
+  padding:15px 0;
+  border-right:none;
+  -webkit-border-top-right-radius:8px;
+}
+
 #admin table {
   width:100%;
   border-collapse:collapse;
+  background:rgba(0,0,0,0.8);
+  -webkit-border-radius:8px;
+}
+
+#admin table tr th {
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:10px;
 }
 
 #admin table tr td {
-  padding:0 6px;
+  padding:8px;
   text-align:center;
+  font-size:16px;
 }
 
 #admin table tr.alt td {
-  background:rgba(0,0,0,0.7);
+  background:-webkit-gradient(linear, left top, left bottom, from(rgba(45, 53, 67, 0.8)), to(rgba(33, 39, 49, 0.8)));
 }
+
+#admin a.attachment {
+  display:block;
+  width:16px;
+  height:16px;
+  margin:0 auto;
+  background:url(/images/contact/attach.png) no-repeat;
+}
+#admin a.attachment span {display:none;}
+
 
 #admin ul.contact {
   padding:20px;

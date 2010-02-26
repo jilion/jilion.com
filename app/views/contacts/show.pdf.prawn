@@ -7,7 +7,7 @@ pdf.font "Helvetica"
 pdf.font_size 11
 
 pdf.text "Jilion Contact - Would you like us to work for you?", h1
-pdf.text "This is a copy of your submission on https://jilion.com/contact on #{I18n.l(@contact.created_at, :format => :long)}", p.merge(:style => :italic)
+pdf.text "This is a copy of your submission on https://jilion.com/contact on #{I18n.l(@contact.created_at, :format => :long)} GMT", p.merge(:style => :italic)
 
 pdf.pad_top(20) do
   pdf.text "About You", h2
