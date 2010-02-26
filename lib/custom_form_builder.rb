@@ -13,6 +13,8 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
   %w[text_field collection_select date_select select password_field text_area file_field hidden_field radio_button].each do |method_name|
     define_method(method_name) do |field_name, *args|
       
+      Rails.logger.debug field_name
+      
       unless @object.nil?
         errors = @object.errors.on(field_name.to_sym)
         if errors
@@ -28,7 +30,7 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
       
       args.last.is_a?(Hash) && args.last.merge!(:id => "#{ActionController::RecordIdentifier.singular_class_name(@object)}_#{field_name}")
       
-      super(field_name, *args) + (inline_errors.nil? ? '' : "<p class='inline_errors'>This field #{inline_errors}</p>")
+      super(field_name, *args) + (inline_errors.nil? ? '' : "<span class='inline_errors'>This field #{inline_errors}</span>")
       # super
     end
   end

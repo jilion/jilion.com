@@ -15,7 +15,7 @@ class Contact::Deal < Contact
   key :deadline, String
   key :comment, String
   
-  validates_inclusion_of :exclusive_request, :within => %w( true false ), :message => "can't be blank"
+  validates_inclusion_of :exclusive_request, :within => %w( true false ), :message => "is required"
   validates_presence_of :name, :message => "can't be blank"
   validates_presence_of :activity, :message => "can't be blank"
   validates_presence_of :budget, :message => "can't be blank"

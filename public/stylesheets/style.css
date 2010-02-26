@@ -760,9 +760,13 @@ ul#contact_topics .form_box .intro ul li {
   color:#fff;
 }
 
-#contact form label.checkbox {
+#contact form label.radio {
   margin:10px 0 0;
   line-height:18px;
+}
+
+#contact form label.select {
+  margin:0;
 }
 
 #contact label em {
@@ -786,7 +790,7 @@ ul#contact_topics .form_box .intro ul li {
   border:none;
 }
 
-#contact form .textarea_wrapper .fieldWithErrors {line-height:0;}
+#contact form .textarea_wrapper {line-height:12px;}
 
 #contact form textarea {
   width:99%;
@@ -806,7 +810,7 @@ ul#contact_topics .form_box .intro ul li {
   -webkit-border-radius:4px;
 }
 
-#contact form .fieldWithErrors input, #contact form .fieldWithErrors textarea {
+#contact form input.text.errors, #contact form textarea.errors {
   -webkit-border-bottom-left-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:6px 6px 0 0;
@@ -824,9 +828,27 @@ ul#contact_topics .form_box .intro ul li {
   color:#fff;
   font-size:13px;
   font-weight:400;
+  display:block;
   -webkit-border-bottom-left-radius:6px;
   -webkit-border-bottom-right-radius:6px;
   -moz-border-radius:0 0 6px 6px;
+}
+
+#contact form .textarea_wrapper .inline_errors {
+  padding:6px 8px;
+}
+
+#contact form label.radio input[type=radio] {
+  float:left;
+  margin:2px 6px 0 0;
+}
+
+#contact form label.radio .inline_errors {
+  display:inline;
+/*  margin:0 0 3px 5px;*/
+  padding:2px 6px;
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
 }
 
 #contact form .entry.file {
