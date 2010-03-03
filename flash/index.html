@@ -7,20 +7,52 @@
 
 	<title>Test</title>
 	<style type="text/css" media="screen">
+	
 	 body {
 	   background:#ccc;
 	 }
+	 
+	 #main {
+	   position:relative;
+	   width:600px;
+	   height:255px;
+	 }
+	 
+	 #main.fullwindow {
+	   position:absolute;
+	   width:100%;
+	   height:100%;
+	   top:0;
+	   left:0;
+	 }
+	 
+	 object {
+	   position:absolute;
+	   top:0;
+	   left:0;
+	 }
+	 
 	</style>
+  <script type="text/javascript">
+    function SVfullWindow() {
+      var test = document.getElementById("test");
+      test.width="100%";
+      test.height="100%";
+      var main = document.getElementById("main");
+      main.className="fullwindow";
+    }
+	</script>
 </head>
 
 <body>
   <div id="main">
-   <object width="600" height="255" id="test" type="application/x-shockwave-flash" data="sublime.swf">
-      <param name="movie" value="sublime.swf"></param>
+   <object width="100%" height="100%" id="test" type="application/x-shockwave-flash" data="sublime.swf">
+      <param name="movie" value="sublime.swf" />
       <!-- <param name="wmode" value="transparent"></param> -->
       <!-- <param name="flashvars" value="staticSongs=252&amp;staticEarnings=99999.00&amp;staticCurrency=USD&amp;soldUrl=http://test.com&amp;earningsUrl=http://google.us"></param> -->
     </object>
   </div>
+  <a href="" onclick="SVfullWindow(); return false">full-window</a>
 
 </body>
 </html>
