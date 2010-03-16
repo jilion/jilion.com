@@ -6,9 +6,11 @@ package jilion.sublimevideo {
   import flash.net.*;
   import flash.utils.*;
   import flash.text.*;
+  import flash.ui.Keyboard;
+  import flash.external.ExternalInterface;
 
   public class NormalControls extends SublimeControls {
-    public function NormalControls(stage:Stage, ns:NetStream) {
+    public function NormalControls(stage:Stage, ns:NetStream, videoInfo:VideoInfo, fullControls:FullControls) {
       
       normalControlsBackground = new NormalControlsBackground();
       normalControlsBackground.width = stage.stageWidth;
@@ -17,7 +19,7 @@ package jilion.sublimevideo {
       normalControlsBackground.y = stage.stageHeight;
       stage.addChild(normalControlsBackground);
       
-      wrapper = new Sprite();
+      wrapper = new MovieClip();
       wrapper.graphics.beginFill(0x000000,0);
       wrapper.graphics.drawRect(0, 0, stage.stageWidth, 25);
       wrapper.graphics.endFill();
@@ -37,36 +39,72 @@ package jilion.sublimevideo {
       pauseBtn.addEventListener(MouseEvent.CLICK, pauseBtnClick);
       wrapper.addChild(pauseBtn);
       
-      super(stage, ns, wrapper);
+      var fullWindowAndFullScreenBtn:NormalFullWindowandFullScreenButton = new NormalFullWindowandFullScreenButton();
+      fullWindowAndFullScreenBtn.x = wrapper.width-21;
+      fullWindowAndFullScreenBtn.y = 7;
+      wrapper.addChild(fullWindowAndFullScreenBtn);
+      stage.addEventListener(KeyboardEvent.KEY_DOWN, function(keyEvent:KeyboardEvent){
+        if (keyEvent.keyCode == 70) fullWindowAndFullScreenBtn.gotoAndStop(2);        
+      });
+      stage.addEventListener(KeyboardEvent.KEY_UP, function(keyEvent:KeyboardEvent){        
+        if (keyEvent.keyCode == 70) fullWindowAndFullScreenBtn.gotoAndStop(1);
+      });
+      
+      var thisNormalControls = this;
+      fullWindowAndFullScreenBtn.addEventListener(MouseEvent.CLICK, function(event:MouseEvent){
+        ExternalInterface.call("SVfullWindow()");
+        normalControlsBackground.visible = false;
+        wrapper.visible = false;
+        
+        fullControls.show(thisNormalControls);
+      });
+      
+      /*function fullControls():void {
+        stage.addEventListener(KeyboardEvent.KEY_UP, function(keyEvent:KeyboardEvent){        
+          if (keyEvent.keyCode == Keyboard.ESCAPE) {
+            ExternalInterface.call("closeSVfullWindow()");
+            normalControlsBackground.visible = true;
+            wrapper.visible = true;
+          }
+        });
+      }*/
+      
+      super(stage, ns, videoInfo, wrapper);
     }
     
     public var playBtn:NormalPlayButton;
     public var pauseBtn:NormalPauseButton;
     public var normalControlsBackground:NormalControlsBackground;
-    public var wrapper:Sprite;
+    public var wrapper:MovieClip;
     
     public function setupPlayStartUI():void {  
       playBtn.visible = false;
       pauseBtn.visible = true;
     }
-  
+    
+    public function videoEndReached():void {  
+      netStream.pause();  //  tell the NetStream to pause playback  
+      playBtn.visible = true;
+      pauseBtn.visible = false;
+    }
+    
     public function playBtnClick(event:MouseEvent):void {  
       netStream.resume();  //  tell the NetStream to resume playback
       playBtn.visible = false;
       pauseBtn.visible = true;
     }
-
+    
     public function pauseBtnClick(event:MouseEvent):void {  
       netStream.pause();  //  tell the NetStream to pause playback  
       playBtn.visible = true;
       pauseBtn.visible = false;
     }
-
+    
     public function hide():void {
       Tweener.addTween(normalControlsBackground, { alpha:0, time:0.5 });
       Tweener.addTween(wrapper, { alpha:0, time:0.5 });
     }
-
+    
     public function show():void {
       Tweener.addTween(normalControlsBackground, { alpha:1, time:0.5 });
       Tweener.addTween(wrapper, { alpha:1, time:0.5 });

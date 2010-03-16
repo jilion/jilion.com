@@ -9,7 +9,7 @@ package jilion.sublimevideo {
   import flash.geom.Rectangle;
   
   public class SublimeControls {
-    public function SublimeControls(stage:Stage, ns:NetStream, wrapper:Sprite) {
+    public function SublimeControls(stage:Stage, ns:NetStream, vi:VideoInfo, wrapper:MovieClip) {
       
       var loader:Loader = new Loader();
       loader.contentLoaderInfo.addEventListener(Event.INIT, fontloaded);
@@ -19,6 +19,14 @@ package jilion.sublimevideo {
       var timerTextFormat:TextFormat = new TextFormat();
       videoElapsedTime = new TextField();
       videoRemainingTime = new TextField();
+      videoElapsedTime.width = 46;
+      videoElapsedTime.height = 16;
+      videoElapsedTime.x = 19;
+      videoElapsedTime.y = 5;
+      videoRemainingTime.width = 46;
+      videoRemainingTime.height = 16;
+      videoRemainingTime.x = wrapper.width-66;
+      videoRemainingTime.y = 5;
       
       function fontloaded(e:Event):void {
         timerTextFormat.color = 0xD5D5D5;
@@ -26,20 +34,12 @@ package jilion.sublimevideo {
         timerTextFormat.size = 10;
         timerTextFormat.align = "center";
 
-        videoElapsedTime.x = 19;
-        videoElapsedTime.y = 5;
-        videoElapsedTime.width = 46;
-        videoElapsedTime.height = 16;
         videoElapsedTime.selectable = false;
         videoElapsedTime.embedFonts = true;
         videoElapsedTime.defaultTextFormat = timerTextFormat;
         videoElapsedTime.text = "00:00";
         wrapper.addChild(videoElapsedTime);
 
-        videoRemainingTime.x = wrapper.width-66;
-        videoRemainingTime.y = 5;
-        videoRemainingTime.width = 46;
-        videoRemainingTime.height = 16;
         videoRemainingTime.selectable = false;
         videoRemainingTime.embedFonts = true;
         videoRemainingTime.defaultTextFormat = timerTextFormat;
@@ -74,31 +74,45 @@ package jilion.sublimevideo {
       progressBarIndicator.addEventListener(MouseEvent.MOUSE_DOWN, videoScrubberDown);
       wrapper.addChild(progressBarIndicator);
       
+      bounds = new Rectangle(66,8,videoProgressBarBackground.width-10,0);
+      
+      wrap = wrapper;
       netStream = ns;
       theStage = stage;
       
+      videoInfo = vi;
+      
       var newClient:Object = new Object();
       newClient.onMetaData = function(client:Object){
-        videoDuration = client.duration;
+        videoInfo.setDuration(client.duration);
       };
       netStream.client = newClient;
-      
     }
     
     public var netStream:NetStream;
     public var theStage:Stage;
+    public var wrap:MovieClip;
     public var videoProgressBarBackground:ProgressBarBackground;
     public var videoProgressBarBuffered:ProgressBarBuffered;
     public var videoProgressBarElapsedTime:ProgressBarElapsedTime;
     public var videoRemainingTime:TextField;
     public var videoElapsedTime:TextField;
     public var progressBarIndicator:ProgressBarIndicator;
+
+    public var videoInfo:VideoInfo;
     public var videoDuration:Number;
+
     public var videoInterval = setInterval(videoStatus, 100);
     public var amountLoaded:Number;
+    public var bounds:Rectangle;
     public var scrubInterval;
     
     public function videoStatus():void {
+      
+      if (!videoDuration) {
+        videoDuration = videoInfo.duration;
+      }
+      //trace(videoInfo.duration);
       amountLoaded = netStream.bytesLoaded / netStream.bytesTotal;
 
       videoElapsedTime.text = secondsToTime(netStream.time);
@@ -113,7 +127,6 @@ package jilion.sublimevideo {
     }
     
     public function videoScrubberDown(event:MouseEvent):void {
-      var bounds:Rectangle = new Rectangle(66,8,videoProgressBarBackground.width-10,0);  //  sets the bounds for the video scrubber based on the width of the scrubber
       clearInterval(videoInterval);  //  clear our videoInterval so we can scrub
       scrubInterval = setInterval(scrubTimeline, 10);  //  sets the scrubTimeline listener to update the video  
       progressBarIndicator.startDrag(false, bounds);  //  starts to drag the videoThumb within the bounds we set
@@ -135,7 +148,13 @@ package jilion.sublimevideo {
     }
     
     public function videoProgressBarDown(event:MouseEvent):void {
-      var clickedPos:Number = theStage.mouseX-71;
+      var clickedPos:Number;
+      if (wrap.x > 0) {
+        clickedPos = theStage.mouseX-wrap.x-71;
+      } else {
+        clickedPos = theStage.mouseX-71;
+      }
+      
       var pos:Number;
       if (clickedPos < 5) {
         pos = 0;

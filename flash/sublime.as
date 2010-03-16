@@ -29,6 +29,7 @@ video.scaleY = 1.0;
 
 var nc:NetConnection = new NetConnection();  //  variable for a new NetConnection
 nc.connect(null);  //  set the nc variable to null
+
 var ns:NetStream = new NetStream(nc);  // create a variable for a new NetStream connection & connect it to the nc variable
 ns.addEventListener(NetStatusEvent.NET_STATUS, myStatusHandler);  //  add a listener to the NetStream to listen for any changes that happen with the NetStream
 ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);  //  add a listener to the NetStream for any errors that may happen
@@ -36,11 +37,17 @@ ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);  //  add a 
 video.attachNetStream(ns);  // attach the NetStream variable to the video object
 ns.bufferTime = 5;  // set the buffer time to 5 seconds
 
-function asyncErrorHandler(Event:AsyncErrorEvent):void  {
+ns.play("video.mp4");
+
+var videoInfo:VideoInfo = new VideoInfo();
+var fullControls:FullControls = new FullControls(this.stage, ns, videoInfo);
+var normalControls:NormalControls = new NormalControls(this.stage, ns, videoInfo, fullControls);
+
+function asyncErrorHandler(Event:AsyncErrorEvent):void {
   //trace(event.text);
 }  
 
-function myStatusHandler(event:NetStatusEvent):void  {
+function myStatusHandler(event:NetStatusEvent):void {
   //trace(event.info.code);
   switch(event.info.code)  {
     case "NetStream.Buffer.Full":
@@ -52,6 +59,7 @@ function myStatusHandler(event:NetStatusEvent):void  {
     case "NetStream.Play.Start":
       ns.bufferTime = 10;
       normalControls.setupPlayStartUI();
+      fullControls.setupPlayStartUI();
       break;
     case "NetStream.Seek.Notify":
       ns.bufferTime = 10;
@@ -60,16 +68,12 @@ function myStatusHandler(event:NetStatusEvent):void  {
       ns.bufferTime = 10;
       break;
     case "NetStream.Play.Stop":
-      ns.pause();
-      //ns.seek(0);
+      ns.seek(0);
+      normalControls.videoEndReached();
+      fullControls.videoEndReached();
       break;
   }
 }
-
-ns.play("video.mp4");
-
-// Instance normalControls
-var normalControls:NormalControls = new NormalControls(this.stage, ns);
 
 stage.addEventListener(Event.RESIZE, resizeHandler);
 
@@ -91,6 +95,7 @@ function resizeHandler(e:Event):void {
     videoBlackBox.width = scaledWidth;
     videoBlackBox.x = (stage.stageWidth - videoBlackBox.width)/2;
   }
+  fullControls.updateControlsPosition(stage);
 }
 
 function mouseOn(evt:MouseEvent){
