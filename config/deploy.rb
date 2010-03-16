@@ -53,7 +53,7 @@ namespace :db do
   task :symlink do
     # run "ln -nsf #{shared_config_path}/mysql_config.yml #{release_path}/config/database.yml"
     # run "ln -nsf #{shared_config_path}/mysql_config.yml #{release_path}/config/database.yml"
-    run "ln -nsf #{shared_path}/medias #{release_path}/public/medias"
+    run "ln -nsf #{shared_path}/media #{release_path}/public/media"
     run "ln -nsf #{shared_path}/uploads #{release_path}/public/uploads"
     run "ln -nsf #{shared_path}/test #{release_path}/public/test"
   end

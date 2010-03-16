@@ -7,7 +7,7 @@
       %a.title{ :href => "#deal" }
         = "Would you like <strong>us to work for you?</strong>"
         %span.arrow
-      = render 'deal'      
+      = render 'deal'
     %li.form_2
       %a.title{ :href => "#team_up" }
         = "Would you like to <strong>team up with us?</strong>"
@@ -33,7 +33,7 @@
         = "Do you have an urgent need to <strong>share some good vibes with us?</strong>"
         %span.arrow
       = render 'love'
-
+      
   - flash.each do |key,value|
     #flash{ :class => "alert #{key} #{session[:contact_id] ? 'attachment':''}" }
       %p

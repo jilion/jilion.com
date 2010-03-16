@@ -4,7 +4,7 @@ class Contact
   key :_type, String
   key :email, String
   key :state, String, :default => 'new'
-  key :replied, Boolean
+  key :replied, Boolean, :default => false
   key :issue, Integer
   timestamps!
   
@@ -16,6 +16,7 @@ class Contact
   RegDomainTLD   = '(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)'
   RegEmailOk     = /\A#{RegEmailName}@#{RegDomainHead}#{RegDomainTLD}\z/i
   TYPES = %w[Contact::Deal Contact::Job Contact::Love Contact::Press Contact::Request Contact::TeamUp]
+  STATES = %w[new archived]
   
   validates_presence_of :email, :message => "can't be blank"
   validates_length_of   :email, :within  => 6..100, :message => "is too short"
@@ -43,7 +44,7 @@ class Contact
   end
   
   def self.search(params)
-    options = {:state => 'new', :order => "created_at desc", :page => params[:page]}
+    options = { :state => 'new', :order => "created_at desc", :page => params[:page] }
     options[:_type] = params[:type] if params[:type].present?
     options[:state] = params[:state] if params[:state].present?
     paginate(options.merge(:per_page => 25))
