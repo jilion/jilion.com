@@ -4,6 +4,18 @@ stage.scaleMode = StageScaleMode.NO_SCALE; // tell the stage not to scale our it
 stage.align = StageAlign.TOP_LEFT; // set the stage to center in the top left of the .swf file  
 FilterShortcuts.init();  // initialize the filter shortcuts for our tweener class
 
+var myMenu:ContextMenu = new ContextMenu();
+myMenu.hideBuiltInItems();
+var menuItem:ContextMenuItem = new ContextMenuItem("SublimeVideo® | 2010 © Jilion");
+menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, goToJilion);
+myMenu.customItems.push(menuItem);
+this.contextMenu = myMenu;
+function goToJilion(e:ContextMenuEvent):void {
+  var url:String = "http://jilion.com";
+  var request:URLRequest = new URLRequest(url);
+  navigateToURL(request, '_blank');
+}
+
 var videoSound:SoundTransform;
 
 var videoBackground:PlayerBackground = new PlayerBackground();
@@ -27,6 +39,9 @@ videoBlackBox.addChild(video);
 video.scaleX = 1.0;
 video.scaleY = 1.0;
 
+videoBlackBox.doubleClickEnabled = true;
+videoBlackBox.addEventListener(MouseEvent.DOUBLE_CLICK, goToFullScreen);
+
 var nc:NetConnection = new NetConnection();  //  variable for a new NetConnection
 nc.connect(null);  //  set the nc variable to null
 
@@ -37,6 +52,14 @@ ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);  //  add a 
 video.attachNetStream(ns);  // attach the NetStream variable to the video object
 ns.bufferTime = 5;  // set the buffer time to 5 seconds
 
+var videoUrl:String;
+var videoUrlVar:String;
+var paramObj:Object = LoaderInfo(this.root.loaderInfo).parameters;
+for (videoUrlVar in paramObj) {
+  videoUrl = String(paramObj[videoUrlVar]);
+}
+
+// ns.play(videoUrl);
 ns.play("video.mp4");
 
 var videoInfo:VideoInfo = new VideoInfo();
@@ -75,6 +98,15 @@ function myStatusHandler(event:NetStatusEvent):void {
   }
 }
 
+function goToFullScreen(event:MouseEvent) {
+  if (stage.displayState == StageDisplayState.NORMAL) {
+    normalControls.goToFullScreen = true;
+    normalControls.openFull(event);
+  } else if (stage.displayState == StageDisplayState.FULL_SCREEN) {
+    fullControls.closeFull(stage);
+  }
+}
+
 stage.addEventListener(Event.RESIZE, resizeHandler);
 
 function resizeHandler(e:Event):void {
@@ -109,3 +141,12 @@ function mouseOff(evt:Event){
 }
 
 stage.addEventListener(Event.MOUSE_LEAVE, mouseOff);
+
+stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFullscreenChange);
+
+function onFullscreenChange(e:FullScreenEvent = null):void {
+  if (stage.displayState == StageDisplayState.NORMAL) {
+    fullControls.closeFull(stage);
+  }
+}
+

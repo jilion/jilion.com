@@ -10,7 +10,7 @@ package jilion.sublimevideo {
   import flash.external.ExternalInterface;
 
   public class NormalControls extends SublimeControls {
-    public function NormalControls(stage:Stage, ns:NetStream, videoInfo:VideoInfo, fullControls:FullControls) {
+    public function NormalControls(stage:Stage, ns:NetStream, videoInfo:VideoInfo, fc:FullControls) {
       
       normalControlsBackground = new NormalControlsBackground();
       normalControlsBackground.width = stage.stageWidth;
@@ -30,44 +30,32 @@ package jilion.sublimevideo {
       playBtn = new NormalPlayButton();
       playBtn.x = 6;
       playBtn.y = 7;
-      playBtn.addEventListener(MouseEvent.CLICK, playBtnClick); 
+      playBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void {
+        playBtnClick();
+      }); 
       wrapper.addChild(playBtn);
       
       pauseBtn = new NormalPauseButton();
       pauseBtn.x = 5;
       pauseBtn.y = 7;
-      pauseBtn.addEventListener(MouseEvent.CLICK, pauseBtnClick);
+      pauseBtn.visible = false;
+      pauseBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void {
+        pauseBtnClick();
+      });
       wrapper.addChild(pauseBtn);
       
-      var fullWindowAndFullScreenBtn:NormalFullWindowandFullScreenButton = new NormalFullWindowandFullScreenButton();
+      fullWindowAndFullScreenBtn = new NormalFullWindowandFullScreenButton();
       fullWindowAndFullScreenBtn.x = wrapper.width-21;
       fullWindowAndFullScreenBtn.y = 7;
       wrapper.addChild(fullWindowAndFullScreenBtn);
-      stage.addEventListener(KeyboardEvent.KEY_DOWN, function(keyEvent:KeyboardEvent){
-        if (keyEvent.keyCode == 70) fullWindowAndFullScreenBtn.gotoAndStop(2);        
-      });
-      stage.addEventListener(KeyboardEvent.KEY_UP, function(keyEvent:KeyboardEvent){        
-        if (keyEvent.keyCode == 70) fullWindowAndFullScreenBtn.gotoAndStop(1);
-      });
       
-      var thisNormalControls = this;
-      fullWindowAndFullScreenBtn.addEventListener(MouseEvent.CLICK, function(event:MouseEvent){
-        ExternalInterface.call("SVfullWindow()");
-        normalControlsBackground.visible = false;
-        wrapper.visible = false;
-        
-        fullControls.show(thisNormalControls);
-      });
+      ExternalInterface.addCallback( "togglefullWindowAndFullScreenBtn", togglefullWindowAndFullScreenBtn);
       
-      /*function fullControls():void {
-        stage.addEventListener(KeyboardEvent.KEY_UP, function(keyEvent:KeyboardEvent){        
-          if (keyEvent.keyCode == Keyboard.ESCAPE) {
-            ExternalInterface.call("closeSVfullWindow()");
-            normalControlsBackground.visible = true;
-            wrapper.visible = true;
-          }
-        });
-      }*/
+      fullWindowAndFullScreenBtn.addEventListener(MouseEvent.CLICK, openFull);
+      
+      thisNormalControls = this;
+      
+      fullControls = fc;
       
       super(stage, ns, videoInfo, wrapper);
     }
@@ -76,28 +64,39 @@ package jilion.sublimevideo {
     public var pauseBtn:NormalPauseButton;
     public var normalControlsBackground:NormalControlsBackground;
     public var wrapper:MovieClip;
+    public var fullWindowAndFullScreenBtn:NormalFullWindowandFullScreenButton;
+    public var fullControls:FullControls;
+    public var thisNormalControls:NormalControls;
+    public var goToFullScreen:Boolean = false;
     
-    public function setupPlayStartUI():void {  
+    public function setupPlayStartUI():void {
       playBtn.visible = false;
       pauseBtn.visible = true;
+      progressBarIndicator.visible = true;
     }
     
-    public function videoEndReached():void {  
-      netStream.pause();  //  tell the NetStream to pause playback  
+    public function videoEndReached():void {
+      netStream.pause();
       playBtn.visible = true;
       pauseBtn.visible = false;
     }
     
-    public function playBtnClick(event:MouseEvent):void {  
-      netStream.resume();  //  tell the NetStream to resume playback
-      playBtn.visible = false;
-      pauseBtn.visible = true;
+    public function setPlayPauseUI(playPause:Boolean):void {
+      // playPause == true => play, playPause == false => pause
+      playBtn.visible = !playPause;
+      pauseBtn.visible = playPause;
     }
     
-    public function pauseBtnClick(event:MouseEvent):void {  
-      netStream.pause();  //  tell the NetStream to pause playback  
-      playBtn.visible = true;
-      pauseBtn.visible = false;
+    public function playBtnClick():void {
+      netStream.resume();
+      this.setPlayPauseUI(true);
+      fullControls.setPlayPauseUI(true);
+    }
+    
+    public function pauseBtnClick():void {
+      netStream.pause();
+      this.setPlayPauseUI(false);
+      fullControls.setPlayPauseUI(false);
     }
     
     public function hide():void {
@@ -109,18 +108,28 @@ package jilion.sublimevideo {
       Tweener.addTween(normalControlsBackground, { alpha:1, time:0.5 });
       Tweener.addTween(wrapper, { alpha:1, time:0.5 });
     }
-
-  }
-
-  
-
-/*  public class FullWindowControls extends SublimeControls {
-    public function FullWindowControls() {
-      super();
-      playBtn = playBtn_fs_mc;  //  targets the play button in the player
-
+    
+    public function openFull(event:MouseEvent):void {
+      if (goToFullScreen) {
+        theStage.displayState = StageDisplayState.FULL_SCREEN;
+      } else {
+        ExternalInterface.call("SVfullWindow()");
+      }
+      normalControlsBackground.visible = false;
+      wrapper.visible = false;
+      fullControls.show(thisNormalControls);
     }
+    
+    function togglefullWindowAndFullScreenBtn(fullScreen:Boolean):void {
+      if (fullScreen) {
+        fullWindowAndFullScreenBtn.gotoAndStop(2);
+        goToFullScreen = true;
+      } else {
+        fullWindowAndFullScreenBtn.gotoAndStop(1);
+        goToFullScreen = false;
+      }
+    }
+
   }
 
-*/
 }

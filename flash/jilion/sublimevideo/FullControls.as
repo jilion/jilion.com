@@ -8,6 +8,7 @@ package jilion.sublimevideo {
   import flash.text.*;
   import flash.geom.Rectangle;
   import flash.ui.Keyboard;
+  import flash.ui.Mouse;
   import flash.external.ExternalInterface;
 
   public class FullControls extends SublimeControls {
@@ -15,7 +16,7 @@ package jilion.sublimevideo {
       
       stage.addEventListener(KeyboardEvent.KEY_UP, function(keyEvent:KeyboardEvent){
         if (keyEvent.keyCode == Keyboard.ESCAPE) {
-          closeFull();
+          closeFull(stage);
         }
       });
       
@@ -24,7 +25,7 @@ package jilion.sublimevideo {
       fullControlsWrap.width = 334;
       fullControlsWrap.height = 94;
       fullControlsWrap.x = (stage.stageWidth/2)-fullControlsWrap.width;
-      fullControlsWrap.y = stage.stageHeight-40;
+      fullControlsWrap.y = stage.stageHeight;
       fullControlsWrap.addEventListener(MouseEvent.MOUSE_DOWN, function (e:MouseEvent):void {
         if (e.eventPhase == 2) e.currentTarget.startDrag();
       });
@@ -36,13 +37,18 @@ package jilion.sublimevideo {
       playBtn = new FullPlayButton();
       playBtn.x = 153;
       playBtn.y = 23;
-      playBtn.addEventListener(MouseEvent.CLICK, playBtnClick); 
+      playBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void {
+        playBtnClick();
+      }); 
       fullControlsWrap.addChild(playBtn);
       
       pauseBtn = new FullPauseButton();
       pauseBtn.x = 156;
       pauseBtn.y = 23;
-      pauseBtn.addEventListener(MouseEvent.CLICK, pauseBtnClick);
+      pauseBtn.visible = false;
+      pauseBtn.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void {
+        pauseBtnClick()
+      });
       fullControlsWrap.addChild(pauseBtn);
       
       var fullCloseFullWindowAndFullScreenBtn:FullCloseFullWindowAndFullScreen = new FullCloseFullWindowAndFullScreen();
@@ -51,7 +57,7 @@ package jilion.sublimevideo {
       fullControlsWrap.addChild(fullCloseFullWindowAndFullScreenBtn);
 
       fullCloseFullWindowAndFullScreenBtn.addEventListener(MouseEvent.CLICK, function(event:MouseEvent){
-        closeFull();
+        closeFull(stage);
       });
       
       super(stage, ns, videoInfo, fullControlsWrap);
@@ -71,28 +77,40 @@ package jilion.sublimevideo {
     public var pauseBtn:FullPauseButton;
     public var fullControlsWrap:FullControlsWrap;
     public var normalControls:NormalControls;
+    public var mousePosition:Number;
+    public var poller;
+    public var latestPolledMousePosition:Number;
+    public var frozenDuration:Number = 0;
     
     public function setupPlayStartUI():void {  
       playBtn.visible = false;
       pauseBtn.visible = true;
+      progressBarIndicator.visible = true;
     }
     
     public function videoEndReached():void {  
-      netStream.pause();  //  tell the NetStream to pause playback  
+      netStream.pause();
       playBtn.visible = true;
       pauseBtn.visible = false;
     }
     
-    public function playBtnClick(event:MouseEvent):void {  
-      netStream.resume();  //  tell the NetStream to resume playback
-      playBtn.visible = false;
-      pauseBtn.visible = true;
+    public function setPlayPauseUI(playPause:Boolean):void {  
+      // playPause == true => play, playPause == false => pause
+      playBtn.visible = !playPause;
+      pauseBtn.visible = playPause;
+    }
+    
+    public function playBtnClick():void {
+      netStream.resume();
+      this.setPlayPauseUI(true);
+      poller = setInterval(fullControlsPoll, 500);
+      normalControls.setPlayPauseUI(true);
     }
 
-    public function pauseBtnClick(event:MouseEvent):void {  
-      netStream.pause();  //  tell the NetStream to pause playback  
-      playBtn.visible = true;
-      pauseBtn.visible = false;
+    public function pauseBtnClick():void {
+      netStream.pause();
+      this.setPlayPauseUI(false);
+      normalControls.setPlayPauseUI(false);
     }
 
     public function hide():void {
@@ -104,14 +122,41 @@ package jilion.sublimevideo {
         normalControls = nc;
       }
       
-      Tweener.addTween(fullControlsWrap, { alpha:1, time:0.5 });
+      fullControlsWrap.visible = true;
+      fullControlsWrap.alpha = 1;
+      
+      theStage.addEventListener(KeyboardEvent.KEY_DOWN, spaceBarControls);
+      theStage.addEventListener(MouseEvent.MOUSE_MOVE, setMousePosition);
+      if (pauseBtn.visible == true) poller = setInterval(fullControlsPoll, 500);
     }
     
-    public function closeFull():void {
-      ExternalInterface.call("closeSVfullWindow()");
-      fullControlsWrap.alpha = 0;
+    public function closeFull(stage:Stage):void {
+      frozenDuration = 0;
+      fullControlsWrap.visible = false;
+      if (stage.displayState == StageDisplayState.NORMAL) {
+        ExternalInterface.call("closeSVfullWindow()");
+        Mouse.show();
+      }
+      else if (stage.displayState == StageDisplayState.FULL_SCREEN) {
+        stage.displayState = StageDisplayState.NORMAL;
+        Mouse.show();
+      }
       normalControls.normalControlsBackground.visible = true;
       normalControls.wrapper.visible = true;
+      theStage.removeEventListener(KeyboardEvent.KEY_DOWN, spaceBarControls);
+      theStage.removeEventListener(MouseEvent.MOUSE_MOVE, setMousePosition);
+      clearInterval(poller);
+      normalControls.goToFullScreen = false;
+    }
+    
+    public function spaceBarControls(keyEvent:KeyboardEvent):void {
+      if (keyEvent.keyCode == 32) {
+        if (playBtn.visible == true) {
+          playBtnClick();
+        } else {
+          pauseBtnClick();
+        }
+      }
     }
     
     public function updateControlsPosition(stage:Stage) {
@@ -126,6 +171,35 @@ package jilion.sublimevideo {
         fullControlsWrap.y = yValue;
       } else {
         fullControlsWrap.y = 0;
+      }
+    }
+    
+    public function setMousePosition(event:MouseEvent):void {
+      mousePosition = event.stageX*event.stageY;
+    }
+    
+    public function fullControlsPoll():void {
+      if (latestPolledMousePosition == mousePosition) {
+        if (playBtn.visible == true) {
+          clearInterval(poller);
+          Tweener.addTween(fullControlsWrap, { alpha:1, time:0.5 });
+        }
+        frozenDuration += 500;
+      } else {
+        mousePosition = 0;
+        latestPolledMousePosition = mousePosition;
+        frozenDuration = 0;
+        if (fullControlsWrap.alpha == 0) Tweener.addTween(fullControlsWrap, { alpha:1, time:0.5 });
+        if (theStage.displayState == StageDisplayState.FULL_SCREEN) Mouse.show();
+      }
+      
+      if (frozenDuration > 3000) { 
+        if (pauseBtn.visible == true) {
+          Tweener.addTween(fullControlsWrap, { alpha:0, time:0.5 });
+          if (theStage.displayState == StageDisplayState.FULL_SCREEN) Mouse.hide();
+        } else if (theStage.displayState == StageDisplayState.FULL_SCREEN) {
+          Mouse.show();
+        }
       }
     }
   }

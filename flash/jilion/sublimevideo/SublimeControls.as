@@ -71,6 +71,7 @@ package jilion.sublimevideo {
       progressBarIndicator = new ProgressBarIndicator();
       progressBarIndicator.x = 62;
       progressBarIndicator.y = 8;
+      progressBarIndicator.visible = false;
       progressBarIndicator.addEventListener(MouseEvent.MOUSE_DOWN, videoScrubberDown);
       wrapper.addChild(progressBarIndicator);
       
@@ -123,7 +124,7 @@ package jilion.sublimevideo {
 
       var r:Number = netStream.time * (videoProgressBarBackground.width-10) / videoDuration;
       videoProgressBarElapsedTime.width = r + 5;
-      progressBarIndicator.x = r + 66;
+      if (r > 0) progressBarIndicator.x = r + 66;
     }
     
     public function videoScrubberDown(event:MouseEvent):void {
