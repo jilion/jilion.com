@@ -61,6 +61,7 @@ body {
 #video_wrap {
   -webkit-box-shadow:#2e333c 0 4px 20px;
   -moz-box-shadow:#2e333c 0 4px 20px;
+  box-shadow:#2e333c 0 4px 20px;
   background:#000;
   line-height:0;
   margin-bottom:10px;
@@ -382,6 +383,7 @@ img {border:none;}
 .sublime_video_wrapper .controls .progress_back input.progress_indicator::-webkit-slider-thumb:hover {
   -webkit-box-shadow:0 0 6px #fff;
   -moz-box-shadow:0 0 6px #fff;
+  box-shadow:0 0 6px #fff;
 }
 .sublime_video_wrapper .controls .progress_back input.progress_indicator:focus {
   outline: none;
