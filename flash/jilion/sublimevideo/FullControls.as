@@ -134,7 +134,7 @@ package jilion.sublimevideo {
       frozenDuration = 0;
       fullControlsWrap.visible = false;
       if (stage.displayState == StageDisplayState.NORMAL) {
-        ExternalInterface.call("closeSVfullWindow()");
+        ExternalInterface.call("exitSublimeVideoFullWindow()");
         Mouse.show();
       }
       else if (stage.displayState == StageDisplayState.FULL_SCREEN) {
@@ -147,6 +147,7 @@ package jilion.sublimevideo {
       theStage.removeEventListener(MouseEvent.MOUSE_MOVE, setMousePosition);
       clearInterval(poller);
       normalControls.goToFullScreen = false;
+      normalControls.isFullWindow = false;
     }
     
     public function spaceBarControls(keyEvent:KeyboardEvent):void {

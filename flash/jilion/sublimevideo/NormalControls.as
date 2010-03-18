@@ -49,7 +49,7 @@ package jilion.sublimevideo {
       fullWindowAndFullScreenBtn.y = 7;
       wrapper.addChild(fullWindowAndFullScreenBtn);
       
-      ExternalInterface.addCallback( "togglefullWindowAndFullScreenBtn", togglefullWindowAndFullScreenBtn);
+      ExternalInterface.addCallback( "toggleSublimeVideoFullBtn", togglefullWindowAndFullScreenBtn);
       
       fullWindowAndFullScreenBtn.addEventListener(MouseEvent.CLICK, openFull);
       
@@ -68,6 +68,7 @@ package jilion.sublimevideo {
     public var fullControls:FullControls;
     public var thisNormalControls:NormalControls;
     public var goToFullScreen:Boolean = false;
+    public var isFullWindow:Boolean = false;
     
     public function setupPlayStartUI():void {
       playBtn.visible = false;
@@ -112,8 +113,10 @@ package jilion.sublimevideo {
     public function openFull(event:MouseEvent):void {
       if (goToFullScreen) {
         theStage.displayState = StageDisplayState.FULL_SCREEN;
+        isFullWindow = false;
       } else {
-        ExternalInterface.call("SVfullWindow()");
+        ExternalInterface.call("enterSublimeVideoFullWindow()");
+        isFullWindow = true;
       }
       normalControlsBackground.visible = false;
       wrapper.visible = false;

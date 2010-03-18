@@ -8,46 +8,39 @@ package jilion.sublimevideo {
   import flash.text.*;
   import flash.geom.Rectangle;
   
+  [Embed(systemFont="Helvetica Neue", fontName="HelveticaNeueBold", fontWeight="bold", advancedAntiAliasing="true", mimeType="application/x-font", unicodeRange="U+0030-U+003A,U+002D")]
+  
   public class SublimeControls {
     public function SublimeControls(stage:Stage, ns:NetStream, vi:VideoInfo, wrapper:MovieClip) {
-      
-      var loader:Loader = new Loader();
-      loader.contentLoaderInfo.addEventListener(Event.INIT, fontloaded);
-
-      loader.load(new URLRequest('Helvetica.swf'));
-      
+            
       var timerTextFormat:TextFormat = new TextFormat();
+      timerTextFormat.color = 0xD5D5D5;
+      timerTextFormat.font = "HelveticaNeueBold";
+      timerTextFormat.size = 10;
+      timerTextFormat.align = "center";
+      
       videoElapsedTime = new TextField();
-      videoRemainingTime = new TextField();
       videoElapsedTime.width = 46;
       videoElapsedTime.height = 16;
       videoElapsedTime.x = 19;
       videoElapsedTime.y = 5;
+      videoElapsedTime.selectable = false;
+      videoElapsedTime.embedFonts = true;
+      videoElapsedTime.defaultTextFormat = timerTextFormat;
+      videoElapsedTime.text = "00:00";
+      wrapper.addChild(videoElapsedTime);
+
+      videoRemainingTime = new TextField();
       videoRemainingTime.width = 46;
       videoRemainingTime.height = 16;
       videoRemainingTime.x = wrapper.width-66;
       videoRemainingTime.y = 5;
+      videoRemainingTime.selectable = false;
+      videoRemainingTime.embedFonts = true;
+      videoRemainingTime.defaultTextFormat = timerTextFormat;
+      videoRemainingTime.text = "00:00";
+      wrapper.addChild(videoRemainingTime);
       
-      function fontloaded(e:Event):void {
-        timerTextFormat.color = 0xD5D5D5;
-        timerTextFormat.font = "HelveticaNeueBold";
-        timerTextFormat.size = 10;
-        timerTextFormat.align = "center";
-
-        videoElapsedTime.selectable = false;
-        videoElapsedTime.embedFonts = true;
-        videoElapsedTime.defaultTextFormat = timerTextFormat;
-        videoElapsedTime.text = "00:00";
-        wrapper.addChild(videoElapsedTime);
-
-        videoRemainingTime.selectable = false;
-        videoRemainingTime.embedFonts = true;
-        videoRemainingTime.defaultTextFormat = timerTextFormat;
-        videoRemainingTime.text = "00:00";
-        wrapper.addChild(videoRemainingTime);
-        
-      }
-
       videoProgressBarBackground = new ProgressBarBackground();
       videoProgressBarBackground.width = wrapper.width-132;
       videoProgressBarBackground.x = 66;
@@ -89,7 +82,7 @@ package jilion.sublimevideo {
       };
       netStream.client = newClient;
     }
-    
+        
     public var netStream:NetStream;
     public var theStage:Stage;
     public var wrap:MovieClip;

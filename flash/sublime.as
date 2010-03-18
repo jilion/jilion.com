@@ -4,14 +4,15 @@ stage.scaleMode = StageScaleMode.NO_SCALE; // tell the stage not to scale our it
 stage.align = StageAlign.TOP_LEFT; // set the stage to center in the top left of the .swf file  
 FilterShortcuts.init();  // initialize the filter shortcuts for our tweener class
 
+
 var myMenu:ContextMenu = new ContextMenu();
 myMenu.hideBuiltInItems();
-var menuItem:ContextMenuItem = new ContextMenuItem("SublimeVideo® | 2010 © Jilion");
+var menuItem:ContextMenuItem = new ContextMenuItem("SublimeVideo® | © 2010 Jilion");
 menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, goToJilion);
 myMenu.customItems.push(menuItem);
 this.contextMenu = myMenu;
 function goToJilion(e:ContextMenuEvent):void {
-  var url:String = "http://jilion.com";
+  var url:String = "http://jilion.com/sublime/video";
   var request:URLRequest = new URLRequest(url);
   navigateToURL(request, '_blank');
 }
@@ -40,7 +41,7 @@ video.scaleX = 1.0;
 video.scaleY = 1.0;
 
 videoBlackBox.doubleClickEnabled = true;
-videoBlackBox.addEventListener(MouseEvent.DOUBLE_CLICK, goToFullScreen);
+videoBlackBox.addEventListener(MouseEvent.DOUBLE_CLICK, goToFullWindow);
 
 var nc:NetConnection = new NetConnection();  //  variable for a new NetConnection
 nc.connect(null);  //  set the nc variable to null
@@ -59,8 +60,8 @@ for (videoUrlVar in paramObj) {
   videoUrl = String(paramObj[videoUrlVar]);
 }
 
-// ns.play(videoUrl);
-ns.play("video.mp4");
+ns.play(videoUrl);
+//ns.play("video.mp4");
 
 var videoInfo:VideoInfo = new VideoInfo();
 var fullControls:FullControls = new FullControls(this.stage, ns, videoInfo);
@@ -95,6 +96,19 @@ function myStatusHandler(event:NetStatusEvent):void {
       normalControls.videoEndReached();
       fullControls.videoEndReached();
       break;
+  }
+}
+
+function goToFullWindow(event:MouseEvent) {
+  if (stage.displayState == StageDisplayState.NORMAL) {
+    normalControls.goToFullScreen = false;
+    if (normalControls.isFullWindow) {
+      fullControls.closeFull(stage);
+    } else {
+      normalControls.openFull(event);
+    }
+  } else if (stage.displayState == StageDisplayState.FULL_SCREEN) {
+    fullControls.closeFull(stage);
   }
 }
 
