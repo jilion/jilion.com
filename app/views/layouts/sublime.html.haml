@@ -11,8 +11,9 @@
         == body {background:#fff;display:none;}
     == <script type="text/javascript" src="http://use.typekit.com/fhp4bvf.js"></script>
     == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    = javascript_include_tag "sublime/video/sublime", :cache => "/assets/sublime"
   %body
     = yield
     
-    = include_javascripts :sublime
+    -#= include_javascripts :sublime
     - google_analytics

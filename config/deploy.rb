@@ -32,12 +32,13 @@ role :db, domain, :primary => true
 
 after "deploy:symlink", "db:symlink"
 before "deploy:symlink", "asset:prepare"
-after "asset:prepare", "asset:copyright"
+# after "asset:prepare", "asset:copyright"
 after "asset:copyright", "asset:upload"
 
 namespace :asset do
   task :prepare do
     run "cd #{release_path}; jammit -u http://jilion.com"
+    run "cd #{release_path}; cp public/javascripts/sublime/video/sublime.js public/assets/sublime.js"
   end
   
   task :copyright do
