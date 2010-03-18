@@ -33,7 +33,7 @@ role :db, domain, :primary => true
 after "deploy:symlink", "db:symlink"
 before "deploy:symlink", "asset:prepare"
 # after "asset:prepare", "asset:copyright"
-after "asset:copyright", "asset:upload"
+after "asset:prepare", "asset:upload"
 
 namespace :asset do
   task :prepare do
