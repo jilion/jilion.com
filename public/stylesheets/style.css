@@ -36,6 +36,7 @@ body.winxp {font-family:Arial, sans-serif;}
   -moz-box-shadow:#000 0 2px 10px;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
+  border-radius:10px;
 }
 
 #logo_backlights {
@@ -569,6 +570,7 @@ button::-moz-focus-inner { border: 0; }
   font-size:12px;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
+  border-radius:6px;
 }
 
 #email_flash.thankyou {
@@ -602,6 +604,7 @@ button::-moz-focus-inner { border: 0; }
   -moz-box-shadow:rgb(0,0,0) 0 2px 10px;
   -webkit-border-radius:8px;
   -moz-border-radius:8px;
+  border-radius:8px;
 }
 
 #map_wrap {
@@ -635,6 +638,7 @@ ul#contact_topics > li {
   position:relative;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
+  border-radius:10px;
 }
 
 
@@ -648,6 +652,7 @@ ul#contact_topics li a.title {
   position:relative;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
+  border-radius:10px;
   -webkit-transition-property: background-color, color;
   -webkit-transition-duration: 1s, 1s;
 }
@@ -672,6 +677,7 @@ ul#contact_topics li.expanded a.title, ul#contact_topics li.expanded a.title:hov
   -webkit-border-bottom-left-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:6px 6px 0 0;
+  border-radius:6px 6px 0 0;
 }
 
 ul#contact_topics li a.title span.arrow {
@@ -814,6 +820,7 @@ ul#contact_topics .form_box .intro ul li {
   -webkit-border-bottom-left-radius:0;
   -webkit-border-bottom-right-radius:0;
   -moz-border-radius:6px 6px 0 0;
+  border-radius:6px 6px 0 0;
 }
 
 #contact form input.text:focus, #contact form textarea:focus {
@@ -832,6 +839,7 @@ ul#contact_topics .form_box .intro ul li {
   -webkit-border-bottom-left-radius:6px;
   -webkit-border-bottom-right-radius:6px;
   -moz-border-radius:0 0 6px 6px;
+  border-radius:0 0 6px 6px;
 }
 
 #contact form .textarea_wrapper .inline_errors {
@@ -849,6 +857,7 @@ ul#contact_topics .form_box .intro ul li {
   padding:2px 6px;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
+  border-radius:6px;
 }
 
 #contact form .entry.file {
@@ -866,6 +875,7 @@ ul#contact_topics .form_box .intro ul li {
   background:url(/images/contact/file_button_back.png) no-repeat;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
+  border-radius:6px;
 }
 
 #contact form .entry.file .fake_file_input_button.active {background-position:0 -28px;}
@@ -941,6 +951,8 @@ ul#contact_topics .form_box .intro ul li {
   height:434px;
   background:rgba(0,0,0,0.9);
   -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
 }
 
 #contact #flash.notice p {
