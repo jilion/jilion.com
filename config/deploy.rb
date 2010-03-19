@@ -4,7 +4,7 @@
 
 set :application, "jilion.com"
 set :scm, :git
-set :repository, "git@jime1.epfl.ch:jilion_v2.git"
+set :repository, "git@jime1.epfl.ch:jilion.com.git"
 set :branch, "master"
 set :ssh_options, { :forward_agent => true }
 # set :deploy_via, :remote_cache
