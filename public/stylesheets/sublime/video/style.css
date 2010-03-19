@@ -217,6 +217,7 @@ img {border:none;}
   background:rgba(0,0,0,0.4) url(/images/embed/sublime/video/play_button.png) no-repeat 50% 50%;
   -webkit-transition:0.5s background-color;
   -moz-transition:0.5s background-color;
+  -o-transition:0.5s background-color;
 }
 
 .sublime_video_wrapper span.play_button:hover, .sublime_video_wrapper span.pause_button:hover {
@@ -252,7 +253,7 @@ img {border:none;}
   -webkit-user-select:none;
   -webkit-transition:0.5s opacity;
   -moz-transition:0.5s opacity;
-/*    -webkit-transition-delay:0.3s;*/
+  -o-transition:0.5s opacity;
 }
 
 .sublime_video_wrapper video:hover + .controls.small, .sublime_video_wrapper .controls.small:hover, .sublime_video_wrapper.paused .controls {
@@ -319,6 +320,7 @@ img {border:none;}
   border-radius:20px;
   -webkit-transition:1s width;
   -moz-transition:1s width;
+  -o-transition:1s width;
 }
 
 .sublime_video_wrapper .controls .progress_back .progress_elapsed_time {
@@ -338,7 +340,7 @@ img {border:none;}
 */
 }
 
-/* firefox slider */
+/* js slider */
 .sublime_video_wrapper .controls .progress_back span.progress_indicator {
   width:10px;
   height:10px;
@@ -359,7 +361,7 @@ img {border:none;}
   -moz-box-shadow:0 0 6px #fff;
 }*/
 
-/* webkit slider */
+/* html5 slider */
 .sublime_video_wrapper .controls .progress_back input.progress_indicator {
   -webkit-appearance:none;
   background:none;
@@ -431,11 +433,12 @@ img {border:none;}
   margin:0 auto;
   z-index:4;
   background:url(/images/embed/sublime/video/controls/full/pane_back.png) repeat-x;
-  -webkit-transform:translate(1px,1px);
-  -webkit-transform-origin:0 0;
   -webkit-transition:0.5s opacity;
   -moz-transition:0.5s opacity;
+  -o-transition:0.5s opacity;
   -webkit-user-select:none;
+  -moz-user-select:none;
+
 }
 
 .sublime_video_wrapper .controls.full .play_pause_button {
@@ -498,6 +501,7 @@ img {border:none;}
   text-shadow:#000 1px 1px 1px;
   -webkit-transition:0.5s opacity;
   -moz-transition:0.5s opacity;
+  -o-transition:0.5s opacity;
 }
 
 .sublime_video_wrapper .controls.full .progress_bar {
