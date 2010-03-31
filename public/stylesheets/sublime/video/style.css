@@ -11,6 +11,8 @@ body {
   font-size:14px;
 }
 
+body.win {font-family:Arial, sans-serif !important;}
+
 #global {
   width:600px;
   margin:0 auto;
