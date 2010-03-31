@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.resources :sublime, :only => [:index, :show]
+  map.video_flash '/sublime/video/flash', :controller => 'sublime', :action => 'show', :id => 'video', :flash => true
   map.resources :contacts, :only => [:create]
   map.new_contact 'contact', :controller => 'contacts', :action => 'new', :conditions => { :method => :get }
   map.contact_pdf "contact/Jilion-contact.pdf", :controller => 'contacts', :action => 'show', :conditions => { :method => :get }

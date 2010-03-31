@@ -18,9 +18,9 @@
     -#    -#%source{ :title => "http://jilion.local/~zeno/Jilion/videos/apple-ipad-video-us-20100127_r848-9cie.mov", :type => "video/mp4" }/
     -#- else
     %video.sublime{ :width => "600", :height => "255", :poster => image_path("/images/embed/sublime/video/poster.jpg") }
-      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mov", :type => "video/mp4" }/
-      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mp4", :type => "video/mp4" }/
-      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.ogv", :type => "video/ogg" }/
+      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mov", :type => "video/mp4", :src => "" }/
+      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mp4", :type => "video/mp4", :src => "" }/
+      %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.ogv", :type => "video/ogg", :src => "" }/
       -#%source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor_iphone.mp4", :type => "video/mp4" }/
   #caption
     %p
@@ -33,57 +33,58 @@
         = link_to "James Watson", "http://james-watson.net"
         = "(Desktop: HD 720p. iPhone/iPad Wi-Fi: 496x208 and cellular: 176x74)"
   #content
-    .left
-      %h3
-        = "Current features" 
-        %em= "(in this demo)"
-      %ul
-        %li
-          %strong= "HTML5 video goodness:"
-          %ul
-            %li= "no browser plugin, no Flash dependencies"
-            %li= "jump anywhere in the video and it'll start buffering from that point"
-        %li= "Custom styled controls"
-        %li= "Standalone pure JavaScript library"
-        %li
-          %strong= "Full-window mode:"
-          %ul
-            %li= "Sleek zoom-in/out transitions"
-            %li= "Live-resizing (when resizing the browser window)"
-            %li= "More advanced controls on a draggable pane"
-            %li= "Press spacebar to play/pause video"
-        %li
-          %strong= "Full-screen mode"
-          - link = link_to("WebKit Nightly Builds", "http://nightly.webkit.org")
-          = "by alt-clicking on the full-window button (currently only supported in latest #{link})"
-        %li
-          %strong
-            = "iPhone & "
-            %span.new= "iPad"
-            = "support"
-    .right
-      %h3
-        = "Features we plan to add"
-        %em= "(in the public release)"
-      %ul
-        %li= "Volume controls"
-        %li= "IE support by falling back to Flash"
+    - if params[:flash]
+      %h3.headline= "You are currently testing the Flash mode of SublimeVideo player.<br /> <strong>#{ link_to 'Back to full version', sublime_url(:video)}</strong>"
+    - else
+      .left
+        %h3
+          = "Current features" 
+        %ul
+          %li
+            %strong= "HTML5 video goodness:"
+            %ul
+              %li= "no browser plugin, no Flash dependencies"
+              %li= "jump anywhere in the video and it'll start buffering from that point"
+          %li
+            %strong= "Uniform UI across all browsers"
+          %li
+            %strong= "Standalone pure JavaScript library"
+          %li
+            %strong= "Full-window mode:"
+            %ul
+              %li= "Sleek zoom-in/out transitions"
+              %li= "Live-resizing (when resizing the browser window)"
+              %li= "More advanced controls on a draggable pane"
+              %li= "Press spacebar to play/pause video"
+          %li
+            %strong= "Full-screen mode"
+            - link = link_to("WebKit Nightly Builds", "http://nightly.webkit.org")
+            = "by alt-clicking on the full-window button (currently only supported in latest #{link})"
+          %li
+            %strong
+              = "iPhone &amp; iPad support"
+      .right
       
-      %h3= "Supported Browsers"
-      %ul
-        %li= "Safari (v4.0.4+)"
-        %li= "Google Chrome (v4.0+)"
-        %li
-          %span.new= "Firefox (v3.6+)"
-          = link_to "(read more)", "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link"
-        %li= "Internet Explorer with Chrome Frame installed"
-
-      %h3= "Note"
-      %p
-        = "SublimeVideo® will be soon released for free (at least for non-commercial use)."
-        %strong
-          = link_to "Follow us", "http://twitter.com/Jilion"
-        = "to be notified when it'll be ready!"
+        %h3= "Supported Browsers"
+        %ul
+          %li= "Safari (v4.0.4+)"
+          %li= "Google Chrome (v4.0+)"
+          %li
+            = "Firefox (v3.6+)"
+            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link"
+          %li= "Internet Explorer with Chrome Frame installed"
+          %li
+            %strong= "All other browsers"
+            = "(who do not fully support HTML5 Video) are supported through our"
+            %strong.new= "SublimeVideo Flash player"
+            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link"
+        %h3= "Note"
+        %p
+          = "SublimeVideo® will be soon released and it'll be free for non-commercial use."
+          %br/
+          %strong
+            = link_to "Follow us", "http://twitter.com/Jilion"
+          = "to be notified when it'll be ready!"
     .spacer
     -##faq
     -#  %h3= "FAQ"
