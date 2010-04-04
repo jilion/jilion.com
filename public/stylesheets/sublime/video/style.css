@@ -69,6 +69,16 @@ body.win {font-family:Arial, sans-serif !important;}
   width:600px;
   height:255px;
   margin-bottom:10px;
+  position:relative;
+}
+
+#demo_page_info {
+  position:absolute;
+  width:100%;
+  height:20px;
+  text-align:center;
+  top:-18px;
+  font-size:12px;
 }
 
 #caption {
@@ -520,6 +530,11 @@ img {border:none;}
   position:absolute;
   top:26px;
   right:32px;
+}
+
+.sublime_video_wrapper .controls.full span.fullwindow_button.fullscreen {
+  width:19px;
+  background-image:url(../images/embed/sublime/video/controls/full/enter_fullscreen.png);
 }
 
 .sublime_video_wrapper .controls.small span.playback_display {display:none;}
