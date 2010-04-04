@@ -17,7 +17,7 @@
     -#    %source{ :title => "http://movies.apple.com/media/us/ipad/2010/tours/apple-ipad-video-us-20100127_r848-9cie.mov", :type => "video/mp4" }/
     -#    -#%source{ :title => "http://jilion.local/~zeno/Jilion/videos/apple-ipad-video-us-20100127_r848-9cie.mov", :type => "video/mp4" }/
     -#- else
-    %video.sublime{ :width => "600", :height => "255", :poster => image_path("/images/embed/sublime/video/poster.jpg") }
+    %video{ :class => params[:flash] ? "sublime flash" : "sublime", :width => "600", :height => "255", :poster => image_path("/images/embed/sublime/video/poster.jpg") }
       %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mov", :type => "video/mp4", :src => "" }/
       %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.mp4", :type => "video/mp4", :src => "" }/
       %source{ :title => "http://medias.jilion.com/sublimevideo/dartmoor.ogv", :type => "video/ogg", :src => "" }/
