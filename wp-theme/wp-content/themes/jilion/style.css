@@ -21,6 +21,8 @@ body {
   background:url(http://blog.jilion.com/assets/images/background.png);
 }
 
+body.win {font-family:Arial, sans-serif !important;}
+
 #global {
   width:960px;
   margin:0 auto;

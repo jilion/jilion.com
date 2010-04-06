@@ -5,6 +5,14 @@ namespace :cdn do
     desc "Upload static assets to S3"
     task :upload => :environment do
       timestamp = Time.now.strftime("%m%d%Y%H%M%S")
+      
+      %x[jammit -u http://assets1.jilion.com/#{timestamp} -f]
+      
+      # Add paths here from assets which are not processed by jammit but you want to put on the CDN
+      %x[cp public/javascripts/sublime/video/sublime.js public/assets/sublime.js]
+      %x[cp public/stylesheets/sublime/video/ie7.css public/assets/ie7.css]
+      %x[cp public/stylesheets/sublime/video/ie6.css public/assets/ie6.css]
+      
       s3 = RightAws::S3.new(
         S3_CONFIG['access_key_id'],
         S3_CONFIG['secret_access_key']
