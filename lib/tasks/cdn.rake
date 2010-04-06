@@ -6,12 +6,28 @@ namespace :cdn do
     task :upload => :environment do
       timestamp = Time.now.strftime("%m%d%Y%H%M%S")
       
-      %x[jammit -u http://assets1.jilion.com/#{timestamp} -f]
+      %x[jammit -u https://s3.amazonaws.com/jilion.com/#{timestamp} -f]
       
       # Add paths here from assets which are not processed by jammit but you want to put on the CDN
       %x[cp public/javascripts/sublime/video/sublime.js public/assets/sublime.js]
-      %x[cp public/stylesheets/sublime/video/ie7.css public/assets/ie7.css]
-      %x[cp public/stylesheets/sublime/video/ie6.css public/assets/ie6.css]
+      %x[cp public/javascripts/curvycorners.js public/assets/curvycorners.js]
+      
+      files = ["public/assets/style.css","public/assets/style-datauri.css","public/assets/style-mhtml.css"]
+      
+      files.each do |file|
+        buffer = File.new(file,'r').read.gsub(/@media screen and\(/,"@media screen and (").gsub(/\/images\/embed/,"/#{timestamp}/images/embed")
+        File.open(file,'w') {|fw| fw.write(buffer)}
+      end
+      
+      files = ["public/assets/sublime_ie7.css","public/assets/sublime_ie6.css"]
+      
+      files.each do |file|
+        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"https://s3.amazonaws.com/jilion.com/#{timestamp}/images/embed")
+        File.open(file,'w') {|fw| fw.write(buffer)}
+      end
+      
+      buffer = File.new("public/assets/sublime.js",'r').read.gsub(/\/images\/embed\/sublime\/video\/play_button.png/,"http://assets0.jilion.com/#{timestamp}/images/embed/sublime/video/play_button.png").gsub(/\/flash\/sublime.swf/,"http://assets0.jilion.com/#{timestamp}/flash/sublime.swf")
+      File.open("public/assets/sublime.js",'w') {|fw| fw.write(buffer)}
       
       s3 = RightAws::S3.new(
         S3_CONFIG['access_key_id'],
@@ -20,7 +36,8 @@ namespace :cdn do
       bucket = s3.bucket(S3_CONFIG['bucket'], true, 'public-read')
       
       files = Dir.glob(File.join(RAILS_ROOT, "public/assets/*")) +
-              Dir.glob(File.join(RAILS_ROOT, "public/images/**/*.{png,jpg,jpeg,gif}"))
+              Dir.glob(File.join(RAILS_ROOT, "public/images/**/*.{png,jpg,jpeg,gif}")) +
+              Dir.glob(File.join(RAILS_ROOT, "public/flash/*"))
       
       files.each do |file|
         filekey = file.gsub(/.*public\//, "#{timestamp}/")
@@ -44,8 +61,12 @@ namespace :cdn do
 <<-EOT
 
 # overriding production.rb to include new asset host:
-ActionController::Base.asset_host = Proc.new { |source|
-  "http://assets\#{rand(4)}.jilion.com/#{timestamp}"
+ActionController::Base.asset_host = Proc.new { |source, request|
+  if request.ssl?
+    "\#{request.protocol}s3.amazonaws.com/jilion.com/#{timestamp}"
+  else
+    "\#{request.protocol}assets\#{rand(4)}.jilion.com/#{timestamp}"
+  end
 }
 EOT
       config_file.close

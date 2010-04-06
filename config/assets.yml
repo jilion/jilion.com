@@ -5,5 +5,18 @@ compressor_options:
   compilation_level: "SIMPLE_OPTIMIZATIONS"
 
 stylesheets:
+  style:
+    - public/stylesheets/style.css
+  style_ie:
+    - public/stylesheets/ie.css
   sublime:
     - public/stylesheets/sublime/video/style.css
+  sublime_ie6:
+    - public/stylesheets/sublime/video/ie6.css
+  sublime_ie7:
+    - public/stylesheets/sublime/video/ie7.css
+    
+javascripts:
+  application:
+    - public/javascripts/prototype.s2.min.js
+    - public/javascripts/application.js

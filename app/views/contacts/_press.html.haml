@@ -17,7 +17,6 @@
     .entry.submit
       = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
       .spinner{ :style => "display:none" }
-        -#= image_tag "/images/contact/spinner.gif", :alt => ""
-        %img{ :src => "/images/contact/spinner.gif", :alt => "" }
+        = image_tag "/images/embed/contact/spinner.gif", :alt => ""
       .spacer
   .required_mention= "<abbr title='required'>*</abbr> required"

@@ -59,7 +59,7 @@ document.observe("dom:loaded", function() {
   }
   
   var dropPin = new Image();
-  dropPin.src = "/images/map_drop_pin.png";
+  dropPin.src = "/images/embed/map_drop_pin.png";
   
   //Newsletter
   var emailField = $('subscriber_email');
@@ -188,7 +188,7 @@ function googleMapInitialize() {
   };
   var map = new google.maps.Map(document.getElementById("map_wrap"), myOptions);
 
-  var image = '/images/map_drop_pin.png';
+  var image = '/images/embed/map_drop_pin.png';
   var marker = new google.maps.Marker({
       position: myLatlng, 
       map: map,

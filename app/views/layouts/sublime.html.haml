@@ -7,9 +7,9 @@
     -#%meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
     = include_stylesheets :sublime
     /[if gte IE 7]
-      = stylesheet_link_tag "sublime/video/ie7", :cache => "/assets/ie7"
+      = include_stylesheets :sublime_ie7, :embed_assets => false 
     /[if lte IE 6]
-      = stylesheet_link_tag "sublime/video/ie6", :cache => "/assets/ie6"
+      = include_stylesheets :sublime_ie6, :embed_assets => false 
       -#%meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
       -#%style{ :type => "text/css", :media => "screen" }
       -#  == body {background:#fff;display:none;}

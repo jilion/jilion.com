@@ -8,7 +8,7 @@ body {
   font-size:18px;
   font-weight:100;
   color:#91a1bb;
-  background:url(/images/background.png);
+  background:url(/images/embed/background.png);
 }
 
 body.winxp {font-family:Arial, sans-serif;}
@@ -24,7 +24,7 @@ body.winxp {font-family:Arial, sans-serif;}
 #back {
   width:960px;
   margin:0 auto;
-  background:#000 url(/images/texture.png);
+  background:#000 url(/images/embed/texture.png);
   opacity:0.7;
   position:absolute;
   left:0;
@@ -43,7 +43,7 @@ body.winxp {font-family:Arial, sans-serif;}
 #logo_backlights {
   width:960px;
   height:292px;
-  background:url(/images/logo_backlights.png) no-repeat;
+  background:url(/images/embed/logo_backlights.png) no-repeat;
   position:absolute;
   margin:0 auto;
   top:-80px;
@@ -67,7 +67,7 @@ body.winxp {font-family:Arial, sans-serif;}
   width:234px;
   height:54px;
   margin:10px 10px 0;
-  background:url(/images/jilion.png) no-repeat;
+  background:url(/images/embed/jilion.png) no-repeat;
 }
 
 #header h1 a span {display:none;}
@@ -98,7 +98,7 @@ body.winxp {font-family:Arial, sans-serif;}
 }
 
 #menu li a strong {
-  background:url(/images/black_btn_left.png) no-repeat;
+  background:url(/images/embed/black_btn_left.png) no-repeat;
   height:28px;
   font-weight:600;
   padding:11px 3px 0 12px;
@@ -108,7 +108,7 @@ body.winxp {font-family:Arial, sans-serif;}
 #menu li a:active strong {background-position:0 -39px;}
 
 #menu li a span.corner {
-  background:url(/images/black_btn_right.png) no-repeat;
+  background:url(/images/embed/black_btn_right.png) no-repeat;
   display:block;
   width:6px;
   height:39px;
@@ -121,7 +121,7 @@ body.winxp {font-family:Arial, sans-serif;}
 
 #menu li.blog a span.icon {
   padding:0 26px 0 0;
-  background:url(/images/blog_icon.png) no-repeat 100% 0;
+  background:url(/images/embed/blog_icon.png) no-repeat 100% 0;
 }
 
 h2.headline {
@@ -129,7 +129,7 @@ h2.headline {
   display:block;
   width:778px;
   height:24px;
-  background:url(/images/we_help.png) no-repeat;
+  background:url(/images/embed/we_help.png) no-repeat;
   margin:7px auto 36px;
 }
 
@@ -140,7 +140,7 @@ h2.headline {
   font-size:14px;
   font-weight:400;
   text-shadow:#ccc 0 1px 0;
-  background:url(/images/home/helvetiq.png) no-repeat;
+  background:url(/images/embed/home/helvetiq.png) no-repeat;
   position:relative;
 }
 
@@ -168,7 +168,7 @@ h2.headline {
 
 #latest_work a.view_btn {
   display:block;
-  background:url(/images/home/red_btn.png) no-repeat;
+  background:url(/images/embed/home/red_btn.png) no-repeat;
   width:63px;
   height:26px;
   padding:7px 0 0 13px;
@@ -195,7 +195,7 @@ h2.headline {
   line-height:30px;
   padding:0 25px 0 0;
   text-shadow:#eee 0 1px 0;
-  background:url(/images/home/arrow_black.png) no-repeat 94% 88%;
+  background:url(/images/embed/home/arrow_black.png) no-repeat 94% 88%;
 }
 
 /*#latest_work a.post_link:hover {color:#960200;}*/
@@ -244,7 +244,7 @@ h2.headline {
 #spectrum {
   width:872px;
   height:86px;
-  background:url(/images/home/we_cover.png) no-repeat;
+  background:url(/images/embed/home/we_cover.png) no-repeat;
   text-indent:-99999px;
   margin:10px 0 16px;
 }
@@ -274,7 +274,7 @@ h2.headline {
   margin:0 30px 40px 0;
   width:260px;
   height:81px;
-/*  background:url(/images/home/people_back.png) no-repeat;*/
+/*  background:url(/images/embed/home/people_back.png) no-repeat;*/
   position:relative;
 }
 
@@ -329,7 +329,7 @@ h2.headline {
   width:516px;
   height:98px;
   margin:0 auto;
-  background:url(/images/contact_back.png) no-repeat;
+  background:url(/images/embed/contact_back.png) no-repeat;
   position:relative;
 }
 
@@ -364,7 +364,7 @@ h2.headline {
 }
 
 #content .section.contact li a strong {
-  background:url(/images/black_btn_small_left.png) no-repeat;
+  background:url(/images/embed/black_btn_small_left.png) no-repeat;
   height:24px;
   font-weight:600;
   padding:9px 4px 0 8px;
@@ -374,7 +374,7 @@ h2.headline {
 #content .section.contact li a:active strong {background-position:0 -33px;}
 
 #content .section.contact li a span.corner {
-  background:url(/images/black_btn_small_right.png) no-repeat;
+  background:url(/images/embed/black_btn_small_right.png) no-repeat;
   display:block;
   width:6px;
   height:33px;
@@ -387,17 +387,17 @@ h2.headline {
 
 #content .section.contact li.email a span.icon {
   padding:0 0 5px 28px;
-  background:url(/images/email_icon.png) no-repeat 0 0;
+  background:url(/images/embed/email_icon.png) no-repeat 0 0;
 }
 
 #content .section.contact li.map a span.icon {
   padding:2px 0 5px 20px;
-  background:url(/images/map_icon.png) no-repeat 0 0;
+  background:url(/images/embed/map_icon.png) no-repeat 0 0;
 }
 
 #content .section.contact li.twitter a span.icon {
   padding:2px 0 5px 32px;
-  background:url(/images/twitter_icon.png) no-repeat 0 0;
+  background:url(/images/embed/twitter_icon.png) no-repeat 0 0;
 }
 
 #content .section.contact .newsletter {
@@ -417,7 +417,7 @@ h2.headline {
 }
 
 #content .section.contact .newsletter .wrap {
-  background:url(/images/input_back.png) no-repeat 0 0;
+  background:url(/images/embed/input_back.png) no-repeat 0 0;
   width:180px;
   display:block;
   position:relative;
@@ -440,7 +440,7 @@ h2.headline {
 #content .section.contact .newsletter button.submit {
   width:32px;
   height:32px;
-  background:url(/images/submit_arrow_btn.png) no-repeat;
+  background:url(/images/embed/submit_arrow_btn.png) no-repeat;
   border:none;
   position:absolute;
   right:0;
@@ -530,7 +530,7 @@ h3.title.contact {color:#a7b1c1;}
 #footer {
   width:840px;
   height:88px;
-  background:url(/images/footer_back.png) no-repeat center top;
+  background:url(/images/embed/footer_back.png) no-repeat center top;
   padding:60px;
   margin:0 auto;
   text-align:center;
@@ -561,7 +561,7 @@ a:hover {
 button::-moz-focus-inner { border: 0; }
 
 #email_flash {
-  background:#92c9ad url(/images/home/valid.png) no-repeat 5px 7px;
+  background:#92c9ad url(/images/embed/home/valid.png) no-repeat 5px 7px;
   float:right;
   height:24px;
   padding:8px 7px 0 24px;
@@ -575,7 +575,7 @@ button::-moz-focus-inner { border: 0; }
 }
 
 #email_flash.thankyou {
-  background:#c9b77c url(/images/home/valid_orange.png) no-repeat 5px 7px;
+  background:#c9b77c url(/images/embed/home/valid_orange.png) no-repeat 5px 7px;
   color:#614a01;
 }
 
@@ -686,7 +686,7 @@ ul#contact_topics li a.title span.arrow {
   display:none;
   width:21px;
   height:21px;
-  background:url(/images/contact/arrow.png) no-repeat;
+  background:url(/images/embed/contact/arrow.png) no-repeat;
   position:absolute;
   top:20px;
   right:20px;
@@ -737,7 +737,7 @@ ul#contact_topics .form_box .intro ul {
 
 ul#contact_topics .form_box .intro ul li {
   padding:3px 24px;
-  background:url(/images/contact/li.png) no-repeat 0 11px;
+  background:url(/images/embed/contact/li.png) no-repeat 0 11px;
 }
 
 #contact .required_mention {
@@ -874,7 +874,7 @@ ul#contact_topics .form_box .intro ul li {
 #contact form .entry.file .fake_file_input_button {
   width:115px;
   height:28px;
-  background:url(/images/contact/file_button_back.png) no-repeat;
+  background:url(/images/embed/contact/file_button_back.png) no-repeat;
   -webkit-border-radius:6px;
   -moz-border-radius:6px;
   border-radius:6px;
@@ -889,7 +889,7 @@ ul#contact_topics .form_box .intro ul li {
   font-weight:400;
   text-align:center;
   text-shadow:#232932 0 -1px 0;
-  background:url(/images/contact/file_icon.png) no-repeat 8px 6px;
+  background:url(/images/embed/contact/file_icon.png) no-repeat 8px 6px;
 }
 
 #contact form .entry.file .fake_file_input_value {
@@ -920,7 +920,7 @@ ul#contact_topics .form_box .intro ul li {
 #contact .entry.submit input {
   width:115px;
   height:39px;
-  background:url(/images/contact/button.png) no-repeat;
+  background:url(/images/embed/contact/button.png) no-repeat;
   border:none;
   outline:0;
   font-family:"proxima-nova-1","proxima-nova-2","Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -973,7 +973,7 @@ ul#contact_topics .form_box .intro ul li {
   width:270px;
   height:55px;
   line-height:55px;
-  background:url(/images/contact/pdf_icon.png) no-repeat;
+  background:url(/images/embed/contact/pdf_icon.png) no-repeat;
   margin:0 auto;
   position:absolute;
   bottom:140px;
@@ -987,7 +987,7 @@ ul#contact_topics .form_box .intro ul li {
   display:block;
   width:14px;
   height:14px;
-  background:url(/images/contact/remove.png) no-repeat;
+  background:url(/images/embed/contact/remove.png) no-repeat;
   position:absolute;
   top:20px;
   right:20px;
