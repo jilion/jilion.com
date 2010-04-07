@@ -328,7 +328,7 @@ img {border:none;}
 
 .sublime_video_wrapper .controls .progress_back {
   float:left;
-  width:80%;
+  width:81%;
   padding:0;
   height:8px;
   position:relative;
@@ -355,7 +355,7 @@ img {border:none;}
   width:110%;
   height:8px;
   position:relative;
-  background:url(images/embed/sublime/video/controls/small/loading_stripes.png) repeat-x;
+  background:url(/images/embed/sublime/video/controls/small/loading_stripes.png) repeat-x;
 }
 
 .sublime_video_wrapper .controls .progress_back .progress_buffered {
@@ -534,7 +534,7 @@ img {border:none;}
 
 .sublime_video_wrapper .controls.full span.fullwindow_button.fullscreen {
   width:19px;
-  background-image:url(../images/embed/sublime/video/controls/full/enter_fullscreen.png);
+  background-image:url(/images/embed/sublime/video/controls/full/enter_fullscreen.png);
 }
 
 .sublime_video_wrapper .controls.small span.playback_display {display:none;}
