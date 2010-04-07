@@ -6,7 +6,7 @@ namespace :cdn do
     task :upload => :environment do
       timestamp = Time.now.strftime("%m%d%Y%H%M%S")
       
-      %x[jammit -u https://s3.amazonaws.com/jilion.com/#{timestamp} -f]
+      %x[jammit -u https://jilion.com.s3.amazonaws.com/#{timestamp} -f]
       
       # Add paths here from assets which are not processed by jammit but you want to put on the CDN
       %x[cp public/javascripts/sublime/video/sublime.js public/assets/sublime.js]
@@ -22,7 +22,7 @@ namespace :cdn do
       files = ["public/assets/sublime_ie7.css","public/assets/sublime_ie6.css"]
       
       files.each do |file|
-        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"https://s3.amazonaws.com/jilion.com/#{timestamp}/images/embed")
+        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"https://jilion.com.s3.amazonaws.com/#{timestamp}/images/embed")
         File.open(file,'w') {|fw| fw.write(buffer)}
       end
       
@@ -63,7 +63,7 @@ namespace :cdn do
 # overriding production.rb to include new asset host:
 ActionController::Base.asset_host = Proc.new { |source, request|
   if request.ssl?
-    "\#{request.protocol}s3.amazonaws.com/jilion.com/#{timestamp}"
+    "\#{request.protocol}jilion.com.s3.amazonaws.com/#{timestamp}"
   else
     "\#{request.protocol}assets\#{rand(4)}.jilion.com/#{timestamp}"
   end
