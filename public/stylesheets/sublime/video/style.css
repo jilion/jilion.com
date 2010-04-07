@@ -74,11 +74,14 @@ body.win {font-family:Arial, sans-serif !important;}
 
 #demo_page_info {
   position:absolute;
-  width:100%;
+  width:600px;
   height:20px;
+  line-height:20px;
   text-align:center;
-  top:-18px;
+  top:-30px;
+  left:0;
   font-size:12px;
+  text-shadow:#8893a8 0 1px 0;
 }
 
 #caption {
