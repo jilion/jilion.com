@@ -99,6 +99,10 @@ body.win {font-family:Arial, sans-serif !important;}
   border-radius:10px;
 }
 
+#content.flash_notice a {
+  font-style:italic;
+}
+
 #content .left {
   float:left;
   width:270px;
@@ -123,11 +127,23 @@ body.win {font-family:Arial, sans-serif !important;}
   padding:3px 0 0;
 }
 
-#content h3.headline {
+#content p.headline {
   text-align:center;
   font-weight:400;
-  font-size:18px;
+  font-size:22px;
   line-height:30px;
+  padding:5px 0 22px;
+}
+
+#content p.headline em {
+  font-style:normal;
+  color:#7e0f00;
+}
+
+#content p.subline {
+  font-size:16px;
+  line-height:30px;
+  text-align:center;
   padding:5px 0 22px;
 }
 

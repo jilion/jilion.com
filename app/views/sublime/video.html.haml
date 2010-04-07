@@ -29,12 +29,13 @@
         = link_to "Apple.com/ipad", "http://www.apple.com/ipad/"
       - else
         %em= "Dartmoor"
-        = "by" 
+        = "by"
         = link_to "James Watson", "http://james-watson.net"
         = "(Desktop: HD 720p. iPhone/iPad Wi-Fi: 496x208 and cellular: 176x74)"
-  #content
+  #content{ :class => params[:flash] ? "flash_notice" : "" }
     - if params[:flash]
-      %h3.headline= "You are currently testing the Flash mode of SublimeVideo player.<br /> <strong>#{ link_to 'Back to full version', sublime_url(:video)}</strong>"
+      %p.headline= "<strong>This page presents a demo of the SublimeVideo player where its <em>Flash mode is forced</em> in all browsers.</strong>"
+      %p.subline= "Back to <strong>#{ link_to 'full version', sublime_url(:video)}</strong> (automatic detection of HTML5 or Flash) <br /> Read more about <strong>#{ link_to 'SublimeVideo Flash mode ', "http://blog.jilion.com/2010/04/07/sublimevideo-and-flash"}</strong>"
     - else
       .left
         %h3
@@ -77,7 +78,7 @@
             %strong= "All other browsers"
             = "(who do not fully support HTML5 Video) are supported through our"
             %strong.new= "SublimeVideo Flash player"
-            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link"
+            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/04/07/sublimevideo-and-flash", :class => "small_link"
         %h3= "Note"
         %p
           = "SublimeVideo® will be soon released and it'll be free for non-commercial use."
