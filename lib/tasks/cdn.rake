@@ -6,7 +6,7 @@ namespace :cdn do
     task :upload => :environment do
       timestamp = Time.now.strftime("%m%d%Y%H%M%S")
       
-      %x[jammit -u https://jilion.com.s3.amazonaws.com/#{timestamp} -f]
+      %x[jammit -u http://assets0.jilion.com/#{timestamp} -f]
       
       # Add paths here from assets which are not processed by jammit but you want to put on the CDN
       %x[cp public/javascripts/sublime/video/sublime.js public/assets/sublime.js]
@@ -22,7 +22,7 @@ namespace :cdn do
       files = ["public/assets/sublime_ie7.css","public/assets/sublime_ie6.css"]
       
       files.each do |file|
-        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"https://jilion.com.s3.amazonaws.com/#{timestamp}/images/embed")
+        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"http://assets0.jilion.com/#{timestamp}/images/embed")
         File.open(file,'w') {|fw| fw.write(buffer)}
       end
       
