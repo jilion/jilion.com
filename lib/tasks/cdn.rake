@@ -22,7 +22,7 @@ namespace :cdn do
       files = ["public/assets/sublime_ie7.css","public/assets/sublime_ie6.css"]
       
       files.each do |file|
-        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"https://s3.amazonaws.com/jilion.com/#{timestamp}/images/embed")
+        buffer = File.new(file,'r').read.gsub(/\/images\/embed/,"http://s3.amazonaws.com/jilion.com/#{timestamp}/images/embed")
         File.open(file,'w') {|fw| fw.write(buffer)}
       end
       
