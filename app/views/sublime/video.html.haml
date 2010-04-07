@@ -36,7 +36,7 @@
   #content{ :class => params[:flash] ? "flash_notice" : "" }
     - if params[:flash]
       %p.headline= "<strong>This page presents a demo of the SublimeVideo player where its <em>Flash mode is forced</em> in all browsers.</strong>"
-      %p.subline= "Back to <strong>#{ link_to 'full version', sublime_url(:video)}</strong> (automatic detection of HTML5 or Flash) <br /> Read more about <strong>#{ link_to 'SublimeVideo Flash mode ', "http://blog.jilion.com/2010/04/07/sublimevideo-and-flash"}</strong>"
+      %p.subline= "Back to <strong>#{ link_to 'full version', sublime_url(:video)}</strong> (automatic detection of HTML5 or Flash) <br /> Read more about <strong>#{ link_to 'SublimeVideo Flash mode ', "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode"}</strong>"
     - else
       .left
         %h3
@@ -79,7 +79,7 @@
             %strong= "All other browsers"
             = "(who do not fully support HTML5 Video) are supported through our"
             %strong.new= "SublimeVideo Flash player"
-            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/04/07/sublimevideo-and-flash", :class => "small_link"
+            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode", :class => "small_link"
         %h3= "Note"
         %p
           = "SublimeVideo® will be soon released and it'll be free for non-commercial use."
