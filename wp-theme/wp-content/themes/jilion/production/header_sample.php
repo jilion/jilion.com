@@ -48,7 +48,7 @@
   <![endif]-->
   <script type="text/javascript" src="http://use.typekit.com/ibz5qib.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <script type='text/javascript' src='/assets/js/comment-reply.js'></script>
+  <script type='text/javascript' src='http://blog.medias.jilion.com/wp-includes/js/comment-reply.js'></script>
   <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' );?>
   <?php //wp_head(); ?>
 
