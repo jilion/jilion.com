@@ -11,7 +11,7 @@ body {
   background:url(/images/embed/background.png);
 }
 
-body.winxp {font-family:Arial, sans-serif;}
+body.win {font-family:Arial, sans-serif;}
 
 #global {
   width:960px;

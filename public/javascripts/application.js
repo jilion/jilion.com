@@ -30,8 +30,8 @@ Element.addMethods({
 });
 
 document.observe("dom:loaded", function() {
-  // Windows XP Disable Typekit
-  if ((navigator.userAgent.indexOf("Windows NT 5.1")!=-1) || (navigator.userAgent.indexOf("Windows XP")!=-1)) $(document.body).addClassName('winxp');
+  // Windows Disable Typekit
+  if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
 
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
