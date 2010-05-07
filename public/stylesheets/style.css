@@ -64,7 +64,7 @@ body.winxp {font-family:Arial, sans-serif;}
 
 #header h1 a {
   display:block;
-  width:234px;
+  width:233px;
   height:54px;
   margin:10px 10px 0;
   background:url(/images/embed/jilion.png) no-repeat;
@@ -137,16 +137,26 @@ h2.headline {
   width:910px;
   height:390px;
   margin:0 auto 30px;
+/*  position:relative;
+  overflow:hidden;*/
+}
+
+#latest_work .box {
+  width:910px;
+  height:390px;
   font-size:14px;
   font-weight:400;
   text-shadow:#ccc 0 1px 0;
   background:url(/images/embed/home/helvetiq.png) no-repeat;
   position:relative;
+/*  position:absolute;
+  top:0;
+  left:0;*/
 }
 
 #latest_work h4 {display:none;}
 
-#latest_work .left {
+/*#latest_work .box.helvetiq .left {
   width:203px;
   color:#545454;
   line-height:23px;
@@ -156,17 +166,14 @@ h2.headline {
   left:47px;
 }
 
-#latest_work .right {
-/*  width:250px;*/
+#latest_work .box.helvetiq .right {
   width:190px;
   position:absolute;
-/*  top:168px;*/
   top:200px;
-/*  right:34px;*/
   right:0;
 }
 
-#latest_work a.view_btn {
+#latest_work .box.helvetiq a.view_btn {
   display:block;
   background:url(/images/embed/home/red_btn.png) no-repeat;
   width:63px;
@@ -178,16 +185,16 @@ h2.headline {
   text-shadow:#720100 0 -1px 0;
 }
 
-#latest_work a.view_btn:active {background-position:0 -33px;}
+#latest_work .box.helvetiq a.view_btn:active {background-position:0 -33px;}
 
-#latest_work .right p.read_more {
+#latest_work .box.helvetiq .right p.read_more {
   color:#545454;
   font-size:13px;
   padding:40px 0 5px;
   text-shadow:#eee 0 1px 0;
 }
 
-#latest_work a.post_link {
+#latest_work .box.helvetiq a.post_link {
   font-size:22px;
   font-weight:bold;
   color:#000;
@@ -196,9 +203,80 @@ h2.headline {
   padding:0 25px 0 0;
   text-shadow:#eee 0 1px 0;
   background:url(/images/embed/home/arrow_black.png) no-repeat 94% 88%;
-}
+}*/
 
 /*#latest_work a.post_link:hover {color:#960200;}*/
+
+#latest_work .box.sublimevideo {
+  background:url(/images/embed/home/sublimevideo.png) no-repeat;
+}
+
+#latest_work .box.sublimevideo a.view_btn {
+  display:block;
+  background:url(/images/embed/home/black_btn.png) no-repeat;
+  width:112px;
+  height:27px;
+  padding:5px 0 0 13px;
+  font-weight:500;
+  font-size:16px;
+  color:#fff;
+  text-shadow:#000 0 -1px 0;
+  position:absolute;
+  top:225px;
+  left:143px;
+}
+
+#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -32px;}
+
+#latest_work .box.sublimevideo h5 {
+  text-transform:uppercase;
+  font-size:13px;
+  color:#474b51;
+  text-shadow:rgba(255,255,255,0.2) 0 1px 0;
+}
+
+#latest_work .box.sublimevideo .what_they_say {
+  position:absolute;
+  top:300px;
+  left:20px;
+  width:390px;
+  height:96px;
+}
+
+#latest_work .box.sublimevideo .what_they_say a {display:block;position:absolute;}
+#latest_work .box.sublimevideo .what_they_say a span {display:none;}
+
+#latest_work .box.sublimevideo a.daringfireball {
+  width:136px;
+  height:24px;
+  background:url(/images/embed/home/logos/daringfireball.png) no-repeat;
+  top:24px;
+  left:22px;
+}
+
+#latest_work .box.sublimevideo a.readwriteweb {
+  width:140px;
+  height:17px;
+  background:url(/images/embed/home/logos/readwriteweb.png) no-repeat;
+  top:10px;
+  left:175px;
+}
+
+#latest_work .box.sublimevideo a.wired {
+  width:86px;
+  height:19px;
+  background:url(/images/embed/home/logos/wired.png) no-repeat;
+  top:59px;
+  left:118px;
+}
+
+#latest_work .box.sublimevideo a.mashable {
+  width:90px;
+  height:18px;
+  background:url(/images/embed/home/logos/mashable.png) no-repeat;
+  top:42px;
+  left:246px;
+}
 
 #content {
   padding:0 45px 16px;
@@ -472,7 +550,7 @@ h3.title {
 
 h3.title.latest_work {
   color:#393b3e;
-  text-shadow:#aaa 0 1px 0;
+  text-shadow:#ddd 0 1px 0;
   padding:18px 0 0 20px;
   font-weight:700;
 }

@@ -2,14 +2,32 @@
   %span= t 'home.headline'
 
 #latest_work
-  %h3.title.latest_work= "Latest work"
-  .left
-    %h4= "Helvetiq"
-    %p.description= 'We are glad to introduce the Helvetiq iPhone App. A Swiss IQ test based on the original Helvetiq board game.'
-  .right
-    = link_to "view", "http://iphone.helvetiq.ch", :class => "view_btn"
-    -#%p.read_more= 'Read more:'
-    -#= link_to "The Making of Helvetiq iPhone App", "http://blog.jilion.com", :class => "post_link"
+  -# .box.helvetiq
+  -#   %h3.title.latest_work= "Latest work"
+  -#   .left
+  -#     %h4= "Helvetiq"
+  -#     %p.description= 'We are glad to introduce the Helvetiq iPhone App. A Swiss IQ test based on the original Helvetiq board game.'
+  -#   .right
+  -#     = link_to "view", "http://iphone.helvetiq.ch", :class => "view_btn"
+  -#     -#%p.read_more= 'Read more:'
+  -#     -#= link_to "The Making of Helvetiq iPhone App", "http://blog.jilion.com", :class => "post_link"
+  .box.sublimevideo
+    %h3.title.latest_work= "Latest work"
+    %h4
+      = "SublimeVideo"
+      %em= "HTML5 Video Player"
+    = link_to "demo page", "http://jilion.com/sublime/video", :class => "view_btn"
+    .what_they_say
+      %h5= "What they say"
+      - link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
+        %span= "Daring Fireball"
+      - link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
+        %span= "Read Write Web"
+      - link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
+        %span= "Wired"
+      - link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
+        %span= "Mashable"
+    
 #content
   .section.jilion
     %h3.title.jilion

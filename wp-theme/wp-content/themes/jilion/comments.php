@@ -68,7 +68,7 @@
     </div>
     <div class="entry_form">
       <label for="comment_form_email">Email <em class="required">*</em></label>
-      <input type="text" name="email" class="text" id="comment_form_email"  />
+      <input type="text" name="email" class="text" id="comment_form_email" />
     </div>
     <div class="entry_form">
       <label for="comment_form_url">Website</label>
