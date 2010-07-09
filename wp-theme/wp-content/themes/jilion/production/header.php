@@ -8,10 +8,10 @@
   <title><?php bloginfo('name'); ?> <?php wp_title('-'); ?></title>
 
   <!--[if (!IE)|(gte IE 8)]><!-->
-  <link href="http://blog.medias.jilion.com/04072010154754/assets/style-datauri.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://blog.medias.jilion.com/07082010162310/assets/style-datauri.css" media="all" rel="stylesheet" type="text/css" />
   <!--<![endif]-->
   <!--[if lte IE 7]>
-  <link href="http://blog.medias.jilion.com/04072010154754/assets/style-mhtml.css" media="all" rel="stylesheet" type="text/css" />
+  <link href="http://blog.medias.jilion.com/07082010162310/assets/style-mhtml.css" media="all" rel="stylesheet" type="text/css" />
   <![endif]-->
   <link rel="alternate" type="application/rss+xml" title="Jilion Blog" href="http://feeds.feedburner.com/jilion" />
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />

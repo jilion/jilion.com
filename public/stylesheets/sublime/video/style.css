@@ -89,6 +89,29 @@ body.win {font-family:Arial, sans-serif !important;}
   font-size:12px;
 }
 
+#status_update {
+  background:rgba(0,0,0,0.4);
+  margin-top:5px;
+  padding:4px 10px;
+  color:#a3aec3;
+  text-shadow:rgba(0,0,0,0.4) 0 -1px 0;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+#status_update strong {
+  color:#dce4f4;
+}
+
+#status_update a {
+  font-size:13px;
+  float:right;
+  color:#fff;
+  font-style:italic;
+/*  font-weight:bold;*/
+}
+
 #content {
   background:rgba(255,255,255,0.15);
 /*    background:rgba(0,0,0,0.05);*/

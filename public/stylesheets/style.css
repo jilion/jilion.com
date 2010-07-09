@@ -211,6 +211,23 @@ h2.headline {
   background:url(/images/embed/home/sublimevideo.png) no-repeat;
 }
 
+#latest_work .box.sublimevideo a.read_more {
+  display:block;
+  width:160px;
+  height:20px;
+  font-weight:bold;
+  font-size:16px;
+  font-style:italic;
+  color:#660a2c;
+  text-align:center;
+  text-shadow:#fff 0 1px 0;
+  position:absolute;
+  top:86px;
+  left:124px;
+}
+
+#latest_work .box.sublimevideo a.read_more:active {background-position:0 -25px;}
+
 #latest_work .box.sublimevideo a.view_btn {
   display:block;
   background:url(/images/embed/home/black_btn.png) no-repeat;
@@ -222,7 +239,7 @@ h2.headline {
   color:#fff;
   text-shadow:#000 0 -1px 0;
   position:absolute;
-  top:225px;
+  top:235px;
   left:143px;
 }
 
