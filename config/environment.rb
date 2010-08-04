@@ -23,7 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'mongo_ext', :version => '0.18.3', :lib => false
   config.gem 'mongo_mapper', :version => '0.7.0'
   config.gem "formtastic"
-  config.gem "carrierwave"
+  config.gem "carrierwave", :version => '0.4.9'
   config.gem "will_paginate"
   config.gem "prawn"
   
