@@ -92,8 +92,10 @@ body.win {font-family:Arial, sans-serif !important;}
 #status_update {
   background:#373d48;
   margin-top:5px;
-  padding:4px 10px;
+  padding:10px;
   color:#a3aec3;
+  text-align:center;
+  font-size:20px;
   text-shadow:rgba(0,0,0,0.4) 0 -1px 0;
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
@@ -105,11 +107,8 @@ body.win {font-family:Arial, sans-serif !important;}
 }
 
 #status_update a {
-  font-size:13px;
-  float:right;
   color:#fff;
-  font-style:italic;
-/*  font-weight:bold;*/
+  padding:0 4px;
 }
 
 #content {
