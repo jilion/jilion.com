@@ -213,20 +213,14 @@ h2.headline {
 
 #latest_work .box.sublimevideo a.read_more {
   display:block;
-  width:160px;
-  height:20px;
-  font-weight:bold;
-  font-size:16px;
-  font-style:italic;
-  color:#660a2c;
-  text-align:center;
-  text-shadow:#fff 0 1px 0;
+  width:300px;
+  height:40px;
   position:absolute;
-  top:86px;
-  left:124px;
+  top:60px;
+  left:60px;
 }
 
-#latest_work .box.sublimevideo a.read_more:active {background-position:0 -25px;}
+#latest_work .box.sublimevideo a.read_more span {display:none;}
 
 #latest_work .box.sublimevideo a.view_btn {
   display:block;
