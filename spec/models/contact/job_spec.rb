@@ -11,7 +11,7 @@ describe Contact::Job do
     its(:replied) { should == false }
     its(:issue) { should be_nil }
     its(:file_filename) { should == "File" }
-    # its(:file?) { should be_true }
+    its(:job_id) { should == "abc123" }
     it { should_not be_archived }
     it { should be_valid }
     

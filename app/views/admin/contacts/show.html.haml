@@ -7,9 +7,10 @@
     %strong= "Issue:"
     = @contact.issue
   - if @contact.job?
+    - job = Job.find(@contact.job_id)
     %li
-      %strong= "Job ref:"
-      = link_to @contact.job_id, admin_job_path(@contact.job_id)
+      %strong= "Job reference:"
+      = link_to "##{job.issue} - #{job.title}", admin_job_path(@contact.job_id)
   %li
     %strong= "Email:"
     = @contact.email

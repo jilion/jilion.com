@@ -1,7 +1,4 @@
-class Admin::ContactsController < ApplicationController
-  ssl_required :index, :show, :update
-  layout 'admin'
-  before_filter :admin_required
+class Admin::ContactsController < Admin::AdminController
   
   # GET /admin/contacts
   def index

@@ -17,12 +17,9 @@ gem 'formtastic',    '~> 0.9.10'
 gem 'will_paginate', '~> 2.3.14'
 gem 'prawn'
 
-group :development do
-end
-
 group :test do
-  gem 'spork', :require => false
-  gem 'rspactor'
+  gem 'spork',    :require => false
+  gem 'rspactor', '0.7.0.beta.6'
   gem 'sys-uname'
   gem 'growl'
   

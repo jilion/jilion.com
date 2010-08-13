@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe SecretStatsController do
+describe SublimeController do
   
   context "as guest" do
-    it "should respond with success to GET :index" do
-      get :index, :format => "json"
+    it "should respond with redirect to GET :index" do
+      get :index
+      response.should redirect_to(sublime_path(:video))
+    end
+    it "should respond with redirect to GET :show" do
+      get :show, :id => 'video'
       response.should be_success
     end
   end

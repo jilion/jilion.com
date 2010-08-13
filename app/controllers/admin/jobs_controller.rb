@@ -1,11 +1,8 @@
-class Admin::JobsController < ApplicationController
-  ssl_required :index, :show, :new, :create, :edit, :update, :destroy
-  before_filter :admin_required
-  layout 'admin'
+class Admin::JobsController < Admin::AdminController
   
   # GET /admin/jobs
   def index
-    @jobs = Job.search(params)
+    @jobs = Job.search(params.reverse_merge!(:state => 'published'))
   end
   
   # GET /admin/jobs/:id

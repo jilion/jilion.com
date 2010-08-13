@@ -142,7 +142,8 @@ document.observe("dom:loaded", function() {
     // });
   });
   
-  $$("#contact_topics li a").each(function(a){
+  $$("#contact_topics li a.title").each(function(a){
+    ddd(a);
     if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
     a.observe("click",function(e){
       var form_box = a.next('.form_box');
