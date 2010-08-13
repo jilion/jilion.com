@@ -1,4 +1,4 @@
-- contact = contact(Contact::TeamUp)
+- contact = contact("Contact::TeamUp")
 .form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Team Up
   .intro
@@ -9,9 +9,9 @@
       %li= "We believe in building lasting relationships where all parties are valued"
       %li= "We do our best to establish clear rules of collaboration to avoid any possible frustration"
       %li= "We try to be aware of our own limits and will only start projects that are within our capacity"
-
+      
     %p= "If your organization is interested in teaming-up with us, we would love to hear from you:"
-
+    
   - form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
     = f.hidden_field :_type
     .entry
@@ -33,4 +33,4 @@
       .spinner{ :style => "display:none" }
         = image_tag "/images/embed/contact/spinner.gif", :alt => ""
       .spacer
-  .required_mention= "<abbr title='required'>*</abbr> required"
+  .required_mention= raw "<abbr title='required'>*</abbr> required"

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Contact::Job do
   
   describe "valid" do
-    subject { Factory(:job) }
+    subject { Factory(:contact_job) }
     
     its(:_type) { should == "Contact::Job" }
     its(:email) { should match /email[0-9]+@jilion.com/ }
@@ -16,7 +16,7 @@ describe Contact::Job do
     it { should be_valid }
     
     it "should be a job" do
-      Factory(:job).should be_job
+      Factory(:contact_job).should be_job
     end
     
   end
@@ -36,7 +36,7 @@ describe Contact::Job do
   describe "type_name" do
     
     it "should be job" do
-      Factory(:job).type_name.should == "job"
+      Factory(:contact_job).type_name.should == "job"
     end
     
   end

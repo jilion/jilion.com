@@ -1,3 +1,8 @@
+Factory.define :job, :default_strategy => :build do |c|
+  c.title       "Fluent english writer"
+  c.description "Job description"
+end
+
 Factory.define :contact, :default_strategy => :build do |c|
   c.sequence(:email)  { |n| "email#{n}@jilion.com" }
 end
@@ -19,7 +24,7 @@ Factory.define :deal, :class => Contact::Deal, :parent => :contact, :default_str
   c.comment "No comment"
 end
 
-Factory.define :job, :class => Contact::Job, :parent => :contact, :default_strategy => :build do |c|
+Factory.define :contact_job, :class => Contact::Job, :parent => :contact, :default_strategy => :build do |c|
   c.message "A message"
   c.file_filename "File"
 end

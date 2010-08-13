@@ -1,0 +1,6 @@
+%tr{ :class => cycle("alt", "") }
+  %td= link_to "##{job.issue}", admin_job_path(job)
+  %td= job.title
+  %td= job.description
+  %td= job.state
+  %td= l job.created_at, :format => :small

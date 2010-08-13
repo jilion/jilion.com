@@ -2,7 +2,7 @@ class Contact
   include MongoMapper::Document
   
   key :_type, String
-  key :email, String
+  key :email, String, :required => true
   key :state, String, :default => 'new'
   key :replied, Boolean, :default => false
   key :issue, Integer
@@ -18,11 +18,10 @@ class Contact
   TYPES = %w[Contact::Deal Contact::Job Contact::Love Contact::Press Contact::Request Contact::TeamUp]
   STATES = %w[new archived]
   
-  validates_presence_of :email, :message => "can't be blank"
   validates_length_of   :email, :within  => 6..100, :message => "is too short"
   validates_format_of   :email, :with    => RegEmailOk, :message => "is not valid"
   
-  before_save :set_issue
+  before_create :set_issue
   # after_create :deliver_notification
   
   TYPES.each do |klass|

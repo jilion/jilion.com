@@ -14,3 +14,13 @@ en:
       thankyou: "Thank you for subscribing"
       confirmed: "Subscription verified"
       unsubscribed: "Successfully unsubscribed"
+      
+  time:
+    formats:
+      date: "%B %d, %Y"
+      full: "%m/%d/%Y %I:%M %p"
+      small: "%m/%d/%Y"
+  date:
+    formats:
+      default: "%B %d, %Y"
+      small: "%m/%d/%Y"

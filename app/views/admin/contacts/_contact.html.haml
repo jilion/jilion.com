@@ -5,18 +5,15 @@
         %span="Attachment"
   %td
     = link_to "##{contact.issue}", admin_contact_path(contact)
-  %td= h contact.type.to_s.gsub(/Contact::/,'')
+  %td= contact.type.to_s.gsub(/Contact::/,'')
   %td= mail_to contact.email
-  %td= h contact.state
+  %td= contact.state
   %td
     - if contact.deal?
-      = h contact.budget
+      = contact.budget
     - else
       = "Not applicable"
   %td= l contact.created_at, :format => :long
   %td 
     - if contact.replied?
       %em= "Replied"
-    -#= link_to "show", admin_contact_path(contact)
-    -#= archive_button(contact) unless contact.archived?
-    -#= reply_link(contact)

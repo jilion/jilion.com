@@ -1,7 +1,7 @@
 class Admin::ContactsController < ApplicationController
   ssl_required :index, :show, :update
-  before_filter :admin_required
   layout 'admin'
+  before_filter :admin_required
   
   # GET /admin/contacts
   def index
@@ -13,7 +13,7 @@ class Admin::ContactsController < ApplicationController
     @contact = Contact.find(params[:id])
   end
   
-  # PUT /contacts/:id
+  # PUT /admin/contacts/:id
   def update
     @contact = Contact.find(params[:id])
     

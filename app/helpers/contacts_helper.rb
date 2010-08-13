@@ -4,7 +4,7 @@ module ContactsHelper
     if params[:contact] && params[:contact][:_type] == klass.to_s
       @contact
     else
-      klass.new
+      klass.constantize.new
     end
   end
   

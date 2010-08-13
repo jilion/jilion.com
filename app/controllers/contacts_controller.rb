@@ -1,7 +1,6 @@
 class ContactsController < ApplicationController
-  # before_filter :admin_required
+  ssl_required :show, :new, :create
   # caches_page :new
-  ssl_required :new, :create, :show
   
   # GET /contact/Jilion-contact.pdf
   def show

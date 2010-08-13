@@ -1,19 +1,28 @@
-- contact = contact(Contact::Job)
-.form_box#job{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
+- contact = contact("Contact::Job")
+.form_box#job{ :style => contact.errors.empty? && !job ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Job
-  .intro
-    %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
-    %p= "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to continuously amaze the team, while the team is functioning as your talents' amplifier."
-
-    %p= "At the moment we are looking for:"
-    %ul
-      %li= "iPhone / iPad software engineer"
-      %li= "JavaScript software engineer"
-      %li= "Ruby on Rails software engineer"
-    %p= "If you'd love to work with us, don't be shy, send us your Resume!"
-        
-  - form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+  - job_id = job ? job.id : contact.job_id
+  
+  - unless job_id
+    .intro
+      %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
+      %p= raw "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to continuously amaze the team, while the team is functioning as your talents' amplifier."
+      
+      %p= "At the moment we are looking for:"
+      %ul
+        %li= "iPhone / iPad software engineer"
+        %li= "JavaScript software engineer"
+        %li= "Ruby on Rails software engineer"
+      = link_to "Open positions", jobs_path
+      %p= "If you'd love to work with us, don't be shy, send us your résumé!"
+    
+  - form_for :contact, contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
     = f.hidden_field :_type
+    - if job_id
+      = f.hidden_field :job_id, :value => job_id
+      .entry
+        = "Job title:"
+        = Job.find(job_id).title
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"
@@ -22,7 +31,7 @@
       .textarea_wrapper
         = f.text_area :message, :class => "text"
     .entry.file
-      = f.label :file, "Please attach your Resume (pdf, zip, etc.)", :require => true
+      = f.label :file, "Please attach your résumé (pdf, zip, etc.)", :require => true
       .fake_file_input
         .fake_file_input_button
           %span= "Browse"
@@ -34,4 +43,4 @@
       .spinner{ :style => "display:none" }
         = image_tag "/images/embed/contact/spinner.gif", :alt => ""
       .spacer
-  .required_mention= "<abbr title='required'>*</abbr> required"
+  .required_mention= raw "<abbr title='required'>*</abbr> required"

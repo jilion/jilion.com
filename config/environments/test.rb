@@ -27,16 +27,16 @@ config.action_mailer.delivery_method = :test
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
 
-config.gem "rspec", :lib => false, :version => "1.3.0"
-config.gem "rspec-rails", :lib => false, :version => "1.3.2"
-# config.gem "remarkable_rails", :lib => "remarkable_rails"
-# config.gem "remarkable_mongo", :lib => "remarkable/mongo_mapper"
-config.gem 'factory_girl', :lib => false
-
-# config.gem 'webrat', :lib => false
-# config.gem 'cucumber', :lib => false
-# config.gem 'email_spec', :lib => false
-
-config.gem 'spork'
-config.gem 'rspactor'
-# config.gem "faker"
+# config.gem "rspec", :lib => false, :version => "1.3.0"
+# config.gem "rspec-rails", :lib => false, :version => "1.3.2"
+# # config.gem "remarkable_rails", :lib => "remarkable_rails"
+# # config.gem "remarkable_mongo", :lib => "remarkable/mongo_mapper"
+# config.gem 'factory_girl', :lib => false
+# 
+# # config.gem 'webrat', :lib => false
+# # config.gem 'cucumber', :lib => false
+# # config.gem 'email_spec', :lib => false
+# 
+# config.gem 'spork'
+# config.gem 'rspactor'
+# # config.gem "faker"

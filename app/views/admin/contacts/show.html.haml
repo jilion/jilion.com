@@ -1,67 +1,69 @@
--#= link_to "Back", :back
-%h2=h @contact.type.to_s.gsub(/Contact::/,'')
+%h2= @contact.type.to_s.gsub(/Contact::/,'')
 
 = link_to "Back to the contact list", admin_contacts_path
 
 %ul.contact
   %li
     %strong= "Issue:"
-    =h @contact.issue
+    = @contact.issue
+  - if @contact.job?
+    %li
+      %strong= "Job ref:"
+      = link_to @contact.job_id, admin_job_path(@contact.job_id)
   %li
     %strong= "Email:"
-    =h @contact.email
+    = @contact.email
   %li
     %strong= "Status:"
-    =h @contact.state
+    = @contact.state
   - if @contact.deal?
     %li
-      %strong= "Name:"    
-      =h @contact.name
+      %strong= "Name:"
+      = @contact.name
     %li
       %strong= "Phone:"
-      =h @contact.phone
+      = @contact.phone
     %li
       %strong= "Organization:"
-      =h @contact.organization
+      = @contact.organization
     %li
       %strong= "Url:"
-      = link_to h(@contact.url), @contact.url
+      = link_to @contact.url
     %li
       %strong= "Activity:"
-      =h @contact.activity
+      = @contact.activity
     %li
       %strong= "Budget:"
-      =h @contact.budget
+      = @contact.budget
     %li
       %strong= "Project Description:"
-      =h @contact.project_description
+      = @contact.project_description
     %li
       %strong= "Goal:"
-      =h @contact.goal
+      = @contact.goal
     %li
       %strong= "Metrics:"
-      =h @contact.metrics
+      = @contact.metrics
     %li
       %strong= "Challenge:"
-      =h @contact.challenge
+      = @contact.challenge
     %li
       %strong= "Deadline:"
-      =h @contact.deadline
+      = @contact.deadline
     %li
       %strong= "Comment:"
-      =h @contact.comment
+      = @contact.comment
   - if !@contact.deal?
     %li
       %strong= "Message:"
-      =h @contact.message
-  - if !@contact.file_url.nil?
+      = @contact.message
+  - if @contact.file.present?
     %li
       %strong= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
   %li
     %strong= "Submitted on:"
-    =l @contact.created_at, :format => :long
-
-
+    = l @contact.created_at, :format => :long
+    
 = archive_button(@contact) unless @contact.archived?
 = reply_link(@contact)

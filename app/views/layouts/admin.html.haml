@@ -21,6 +21,16 @@
             - link_to root_path do
               %span= 'Jilion'
           %ul#menu
+            %li.contact
+              - link_to admin_contacts_path do
+                %strong
+                  %span.icon= 'Contacts'
+                %span.corner
+            %li.job
+              - link_to admin_jobs_path do
+                %strong
+                  %span.icon= 'Jobs'
+                %span.corner
             %li.blog
               - link_to "http://blog.jilion.com" do
                 %strong

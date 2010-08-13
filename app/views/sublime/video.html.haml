@@ -1,6 +1,6 @@
 - content_for :title do
   = "SublimeVideo"
-
+  
 #global
   #header
     %h1
@@ -10,7 +10,7 @@
       %span= "Jilion"
     - link_to "http://twitter.com/jilion", :class => "twitter" do
       %span= "Twitter"
-  
+      
   #video_wrap
     %p#demo_page_info
     -#- if params[:v] == "ipad"
@@ -41,12 +41,11 @@
       = "and get an invitation for the limited beta!"
   #content{ :class => params[:flash] ? "flash_notice" : "" }
     - if params[:flash]
-      %p.headline= "<strong>This page presents a demo of the SublimeVideo player where its <em>Flash mode is forced</em> in all browsers.</strong>"
-      %p.subline= "Back to <strong>#{ link_to 'full version', sublime_url(:video)}</strong> (automatic detection of HTML5 or Flash) <br /> Read more about <strong>#{ link_to 'SublimeVideo Flash mode ', "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode"}</strong>"
+      %p.headline= raw "<strong>This page presents a demo of the SublimeVideo player where its <em>Flash mode is forced</em> in all browsers.</strong"
+      %p.subline= raw "Back to <strong>#{link_to('full version', sublime_url(:video))}</strong> (automatic detection of HTML5 or Flash) <br /> Read more about <strong>#{link_to('SublimeVideo Flash mode', "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode")}</strong>"
     - else
       .left
-        %h3
-          = "Current features" 
+        %h3= "Current features"
         %ul
           %li
             %strong= "HTML5 video goodness:"
@@ -67,12 +66,9 @@
               %li= "Press spacebar to play/pause and Esc to exit full-window"
           %li
             %strong= "Full-screen mode"
-            -#- link = link_to("WebKit Nightly Builds", "http://nightly.webkit.org")
-            - link = link_to("Safari 5", "http://www.apple.com/safari")
-            = "hold down Command (Mac) or Ctrl (Windows/Linux) while entering full-window. Currently only supported in #{link} and in the Flash version of the player."
+            = raw "hold down Command (Mac) or Ctrl (Windows/Linux) while entering full-window. Currently only supported in #{link_to("Safari 5", "http://www.apple.com/safari")} and in the Flash version of the player."
           %li
-            %strong
-              = "iPhone &amp; iPad support"
+            %strong= raw "iPhone &amp; iPad support"
       .right
       
         %h3= "Supported Browsers"
@@ -81,14 +77,14 @@
           %li= "Google Chrome (v4.0+)"
           %li
             = "Firefox (v3.6+)"
-            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link"
+            = link_to("Read more &raquo;".html_safe, "http://blog.jilion.com/2010/02/11/sublimevideo-supports-firefox", :class => "small_link")
           %li= "Opera (v10.5+)"
           %li= "Internet Explorer with Chrome Frame installed"
           %li
             %strong= "All other browsers"
             = "(who do not fully support HTML5 Video) are supported through our"
             %strong= "SublimeVideo Flash player"
-            = link_to "Read more &raquo;", "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode", :class => "small_link"
+            = link_to("Read more &raquo;".html_safe, "http://blog.jilion.com/2010/04/07/sublimevideo-flash-mode", :class => "small_link")
         %h3= "Note"
         %p
           = "SublimeVideo® will be soon released and it'll be free for non-commercial use."
@@ -107,4 +103,4 @@
     -#        %br
     -#        = "As soon as it will be implemented we will definitely add Firefox support."
   #footer
-    = "Copyright © 2010 Jime® SA — #{link_to "Jilion®","http://jilion.com"} is the consulting group of Jime® SA"
+    = raw "Copyright © 2010 Jime® SA — #{link_to "Jilion®","http://jilion.com"} is the consulting group of Jime® SA"
