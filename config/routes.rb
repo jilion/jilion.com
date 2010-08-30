@@ -1,24 +1,20 @@
-ActionController::Routing::Routes.draw do |map|
+Jilion::Application.routes.draw do
   
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "pages", :action => "home"
-  map.connect 'n/:n', :controller => "pages", :action => "home", :requirements => { :n => /thankyou|confirmed|unsubscribed/ }
+  root :to => "pages#home"
   
-  map.with_options :controller => 'pages' do |home|
-    home.ie '/ie', :action => 'ie'
-    # info.ie '/ie', :action => 'ie', :conditions => { :subdomain => false }
-    # info.ie '/mobile', :action => 'mobile'
-  end
+  match 'n/:n', :to => 'pages#home', :via => :get, :n => /thankyou|confirmed|unsubscribed/
+  match 'ie', :to => 'pages#ie'
   
-  map.resources :sublime, :only => [:index, :show]
-  map.resources :contacts, :only => [:create]
-  map.new_contact 'contact', :controller => 'contacts', :action => 'new', :condiction => { :method => :get }
-  map.contact_pdf "contact/Jilion-contact.pdf", :controller => 'contacts', :action => 'show', :condiction => { :method => :get }
+  match 'sublime/video/flash', :to => redirect('http://sublimevideo.net/demo')
+  match 'sublime*', :to => redirect('http://sublimevideo.net')
   
-  map.redirect 'admin', :controller => 'admin/contacts'
-  map.namespace :admin do |admin|
-    admin.resources :contacts
-  end
-  
-  Jammit::Routes.draw(map)
+  # resources :sublime, :only => [:index, :show]
+  # map.resources :contacts, :only => [:create]
+  # map.new_contact 'contact', :controller => 'contacts', :action => 'new', :condiction => { :method => :get }
+  # map.contact_pdf "contact/Jilion-contact.pdf", :controller => 'contacts', :action => 'show', :condiction => { :method => :get }
+  # 
+  # map.redirect 'admin', :controller => 'admin/contacts'
+  # map.namespace :admin do |admin|
+  #   admin.resources :contacts
+  # end
 end

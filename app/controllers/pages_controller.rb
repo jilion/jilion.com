@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  caches_page :home, :ie
+  before_filter :cache_page
   
   def home
   end

@@ -1,9 +1,0 @@
-development:
-  user: admin
-  pass: admin
-test:
-  user: fake
-  pass: fake
-production:
-  user: admin
-  pass: "63k((Kv%JC9iYi^NM8or"
