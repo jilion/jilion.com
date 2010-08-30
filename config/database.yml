@@ -1,14 +1,14 @@
 development:
   adapter: mongodb
+  hostname: localhost
   database: jilion-dev
-  host: localhost
-
+  
 test:
   adapter: mongodb
+  hostname: localhost
   database: jilion-test
-  host: localhost
-
+  
 production:
   adapter: mongodb
+  hostname: localhost
   database: jilion-prod
-  host: localhost

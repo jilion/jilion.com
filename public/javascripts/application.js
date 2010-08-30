@@ -30,8 +30,8 @@ Element.addMethods({
 });
 
 document.observe("dom:loaded", function() {
-  // Windows XP Disable Typekit
-  if ((navigator.userAgent.indexOf("Windows NT 5.1")!=-1) || (navigator.userAgent.indexOf("Windows XP")!=-1)) $(document.body).addClassName('winxp');
+  // Windows Disable Typekit
+  if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
 
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
@@ -59,7 +59,7 @@ document.observe("dom:loaded", function() {
   }
   
   var dropPin = new Image();
-  dropPin.src = "/images/map_drop_pin.png";
+  dropPin.src = "/images/embed/map_drop_pin.png";
   
   //Newsletter
   var emailField = $('subscriber_email');
@@ -142,7 +142,8 @@ document.observe("dom:loaded", function() {
     // });
   });
   
-  $$("#contact_topics li a").each(function(a){
+  $$("#contact_topics li a.title").each(function(a){
+    ddd(a);
     if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
     a.observe("click",function(e){
       var form_box = a.next('.form_box');
@@ -188,7 +189,7 @@ function googleMapInitialize() {
   };
   var map = new google.maps.Map(document.getElementById("map_wrap"), myOptions);
 
-  var image = '/images/map_drop_pin.png';
+  var image = '/images/embed/map_drop_pin.png';
   var marker = new google.maps.Marker({
       position: myLatlng, 
       map: map,
