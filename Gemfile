@@ -7,6 +7,10 @@ gem 'haml',              '~> 3.0.18'
 gem 'jammit',            :git => 'git://github.com/thibaudgg/jammit.git'
 
 
+group :production do
+  gem 'rack-staging',    :git => 'git://github.com/thibaudgg/rack-staging.git'
+end
+
 group :development do
   gem 'wirble' # irbrcg
   gem 'heroku'
