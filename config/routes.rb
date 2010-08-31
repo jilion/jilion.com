@@ -1,11 +1,12 @@
 Jilion::Application.routes.draw do
   
-  root :to => "pages#home"
-  
-  match 'n/:n', :to => 'pages#home', :via => :get, :n => /thankyou|confirmed|unsubscribed/
-  match 'ie', :to => 'pages#ie'
+  scope :to => "pages#show", :via => :get do
+    root :page => 'home'
+    match 'n/:n', :as => :page, :n => /thankyou|confirmed|unsubscribed/, :page => 'home'
+    match 'ie', :page => 'ie'
+  end
   
   match 'sublime/video/flash', :to => redirect('http://sublimevideo.net/demo')
-  match 'sublime*', :to => redirect('http://sublimevideo.net')
+  match 'sublime(/:id)', :to => redirect('http://sublimevideo.net')
   
 end
