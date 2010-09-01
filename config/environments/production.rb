@@ -1,5 +1,6 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
+  config.middleware.use(Rack::GoogleAnalytics, :tracker => 'UA-10280941-1')
   
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests

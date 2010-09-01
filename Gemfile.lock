@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/thibaudgg/heroku_tasks.git
-  revision: 26937774ed6cdc848977cbcbdb88f0ede7f9fcfa
-  specs:
-    heroku_tasks (0.1.0)
-
-GIT
   remote: git://github.com/thibaudgg/jammit.git
   revision: a9d1aec010616838fa000942af94071b4acf5582
   specs:
@@ -55,6 +49,7 @@ GEM
       json_pure (>= 1.2.0, < 1.5.0)
       launchy (~> 0.3.2)
       rest-client (~> 1.4.0)
+    heroku_tasks (0.1.4)
     i18n (0.4.1)
     json_pure (1.4.6)
     launchy (0.3.7)
@@ -67,6 +62,7 @@ GEM
     mime-types (1.16)
     polyglot (0.3.1)
     rack (1.2.1)
+    rack-google-analytics (0.9.2)
     rack-mount (0.6.12)
       rack (>= 1.0.0)
     rack-test (0.5.4)
@@ -101,8 +97,9 @@ DEPENDENCIES
   git
   haml (~> 3.0.18)
   heroku
-  heroku_tasks!
+  heroku_tasks (~> 0.1.4)
   i18n (~> 0.4.1)
   jammit!
+  rack-google-analytics (~> 0.9.2)
   rails (~> 3.0.0)
   wirble
