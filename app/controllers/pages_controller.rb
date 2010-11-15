@@ -1,11 +1,15 @@
 class PagesController < ApplicationController
-  caches_page :home, :ie
+  before_filter :cache_page
+  layout :appropriate_layout
   
-  def home
+  def show
+    render params[:page]
   end
   
-  def ie
-    render :layout => false
+protected
+  
+  def appropriate_layout
+    params[:page] == 'ie' ? false : 'application'
   end
   
 end

@@ -1,17 +1,11 @@
 class ApplicationController < ActionController::Base
-  include SslRequirement
-  include AdminAuthenticatedSystem
-  
-  helper :all
+  # include AdminAuthenticatedSystem
   protect_from_forgery
-  
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
   
 protected
   
-  def ssl_required?
-    Rails.env.production?
+  def cache_page
+    expires_in(1.year, :public => true) if Rails.env.production?
   end
   
 end

@@ -13,21 +13,21 @@
   -#     -#= link_to "The Making of Helvetiq iPhone App", "http://blog.jilion.com", :class => "post_link"
   .box.sublimevideo
     %h3.title.latest_work= "Latest work"
-    - link_to "http://sublimevideo.net", :class => "read_more" do
+    = link_to "http://sublimevideo.net", :class => "read_more" do
       %span= "Get an invitation for the beta on sublimevideo.net"
     %h4
       = "SublimeVideo"
       %em= "HTML5 Video Player"
-    = link_to "demo page", "http://jilion.com/sublime/video", :class => "view_btn"
+    = link_to "demo page", "http://sublimevideo.net", :class => "view_btn"
     .what_they_say
       %h5= "What they say"
-      - link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
+      = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
         %span= "Daring Fireball"
-      - link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
+      = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
         %span= "Read Write Web"
-      - link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
+      = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
         %span= "Wired"
-      - link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
+      = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
         %span= "Mashable"
     
 #content
@@ -92,17 +92,17 @@
       %span= "Contact"
     %ul
       %li.email
-        - link_to "&#109;&#97;&#105;&#108;&#116;&#111;&#58;%69%6e%66%6f@%6a%69%6c%69%6f%6e.%63%6f%6d" do
+        = link_to "mailto:%69%6e%66%6f@%6a%69%6c%69%6f%6e.%63%6f%6d" do
           %strong
             %span.icon= 'Email'
           %span.corner
       %li.map
-        - link_to "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A", :title => "Show map", :id => "show_location" do
+        = link_to "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A", :title => "Show map", :id => "show_location" do
           %strong
             %span.icon= 'Map'
           %span.corner
       %li.twitter
-        - link_to "http://twitter.com/jilion" do
+        = link_to "http://twitter.com/jilion" do
           %strong
             %span.icon= 'Twitter'
           %span.corner

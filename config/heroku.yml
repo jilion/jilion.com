@@ -1,0 +1,4 @@
+staging: jilion-staging
+production: jilion
+production_url: http://jilion.com # for jammit assets
+git_repo: git@jime1.epfl.ch:jilion.com.git # for git tag

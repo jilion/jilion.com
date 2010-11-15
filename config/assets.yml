@@ -9,12 +9,6 @@ stylesheets:
     - public/stylesheets/style.css
   style_ie:
     - public/stylesheets/ie.css
-  sublime:
-    - public/stylesheets/sublime/video/style.css
-  sublime_ie6:
-    - public/stylesheets/sublime/video/ie6.css
-  sublime_ie7:
-    - public/stylesheets/sublime/video/ie7.css
     
 javascripts:
   application:
