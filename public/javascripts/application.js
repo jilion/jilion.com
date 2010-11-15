@@ -11,9 +11,9 @@ Element.addMethods({
     Object.extend(opts, options);
     var distance = opts.distance;
     var duration = opts.duration;
-
+    
     var split = parseFloat(duration) / 10.0;
-
+    
     var shakeEffect = element.morph('left:' + (originalLeft+distance) + 'px', { duration:split 
       }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
         }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
@@ -22,7 +22,7 @@ Element.addMethods({
               }).morph('left:' + (originalLeft) + 'px', { duration:split*2, after: function() {
                 element.undoPositioned().setStyle(oldStyle);
                 }});
-
+                
     return shakeEffect;
   },
   pulsate: function(element, options) {
@@ -32,7 +32,7 @@ Element.addMethods({
 document.observe("dom:loaded", function() {
   // Windows Disable Typekit
   if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
-
+  
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
   if (Prototype.Browser.IE) {
@@ -160,7 +160,7 @@ document.observe("dom:loaded", function() {
         $$("#contact_topics li").invoke("removeClassName", "expanded");
         a.up().addClassName('expanded');
         form_box.setStyle({display:"block"});
-
+        
         if (Prototype.Browser.IE) {
           curvyCorners.redraw();
         }
@@ -179,26 +179,25 @@ function validateEmail(email) {
 }
 
 function googleMapInitialize() {
-  var myLatlng = new google.maps.LatLng(46.524638, 6.563698);
-  // var cenLatlng = new google.maps.LatLng(46.525424, 6.56372);
-  var cenLatlng = new google.maps.LatLng(46.524754, 6.563699);
+  var myLatlng = new google.maps.LatLng(46.51725, 6.56210);
+  var cenLatlng = new google.maps.LatLng(46.51735, 6.56210);
   var myOptions = {
-    zoom: 20,
+    zoom: 18,
     center: cenLatlng,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
   var map = new google.maps.Map(document.getElementById("map_wrap"), myOptions);
-
+  
   var image = '/images/embed/map_drop_pin.png';
   var marker = new google.maps.Marker({
-      position: myLatlng, 
+      position: myLatlng,
       map: map,
       title:"Jilion",
       icon: image
   });
   
   var contentString = '<div id="popbox">'+
-      '<p><a href="http://is.gd/2mQ6V">Chemin de la Raye 13 <br />1024 Ecublens <br /> Switzerland</a></p>'+
+      '<p><a href="http://is.gd/h8yz4">Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
       '</div>';
       
   var infowindow = new google.maps.InfoWindow({
