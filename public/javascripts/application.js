@@ -197,7 +197,7 @@ function googleMapInitialize() {
   });
   
   var contentString = '<div id="popbox">'+
-      '<p><a href="http://is.gd/h8yz4">Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
+      '<p><a href="http://is.gd/h8yz4">EPFL Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
       '</div>';
       
   var infowindow = new google.maps.InfoWindow({

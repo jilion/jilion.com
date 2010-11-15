@@ -1,6 +1,6 @@
 %h2.headline
   %span= t 'home.headline'
-
+  
 #latest_work
   -# .box.helvetiq
   -#   %h3.title.latest_work= "Latest work"
@@ -29,7 +29,7 @@
         %span= "Wired"
       = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
         %span= "Mashable"
-    
+        
 #content
   .section.jilion
     %h3.title.jilion
@@ -107,16 +107,8 @@
             %span.icon= 'Twitter'
           %span.corner
     .newsletter
-      - if %w( thankyou confirmed unsubscribed ).include? params[:n]
+      - if %w[thankyou confirmed unsubscribed].include?(params[:n])
         #email_flash{ :class => params[:n] }= t("home.email_flash.#{params[:n]}")
         = render :partial => 'subscribe_form', :locals => { :style => 'display:none' }
       - else
         = render :partial => 'subscribe_form'
-      
--#  .email
--#    - if %w( thankyou confirmed unsubscribed ).include? params[:n]
--#      #email_flash{ :class => params[:n] }= t("home.email_flash.#{params[:n]}")
--#      = render :partial => 'subscribe_form', :locals => { :style => 'display:none' }
--#    - else
--#      = render :partial => 'subscribe_form'
--#  .spacer
