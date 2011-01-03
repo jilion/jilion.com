@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::JobsController do
+pending Admin::JobsController do
   
   # context "with logged in admin" do
   #   before :each do
