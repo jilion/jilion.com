@@ -14,18 +14,18 @@ end
 Spork.each_run do
   require 'factory_girl'
   require Rails.root.join("spec/factories")
-  
+
   Dir[Rails.root.join('/spec/support/**/*.rb')].each { |f| require f }
-  
-  Spec::Runner.configure do |config|
+
+  RSpec.configure do |config|
     # config.include(EmailSpec::Helpers)
     # config.include(EmailSpec::Matchers)
-    
-    config.after(:each) do
-      MongoMapper.database.collections.each { |c| c.remove }
-    end
+
+    # config.after(:each) do
+    #   MongoMapper.database.collections.each { |c| c.remove }
+    # end
   end
-  
+
   # Webrat.configure do |config|
   #   config.mode = :rails
   #   config.open_error_files = false

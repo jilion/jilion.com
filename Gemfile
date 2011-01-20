@@ -6,6 +6,8 @@ gem 'i18n',              '~> 0.4.1'
 gem 'haml',              '~> 3.0.23'
 gem 'jammit',            '~> 0.5.4'
 
+gem 'configuration',     '~> 1.2.0'
+
 group :production do
   gem 'rack-google-analytics', '~> 0.9.2', :require => 'rack/google-analytics'
 end
@@ -29,6 +31,7 @@ group :test do
   gem 'guard-passenger'
   gem 'guard-bundler'
   gem 'guard-ego'
+  gem 'spork',              '~> 0.9.0.rc2'
   gem 'factory_girl_rails', '~> 1.0.0', :require => false # loaded in spec_helper Spork.each_run
   gem 'capybara',           '~> 0.4.0'
 end
