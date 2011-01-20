@@ -2,7 +2,7 @@
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
   %head
     %title= t 'title'
-    
+
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
     ==<![if !(lte IE 7)]>
     %meta{ "http-equiv" => "Refresh", :content => "0;url=/" }
@@ -20,7 +20,7 @@
         ==   color:#fff;
         ==   line-height:20px;
         == }
-        == 
+        ==
         == #main {
         ==   width:500px;
         ==   margin:100px auto;
@@ -28,7 +28,7 @@
         ==   background:#424D5D;
         ==   border:1px solid #8094B3;
         == }
-        == 
+        ==
         == a {
         ==   color:#B1E2FC;
         ==   font-weight:bold;
@@ -51,5 +51,5 @@
           %a{ :href => "http://google.com/chrome" }= "Google Chrome"
         %li
           %a{ :href => "http://apple.com/safari/download" }= "Safari"
-          
-      #footer= t 'footer'
+
+      #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"

@@ -2,9 +2,9 @@
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
   %head
     %title= t 'title'
-    
+
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
-    
+
     = include_stylesheets :style
     /[if gte IE 7]
       = include_stylesheets :style_ie, :embed_assets => false
@@ -34,8 +34,7 @@
                 %span.corner
         = yield
         .spacer
-    #footer
-      = t 'footer'
+    #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"
     #map_global{ :style => "display:none" }
       #map_background
       #map_overlay

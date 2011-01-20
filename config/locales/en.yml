@@ -3,7 +3,6 @@
 
 en:
   title: "Jilion"
-  footer: "Copyright © 2010 Jime® SA — Jilion® is the consulting group of Jime® SA"
   home:
     headline: "We help you create high quality web &amp; iPhone products."
     newsletter:
@@ -14,7 +13,7 @@ en:
       thankyou: "Thank you for subscribing"
       confirmed: "Subscription verified"
       unsubscribed: "Successfully unsubscribed"
-      
+
   time:
     formats:
       date: "%B %d, %Y"
