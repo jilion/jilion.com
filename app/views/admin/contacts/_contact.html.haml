@@ -1,0 +1,22 @@
+%tr{ :class => cycle("alt", "") }
+  %td
+    - if contact.file?
+      - link_to admin_contact_path(contact), :class => "attachment" do
+        %span="Attachment"
+  %td
+    = link_to "##{contact.issue}", admin_contact_path(contact)
+  %td= contact.class.to_s.demodulize
+  %td= mail_to contact.email
+  %td= contact.state.humanize
+  %td
+    - if contact.deal?
+      = h contact.budget
+    - else
+      = "Not applicable"
+  %td= l contact.created_at, :format => :long
+  %td 
+    - if contact.replied?
+      %em= "Replied"
+    -#= link_to "show", admin_contact_path(contact)
+    -#= archive_button(contact) unless contact.archived?
+    -#= reply_link(contact)

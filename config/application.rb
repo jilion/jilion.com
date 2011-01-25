@@ -9,12 +9,12 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Jilion
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W[#{config.root}/lib]
+    # Dir["#{config.root}/lib/{}/**/*.rb"].each do |f|
+    #   dir = File.expand_path(File.dirname(f))
+    #   config.autoload_paths += [dir] if config.autoload_paths.exclude?(dir)
+    # end
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.

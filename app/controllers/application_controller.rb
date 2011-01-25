@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # include AdminAuthenticatedSystem
+  include AdminAuthenticatedSystem
   protect_from_forgery
   
 protected

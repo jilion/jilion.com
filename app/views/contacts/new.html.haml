@@ -1,0 +1,44 @@
+#contact
+  %h3.title.contact.alt
+    %span= "Contact"
+
+  %ul#contact_topics
+    %li.form_1
+      %a.title{ :href => "#deal" }
+        = "Would you like #{content_tag(:strong, "us to work for you?")}".html_safe
+        %span.arrow
+      = render 'deal'
+    %li.form_2
+      %a.title{ :href => "#team_up" }
+        = "Would you like to #{content_tag(:strong, "team up with us?")}".html_safe
+        %span.arrow
+      = render 'team_up'
+    %li.form_3
+      %a.title{ :href => "#job" }
+        = "You are a talented individual. Would you like to #{content_tag(:strong, "join us?")}".html_safe
+        %span.arrow
+      = render 'job'
+    %li.form_4
+      %a.title{ :href => "#press" }
+        = "You are a journalist. Would you like to #{content_tag(:strong, "speak with us?")}".html_safe
+        %span.arrow
+      = render 'press'
+    %li.form_5
+      %a.title{ :href => "#request" }
+        = "Do you have a #{content_tag(:strong, "feature request")} or a great suggestion to share with us?".html_safe
+        %span.arrow
+      = render 'request'
+    %li.form_6
+      %a.title{ :href => "#love" }
+        = "Do you have an urgent need to #{content_tag(:strong, "share some good vibes with us?")}".html_safe
+        %span.arrow
+      = render 'love'
+
+  - flash.each do |key,value|
+    #flash{ :class => "alert #{key} #{session[:contact_id] ? 'attachment':''}" }
+      %p
+        = value
+      - if session[:contact_id]
+        = link_to "download the pdf copy", contact_pdf_path, :class => "pdf"
+      %a.remove{ :href => "", :onclick => "this.up().fade(); return false" }
+        %span= "Remove"

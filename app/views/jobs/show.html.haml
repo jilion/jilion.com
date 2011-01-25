@@ -1,0 +1,5 @@
+%p= @job.title
+%p= @job.description
+%p= l @job.created_at, :format => :long
+
+= render '/contacts/job', :job => @job

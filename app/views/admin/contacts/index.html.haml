@@ -1,0 +1,21 @@
+%ul.filter
+  %li{ :class => (params[:state] == "new") || (params[:state] != "archived") ? "active": "" }= link_to "Recent", url_for(params.merge(:state => "new"))
+  %li{ :class => params[:state] == "archived" ? "active": "" }= link_to "Archived", url_for(params.merge(:state => "archived"))
+  %li
+    = form_tag url_for(params), :method => :get do
+      = select_tag :type, options_for_select([["All",nil]] + Contact::TYPES.map { |t| [t.to_s.gsub(/Contact::/,''),t] }, params[:type]), {:onchange => 'this.form.submit()'}
+.spacer
+
+%table
+  %tr
+    %th
+    %th= "Issue"
+    %th= "Type"
+    %th= "Email"
+    %th= "State"
+    %th= "Budget"
+    %th= "Date"
+    %th= "Replied"
+  = render :partial => "contact", :collection => @contacts
+
+= will_paginate @contacts

@@ -1,0 +1,6 @@
+%ul
+  - @jobs.each do |j|
+    %li
+      .published_at= l j.created_at, :format => :date
+      .title= link_to j.title, job_path(j)
+      .description= j.description

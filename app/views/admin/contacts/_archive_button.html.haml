@@ -1,0 +1,7 @@
+- form_for :contact, contact, :url => admin_contact_path(contact), :html => { :method => :put } do |f|
+  .entry
+    = f.label :replied, "Replied?"
+    = f.check_box :replied
+    = f.hidden_field :state, :value => "archived"
+  .entry
+  = f.submit "archive"

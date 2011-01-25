@@ -5,17 +5,25 @@
 
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
 
-    = include_stylesheets :style
+    - if controller_name == 'contacts'
+      == <!--[if (!IE)|(gte IE 8)]><!-->
+      = stylesheet_link_tag "style", :cache => "/assets/style-datauri"
+      == <!--<![endif]-->
+      /[if gte IE 7]
+        = stylesheet_link_tag "style", :cache => "/assets/style"
+    - else
+      = include_stylesheets :style
     /[if gte IE 7]
       = include_stylesheets :style_ie, :embed_assets => false
       == <script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
-      = javascript_include_tag 'curvycorners'
+      = javascript_include_tag "curvycorners", :cache => "/assets/curvycorners"
     /[if lte IE 6]
       %meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
       %style{ :type => "text/css", :media => "screen" }
         == body {background:#fff;display:none;}
     = javascript_include_tag "#{request.protocol}use.typekit.com/ibz5qib.js"
-    == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    = javascript_tag "try{Typekit.load();}catch(e){}"
+    -# == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
   %body
     #global
