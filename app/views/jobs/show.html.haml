@@ -1,5 +1,15 @@
-%p= @job.title
-%p= @job.description
-%p= l @job.created_at, :format => :long
+%h2= @job.title
 
-= render '/contacts/job', :job => @job
+%h3= "Summary"
+%p= @job.summary
+
+%h3= "Description"
+%p= @job.description
+
+#contact
+  %h3.title
+    %span= "Apply"
+
+  %ul#contact_topics
+    %li
+      = render '/contacts/job', :job => @job

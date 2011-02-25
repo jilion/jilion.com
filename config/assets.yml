@@ -9,8 +9,9 @@ stylesheets:
     - public/stylesheets/style.css
   style_ie:
     - public/stylesheets/ie.css
-    
+
 javascripts:
   application:
-    - public/javascripts/prototype.s2.min.js
+    - public/javascripts/prototype.js
+    - public/javascripts/s2.js
     - public/javascripts/application.js

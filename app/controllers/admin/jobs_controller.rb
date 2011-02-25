@@ -8,7 +8,7 @@ class Admin::JobsController < Admin::AdminController
   
   # GET /admin/jobs/:id
   def show
-    @job = Job.find(params[:id])
+    @job = Job.where(issue: params[:id].to_i).first
   end
   
   # GET /admin/jobs/new
@@ -29,12 +29,12 @@ class Admin::JobsController < Admin::AdminController
   
   # GET /admin/jobs/1/edit
   def edit
-    @job = Job.find(params[:id])
+    @job = Job.where(issue: params[:id].to_i).first
   end
   
   # PUT /admin/jobs/:id
   def update
-    @job = Job.find(params[:id])
+    @job = Job.where(issue: params[:id].to_i).first
     
     if @job.update_attributes(params[:job])
       redirect_to(admin_jobs_path(state: @job.state), notice: "Updated.")

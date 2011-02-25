@@ -5,42 +5,38 @@ describe Contact do
   describe "valid" do
     subject { Factory(:contact) }
 
-    its(:email) { should match /email[0-9]+@jilion.com/ }
-    its(:state) { should == "new" }
-    its(:replied) { should == false }
-    its(:issue) { should be_nil }
+    its(:email)    { should match /email[0-9]+@jilion.com/ }
+    its(:state)    { should == "new" }
+    its(:replied)  { should == false }
+    its(:issue)    { should be_nil }
     its(:filename) { should be_blank }
-    its(:file?) { should be_false }
-    it { should_not be_archived }
+    its(:file?)    { should be_false }
+
+    it { should be_new }
     it { should be_valid }
   end
 
-  describe "invalid" do
-
+  describe "Validations" do
+    it { should validate_presence_of(:email) }
     it "should validate email presence" do
-      Contact.create.errors[:email].should be_present
+      contact = Factory.build(:contact, email: nil)
+      contact.should_not be_valid
+      contact.errors[:email].should be_present
     end
-
     it "should validate email length" do
-      Contact.create(:email => "1@1.c").errors[:email].should be_present
+      contact = Factory.build(:contact, email: "1@1.c")
+      contact.should_not be_valid
+      contact.errors[:email].should be_present
     end
-
     it "should validate email format" do
-      Contact.create(:email => "@google.com").errors[:email].should be_present
+      contact = Factory.build(:contact, email: "@google.com")
+      contact.should_not be_valid
+      contact.errors[:email].should be_present
     end
-
-    it "should have 'new' state when created" do
-      Contact.create(:email => "bob@bob.com").state.should == "new"
-    end
-
   end
 
-  describe "type_name" do
-
-    it "should be contact" do
-      Factory(:contact).type_name.should == "contact"
-    end
-
+  describe "#type_name" do
+    specify { Factory(:contact).type_name.should == "contact" }
   end
 
 end

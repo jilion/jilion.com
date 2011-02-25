@@ -1,3 +1,5 @@
+require 'carrierwave/orm/mongoid'
+
 class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -14,7 +16,7 @@ class Contact
   RegDomainHead  = '(?:[A-Z0-9\-]+\.)+'
   RegDomainTLD   = '(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)'
   RegEmailOk     = /\A#{RegEmailName}@#{RegDomainHead}#{RegDomainTLD}\z/i
-  TYPES = %w[Contact::Deal Contact::Job Contact::Love Contact::Press Contact::Request Contact::TeamUp]
+  TYPES = %w[Contact::Job Contact::Press Contact::Request Contact::TeamUp]
   STATES = %w[new archived]
 
   validates_presence_of :email,                        :message => "can't be blank"

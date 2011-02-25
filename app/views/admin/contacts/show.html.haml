@@ -1,6 +1,7 @@
 %h2= @contact.class.to_s.demodulize
 
 = link_to "Back to the contact list", admin_contacts_path
+%hr
 
 %ul.contact
   %li
@@ -17,47 +18,9 @@
   %li
     %strong= "Status:"
     = @contact.state.humanize
-  - if @contact.deal?
-    %li
-      %strong= "Name:"
-      = @contact.name
-    %li
-      %strong= "Phone:"
-      = @contact.phone
-    %li
-      %strong= "Organization:"
-      = @contact.organization
-    %li
-      %strong= "Url:"
-      = link_to @contact.url, @contact.url
-    %li
-      %strong= "Activity:"
-      = @contact.activity
-    %li
-      %strong= "Budget:"
-      = @contact.budget
-    %li
-      %strong= "Project Description:"
-      = @contact.project_description
-    %li
-      %strong= "Goal:"
-      = @contact.goal
-    %li
-      %strong= "Metrics:"
-      = @contact.metrics
-    %li
-      %strong= "Challenge:"
-      = @contact.challenge
-    %li
-      %strong= "Deadline:"
-      = @contact.deadline
-    %li
-      %strong= "Comment:"
-      = @contact.comment
-  - if !@contact.deal?
-    %li
-      %strong= "Message:"
-      = @contact.message
+  %li
+    %strong= "Message:"
+    = @contact.message
   - if @contact.file.present?
     %li
       %strong= "Attachment:"
@@ -66,5 +29,8 @@
     %strong= "Submitted on:"
     = l @contact.created_at, :format => :long
 
-= archive_button(@contact) unless @contact.archived?
-= reply_link(@contact)
+  %p= reply_link(@contact)
+  %p= archive_button(@contact) unless @contact.archived?
+
+%hr
+= link_to "Back to the contact list", admin_contacts_path

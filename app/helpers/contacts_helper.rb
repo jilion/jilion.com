@@ -1,5 +1,5 @@
 module ContactsHelper
-  
+
   def contact(klass)
     if params[:contact] && params[:contact][:type] == klass.to_s
       @contact
@@ -7,5 +7,5 @@ module ContactsHelper
       klass.new
     end
   end
-  
+
 end

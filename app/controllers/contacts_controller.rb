@@ -1,18 +1,5 @@
 class ContactsController < ApplicationController
-  
-  # GET /contact/Jilion-contact.pdf
-  def show
-    @contact = Contact.find(session[:contact_id])
     
-    respond_to do |format|
-      if @contact
-        format.pdf
-      else
-        format.html { redirect_to new_contact_path }
-      end
-    end
-  end
-  
   # GET /contact
   def new
   end
@@ -20,12 +7,13 @@ class ContactsController < ApplicationController
   # POST /contacts
   def create
     @contact = contact_class.new(params[:contact])
-    session.delete(:contact_id)
-    
+
     if @contact.save
       flash[:notice] = 'Thank you for your message.'
-      session[:contact_id] = @contact.id if @contact.deal?
       redirect_to new_contact_url
+    elsif params[:contact][:job_id]
+      @job = Job.find(params[:contact][:job_id])
+      render '/jobs/show'
     else
       render :new
     end

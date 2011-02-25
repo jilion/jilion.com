@@ -3,17 +3,19 @@ class Job
   include Mongoid::Timestamps
 
   field :title,       :type => String
+  field :summary,     :type => String
   field :description, :type => String
   field :state,       :type => String, :default => 'new'
   field :issue,       :type => Integer
 
   validates_presence_of :title,       :message => "can't be blank"
+  validates_presence_of :summary,     :message => "can't be blank"
   validates_presence_of :description, :message => "can't be blank"
 
   before_create :set_issue
 
   def self.published
-    where(state: 'published').desc(:created_at)
+    where(:state => 'published').desc(:created_at)
   end
 
   def self.search(params)

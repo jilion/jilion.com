@@ -7,6 +7,12 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
 
+  # https://github.com/timcharper/spork/wiki/Spork.trap_method-Jujutsu
+  require "rails/mongoid"
+  Spork.trap_class_method(Rails::Mongoid, :load_models)
+  require "rails/application"
+  Spork.trap_method(Rails::Application, :reload_routes!)
+
   require File.dirname(__FILE__) + "/../config/environment"
   require 'rspec/rails'
 
@@ -22,40 +28,30 @@ Spork.prefork do
     # instead of true.
     # config.use_transactional_fixtures = false
 
-    # config.before(:suite) do
-    #   DatabaseCleaner[:active_record].strategy = :transaction
-    #   DatabaseCleaner[:mongoid].strategy       = :truncation
-    #   DatabaseCleaner.clean_with(:truncation) # clean all the databases
-    # end
+    config.before(:suite) do
+      DatabaseCleaner[:mongoid].strategy       = :truncation
+      DatabaseCleaner.clean_with(:truncation) # clean all the databases
+    end
 
     config.before(:each) do
       Capybara.reset_sessions!
-      # DatabaseCleaner.start
+      DatabaseCleaner.start
     end
 
     # Clear MongoDB Collection
     config.after(:each) do
-      # DatabaseCleaner.clean
-      Mongoid.master.collections.select { |c| c.name !~ /system/ }.each(&:drop)
+      DatabaseCleaner.clean
+      # Mongoid.master.collections.select { |c| c.name !~ /system/ }.each(&:drop)
     end
-    #
-    # config.after(:all) do
-    #   DatabaseCleaner.clean_with(:truncation) # clean all the databases
-    # end
+
+    config.after(:all) do
+      DatabaseCleaner.clean_with(:truncation) # clean all the databases
+    end
   end
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-
-  # Needed to prevent all models loaded by Mongoid
-  Rails::Mongoid.load_models(Jilion::Application)
-
-  # Needed to prevent routes.rb to be load on Rails initialization and make User/Admin model loaded by devise_for
-  Jilion::Application.reload_routes!
-
-  # Reload yml locales
-  I18n.reload!
 
   # Factory need to be required each launch to prevent loading of all models
   require 'factory_girl'
@@ -66,6 +62,5 @@ Spork.each_run do
   RSpec.configure do |config|
     config.include Shoulda::ActionController::Matchers
     config.include Capybara
-    # config.include Devise::TestHelpers, :type => :controller
   end
 end

@@ -1,27 +1,22 @@
 - contact = contact(Contact::Job)
 .form_box#job{ :style => contact.errors.empty? && !job ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Job
-  - job_id = job ? job.id : contact.job_id
-
-  - unless job_id
+  - unless job
     .intro
       %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
-      %p= raw "We try to stay small and hire people who are really motivated to make a difference and who believe in our following winning formula:<br /> Your mission is to continuously amaze the team, while the team is functioning as your talents' amplifier."
-
-      %p= "At the moment we are looking for:"
+      %p= "Our \"mantra\" at Jilion is simple: Your mission is to amaze the team, while the team's mission is to amplify your talent."
+      %strong= "Open positions"
+      %p= "At the moment we are looking to fill the following positions:"
       %ul
-        %li= "iPhone / iPad software engineer"
-        %li= "JavaScript software engineer"
-        %li= "Ruby on Rails software engineer"
-      = link_to "Open positions", jobs_path
-      %p= "If you'd love to work with us, don't be shy, send us your résumé!"
-
-  = form_for :contact, contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
-    - if job_id
-      = f.hidden_field :job_id, :value => job_id
-      .entry
-        = "Job title:"
-        = Job.find(job_id).title
+        - Job.published.each do |job|
+          %li
+            = "#{job.title}, "
+            = link_to("know more and apply...", job_path(job))
+      %p= "For any spontaneous job application or internship proposal, please use the following form:"
+  = form_for contact, :as => :contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
+    = f.hidden_field :type, :value => 'Contact::Job'
+    - if job
+      = f.hidden_field :job_id, :value => job.id
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"
@@ -38,8 +33,8 @@
       = f.file_field :file
       = f.hidden_field :file_cache
     .entry.submit
-      = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
-      .spinner{ :style => "display:none" }
-        = image_tag "/images/embed/contact/spinner.gif", :alt => ""
+      = submit_tag 'Submit'#, :onclick => "this.next('.spinner').show();"
+      -# .spinner{ :style => "display:none" }
+      -#   = image_tag "/images/embed/contact/spinner.gif", :alt => ""
       .spacer
   .required_mention= raw "<abbr title='required'>*</abbr> required"

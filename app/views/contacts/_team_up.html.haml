@@ -2,17 +2,10 @@
 .form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Team Up
   .intro
-    %p= "Not only do we believe it is great to team up with other companies on ambitious projects, but it's also often required."
-    %p= "Our guidelines when we team-up:"
-    %ul
-      %li= "We always focus on and put quality first"
-      %li= "We believe in building lasting relationships where all parties are valued"
-      %li= "We do our best to establish clear rules of collaboration to avoid any possible frustration"
-      %li= "We try to be aware of our own limits and will only start projects that are within our capacity"
-
     %p= "If your organization is interested in teaming-up with us, we would love to hear from you:"
 
-  = form_for :contact, contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+  = form_for contact, :as => :contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
+    = f.hidden_field :type, :value => 'Contact::TeamUp'
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"

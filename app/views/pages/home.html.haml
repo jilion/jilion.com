@@ -1,16 +1,7 @@
 %h2.headline
   %span= t 'home.headline'
-  
+
 #latest_work
-  -# .box.helvetiq
-  -#   %h3.title.latest_work= "Latest work"
-  -#   .left
-  -#     %h4= "Helvetiq"
-  -#     %p.description= 'We are glad to introduce the Helvetiq iPhone App. A Swiss IQ test based on the original Helvetiq board game.'
-  -#   .right
-  -#     = link_to "view", "http://iphone.helvetiq.ch", :class => "view_btn"
-  -#     -#%p.read_more= 'Read more:'
-  -#     -#= link_to "The Making of Helvetiq iPhone App", "http://blog.jilion.com", :class => "post_link"
   .box.sublimevideo
     %h3.title.latest_work= "Latest work"
     = link_to "http://sublimevideo.net", :class => "read_more" do
@@ -29,73 +20,73 @@
         %span= "Wired"
       = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
         %span= "Mashable"
-        
+
 #content
-  .section.jilion
-    %h3.title.jilion
-      %span= "What is Jilion"
-    %p= raw "Jilion is a team of #{hl('developers')} and #{hl('designers')} based in Lausanne, #{hl('Switzerland')} on the #{link_to('EPFL', 'http://www.epfl.ch')} start-up campus. We provide you with our expertise in Internet software development and consulting services in addition to developing our own products."
-    %p= 'We pride ourselves on delivering impactful and state-of-the-art solutions to your online business goals.'
   .section.what_we_do
     %h3.title.what_we_do
       %span= "What we do"
-    .web
-      = image_tag "/images/embed/home/browser_icon.png", :alt => "Web"
-      %p= raw "We have strong expertise in #{hl('web application')} development and interface design. We can collaborate with your team in defining your product goals and specifications, its online presence and market strategy."
-      %p= raw "We are experts in the #{hl('Ruby on Rails')} framework and the #{hl('Facebook Platform')} and we can empower your product by adding advanced social media integration."
-    .iphone
-      = image_tag "/images/embed/home/iphone_icon.png", :alt => "iPhone"
-      %p= raw "We can help you build cutting-edge applications for the #{hl('iPhone and iPod touch')} that will enhance your brand and raise user satisfaction significantly."
-      %p= raw "We want to delight your users with #{hl('easy-to-use applications')} and #{hl('beautiful interfaces')} that will make the difference."
-    .spacer
-  -# .section.our_strength
-  -#   %h3.title.our_strength
-  -#     %span= "Our strength"
-  -#   #spectrum
-  -#     %strong
-  -#       %em= "We cover the full spectrum of competences, from solid back-end web services to sleek iPhone applications and web front-ends."
-  .section.people
+    %p
+      -# = image_tag "/images/embed/home/sublime_video_logo.png", :alt => "Web"
+      = "SublimeVideo was launched as an HTML5 video demo in January 2010."
+      %br
+      = "After more than 1 million unique visitors, SublimeVideo has grown into the world's first \"Universal HTML5 Video Player Service\"."
+    %p
+      = "SublimeVideo is the only video player solution on the web to deliver the promises of HTML5 video on most web browsers, pain-free and consistently."
+      %br
+      = link_to "Learn more", "http://sublimevideo.net"
+
+  .section.people2
     %h3.title.people
       %span= "People"
-    %ul
-      %li
-        = image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
-        .text
-          %h4= 'Mehdi Aminian'
-          %p.desc= "Internet entrepreneur with a passion for micro teams having macro ambitions."
-      %li
-        = image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
-        .text
-          %h4= 'Zeno Crivelli'
-          %p.desc= "iPhone & web front-end developer. Details fine-tuning enthusiast."
-      %li
-        = image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
-        .text
-          %h4= 'Thibaud Guillaume-Gentil'
-          %p.desc= "Rails Developer loving TextMate's Invisible Chars."
-      %li
-        = image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
-        .text
-          %h4= 'Octave Zangs'
-          %p.desc
-            = "Pixel-perfect web & iPhone UI designer."
-            %br
-            = "Music maker."
-  .section.jobs
+    %p= raw "Jilion is a team of #{hl('software creators')} based in Lausanne, #{hl('Switzerland')} at the fantastic #{link_to('EPFL', 'http://www.epfl.ch')} start-ups campus."
+    %p= "Jilion has been made possible through a patient process to assemble individuals who love working together."
+    .photo
+      = "Group photo here"
+    .photo_legend
+      = "From left to right: Octave, Andrea, Rémy, Zeno, Thibaud, Mehdi"
+
+  .section.jobs2
     %h3.title.jobs
       %span= "Jobs"
-    %p= raw "We are looking for a talented and passionate #{hl('iPhone developer')} to join our team and build high quality applications for the iPhone and iPod touch."
-    %p= raw "Do you have experience and a proven track record as iPhone developer? Do you #{hl('care about details')} and love good design? #{ mail_to "info@jilion.com", "Contact us", :encode => "hex" }."
+    %p= "We have one open position at the moment:"
+    %h4.title
+      %span= "Community and marcom manager"
+    %p
+      = "Full-time position in Switzerland (and then possibly UK or US). In charge of all Jilion's communication. You are fully knowledgeable in what we do and have a talent to communicate it easily and with passion. English is your mother tongue."
+      %br
+      = link_to "Please apply here", job_path(Job.where(title: "Community and marcom manager").first)
+
+  .section.supporters
+    %h3.title.supporters
+      %span= "Supporters"
+    %p= "We want to thank all our long-time supporters for their trust in our passion."
+    %p
+      %strong= "Our Angel Investors:"
+    %ul
+      %li= "Stelio Tzonis, IT entrepreneur (Nagra-Kudelki's Lysis)"
+      %li= "Amin Shokrollahi, EPFL professor, IT entrepreneur (Qualcomm's DigitalFountain)"
+      %li= "Pierre Fazan, EPFL professor, IT entrepreneur (Micron's InnovativeSilicon)"
+      %li= "Marco Beltrametti, … professor(?)"
+      %li= "Aminian & Crivelli's families"
+    %p
+      %strong= "Organizations supporting us:"
+    %ul
+      %li= "EPFL VPIV / Innogrant"
+      %li= "FIT"
+      %li= "Venturekick.ch"
+      %li= "SELT"
+      %li= "PSE"
   .spacer
+
   .section.contact
     %h3.title.contact
       %span= "Contact"
     %ul
-      %li.email
-        = link_to "mailto:%69%6e%66%6f@%6a%69%6c%69%6f%6e.%63%6f%6d" do
-          %strong
-            %span.icon= 'Email'
-          %span.corner
+      -# %li.email
+      -#   = link_to "mailto:%69%6e%66%6f@%6a%69%6c%69%6f%6e.%63%6f%6d" do
+      -#     %strong
+      -#       %span.icon= 'Email'
+      -#     %span.corner
       %li.map
         = link_to "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=PSE+D,+1015+Ecublens,+Switzerland&sll=46.51725,6.56210&sspn=0.02838,0.037208&ie=UTF8&t=h&z=16", :title => "Show map", :id => "show_location" do
           %strong
