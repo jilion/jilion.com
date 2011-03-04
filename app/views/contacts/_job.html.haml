@@ -4,8 +4,6 @@
   - unless job
     .intro
       %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
-      %p= "Our \"mantra\" at Jilion is simple: Your mission is to amaze the team, while the team's mission is to amplify your talent."
-      %strong= "Open positions"
       %p= "At the moment we are looking to fill the following positions:"
       %ul
         - Job.published.each do |job|
@@ -33,8 +31,8 @@
       = f.file_field :file
       = f.hidden_field :file_cache
     .entry.submit
-      = submit_tag 'Submit'#, :onclick => "this.next('.spinner').show();"
-      -# .spinner{ :style => "display:none" }
-      -#   = image_tag "/images/embed/contact/spinner.gif", :alt => ""
+      = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
+      .spinner{ :style => "display:none" }
+        = image_tag "/images/embed/contact/spinner.gif", :alt => ""
       .spacer
   .required_mention= raw "<abbr title='required'>*</abbr> required"

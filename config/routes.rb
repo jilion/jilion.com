@@ -3,6 +3,7 @@ Jilion::Application.routes.draw do
   scope :to =>  "pages#show", :via => :get do
     match 'n/:n', :n => /thankyou|confirmed|unsubscribed/, :page => 'home'
     match 'ie', :page => 'ie'
+    match 'team', :page => 'team'
     root :page => 'home'
   end
 

@@ -2,8 +2,8 @@
 .form_box#request{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Request
   .intro
-    %p= "For question related to SublimeVideo, please visit…"
-    %p= "For any other question or a request please use the form below:"
+    %p= raw "If you have a question related to SublimeVideo, please visit #{link_to "sublimevideo.net", "http://sublimevideo.net"}."
+    %p= "For any other question or request, please use the form below:"
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
     = f.hidden_field :type, :value => 'Contact::Request'
     .entry

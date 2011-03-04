@@ -1,0 +1,91 @@
+%h2.headline
+  %span= t 'home.headline'
+
+-# #latest_work
+-#   .box.sublimevideo
+-#     %h3.title.latest_work= "Latest work"
+-#     %h4
+-#       = "SublimeVideo"
+-#       %em= "World's first HTML5 Video Player Service"
+-#     = link_to "Learn more", "http://sublimevideo.net", :class => "view_btn"
+-#     .what_they_say
+-#       = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
+-#         %span= "Daring Fireball"
+-#       = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
+-#         %span= "Wired"
+-#       = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
+-#         %span= "Read Write Web"
+-#       = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
+-#         %span= "Mashable"
+
+#content
+  .section.what_we_do
+    %h3.title.what_we_do
+      %span= "What we do"
+    %ul
+      %li
+        .left
+          = link_to (image_tag "/images/embed/home/sublimevideo_cloud.png"), "http://sublimevideo.net"
+        .right
+          %p
+            = raw "#{link_to "SublimeVideo", "http://sublimevideo.net"} was launched as an HTML5 video demo in January 2010. After more than 1 million unique visitors, SublimeVideo has grown into the #{hl('world\'s first "Universal HTML5 Video Player Service"')}."
+          %p
+            = raw "SublimeVideo is the only video player solution on the web to deliver the promises of #{hl('HTML5 video on most web browsers')}, pain-free and consistently."
+          %p
+            = link_to "Learn more", "http://sublimevideo.net", :class => "learn_more"
+
+  .section.people
+    %h3.title.people
+      %span= "People"
+    %ul.photos
+      %li= image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
+      %li= image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
+      %li= image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
+      %li= image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
+      %li= image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
+      %li= image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coira"
+    %p= raw "Jilion is a team of #{hl('software creators')} based in Lausanne, #{hl('Switzerland')} at the fantastic #{link_to('EPFL', 'http://www.epfl.ch')} start-ups campus."
+    %p= "Jilion has been made possible through a patient process to assemble individuals who love working together."
+    %p{:style => "padding-top:10px"}= link_to "Learn more about us and our supporters", "/team", :class => "learn_more"
+    -# .photo
+    -#   = image_tag "/images/embed/home/jilion_team.jpg", :alt => "Jilion Team"
+    -#   .caption
+    -#     %em= "From left to right: Octave, Andrea, Rémy, Zeno, Thibaud, Mehdi"
+    
+  - jobs = Job.published
+  - if jobs.present?
+    .section.jobs
+      %h3.title.jobs
+        %span= "Jobs"
+      %p= "We have one open position at the moment:"
+      %ul
+        - jobs.each do |job|
+          %li
+            %h4
+              %span= job.title
+            %p= job.summary
+            %p= link_to "Please apply here", job_path(job), :class => "learn_more"
+
+  -# .section.supporters
+  -#   %h3.title.supporters
+  -#     %span= "Supporters"
+  -#   %p= "We want to thank all our long-time supporters for their trust in our passion."
+  -#   %p
+  -#     %strong= "Our Angel Investors:"
+  -#   %ul
+  -#     %li= "Stelio Tzonis, IT entrepreneur (Nagra-Kudelki's Lysis)"
+  -#     %li= "Amin Shokrollahi, EPFL professor, IT entrepreneur (Qualcomm's DigitalFountain)"
+  -#     %li= "Pierre Fazan, EPFL professor, IT entrepreneur (Micron's InnovativeSilicon)"
+  -#     %li= "Marco Beltrametti, … professor(?)"
+  -#     %li= "Aminian & Crivelli's families"
+  -#   %p
+  -#     %strong= "Organizations supporting us:"
+  -#   %ul
+  -#     %li= "EPFL VPIV / Innogrant"
+  -#     %li= "FIT"
+  -#     %li= "Venturekick.ch"
+  -#     %li= "SELT"
+  -#     %li= "PSE"
+  -# .spacer
+
+  = render "get_in_touch"

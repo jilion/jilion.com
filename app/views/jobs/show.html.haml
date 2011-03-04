@@ -1,15 +1,12 @@
-%h2= @job.title
-
-%h3= "Summary"
-%p= @job.summary
-
-%h3= "Description"
-%p= @job.description
+= title "Jobs - #{@job.title}"
+#job_page
+  %h2= @job.title
+  .desc
+    = @job.description
 
 #contact
-  %h3.title
-    %span= "Apply"
-
   %ul#contact_topics
-    %li
+    %li.expanded
+      %a.title.static{ :href => "", :onclick => "return false" }
+        %strong= "Apply"
       = render '/contacts/job', :job => @job
