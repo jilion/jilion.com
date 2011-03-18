@@ -23,38 +23,54 @@
       %span= "What we do"
     %ul
       %li.sublimevideo
-        %div{ :style => "float:left;clear:left;height:28px;width:120px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:134px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:154px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:160px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:152px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:120px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:80px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:139px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:159px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:165px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:157px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
+        %div{ :style => "float:left;clear:left;height:28px;width:85px;" }
         -# %div{ :style => "float:left;clear:left;height:46px;width:45px;" }
         %p
-          = raw "SublimeVideo is the world's first cloud-based HTML5 video player. The universal video playing solution that your web audience deserves, delivering the promises of HTML5 pain-free and consistently."
-        -# %p
-        -#   = raw "SublimeVideo is the only web video player solution to deliver the promises of HTML5 pain-free and consistently."
-        %p{:style => "padding-top:0px"}= link_to "Learn more", "http://sublimevideo.net", :class => "learn_more"
+          = raw "#{link_to "SublimeVideo", "http://sublimevideo.net"} is the world's first cloud-based HTML5 video player. The universal video player solution that your web audience deserves, effortlessly and consistently delivering the benefits of HTML5, today."
+        -# %p{:style => "padding-top:0px"}= link_to "Learn more", "http://sublimevideo.net", :class => "learn_more"
   .section.people
     %h3.title.people
       %span= "People"
     %ul.photos
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Mehdi Aminian"           , :alt => "Mehdi Aminian"
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Zeno Crivelli"           , :alt => "Zeno Crivelli"
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Thibaud Guillaume-Gentil", :alt => "Thibaud Guillaume-Gentil"
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Octave Zangs"            , :alt => "Octave Zangs"
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Rémy Coutable"           , :alt => "Rémy Coutable"
-      %li= image_tag "/images/embed/home/avatar_default.png", :title => "Andrea Coira"            , :alt => "Andrea Coira"
-      -# %li= image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
-      -# %li= image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
-      -# %li= image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
-      -# %li= image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
-      -# %li= image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
-      -# %li= image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coira"
-    .spacer
-    %p= "Jilion is a team of passionate individuals aiming at creating well crafted, meaningful and innovative software. We are based in Lausanne, Switzerland."
-    %p{:style => "padding-top:10px"}= link_to "Learn more", "/team", :class => "learn_more"
+      %li
+        = image_tag "/images/embed/people/andrea_small.jpg", :alt => "Andrea Coiro", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coiro"
+          %h4= "Andrea Coiro"
+      %li
+        = image_tag "/images/embed/people/remy_small.jpg", :alt => "Rémy Coutable", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
+          %h4= "Rémy Coutable"
+      %li
+        = image_tag "/images/embed/people/octave_small.jpg", :alt => "Octave Zangs", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
+          %h4= "Octave Zangs"
+      %li
+        = image_tag "/images/embed/people/thibaud_small.jpg", :alt => "Thibaud Guillaume-Gentil", :size => "56x56"
+        .details_box.double_line
+          = image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
+          %h4= "Thibaud Guillaume-Gentil"
+      %li
+        = image_tag "/images/embed/people/zeno_small.jpg", :alt => "Zeno Crivelli", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
+          %h4= "Zeno Crivelli"
+      %li
+        = image_tag "/images/embed/people/mehdi_small.jpg", :alt => "Mehdi Aminian", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
+          %h4= "Mehdi Aminian"
+    .spacer    
+    %p= "Jilion is a small and passionate team striving to create well-crafted and innovative software. We are based in Lausanne, Switzerland."
+    -# %p{:style => "padding-top:10px"}= link_to "Learn more", "/team", :class => "learn_more"
     -# .photo
     -#   = image_tag "/images/embed/home/jilion_team.jpg", :alt => "Jilion Team"
     -#   .caption
@@ -83,18 +99,19 @@
   -# .spacer
   .spacer
   = render "get_in_touch"
-  - jobs = Job.published
-  - if jobs.present?
-    .section.jobs
-      %h3.title.jobs
-        %span= "Jobs"
-      -# %p= "We have one open position at the moment:"
-      %ul
-        - jobs.each do |job|
-          %li
-            %h4
-              %em= "Open Position:"
-              = job.title
-            %p
-              = job.summary
-              = raw "#{link_to "apply here", job_path(job)}."
+  -# - jobs = Job.published
+  -# - if jobs.present?
+  -#   .section.jobs
+  -#     %h3.title.jobs
+  -#       %span= "Jobs"
+  -#     -# %p= "We have one open position at the moment:"
+  -#     %ul
+  -#       - jobs.each do |job|
+  -#         %li
+  -#           %h4
+  -#             %em= "Open Position:"
+  -#             = job.title
+  -#           %p
+  -#             = job.summary
+  -#             = raw "#{link_to "apply here", job_path(job)}."
+  .hw_enabler

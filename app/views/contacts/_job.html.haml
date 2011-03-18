@@ -3,13 +3,14 @@
   %h2 Job
   - unless job
     .intro
-      %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most for us. A good team spirit is what makes quality and creativity possible."
-      %p= "At the moment we are looking to fill the following positions:"
-      %ul
-        - Job.published.each do |job|
-          %li
-            = "#{job.title}, "
-            = link_to("know more and apply...", job_path(job))
+      %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most to us. A good team spirit is what makes quality and creativity possible."
+      - if Job.published.length > 0
+        %p= "At the moment we are looking to fill the following positions:"
+        %ul
+          - Job.published.each do |job|
+            %li
+              = "#{job.title}, "
+              = link_to("know more and apply...", job_path(job))
       %p= "For any spontaneous job application or internship proposal, please use the following form:"
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
     = f.hidden_field :type, :value => 'Contact::Job'
