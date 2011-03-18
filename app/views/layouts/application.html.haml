@@ -16,7 +16,7 @@
     /[if gte IE 7]
       = include_stylesheets :style_ie, :embed_assets => false
       == <script type="text/javascript">var curvyCornersNoAutoScan = true;</script>
-      = javascript_include_tag "curvycorners", :cache => "/assets/curvycorners"
+      = javascript_include_tag "curvycorners"#, :cache => "/assets/curvycorners"
     /[if lte IE 6]
       %meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
       %style{ :type => "text/css", :media => "screen" }
