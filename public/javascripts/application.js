@@ -143,34 +143,35 @@ document.observe("dom:loaded", function() {
   });
   
   $$("#contact_topics li a.title").each(function(a){
-    ddd(a);
-    if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
-    a.observe("click",function(e){
-      var form_box = a.next('.form_box');
-      if (form_box.visible()) {
-        a.up().removeClassName('expanded');
-        form_box.hide();
+    if (!a.hasClassName('static')) {
+      if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
+      a.observe("click",function(e){
+        var form_box = a.next('.form_box');
+        if (form_box.visible()) {
+          a.up().removeClassName('expanded');
+          form_box.hide();
         
-        if (Prototype.Browser.IE) {
-          curvyCorners.redraw();
+          if (Prototype.Browser.IE) {
+            curvyCorners.redraw();
+          }
+        
+        } else {
+          $$("#contact_topics li .form_box").invoke("hide");
+          $$("#contact_topics li").invoke("removeClassName", "expanded");
+          a.up().addClassName('expanded');
+          form_box.setStyle({display:"block"});
+        
+          if (Prototype.Browser.IE) {
+            curvyCorners.redraw();
+          }
+        
+          var elementToScrollTo = a.up();
+          var scrollPos = elementToScrollTo.cumulativeOffset().top;
+          scrollTo(0,scrollPos-11);
         }
-        
-      } else {
-        $$("#contact_topics li .form_box").invoke("hide");
-        $$("#contact_topics li").invoke("removeClassName", "expanded");
-        a.up().addClassName('expanded');
-        form_box.setStyle({display:"block"});
-        
-        if (Prototype.Browser.IE) {
-          curvyCorners.redraw();
-        }
-        
-        var elementToScrollTo = a.up();
-        var scrollPos = elementToScrollTo.cumulativeOffset().top;
-        scrollTo(0,scrollPos-11);
-      }
-      e.stop();
-    });
+        e.stop();
+      });
+    }
   });
 });
 
@@ -197,7 +198,7 @@ function googleMapInitialize() {
   });
   
   var contentString = '<div id="popbox">'+
-      '<p><a href="http://is.gd/h8yz4">EPFL Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
+      '<p><a href="http://bit.ly/h4GQ0l">EPFL Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
       '</div>';
       
   var infowindow = new google.maps.InfoWindow({
@@ -231,16 +232,10 @@ function showMap(event) {
 }
 
 function hideGArrow() {
-  var gmPane = $$('#pane_6 div.gmnoprint');
+  var GArrows = $$('img[src="http://maps.gstatic.com/intl/en_us/mapfiles/iw_close.gif"]');
   
-  if (gmPane.size() > 0) {
-    var gmnoprint = gmPane.first();
-    var closeButton = Prototype.Browser.IE ? gmnoprint.select('img')[15] : gmnoprint.down('img');
-    if (closeButton) {
-      closeButton.remove();
-      // do not loop anymore
-    }
-    else setTimeout(hideGArrow, 250);
+  if (GArrows.size() > 0) {
+    GArrows.invoke('remove');
   }
   else setTimeout(hideGArrow, 250);
 }

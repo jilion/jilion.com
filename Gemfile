@@ -2,7 +2,7 @@ source :rubygems
 
 gem 'bundler',       '~> 1.0.10'
 
-gem 'rails',         '~> 3.0.5.rc1'
+gem 'rails',         '~> 3.0.5'
 gem 'i18n',          '~> 0.5.0'
 gem 'arel',          '~> 2.0.9.rc1'
 gem 'haml',          '3.0.24'

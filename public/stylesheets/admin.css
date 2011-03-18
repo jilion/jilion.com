@@ -42,7 +42,7 @@
 
 #admin ul.filter li.active a {
   color:#fc0088;
-  text-shadow:#fd6ac4 0 0 4px;
+  text-shadow:#fd6ac4 0 0 4px, #fd6ac4 0 0 4px, #fd6ac4 0 0 8px;
 }
 
 #admin ul.filter li form {

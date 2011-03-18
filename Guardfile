@@ -1,6 +1,6 @@
 group 'frontend' do
 
-  guard 'passenger', :ping => true, :port => 3001 do
+  guard 'passenger', :ping => true, :port => 3000 do
     watch('config/application.rb')
     watch('config/environment.rb')
     watch(%r{^config/environments/.+\.rb})

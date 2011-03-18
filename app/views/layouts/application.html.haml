@@ -1,7 +1,7 @@
 !!! strict
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
   %head
-    %title= t 'title'
+    %title= "#{t 'title'}#{yield :title}"
 
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
 
@@ -21,7 +21,7 @@
       %meta{ "http-equiv" => "Refresh", :content => "0;url=/ie" }
       %style{ :type => "text/css", :media => "screen" }
         == body {background:#fff;display:none;}
-    = javascript_include_tag "#{request.protocol}use.typekit.com/ibz5qib.js"
+    = javascript_include_tag "#{request.protocol}use.typekit.com/odd6rcy.js"
     = javascript_tag "try{Typekit.load();}catch(e){}"
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
   %body
@@ -41,7 +41,7 @@
                 %span.corner
         = yield
         .spacer
-    #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"
+    #footer= "Copyright © 2009-#{Time.now.utc.year} Jilion® / Jime® SA"
     #map_global{ :style => "display:none" }
       #map_background
       #map_overlay

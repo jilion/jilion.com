@@ -1,0 +1,25 @@
+.section.contact
+  %h3.title.contact
+    %span= "Get in touch"
+  %ul
+    %li.email
+      = link_to new_contact_path do
+        %strong
+          %span.icon= 'Contact'
+        %span.corner
+    %li.map
+      = link_to "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=PSE+D,+1015+Ecublens,+Switzerland&sll=46.51725,6.56210&sspn=0.02838,0.037208&ie=UTF8&t=h&z=16", :title => "Show map", :id => "show_location" do
+        %strong
+          %span.icon= 'Map'
+        %span.corner
+    %li.twitter
+      = link_to "http://twitter.com/jilion" do
+        %strong
+          %span.icon= 'Twitter'
+        %span.corner
+  .newsletter
+    - if %w[thankyou confirmed unsubscribed].include?(params[:n])
+      #email_flash{ :class => params[:n] }= t("home.email_flash.#{params[:n]}")
+      = render :partial => 'subscribe_form', :locals => { :style => 'display:none' }
+    - else
+      = render :partial => 'subscribe_form'
