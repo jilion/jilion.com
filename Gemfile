@@ -16,6 +16,7 @@ gem 'mongoid',       '~> 2.0.0.rc.7'
 gem 'settingslogic', '2.0.6'
 
 group :production do
+  gem 'rack-ssl-enforcer', '0.2.2'
   gem 'rack-google-analytics', '0.9.2', :require => 'rack/google-analytics'
 end
 

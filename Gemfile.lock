@@ -149,6 +149,7 @@ GEM
     rack-google-analytics (0.9.2)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
+    rack-ssl-enforcer (0.2.2)
     rack-test (0.5.7)
       rack (>= 1.0)
     rails (3.0.5)
@@ -234,6 +235,7 @@ DEPENDENCIES
   mongoid (~> 2.0.0.rc.7)
   passenger
   rack-google-analytics (= 0.9.2)
+  rack-ssl-enforcer (= 0.2.2)
   rails (= 3.0.5)
   rb-fsevent
   rspec-rails
