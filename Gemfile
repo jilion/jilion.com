@@ -1,19 +1,19 @@
 source :rubygems
 
-gem 'bundler',       '~> 1.0.10'
+gem 'bundler',       '1.0.10'
 
-gem 'rails',         '~> 3.0.5'
-gem 'i18n',          '~> 0.5.0'
-gem 'arel',          '~> 2.0.9.rc1'
-gem 'haml',          '3.0.24'
+gem 'rails',         '3.0.5'
+gem 'haml',          '3.0.25'
 gem 'jammit',        '0.6.0'
 gem 'will_paginate', '3.0.pre2'
 gem 'formtastic',    '1.2.3'
-gem 'fog',           '0.5.1'
+gem 'fog',           '0.6.0'
 gem 'carrierwave',   '0.5.2'
-gem 'bson_ext',      '~> 1.2.4'
-gem 'mongo',         '~> 1.2.4'
+gem 'bson_ext',      '1.2.4'
+gem 'mongo',         '1.2.4'
 gem 'mongoid',       '~> 2.0.0.rc.7'
+
+gem 'settingslogic', '2.0.6'
 
 group :production do
   gem 'rack-google-analytics', '0.9.2', :require => 'rack/google-analytics'
