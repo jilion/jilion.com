@@ -1,6 +1,6 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
-  config.middleware.use(Rack::SslEnforcer, :only => [%r{^/contacts}, %r{^/jobs}, %r{^/admin}] )
+  config.middleware.use(Rack::SslEnforcer, :only => [%r{^/admin}] )
   config.middleware.use(Rack::GoogleAnalytics, :tracker => 'UA-10280941-1')
 
   # The production environment is meant for finished, "live" apps.
