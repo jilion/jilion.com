@@ -183,7 +183,7 @@ function googleMapInitialize() {
   var myLatlng = new google.maps.LatLng(46.51725, 6.56210);
   var cenLatlng = new google.maps.LatLng(46.51735, 6.56210);
   var myOptions = {
-    zoom: 18,
+    zoom: 17,
     center: cenLatlng,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };

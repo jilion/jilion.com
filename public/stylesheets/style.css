@@ -127,7 +127,7 @@ body.win {font-family:Arial, sans-serif;}
 h2.headline {
   text-indent:-99999px;
   display:block;
-  width:755px;
+  width:774px;
   height:25px;
   background:url(/images/embed/we_love.png) no-repeat;
   margin:9px auto 35px;
@@ -282,16 +282,64 @@ h2.headline {
 }
 
 #content .section.people ul.photos li {
-  float:left;
-  padding:0 15px 0 0;
-}
-
-#content .section.people ul.photos li img {
   width:56px;
   height:56px;
+  float:left;
+  display:block;
+  margin:0 15px 0 0;
+  position:relative;
 }
 
-#content .section.jobs {
+#content .section.people ul.photos li .details_box {
+  display:none;
+  position:absolute;
+  top:-42px;
+  left:-38px;
+  z-index:5;
+  width:120px;
+  padding:6px;
+  background:#272f3a;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  -moz-box-shadow:inset rgba(172,204,255,0.2) 0 1px 0, #000 0 1px 14px, #000 0 1px 14px;
+  -webkit-box-shadow:inset rgba(172,204,255,0.2) 0 1px 0, #000 0 1px 14px, #000 0 1px 14px;
+  box-shadow:inset rgba(172,204,255,0.2) 0 1px 0, #000 0 1px 14px, #000 0 1px 14px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #content .section.people ul.photos li .details_box {
+    display:block; 
+    -webkit-transition: opacity .15s ease-out, -webkit-transform .3s ease-out; 
+    -webkit-transform: scale3d(0.46,0.46,0.46) translate3d(0,-10px,0); 
+    opacity:0;
+    -webkit-transform-origin:center;
+  }
+  
+  #content .section.people ul.photos li .details_box.double_line {
+    -webkit-transform: scale3d(0.46,0.46,0.46) translate3d(0,-23px,0); 
+  }
+  
+  #content .section.people ul.photos li:hover .details_box {
+    -webkit-transform: scale3d(1,1,1) translate3d(0,0,0); 
+    opacity:1;
+  }
+}
+
+#content .section.people ul.photos li:hover .details_box {display: block}
+
+#content .section.people ul.photos li .details_box h4 {
+  display:block;
+  color:#acbbd4;
+  font-size:15px;
+  line-height:20px;
+  font-weight:500;
+  text-align:center;
+  padding:10px 0 4px;
+  text-shadow:rgba(0,0,0,0.4) 0 -1px 0;
+}
+
+/*#content .section.jobs {
   padding:0 0 40px;
   position:absolute;
   bottom:0;
@@ -313,11 +361,6 @@ h2.headline {
 
 #content .section.jobs li {
   font-size:14px;
-/*  padding:20px;
-  background:rgba(0,0,0,0.8);
-  -moz-border-radius:10px;
-  -webkit-border-radius:10px;
-  border-radius:10px;*/
 }
 
 #content .section.jobs li h4 {
@@ -329,7 +372,7 @@ h2.headline {
 #content .section.jobs li h4 em {
   font-weight:300;
   font-style:normal;
-}
+}*/
 
 #content .section.contact {
   width:516px;
@@ -339,10 +382,10 @@ h2.headline {
   position:relative;
 }
 
-#content.home .section.contact {
+/*#content.home .section.contact {
   margin:0;
 }
-
+*/
 #content .section.contact h3 {
   position:relative;
   top:13px;
@@ -420,7 +463,7 @@ h2.headline {
 #content .section.contact .newsletter label {
   font-size:11px;
   font-weight:600;
-  color:#03070c;
+  color:#03070C;
   text-shadow:#636871 0 1px 0;
   padding-bottom:4px;
   display:block;
@@ -555,6 +598,14 @@ h3.title.contact {color:#a7b1c1;}
 }
 
 .spacer {clear:both;}
+
+.hw_enabler {
+  width:0;
+  height:0;
+  -webkit-animation:sv_hw_enable 5s infinite linear;
+}
+
+@-webkit-keyframes sv_hw_enable {from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg)}}
 
 a {
   text-decoration:none;
