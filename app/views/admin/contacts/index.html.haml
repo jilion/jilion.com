@@ -3,7 +3,8 @@
   %li{ :class => params[:state] == "archived" ? "active": "" }= link_to "Archived", url_for(params.merge(:state => "archived"))
   %li
     = form_tag url_for(params), :method => :get do
-      = select_tag :type, options_for_select([["All", nil]] + Contact::TYPES.map { |t| [t.to_s.gsub(/Contact::/, ''),t] }, params[:type]), { :onchange => 'this.form.submit();' }
+      = hidden_field_tag :state, params[:state] || "new"
+      = select_tag :type, options_for_select([["All", nil]] + Contact::TYPES.map { |t| t.to_s.gsub("Contact::", '') }, params[:type]), { :onchange => 'this.form.submit();' }
 .spacer
 
 %table
@@ -12,7 +13,6 @@
     %th= "Issue"
     %th= "Type"
     %th= "Email"
-    %th= "State"
     %th= "Date"
     %th= "Replied"
   = render :partial => "contact", :collection => @contacts

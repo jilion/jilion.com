@@ -5,12 +5,12 @@ describe Contact do
   describe "valid" do
     subject { Factory(:contact) }
 
-    its(:email)    { should match /email[0-9]+@jilion.com/ }
-    its(:state)    { should == "new" }
-    its(:replied)  { should == false }
-    its(:issue)    { should be_nil }
-    its(:filename) { should be_blank }
-    its(:file?)    { should be_false }
+    its(:email)      { should match /email[0-9]+@jilion.com/ }
+    its(:state)      { should == "new" }
+    its(:replied_at) { should be_nil }
+    its(:issue)      { should be_nil }
+    its(:filename)   { should be_blank }
+    its(:file?)      { should be_false }
 
     it { should be_new }
     it { should be_valid }
@@ -35,6 +35,14 @@ describe Contact do
     end
   end
 
+  describe "#replied=" do
+    specify { Factory(:contact, replied: true).replied_at.should be_present }
+  end
+  
+  describe "#replied?" do
+    specify { Factory(:contact, replied: true).should be_replied }
+  end
+  
   describe "#type_name" do
     specify { Factory(:contact).type_name.should == "contact" }
   end

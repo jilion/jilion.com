@@ -4,10 +4,13 @@ class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :email,   :type => String
-  field :state,   :type => String,  :default => 'new'
-  field :replied, :type => Boolean, :default => false
-  field :issue,   :type => Integer
+  attr_accessor :replied
+  
+  field :email,      :type => String
+  field :state,      :type => String,  :default => 'new'
+  field :replied,    :type => Boolean, :default => false
+  field :issue,      :type => Integer
+  field :replied_at, :type => DateTime
 
   # CarrierWave
   mount_uploader :file, FileUploader
@@ -31,7 +34,15 @@ class Contact
       self.class.name == klass
     end
   end
-
+  
+  def replied=(replied)
+    self.replied_at = Time.now.utc if replied
+  end
+  
+  def replied?
+    replied_at?
+  end
+  
   def type_name
     self.class.name.gsub(/Contact::/, '').underscore
   end
@@ -46,7 +57,7 @@ class Contact
 
   def self.search(params)
     where = {}
-    where[:_type] = params[:type] if params[:type].present?
+    where[:_type] = "Contact::#{params[:type]}" if params[:type].present?
     where(where.merge(:state => params[:state] || 'new')).desc(:created_at).paginate({ :page => params[:page] || 1, :per_page => 25 })
   end
 

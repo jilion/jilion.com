@@ -10,7 +10,7 @@ Jilion::Application.routes.draw do
   match 'sublime/video/flash', :to => redirect('http://sublimevideo.net/demo')
   match 'sublime(/:id)',       :to => redirect('http://sublimevideo.net')
 
-  resources :jobs,     :only => :show
+  # resources :jobs,     :only => :show
   resources :contacts, :only => :create
 
   match 'contact', :controller => 'contacts', :action => 'new', :conditions => { :method => :get }, :as => :new_contact
@@ -18,7 +18,7 @@ Jilion::Application.routes.draw do
 
   match 'admin', :to => redirect('/admin/contacts')
   namespace :admin do
-    resources :jobs,     :except => :destroy
+    # resources :jobs,     :except => :destroy
     resources :contacts, :only => [:index, :show, :update]
   end
 
