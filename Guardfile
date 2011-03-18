@@ -1,13 +1,13 @@
 group 'frontend' do
 
-  guard 'passenger', :ping => true, :port => 3000 do
+  guard 'passenger' do
     watch('config/application.rb')
     watch('config/environment.rb')
     watch(%r{^config/environments/.+\.rb})
     watch(%r{^config/initializers/.+\.rb})
   end
 
-  guard 'livereload', :apply_js_live => false do
+  guard 'livereload' do
     watch(%r{^app/.+\.(erb|haml)})
     watch(%r{^app/helpers/.+\.rb})
     watch(%r{^public/javascripts/.+\.js})
@@ -33,7 +33,7 @@ group 'backend' do
     watch('spec/spec_helper.rb')
   end
 
-  guard 'rspec', :version => 2, :drb => true, :bundler => false, :fail_fast => false, :formatter => "instafail" do
+  guard 'rspec', :version => 2, :cli => "--color --drb", :bundler => false do
     watch('spec/spec_helper.rb')                                  { "spec" }
     watch('app/controllers/application_controller.rb')            { "spec/controllers" }
     watch('config/routes.rb')                                     { "spec/routing" }
