@@ -1,9 +1,9 @@
 class ContactsController < ApplicationController
-    
+
   # GET /contact
   def new
   end
-  
+
   # POST /contacts
   def create
     @contact = contact_class.new(params[:contact])
@@ -18,9 +18,9 @@ class ContactsController < ApplicationController
       render :new
     end
   end
-  
+
 private
-  
+
   def contact_class
     if params[:contact] && Contact::TYPES.include?(params[:contact][:type])
       class_eval(params[:contact][:type])
@@ -28,5 +28,5 @@ private
       Contact
     end
   end
-  
+
 end

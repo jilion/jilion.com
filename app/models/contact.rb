@@ -5,7 +5,7 @@ class Contact
   include Mongoid::Timestamps
 
   attr_accessor :replied
-  
+
   field :email,      :type => String
   field :state,      :type => String,  :default => 'new'
   field :replied,    :type => Boolean, :default => false
@@ -27,22 +27,22 @@ class Contact
   validates_format_of   :email, :with   => RegEmailOk, :message => "is not valid"
 
   before_create :set_issue
-  # after_create :deliver_notification
+  after_create :deliver_notification
 
   TYPES.each do |klass|
     define_method "#{klass.gsub(/Contact::/, '').underscore}?" do
       self.class.name == klass
     end
   end
-  
+
   def replied=(replied)
     self.replied_at = Time.now.utc if replied
   end
-  
+
   def replied?
     replied_at?
   end
-  
+
   def type_name
     self.class.name.gsub(/Contact::/, '').underscore
   end
@@ -70,7 +70,7 @@ protected
 
   # after_create
   def deliver_notification
-    ContactMailer.deliver_notification(self)
+    ContactMailer.notification(self).deliver!
   end
 
 end

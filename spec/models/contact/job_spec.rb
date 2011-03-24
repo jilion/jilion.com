@@ -8,7 +8,7 @@ describe Contact::Job do
 
     its(:email)   { should match /email[0-9]+@jilion.com/ }
     its(:state)   { should == "new" }
-    its(:replied) { should == false }
+    its(:replied) { should be_false }
     its(:issue)   { should be_nil }
     its(:file)    { should be_present }
     its(:job_id)  { should == "abc123" }
