@@ -46,5 +46,10 @@ describe Contact do
   describe "#type_name" do
     specify { Factory(:contact).type_name.should == "contact" }
   end
+  
+  describe "#after_create" do
+    specify { expect { Factory(:contact) }.to_not change(ActionMailer::Base.deliveries, :count) }
+    specify { expect { Factory.create(:contact) }.to change(ActionMailer::Base.deliveries, :count).by(1) }
+  end
 
 end
