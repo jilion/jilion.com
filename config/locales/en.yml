@@ -3,7 +3,7 @@ en:
   home:
     headline: "We love creating beautiful and meaningful software."
     newsletter:
-      label: "Stay updated on what we're up to:"
+      label: "Subscribe to our mailing-list:"
       placeholder: "Your email address"
       add_button: "Add me"
     email_flash:
