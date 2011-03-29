@@ -1,0 +1,177 @@
+* {
+  margin:0;
+  padding:0;
+}
+
+html {
+  height:100%;
+}
+
+body {
+  background:#3d5880 url(images/space_back.png) repeat-x;
+  min-height:800px;
+  height:100%;
+  font-family:"proxima-nova-1","proxima-nova-2", Helvetica, Arial, sans-serif;
+  text-rendering:optimizeLegibility;
+  color:#f2f7ff;
+  text-shadow:#3d9dff 0 0 5px,#3d9dff 0 0 5px;
+}
+
+#global {
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+}
+
+a#jilion_link {
+  display:block;
+  width:71px;
+  height:71px;
+  background:url(images/jilion.png) no-repeat;
+  position:absolute;
+  top:80px;
+  left:70px;
+}
+
+a#jilion_link span {display:none;}
+
+#global h1 {
+  display:block;
+  width:352px;
+  height:65px;
+  background:url(images/sublimevideo.png) no-repeat;
+  position:absolute;
+  top:180px;
+  left:200px;
+}
+
+#global h1 span {display:none;}
+
+#content {
+  width:520px;
+  height:500px;
+  position:absolute;
+  left:90px;
+  top:300px;
+  font-size:30px;
+  line-height:37px;
+  -webkit-font-smoothing:antialiased;
+}
+
+#content a {
+  color:#fff;
+  border-bottom:1px solid #345483;
+}
+
+#content p.right {
+  padding:20px 0 0;
+  text-align:right;
+  font-size:22px;
+}
+
+#moon {
+  width:189px;
+  height:188px;
+  background:url(images/moon.png) no-repeat;
+  position:fixed;
+  top:320px;
+  left:1100px;
+}
+
+#bottom_wrap {
+  height:100%;
+  min-height:880px;
+  position:relative;
+}
+
+#bottom {
+  position:absolute;
+  width:100%;
+  min-width:700px;
+  height:421px;
+  background:url(images/ground_back.png) repeat-x;
+  bottom:0;
+  left:0;
+}
+
+#mountains_bottom_lights {
+  width:100%;
+  height:155px;
+  position:absolute;
+  left:0;
+  bottom:113px;
+  background:url(images/mountains_bottom_lights.png) repeat-x;
+}
+
+#rocket_wrap {
+  width:203px;
+  height:271px;
+  position:absolute;
+  left:150px;
+  bottom:90px;
+}
+
+#rocket_shadows {
+  width:203px;
+  height:152px;
+  background:url(images/rocket_shadows.png) no-repeat;
+  position:absolute;
+  bottom:0;
+  left:0;
+  -webkit-animation-name:rocket_shadows;
+  -webkit-animation-duration:0.3s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-direction:alternate;
+}
+
+@-webkit-keyframes rocket_shadows {
+  from {
+    opacity:0.9;
+  }
+  to {
+    opacity:1;
+  }
+}
+
+#rocket_fire {
+  width:34px;
+  height:80px;
+  background:url(images/rocket_fire.png) no-repeat;
+  position:absolute;
+  top:160px;
+  left:59px;
+  -webkit-animation-name:rocket_fire;
+  -webkit-animation-duration:0.3s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-direction:alternate;
+}
+
+@-webkit-keyframes rocket_fire {
+  from {
+    top:159px;
+    opacity:0.8;
+  }
+  to {
+    top:162px;
+    opacity:1;
+  }
+}
+
+#rocket {
+  width:107px;
+  height:256px;
+  position:absolute;
+  top:0;
+  left:22px;
+  background:url(images/the_rocket.png) no-repeat;
+}
+
+a {
+  text-decoration:none;
+}
+
+img {border:none;}
