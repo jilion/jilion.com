@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background:#3d5880 url(images/space_back.png) repeat-x;
+  background:#3d5880 url(maintenance-images/space_back.png) repeat-x;
   min-height:800px;
   height:100%;
   font-family:"proxima-nova-1","proxima-nova-2", Helvetica, Arial, sans-serif;
@@ -29,7 +29,7 @@ a#jilion_link {
   display:block;
   width:71px;
   height:71px;
-  background:url(images/jilion.png) no-repeat;
+  background:url(maintenance-images/jilion.png) no-repeat;
   position:absolute;
   top:80px;
   left:70px;
@@ -41,7 +41,7 @@ a#jilion_link span {display:none;}
   display:block;
   width:352px;
   height:65px;
-  background:url(images/sublimevideo.png) no-repeat;
+  background:url(maintenance-images/sublimevideo.png) no-repeat;
   position:absolute;
   top:180px;
   left:200px;
@@ -74,7 +74,7 @@ a#jilion_link span {display:none;}
 #moon {
   width:189px;
   height:188px;
-  background:url(images/moon.png) no-repeat;
+  background:url(maintenance-images/moon.png) no-repeat;
   position:fixed;
   top:320px;
   left:1100px;
@@ -91,7 +91,7 @@ a#jilion_link span {display:none;}
   width:100%;
   min-width:700px;
   height:421px;
-  background:url(images/ground_back.png) repeat-x;
+  background:url(maintenance-images/ground_back.png) repeat-x;
   bottom:0;
   left:0;
 }
@@ -102,7 +102,7 @@ a#jilion_link span {display:none;}
   position:absolute;
   left:0;
   bottom:113px;
-  background:url(images/mountains_bottom_lights.png) repeat-x;
+  background:url(maintenance-images/mountains_bottom_lights.png) repeat-x;
 }
 
 #rocket_wrap {
@@ -116,7 +116,7 @@ a#jilion_link span {display:none;}
 #rocket_shadows {
   width:203px;
   height:152px;
-  background:url(images/rocket_shadows.png) no-repeat;
+  background:url(maintenance-images/rocket_shadows.png) no-repeat;
   position:absolute;
   bottom:0;
   left:0;
@@ -139,7 +139,7 @@ a#jilion_link span {display:none;}
 #rocket_fire {
   width:34px;
   height:80px;
-  background:url(images/rocket_fire.png) no-repeat;
+  background:url(maintenance-images/rocket_fire.png) no-repeat;
   position:absolute;
   top:160px;
   left:59px;
@@ -167,7 +167,7 @@ a#jilion_link span {display:none;}
   position:absolute;
   top:0;
   left:22px;
-  background:url(images/the_rocket.png) no-repeat;
+  background:url(maintenance-images/the_rocket.png) no-repeat;
 }
 
 a {
