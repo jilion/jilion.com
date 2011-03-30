@@ -9,4 +9,5 @@ Desktop DF
 db/*.sqlite3
 config/database.yml
 public/uploads/*
-.bundle
+!.bundle/*
+vendor/ruby
