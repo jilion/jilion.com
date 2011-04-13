@@ -51,7 +51,7 @@ document.observe("dom:loaded", function() {
   //Google Map
   if (Prototype.Browser.MobileSafari) {
     if ($('show_location'))
-      $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Jilion+/+Jime+SA,+Lausanne,+Switzerland&aq=&sll=46.517384,6.561937&sspn=0.112692,0.14883&ie=UTF8&hq=Jilion+/+Jime+SA,&hnear=Lausanne,+Vaud,+Switzerland&t=h&z=13&iwloc=A";
+      $('show_location').href = "http://maps.google.com/maps?q=Jilion+%2F+Jime+SA,+Lausanne,+Switzerland&hl=en&sll=46.517384,6.561937&sspn=0.016475,0.148275&ie=UTF8&t=h&view=map&cid=9118164827788437729&hq=Jilion+%2F+Jime+SA,+Lausanne,+Switzerland&hnear=&ll=46.517532,6.561928&spn=0.007885,0.014334&z=16&iwloc=A";
   }
   else {
     if ($('show_location'))
