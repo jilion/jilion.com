@@ -51,7 +51,7 @@ document.observe("dom:loaded", function() {
   //Google Map
   if (Prototype.Browser.MobileSafari) {
     if ($('show_location'))
-      $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Chemin+de+la+Raye+13,+1024+Ecublens,+Switzerland&sll=46.524693,6.564245&sspn=0.010586,0.019033&ie=UTF8&ll=46.524708,6.564074&spn=0.010586,0.019033&z=16&iwloc=A";
+      $('show_location').href = "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Jilion+/+Jime+SA,+Lausanne,+Switzerland&aq=&sll=46.517384,6.561937&sspn=0.112692,0.14883&ie=UTF8&hq=Jilion+/+Jime+SA,&hnear=Lausanne,+Vaud,+Switzerland&t=h&z=13&iwloc=A";
   }
   else {
     if ($('show_location'))
