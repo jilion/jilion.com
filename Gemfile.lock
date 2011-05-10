@@ -213,7 +213,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth (= 4.2.3)
   bson_ext (= 1.2.4)
-  bundler (= 1.0.12)
+  bundler (= 1.0.13)
   capybara
   carrierwave (= 0.5.2)
   database_cleaner
