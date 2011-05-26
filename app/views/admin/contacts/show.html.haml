@@ -8,25 +8,39 @@
     = ", replied on"
     %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, :format => :long)}"
 
-%ul.contact
+.contact
   -#- if @contact.job_id?
   -#  %li
   -#    %strong= "Job ref:"
   -#    = link_to @contact.job_id, admin_job_path(@contact.job_id)
-  %li
-    %strong= "From:"
-    = @contact.email
-  %li
-    %strong= "Message:"
-    %br
-    = @contact.message
+
+  %p
+    %strong{ :style => "font-weight:600;" }= "From:"
+    = mail_to(@contact.email)
+  %br
+
+  = RedCloth.new(@contact.message).to_html.html_safe
+  %br
+
   - if @contact.file.present?
     %li
       %strong= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
 
 %p= reply_link(@contact)
-%p= render("admin/contacts/archive_button", :contact => @contact) unless @contact.archived?
+%br
+
+%p
+  %strong{ :style => "font-weight:600;" }= "Archive this message"
+
+- unless @contact.archived?
+  - form_for :contact, @contact, :url => admin_contact_path(@contact), :html => { :method => :put } do |f|
+    .entry
+      = f.label :replied, "Mark as replied?"
+      = f.check_box :replied
+      = f.hidden_field :state, :value => "archived"
+    .entry
+    = f.submit "Archive"
 
 %br
 %hr
