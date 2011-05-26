@@ -1,5 +1,6 @@
 source :rubygems
 
+gem 'rake',          '0.8.7'
 gem 'bundler',       '1.0.13'
 
 gem 'rails',         '3.0.7'
