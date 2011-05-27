@@ -1,5 +1,5 @@
 /*!
- *  script.aculo.us version 2.0.0_a6
+ *  script.aculo.us version 2.0.0_b1
  *  (c) 2005-2010 Thomas Fuchs
  *
  *  script.aculo.us is freely distributable under the terms of an MIT-style license.
@@ -8,7 +8,7 @@
 
 
 var S2 = {
-  Version: '2.0.0_a6',
+  Version: '2.0.0_b1',
 
   Extensions: {}
 };
@@ -114,6 +114,26 @@ S2.CSS = {
     zoom: 'number'
   },
 
+  VENDOR: {
+    PREFIX: null,
+
+    LOOKUP_PREFIXES: ['webkit', 'Moz', 'O'],
+    LOOKUP_PROPERTIES: $w('BorderRadius BoxShadow Transform Transition ' +
+     'TransitionDuration TransitionTimingFunction TransitionProperty ' +
+     'TransitionDelay ' +
+     'BorderTopLeftRadius BorderTopRightRadius BorderBottomLeftRadius ' +
+     'BorderBottomRightRadius'
+    ),
+    LOOKUP_EDGE_CASES: {
+      'BorderTopLeftRadius': 'BorderRadiusTopleft',
+      'BorderTopRightRadius': 'BorderRadiusTopright',
+      'BorderBottomLeftRadius': 'BorderRadiusBottomleft',
+      'BorderBottomRightRadius': 'BorderRadiusBottomright'
+    },
+
+    PROPERTY_MAP: {}
+  },
+
   LENGTH: /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/,
 
   NUMBER: /([\+-]*\d+\.?\d*)/,
@@ -136,6 +156,47 @@ S2.CSS = {
       styleRules.opacity = styleString.match(/opacity:\s*((?:0|1)?(?:\.\d*)?)/)[1];
 
     return styleRules;
+  },
+
+  parse: function(styleString) {
+    return S2.CSS.parseStyle(styleString);
+  },
+
+  normalize: function(element, style) {
+    if (Object.isHash(style)) style = style.toObject();
+    if (typeof style === 'string') style = S2.CSS.parseStyle(style);
+
+    var result = {}, current;
+
+    for (var property in style) {
+      current = element.getStyle(property);
+      if (style[property] !== current) {
+        result[property] = style[property];
+      }
+    }
+
+    return result;
+  },
+
+  serialize: function(object) {
+    if (Object.isHash(object)) object = object.toObject();
+    var output = "", value;
+    for (var property in object) {
+      value = object[property];
+      property = this.vendorizeProperty(property);
+      output += (property + ": " + value + ';');
+    }
+    return output;
+  },
+
+  vendorizeProperty: function(property) {
+    property = property.underscore().dasherize();
+
+    if (property in S2.CSS.VENDOR.PROPERTY_MAP) {
+      property = S2.CSS.VENDOR.PROPERTY_MAP[property];
+    }
+
+    return property;
   },
 
   normalizeColor: function(color) {
@@ -201,7 +262,7 @@ S2.CSS = {
 };
 
 S2.CSS.PROPERTIES = [];
-for(property in S2.CSS.PROPERTY_MAP) S2.CSS.PROPERTIES.push(property);
+for (var property in S2.CSS.PROPERTY_MAP) S2.CSS.PROPERTIES.push(property);
 
 S2.CSS.NUMERIC_PROPERTIES = S2.CSS.PROPERTIES.findAll(function(property){ return !property.endsWith('olor') });
 S2.CSS.COLOR_PROPERTIES   = S2.CSS.PROPERTIES.findAll(function(property){ return property.endsWith('olor') });
@@ -221,20 +282,56 @@ if (!(document.defaultView && document.defaultView.getComputedStyle)) {
 
 Element.addMethods(S2.CSS.ElementMethods);
 
+(function() {
+  var div = document.createElement('div');
+  var style = div.style, prefix = null;
+  var edgeCases = S2.CSS.VENDOR.LOOKUP_EDGE_CASES;
+  var uncamelize = function(prop, prefix) {
+    if (prefix) {
+      prop = '-' + prefix.toLowerCase() + '-' + uncamelize(prop);
+    }
+    return prop.underscore().dasherize();
+  }
+
+  S2.CSS.VENDOR.LOOKUP_PROPERTIES.each(function(prop) {
+    if (!prefix) { // We attempt to detect a prefix
+      prefix = S2.CSS.VENDOR.LOOKUP_PREFIXES.detect( function(p) {
+        return !Object.isUndefined(style[p + prop]);
+      });
+    }
+    if (prefix) { // If we detected a prefix
+      if ((prefix + prop) in style) {
+        S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(prop, prefix);
+      } else if (prop in edgeCases && (prefix + edgeCases[prop]) in style) {
+        S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(edgeCases[prop], prefix);
+      }
+    }
+  });
+
+  S2.CSS.VENDOR.PREFIX = prefix;
+
+  div = null;
+})();
+
 S2.FX = (function(){
   var queues = [], globalQueue,
     heartbeat, activeEffects = 0;
 
-  function beatOnDemand(dir){
-    heartbeat[(activeEffects += dir) > 0 ? 'start' : 'stop']();
+  function beatOnDemand(dir) {
+    activeEffects += dir;
+    if (activeEffects > 0) heartbeat.start();
+    else heartbeat.stop();
   }
 
-  function renderQueues(){
-    queues.invoke('render', heartbeat.getTimestamp());
+  function renderQueues() {
+    var timestamp = heartbeat.getTimestamp();
+    for (var i = 0, queue; queue = queues[i]; i++) {
+      queue.render(timestamp);
+    }
   }
 
   function initialize(initialHeartbeat){
-    if(globalQueue) return;
+    if (globalQueue) return;
     queues.push(globalQueue = new S2.FX.Queue());
     S2.FX.DefaultOptions.queue = globalQueue;
     heartbeat = initialHeartbeat || new S2.FX.Heartbeat();
@@ -245,14 +342,19 @@ S2.FX = (function(){
       .observe('effect:dequeued',  beatOnDemand.curry(-1));
   }
 
+  function formatTimestamp(timestamp) {
+    if (!timestamp) timestamp = (new Date()).valueOf();
+    var d = new Date(timestamp);
+    return d.getSeconds() + '.' + d.getMilliseconds() + 's';
+  }
+
   return {
-    initialize: initialize,
-    getQueues: function(){ return queues; },
-    addQueue: function(queue){ queues.push(queue); },
-    getHeartbeat: function(){ return heartbeat; },
-    setHeartbeat: function(newHeartbeat){
-      heartbeat = newHeartbeat;
-    }
+    initialize:   initialize,
+    getQueues:    function() { return queues; },
+    addQueue:     function(queue) { queues.push(queue); },
+    getHeartbeat: function() { return heartbeat; },
+    setHeartbeat: function(newHeartbeat) { heartbeat = newHeartbeat; },
+    formatTimestamp: formatTimestamp
   }
 })();
 
@@ -278,7 +380,30 @@ Object.extend(S2.FX, {
       options = { duration: options == 'slow' ? 1 : options == 'fast' ? .1 : .2 };
 
     return options || {};
-  }
+  },
+
+  ready: function(element) {
+    if (!element) return;
+    var table = this._ready;
+    var uid = element._prototypeUID;
+    if (!uid) return true;
+
+    bool = table[uid];
+    return Object.isUndefined(bool) ? true : bool;
+  },
+
+  setReady: function(element, bool) {
+    if (!element) return;
+    var table = this._ready, uid = element._prototypeUID;
+    if (!uid) {
+      element.getStorage();
+      uid = element._prototypeUID;
+    }
+
+    table[uid] = bool;
+  },
+
+  _ready: {}
 });
 
 S2.FX.Base = Class.create({
@@ -304,10 +429,9 @@ S2.FX.Base = Class.create({
   setOptions: function(options) {
     options = S2.FX.parseOptions(options);
 
-    if (!this.options) {
-      this.options = Object.extend(Object.extend({},S2.FX.DefaultOptions), options);
-      if(options.tween) this.options.transition = options.tween;
-    }
+    this.options = Object.extend(this.options || Object.extend({}, S2.FX.DefaultOptions), options);
+
+    if (options.tween) this.options.transition = options.tween;
 
     if (this.options.beforeUpdate || this.options.afterUpdate) {
       this.update = this.updateWithoutWrappers.wrap( function(proceed,position){
@@ -316,35 +440,41 @@ S2.FX.Base = Class.create({
         if (this.options.afterUpdate) this.options.afterUpdate(this, position);
       }.bind(this));
     }
-    if(this.options.transition === false)
+
+    if (this.options.transition === false)
       this.options.transition = S2.FX.Transitions.linear;
+
     this.options.transition = Object.propertize(this.options.transition, S2.FX.Transitions);
   },
 
   play: function(options) {
     this.setOptions(options);
     this.frameCount = 0;
+    this.state = 'idle';
     this.options.queue.add(this);
     this.maxFrames = this.options.fps * this.duration / 1000;
     return this;
   },
 
   render: function(timestamp) {
+    if (this.options.debug) {
+    }
     if (timestamp >= this.startsAt) {
-      if (this.state == 'idle') {
-        if (this.options.before) this.options.before(this);
-        if (this.setup) this.setup();
-        this.state = 'running';
-        this.update(this.options.transition(0));
+      if (this.state == 'idle' && S2.FX.ready(this.element)) {
+        this.debug('starting the effect at ' + S2.FX.formatTimestamp(timestamp));
+        this.endsAt = this.startsAt + this.duration;
+        this.start();
         this.frameCount++;
         return this;
       }
-      if (timestamp >= this.endsAt && !(this.state == 'finished')) {
-        this.update(this.options.transition(1));
-        if (this.teardown) this.teardown();
-        if (this.options.after) this.options.after(this);
-        this.state = 'finished';
-      } else if (this.state == 'running') {
+
+      if (timestamp >= this.endsAt && this.state !== 'finished') {
+        this.debug('stopping the effect at ' + S2.FX.formatTimestamp(timestamp));
+        this.finish();
+        return this;
+      }
+
+      if (this.state === 'running') {
         var position = 1 - (this.endsAt - timestamp) / this.duration;
         if ((this.maxFrames * position).floor() > this.frameCount) {
           this.update(this.options.transition(position));
@@ -355,15 +485,22 @@ S2.FX.Base = Class.create({
     return this;
   },
 
+  start: function() {
+    if (this.options.before) this.options.before(this);
+    if (this.setup) this.setup();
+    this.state = 'running';
+    this.update(this.options.transition(0));
+  },
+
   cancel: function(after) {
-    if(!this.state == 'running') return;
+    if (this.state !== 'running') return;
     if (this.teardown) this.teardown();
     if (after && this.options.after) this.options.after(this);
     this.state = 'finished';
   },
 
-  finish: function(after) {
-    if(!this.state == 'running') return;
+  finish: function() {
+    if (this.state !== 'running') return;
     this.update(this.options.transition(1));
     this.cancel(true);
   },
@@ -372,7 +509,14 @@ S2.FX.Base = Class.create({
     return '#<S2.FX:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
   },
 
-  update: Prototype.emptyFunction
+  update: Prototype.emptyFunction,
+
+  debug: function(message) {
+    if (!this.options.debug) return;
+    if (window.console && console.log) {
+      console.log(message);
+    }
+  }
 });
 
 S2.FX.Element = Class.create(S2.FX.Base, {
@@ -391,11 +535,14 @@ S2.FX.Element = Class.create(S2.FX.Base, {
 
   play: function($super, element, options) {
     if (element) this.element = $(element);
+    this.operators = [];
     return $super(options);
   },
 
   update: function(position) {
-    this.operators.invoke('render', position);
+    for (var i = 0, operator; operator = this.operators[i]; i++) {
+      operator.render(position);
+    }
   }
 });
 S2.FX.Heartbeat = Class.create({
@@ -438,53 +585,61 @@ S2.FX.Heartbeat = Class.create({
   }
 });
 S2.FX.Queue = (function(){
-  return function(){
+  return function() {
+    var instance = this;
     var effects = [];
 
-    function getEffects(){
+    function getEffects() {
       return effects;
     }
 
-    function active(){
+    function active() {
       return effects.length > 0;
     }
 
-    function add(effect){
+    function add(effect) {
       calculateTiming(effect);
       effects.push(effect);
-      document.fire('effect:queued', this);
-      return this;
+      document.fire('effect:queued', instance);
+      return instance;
     }
 
-    function remove(effect){
+    function remove(effect) {
       effects = effects.without(effect);
+      document.fire('effect:dequeued', instance);
       delete effect;
-      document.fire('effect:dequeued', this);
-      return this;
+      return instance;
     }
 
-    function render(timestamp){
-      effects.invoke('render', timestamp);
-      effects.select(function(effect) {
-        return effect.state == 'finished';
-      }).each(remove);
-      return this;
+    function render(timestamp) {
+      for (var i = 0, effect; effect = effects[i]; i++) {
+        effect.render(timestamp);
+        if (effect.state === 'finished') remove(effect);
+      }
+
+      return instance;
     }
 
-    function calculateTiming(effect){
+    function calculateTiming(effect) {
       var position = effect.options.position || 'parallel',
-        startsAt = S2.FX.getHeartbeat().getTimestamp();
+        now = S2.FX.getHeartbeat().getTimestamp();
 
-      if (position == 'end')
-        startsAt = effects.without(effect).pluck('endsAt').max() || startsAt;
+      var startsAt;
+      if (position === 'end') {
+        startsAt = effects.without(effect).pluck('endsAt').max() || now;
+        if (startsAt < now) startsAt = now;
+      } else {
+        startsAt = now;
+      }
 
-      effect.startsAt =
-        startsAt + (effect.options.delay || 0) * 1000;
-      effect.endsAt =
-        effect.startsAt + (effect.options.duration || 1) * 1000;
+      var delay = (effect.options.delay || 0) * 1000;
+      effect.startsAt = startsAt + delay;
+
+      var duration = (effect.options.duration || 1) * 1000;
+      effect.endsAt = effect.startsAt + duration;
     }
 
-    Object.extend(this, {
+    Object.extend(instance, {
       getEffects: getEffects,
       active: active,
       add: add,
@@ -556,28 +711,34 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
     this.style = Object.isString(this.options.style) ?
       S2.CSS.parseStyle(this.options.style) : this.options.style;
 
-    this.tweens = [];
-    for(var item in this.style){
-      var property = item.underscore().dasherize(),
-        from = this.element.getStyle(property), to = this.style[item];
+    var translations = this.options.propertyTransitions || {};
 
-      if(from!=to)
+    this.tweens = [];
+
+    for (var item in this.style) {
+      var property = item.underscore().dasherize(),
+       from = this.element.getStyle(property), to = this.style[item];
+
+      if (from != to) {
         this.tweens.push([
-          property, S2.CSS.interpolate.curry(property, from, to),
-          item in this.options.propertyTransitions ?
-            Object.propertize(this.options.propertyTransitions[item], S2.FX.Transitions) : Prototype.K
+          property,
+          S2.CSS.interpolate.curry(property, from, to),
+          item in translations ?
+           Object.propertize(translations[item], S2.FX.Transitions) :
+           Prototype.K
         ]);
+      }
     }
   },
 
   valueAt: function(position) {
     return this.tweens.map( function(tween){
-      return tween[0]+':'+tween[1](tween[2](position));
-    }).join(';')
+      return tween[0] + ':' + tween[1](tween[2](position));
+    }).join(';');
   },
 
   applyValue: function(value) {
-    if(this.currentStyle == value) return;
+    if (this.currentStyle == value) return;
     this.element.setStyle(value);
     this.currentStyle = value;
   }
@@ -684,7 +845,6 @@ S2.FX.Scroll = Class.create(S2.FX.Element, {
     this.animate('scroll', this.element, { scrollTo: this.options.to });
   }
 });
-
 
 S2.FX.SlideDown = Class.create(S2.FX.Element, {
   setup: function() {
@@ -1042,682 +1202,467 @@ Object.extend(S2.FX.Transitions, {
     return Math.pow(pos,0.25);
   }
 });
-Prototype.BrowserFeatures.WebkitCSSTransitions = false;
-S2.Extensions.webkitCSSTransitions = false;
+(function(FX) {
 
-(function(){
-  try {
-    document.createEvent("WebKitTransitionEvent");
-  } catch(e) {
-    return;
+  Hash.addMethods({
+    hasKey: function(key) {
+      return (key in this._object);
+    }
+  });
+
+  var supported = false;
+  var hardwareAccelerationSupported = false;
+  var transitionEndEventName = null;
+
+  function isHWAcceleratedSafari() {
+    var ua = navigator.userAgent, av = navigator.appVersion;
+    return (!ua.include('Chrome') && av.include('10_6')) ||
+     Prototype.Browser.MobileSafari;
   }
 
-  Prototype.BrowserFeatures.WebkitCSSTransitions = true;
-  S2.Extensions.webkitCSSTransitions = true;
+  (function() {
+    var eventNames = {
+      'WebKitTransitionEvent': 'webkitTransitionEnd',
+      'TransitionEvent': 'transitionend'
+    };
+    if (S2.CSS.VENDOR.PREFIX) {
+      var p = S2.CSS.VENDOR.PREFIX;
+      eventNames[p + 'TransitionEvent'] = p + 'TransitionEnd';
+    }
 
-  if (Prototype.BrowserFeatures.WebkitCSSTransitions) {
-    $w('webkitBorderTopLeftRadius webkitBorderTopRightRadius '+
-       'webkitBorderBottomLeftRadius webkitBorderBottomRightRadius '+
-       'webkitBackgroundSize').each(function(property){
-      S2.CSS.PROPERTIES.push(property);
-    });
-    S2.CSS.NUMERIC_PROPERTIES =
-      S2.CSS.PROPERTIES.findAll(function(property){
-        return !property.endsWith('olor')
+    for (var e in eventNames) {
+      try {
+        document.createEvent(e);
+        transitionEndEventName = eventNames[e];
+        supported = true;
+        if (e == 'WebKitTransitionEvent') {
+          hardwareAccelerationSupported = isHWAcceleratedSafari();
+        }
+        return;
+      } catch (ex) { }
+    }
+  })();
+
+  if (!supported) return;
+
+
+  Prototype.BrowserFeatures.CSSTransitions = true;
+  S2.Extensions.CSSTransitions = true;
+  S2.Extensions.HardwareAcceleratedCSSTransitions = hardwareAccelerationSupported;
+
+  if (hardwareAccelerationSupported) {
+    Object.extend(FX.DefaultOptions, { accelerate: true });
+  }
+
+  function v(prop) {
+    return S2.CSS.vendorizeProperty(prop);
+  }
+
+  var CSS_TRANSITIONS_PROPERTIES = $w(
+   'border-top-left-radius border-top-right-radius ' +
+   'border-bottom-left-radius border-bottom-right-radius ' +
+   'background-size transform'
+  ).map( function(prop) {
+    return v(prop).camelize();
+  });
+
+  CSS_TRANSITIONS_PROPERTIES.each(function(property) {
+    S2.CSS.PROPERTIES.push(property);
+  });
+
+  S2.CSS.NUMERIC_PROPERTIES = S2.CSS.PROPERTIES.findAll(function(property) {
+    return !property.endsWith('olor')
+  });
+
+  CSS_TRANSITIONS_HARDWARE_ACCELERATED_PROPERTIES =
+   S2.Extensions.HardwareAcceleratedCSSTransitions ?
+    $w('top left bottom right opacity') : [];
+
+  var TRANSLATE_TEMPLATE = new Template("translate(#{0}px, #{1}px)");
+
+
+  var Operators = FX.Operators;
+
+  Operators.CssTransition = Class.create(Operators.Base, {
+    initialize: function($super, effect, object, options) {
+      $super(effect, object, options);
+      this.element = $(this.object);
+
+      var style = this.options.style;
+
+      this.style = Object.isString(style) ?
+       S2.CSS.normalize(this.element, style) : style;
+
+      this.style = $H(this.style);
+
+      this.targetStyle = S2.CSS.serialize(this.style);
+      this.running = false;
+    },
+
+    _canHardwareAccelerate: function() {
+      if (this.effect.options.accelerate === false) return false;
+
+      var style = this.style.toObject(), keys = this.style.keys();
+      var element = this.element;
+
+      if (keys.length === 0) return false;
+
+      var otherPropertyExists = keys.any( function(key) {
+        return !CSS_TRANSITIONS_HARDWARE_ACCELERATED_PROPERTIES.include(key);
       });
 
-    S2.FX.Operators.WebkitCssTransition = Class.create(S2.FX.Operators.Base, {
-      initialize: function($super, effect, object, options) {
-        $super(effect, object, options);
-        this.element = $(this.object);
-        if (!Object.isString(this.options.style)) {
-          this.style = $H(this.options.style);
-        } else {
-          if (this.options.style.include(':')) {
-            this.style = $H(S2.CSS.parseStyle(this.options.style));
+      if (otherPropertyExists) return false;
 
-          } else {
-            this.element.addClassName(options.style);
-            this.style = $H(this.element.getStyles());
-            this.element.removeClassName(options.style);
-
-            var css = this.element.getStyles();
-            this.style = this.style.reject(function(style) { return style.value == css[style.key] });
-          }
-        }
-        this.properties = [];
-        this.targetStyle = '';
-
-        this.style.each(function(pair) {
-          var property = pair[0].underscore().dasherize(), target = pair[1], unit = '',
-            source = this.element.getStyle(property), tween = '';
-
-          if(property.startsWith('webkit')) property = '-' + property;
-
-          this.properties.push(property);
-          this.targetStyle += ';'+property+':'+target;
-        }, this);
-      },
-
-      render: function(){
-        this.element.style.webkitTransitionProperty = this.properties.join(',');
-        this.element.style.webkitTransitionDuration = (this.effect.duration/1000).toFixed(3)+'s';
-
-        for(t in S2.FX.Operators.WebkitCssTransition.TIMING_MAP)
-          if(S2.FX.Transitions[t] === this.effect.options.transition)
-            this.element.style.webkitTransitionTimingFunction =
-              S2.FX.Operators.WebkitCssTransition.TIMING_MAP[t];
-
-        this.element.setStyle(this.targetStyle);
-        this.render = Prototype.emptyFunction;
-      }
-    });
-
-    S2.FX.Operators.WebkitCssTransition.TIMING_MAP = {
-      linear: 'linear',
-      sinusoidal: 'ease-in-out'
-    };
-
-    timingFunctionForTransition = function(transition){
-      var timing = null;
-      for(t in S2.FX.Operators.WebkitCssTransition.TIMING_MAP)
-        if(S2.FX.Transitions[t] === transition)
-          timing = S2.FX.Operators.WebkitCssTransition.TIMING_MAP[t];
-      return timing;
-    };
-
-    isWebkitCSSTransitionCompatible = function(effect){
-      return (S2.Extensions.webkitCSSTransitions &&
-        !((effect.options.engine||'')=='javascript') &&
-        (timingFunctionForTransition(effect.options.transition)) &&
-        !(effect.options.propertyTransitions));
-    };
-
-    S2.FX.Morph = Class.create(S2.FX.Morph, {
-      setup: function(){
-        if (this.options.change)
-          this.setupWrappers();
-        else if (this.options.style){
-          this.engine = isWebkitCSSTransitionCompatible(this) ? 'webkit' : 'javascript';
-          this.animate(this.engine == 'webkit' ?
-            'webkitCssTransition' : 'style', this.destinationElement || this.element, {
-            style: this.options.style,
-            propertyTransitions: this.options.propertyTransitions || { }
-          });
-        }
-      },
-      render: function($super, position){
-        if(this.engine == 'webkit'){
-          if(this.options.before)
-            this.element.beforeStartEffect = this.options.before;
-
-          if(this.options.after) {
-            this.element.afterFinishEffect = this.options.after;
-            delete this.options.after;
-          }
-
-          this.element._effect = this;
-        }
-        return $super(position);
-      }
-    });
-
-    Element.addMethods({
-      morph: function(element, style, options){
-        if (Object.isNumber(options)) options = { duration: options };
-        return element.effect('morph', Object.extend(options, {style: style}));
-      }.optionize()
-    });
-
-    S2.FX.webkitTransitionStartEvent =
-    document.observe('webkitTransitionStart', function(event){
-      var element = event.element();
-      if(!element || !element.beforeStartEffect) return;
-      element.beforeStartEffect();
-      element.beforeStartEffect = null;
-    });
-
-    S2.FX.webkitTransitionEndEvent =
-    document.observe('webkitTransitionEnd', function(event){
-      var element = event.element();
-      if(!element) return;
-      (function(){ element.style.webkitTransitionDuration = ''; }).defer();
-      if(!element.afterFinishEffect) return;
-      element.afterFinishEffect();
-      element.afterFinishEffect = null;
-    });
-  }
-})();
-
-(function() {
-
-  function toDecimal(pctString) {
-    var match = pctString.match(/^(\d+)%?$/i);
-    if (!match) return null;
-    return (Number(match[1]) / 100);
-  }
-
-  function getPixelValue(value, property) {
-    if (Object.isElement(value)) {
-      element = value;
-      value = element.getStyle(property);
-    }
-    if (value === null) {
-      return null;
-    }
-
-    if ((/^\d+(px)?$/i).test(value)) {
-      return window.parseInt(value, 10);
-    }
-
-    if (/\d/.test(value) && element.runtimeStyle) {
-      var style = element.style.left, rStyle = element.runtimeStyle.left;
-      element.runtimeStyle.left = element.currentStyle.left;
-      element.style.left = value || 0;
-      value = element.style.pixelLeft;
-      element.style.left = style;
-      element.runtimeStyle.left = rStyle;
-
-      return value;
-    }
-
-    if (value.include('%')) {
-      var decimal = toDecimal(value);
-      var whole;
-      if (property.include('left') || property.include('right') ||
-       property.include('width')) {
-        whole = $(element.parentNode).measure('width');
-      } else if (property.include('top') || property.include('bottom') ||
-       property.include('height')) {
-        whole = $(element.parentNode).measure('height');
-      }
-
-      return whole * decimal;
-    }
-
-    return 0;
-  }
-
-  function toCSSPixels(number) {
-    if (Object.isString(number) && number.endsWith('px')) {
-      return number;
-    }
-    return number + 'px';
-  }
-
-  function isDisplayed(element) {
-    var originalElement = element;
-    while (element && element.parentNode) {
-      var display = element.getStyle('display');
-      if (display === 'none') {
-        return false;
-      }
-      element = $(element.parentNode);
-    }
-    return true;
-  }
-
-  var hasLayout = Prototype.K;
-
-  if ('currentStyle' in document.documentElement) {
-    hasLayout = function(element) {
-      if (!element.currentStyle.hasLayout) {
-        element.style.zoom = 1;
-      }
-      return element;
-    };
-  }
-
-
-  Element.Layout = Class.create(Hash, {
-    initialize: function($super, element, preCompute) {
-      $super();
-      this.element = $(element);
-      if (preCompute) {
-        this._preComputing = true;
-        this._begin();
-      }
-      Element.Layout.PROPERTIES.each( function(property) {
-        if (preCompute) {
-          this._compute(property);
-        } else {
-          this._set(property, null);
-        }
-      }, this);
-      if (preCompute) {
-        this._end();
-        this._preComputing = false;
-      }
-    },
-
-    _set: function(property, value) {
-      return Hash.prototype.set.call(this, property, value);
-    },
-
-
-    set: function(property, value) {
-      throw "Properties of Element.Layout are read-only.";
-    },
-
-    get: function($super, property) {
-      var value = $super(property);
-      return value === null ? this._compute(property) : value;
-    },
-
-    _begin: function() {
-      if (this._prepared) return;
-
-      var element = this.element;
-      if (isDisplayed(element)) {
-        this._prepared = true;
-        return;
-      }
-
-      var originalStyles = {
-        position:   element.style.position   || '',
-        width:      element.style.width      || '',
-        visibility: element.style.visibility || '',
-        display:    element.style.display    || ''
+      var currentStyles = {
+        left:   element.getStyle('left'),
+        right:  element.getStyle('right'),
+        top:    element.getStyle('top'),
+        bottom: element.getStyle('bottom')
       };
 
-      element.store('prototype_original_styles', originalStyles);
-
-      var position = element.getStyle('position'),
-       width = element.getStyle('width');
-
-      element.setStyle({
-        position:   'absolute',
-        visibility: 'hidden',
-        display:    'block'
-      });
-
-      var positionedWidth = element.getStyle('width');
-
-      var newWidth;
-      if (width && (positionedWidth === width)) {
-        newWidth = window.parseInt(width, 10);
-      } else if (width && (position === 'absolute' || position === 'fixed')) {
-        newWidth = window.parseInt(width, 10);
-      } else {
-        var parent = element.parentNode, pLayout = $(parent).getLayout();
-
-
-        newWidth = pLayout.get('width') -
-         this.get('margin-left') -
-         this.get('border-left') -
-         this.get('padding-left') -
-         this.get('padding-right') -
-         this.get('border-right') -
-         this.get('margin-right');
+      function hasTwoPropertiesOnSameAxis(obj) {
+        if (obj.top && obj.bottom) return true;
+        if (obj.left && obj.right) return true;
+        return false;
       }
 
-      element.setStyle({ width: newWidth + 'px' });
+      if (hasTwoPropertiesOnSameAxis(currentStyles)) return false;
+      if (hasTwoPropertiesOnSameAxis(style))         return false;
 
-      this._prepared = true;
+      return true;
     },
 
-    _end: function() {
-      var element = this.element;
-      var originalStyles = element.retrieve('prototype_original_styles');
-      element.store('prototype_original_styles', null);
-      element.setStyle(originalStyles);
-      this._prepared = false;
-    },
-
-    _compute: function(property) {
-      var COMPUTATIONS = Element.Layout.COMPUTATIONS;
-      if (!(property in COMPUTATIONS)) {
-        throw "Property not found.";
-      }
-
-      var value = COMPUTATIONS[property].call(this, this.element);
-      this._set(property, value);
-      return value;
-    }
-  });
-
-  Object.extend(Element.Layout, {
-    PROPERTIES: $w('height width top left right bottom border-left border-right border-top border-bottom padding-left padding-right padding-top padding-bottom margin-top margin-bottom margin-left margin-right padding-box-width padding-box-height border-box-width border-box-height margin-box-width margin-box-height'),
-
-    COMPOSITE_PROPERTIES: $w('padding-box-width padding-box-height margin-box-width margin-box-height border-box-width border-box-height'),
-
-    COMPUTATIONS: {
-      'height': function(element) {
-        if (!this._preComputing) this._begin();
-
-        var bHeight = this.get('border-box-height');
-        if (bHeight <= 0) return 0;
-
-        var bTop = this.get('border-top'),
-         bBottom = this.get('border-bottom');
-
-        var pTop = this.get('padding-top'),
-         pBottom = this.get('padding-bottom');
-
-        if (!this._preComputing) this._end();
-
-        return bHeight - bTop - bBottom - pTop - pBottom;
-      },
-
-      'width': function(element) {
-        if (!this._preComputing) this._begin();
-
-        var bWidth = this.get('border-box-width');
-        if (bWidth <= 0) return 0;
-
-        var bLeft = this.get('border-left'),
-         bRight = this.get('border-right');
-
-        var pLeft = this.get('padding-left'),
-         pRight = this.get('padding-right');
-
-        if (!this._preComputing) this._end();
-
-        return bWidth - bLeft - bRight - pLeft - pRight;
-      },
-
-      'padding-box-height': function(element) {
-        var height = this.get('height'),
-         pTop = this.get('padding-top'),
-         pBottom = this.get('padding-bottom');
-
-        return height + pTop + pBottom;
-      },
-
-      'padding-box-width': function(element) {
-        var width = this.get('width'),
-         pLeft = this.get('padding-left'),
-         pRight = this.get('padding-right');
-
-        return width + pLeft + pRight;
-      },
-
-      'border-box-height': function(element) {
-        return element.offsetHeight;
-      },
-
-      'border-box-width': function(element) {
-        return element.offsetWidth;
-      },
-
-      'margin-box-height': function(element) {
-        var bHeight = this.get('border-box-height'),
-         mTop = this.get('margin-top'),
-         mBottom = this.get('margin-bottom');
-
-        if (bHeight <= 0) return 0;
-
-        return bHeight + mTop + mBottom;
-      },
-
-      'margin-box-width': function(element) {
-        var bWidth = this.get('border-box-width'),
-         mLeft = this.get('margin-left'),
-         mRight = this.get('margin-right');
-
-        if (bWidth <= 0) return 0;
-
-        return bWidth + mLeft + mRight;
-      },
-
-      'top': function(element) {
-        var offset = element.positionedOffset();
-        return offset.top;
-      },
-
-      'bottom': function(element) {
-        var offset = element.positionedOffset(),
-         parent = element.getOffsetParent(),
-         pHeight = parent.measure('height');
-
-        var mHeight = this.get('border-box-height');
-
-        return pHeight - mHeight - offset.top;
-      },
-
-      'left': function(element) {
-        var offset = element.positionedOffset();
-        return offset.left;
-      },
-
-      'right': function(element) {
-        var offset = element.positionedOffset(),
-         parent = element.getOffsetParent(),
-         pWidth = parent.measure('width');
-
-        var mWidth = this.get('border-box-width');
-
-        return pWidth - mWidth - offset.left;
-      },
-
-      'padding-top': function(element) {
-        return getPixelValue(element, 'paddingTop');
-      },
-
-      'padding-bottom': function(element) {
-        return getPixelValue(element, 'paddingBottom');
-      },
-
-      'padding-left': function(element) {
-        return getPixelValue(element, 'paddingLeft');
-      },
-
-      'padding-right': function(element) {
-        return getPixelValue(element, 'paddingRight');
-      },
-
-      'border-top': function(element) {
-        return Object.isNumber(element.clientTop) ? element.clientTop :
-         getPixelValue(element, 'borderTopWidth');
-      },
-
-      'border-bottom': function(element) {
-        return Object.isNumber(element.clientBottom) ? element.clientBottom :
-         getPixelValue(element, 'borderBottomWidth');
-      },
-
-      'border-left': function(element) {
-        return Object.isNumber(element.clientLeft) ? element.clientLeft :
-         getPixelValue(element, 'borderLeftWidth');
-      },
-
-      'border-right': function(element) {
-        return Object.isNumber(element.clientRight) ? element.clientRight :
-         getPixelValue(element, 'borderRightWidth');
-      },
-
-      'margin-top': function(element) {
-        return getPixelValue(element, 'marginTop');
-      },
-
-      'margin-bottom': function(element) {
-        return getPixelValue(element, 'marginBottom');
-      },
-
-      'margin-left': function(element) {
-        return getPixelValue(element, 'marginLeft');
-      },
-
-      'margin-right': function(element) {
-        return getPixelValue(element, 'marginRight');
-      }
-    }
-  });
-
-  if ('getBoundingClientRect' in document.documentElement) {
-    Object.extend(Element.Layout.COMPUTATIONS, {
-      'right': function(element) {
-        var parent = hasLayout(element.getOffsetParent());
-        var rect = element.getBoundingClientRect(),
-         pRect = parent.getBoundingClientRect();
-
-        return (pRect.right - rect.right).round();
-      },
-
-      'bottom': function(element) {
-        var parent = hasLayout(element.getOffsetParent());
-        var rect = element.getBoundingClientRect(),
-         pRect = parent.getBoundingClientRect();
-
-        return (pRect.bottom - rect.bottom).round();
-      }
-    });
-  }
-
-  Element.Offset = Class.create({
-    initialize: function(left, top) {
-      this.left = left.round();
-      this.top  = top.round();
-
-      this[0] = this.left;
-      this[1] = this.top;
-    },
-
-    relativeTo: function(offset) {
-      return new Element.Offset(
-        this.left - offset.left,
-        this.top  - offset.top
-      );
-    },
-
-    inspect: function() {
-      return "#<Element.Offset left: #{left} top: #{top}>".interpolate(this);
-    },
-
-    toString: function() {
-      return "[#{left}, #{top}]".interpolate(this);
-    },
-
-    toArray: function() {
-      return [this.left, this.top];
-    }
-  });
-
-  function getLayout(element) {
-    return new Element.Layout(element);
-  }
-
-  function measure(element, property) {
-    return $(element).getLayout().get(property);
-  }
-
-  function cumulativeOffset(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      element = element.offsetParent;
-    } while (element);
-    return new Element.Offset(valueL, valueT);
-  }
-
-  function positionedOffset(element) {
-    var layout = element.getLayout();
-
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      element = element.offsetParent;
-      if (element) {
-        if (isBody(element)) break;
-        var p = Element.getStyle(element, 'position');
-        if (p !== 'static') break;
-      }
-    } while (element);
-
-    valueL -= layout.get('margin-top');
-    valueT -= layout.get('margin-left');
-
-    return new Element.Offset(valueL, valueT);
-  }
-
-  function cumulativeScrollOffset(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.scrollTop  || 0;
-      valueL += element.scrollLeft || 0;
-      element = element.parentNode;
-    } while (element);
-    return new Element.Offset(valueL, valueT);
-  }
-
-  function viewportOffset(forElement) {
-    var valueT = 0, valueL = 0;
-
-    var element = forElement;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      if (element.offsetParent == document.body &&
-        Element.getStyle(element, 'position') == 'absolute') break;
-    } while (element = element.offsetParent);
-
-    element = forElement;
-    var tagName = element.tagName, O = Prototype.Browser.Opera;
-    do {
-      if (!O || tagName && tagName.toUpperCase() === 'BODY') {
-        valueT -= element.scrollTop  || 0;
-        valueL -= element.scrollLeft || 0;
-      }
-    } while (element = element.parentNode);
-    return new Element.Offset(valueL, valueT);
-  }
-
-  Element.addMethods({
-    getLayout:              getLayout,
-    measure:                measure,
-    cumulativeOffset:       cumulativeOffset,
-    positionedOffset:       positionedOffset,
-    cumulativeScrollOffset: cumulativeScrollOffset,
-    viewportOffset:         viewportOffset
-  });
-
-  function isBody(element) {
-    return $w('BODY HTML').include(element.nodeName.toUpperCase());
-  }
-
-  if ('getBoundingClientRect' in document.documentElement) {
-    Element.addMethods({
-      viewportOffset: function(element) {
-        element = $(element);
-        var rect = element.getBoundingClientRect();
-        return new Element.Offset(rect.left, rect.top);
-      },
-
-      cumulativeOffset: function(element) {
-        element = $(element);
-        var docOffset = $(document.documentElement).viewportOffset(),
-          elementOffset = element.viewportOffset();
-        return elementOffset.relativeTo(docOffset);
-      },
-
-      positionedOffset: function(element) {
-        element = $(element);
-        var parent = element.getOffsetParent();
-
-        if (parent.nodeName.toUpperCase() === 'HTML') {
-          return positionedOffset(element);
+    _adjustForHardwareAcceleration: function(style) {
+      var dx = 0, dy = 0;
+
+      $w('top bottom left right').each( function(prop) {
+        if (!style.hasKey(prop)) return;
+        var current = window.parseInt(this.element.getStyle(prop), 10);
+        var target  = window.parseInt(style.get(prop), 10);
+
+        if (prop === 'top') {
+          dy += (target - current);
+        } else if (prop === 'bottom') {
+          dy += (current - target);
+        } else if (prop === 'left') {
+          dx += (target - current);
+        } else if (prop === 'right') {
+          dx += (current - target);
         }
 
-        var eOffset = element.viewportOffset(),
-         pOffset = isBody(parent) ? viewportOffset(parent) :
-          parent.viewportOffset();
-        var retOffset = eOffset.relativeTo(pOffset);
+        style.unset(prop);
+      }, this);
 
-        var layout = element.getLayout();
-        var top  = retOffset.top  - layout.get('margin-top');
-        var left = retOffset.left - layout.get('margin-left');
+      var transformProperty = v('transform');
 
-        return new Element.Offset(left, top);
+      if (dx !== 0 || dy !== 0) {
+        var translation = TRANSLATE_TEMPLATE.evaluate([dx, dy]);
+        style.set(transformProperty, translation);
       }
-    });
+
+      this.targetStyle += transformProperty + ': translate(0px, 0px);';
+      return style;
+    },
+
+    render: function() {
+      if (this.running === true) return;
+      var style = this.style.clone(), effect = this.effect;
+      if (this._canHardwareAccelerate()) {
+        effect.accelerated = true;
+        style = this._adjustForHardwareAcceleration(style);
+      } else {
+        effect.accelerated = false;
+      }
+
+      var s = this.element.style;
+
+      var original = {};
+      $w('transition-property transition-duration transition-timing-function').each( function(prop) {
+        prop = v(prop).camelize();
+        original[prop] = s[prop];
+      });
+
+      this.element.store('s2.targetStyle', this.targetStyle);
+
+      this.element.store('s2.originalTransitionStyle', original);
+
+      s[v('transition-property').camelize()] = style.keys().join(',');
+      s[v('transition-duration').camelize()] = (effect.duration / 1000).toFixed(3) + 's';
+      s[v('transition-timing-function').camelize()] = timingFunctionForTransition(effect.options.transition);
+
+      if (Prototype.Browser.Opera) {
+        this._setStyle.bind(this).defer(style.toObject());
+      } else this._setStyle(style.toObject());
+      this.running = true;
+
+      this.render = Prototype.emptyFunction;
+    },
+
+    _setStyle: function(style) {
+      this.element.setStyle(style);
+    }
+  });
+
+  Operators.CssTransition.TIMING_MAP = {
+    linear:     'linear',
+    sinusoidal: 'ease-in-out'
+  };
+
+  function timingFunctionForTransition(transition) {
+    var timing = null, MAP = FX.Operators.CssTransition.TIMING_MAP;
+
+    for (var t in MAP) {
+      if (FX.Transitions[t] === transition) {
+        timing = MAP[t];
+        break;
+      }
+    }
+    return timing;
   }
+
+  function isCSSTransitionCompatible(effect) {
+    if (!S2.Extensions.CSSTransitions) return false;
+    var opt = effect.options;
+
+    if ((opt.engine || '') === 'javascript') return false;
+
+    if (!timingFunctionForTransition(opt.transition)) return false;
+
+    if (opt.propertyTransitions) return false;
+
+    return true;
+  };
+
+  FX.Morph = Class.create(FX.Morph, {
+    setup: function() {
+      if (this.options.change) {
+        this.setupWrappers();
+      } else if (this.options.style) {
+        this.engine  = 'javascript';
+        var operator = 'style';
+
+        var style = Object.isString(this.options.style) ?
+         S2.CSS.parseStyle(this.options.style) : style;
+
+        var normalizedStyle = S2.CSS.normalize(
+         this.destinationElement || this.element, style);
+
+        var changesStyle = Object.keys(normalizedStyle).length > 0;
+
+        if (changesStyle && isCSSTransitionCompatible(this)) {
+          this.engine = 'css-transition';
+          operator    = 'CssTransition';
+
+          this.update = function(position) {
+            this.element.store('s2.effect', this);
+
+            S2.FX.setReady(this.element, false);
+
+            for (var i = 0, operator; operator = this.operators[i]; i++) {
+              operator.render(position);
+            }
+
+            this.render = Prototype.emptyFunction;
+          }
+        }
+
+        this.animate(operator, this.destinationElement || this.element, {
+          style: this.options.style,
+          propertyTransitions: this.options.propertyTransitions || { }
+        });
+      }
+    }
+  });
+
+  document.observe(transitionEndEventName, function(event) {
+    var element = event.element();
+    if (!element) return;
+
+    var effect = element.retrieve('s2.effect');
+
+    if (!effect || effect.state === 'finished') return;
+
+    function adjust(element, effect){
+      var targetStyle = element.retrieve('s2.targetStyle');
+      if (!targetStyle) return;
+
+      element.setStyle(targetStyle);
+
+      var originalTransitionStyle = element.retrieve('s2.originalTransitionStyle');
+
+      var storage = element.getStorage();
+      storage.unset('s2.targetStyle');
+      storage.unset('s2.originalTransitionStyle');
+      storage.unset('s2.effect');
+
+      if (originalTransitionStyle) {
+        element.setStyle(originalTransitionStyle);
+      }
+      S2.FX.setReady(element);
+    }
+
+    var durationProperty = v('transition-duration').camelize();
+    element.style[durationProperty] = '';
+    adjust(element, effect);
+
+    effect.state = 'finished';
+
+    var after = effect.options.after;
+    if (after) after(effect);
+  });
+})(S2.FX);
+
+Element.__scrollTo = Element.scrollTo;
+Element.addMethods({
+  scrollTo: function(element, to, options){
+    if(arguments.length == 1) return Element.__scrollTo(element);
+    new S2.FX.Scroll(element, Object.extend(options || {}, { to: to })).play();
+    return element;
+  }
+});
+
+Element.addMethods({
+  effect: function(element, effect, options){
+    if (Object.isFunction(effect))
+      effect = new effect(element, options);
+    else if (Object.isString(effect))
+      effect = new S2.FX[effect.charAt(0).toUpperCase() + effect.substring(1)](element, options);
+    effect.play(element, options);
+    return element;
+  },
+
+  morph: function(element, style, options) {
+    options = S2.FX.parseOptions(options);
+    if (!options.queue) {
+      options.queue = element.retrieve('S2.FX.Queue');
+      if (!options.queue) {
+        element.store('S2.FX.Queue', options.queue = new S2.FX.Queue());
+      }
+    }
+    if (!options.position) options.position = 'end';
+    return element.effect('morph', Object.extend(options, { style: style }));
+  }.optionize(),
+
+  appear: function(element, options){
+    return element.setStyle('opacity: 0;').show().morph('opacity: 1', options);
+  },
+
+  fade: function(element, options){
+    options = Object.extend({
+      after: Element.hide.curry(element)
+    }, options || {});
+    return element.morph('opacity: 0', options);
+  },
+
+  cloneWithoutIDs: function(element) {
+    element = $(element);
+    var clone = element.cloneNode(true);
+    clone.id = '';
+    $(clone).select('*[id]').each(function(e) { e.id = ''; });
+    return clone;
+  }
+});
+
+(function(){
+  var transform;
+
+  if(window.CSSMatrix) transform = function(element, transform){
+    element.style.transform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(window.WebKitCSSMatrix) transform = function(element, transform){
+    element.style.webkitTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(Prototype.Browser.Gecko) transform = function(element, transform){
+    element.style.MozTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(Prototype.Browser.IE) transform = function(element, transform){
+    if(!element._oDims)
+      element._oDims = [element.offsetWidth, element.offsetHeight];
+    var c = Math.cos(transform.rotation||0) * 1, s = Math.sin(transform.rotation||0) * 1,
+        filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11="+c+",M12="+(-s)+",M21="+s+",M22="+c+")";
+    element.style.filter = filter;
+    element.style.marginLeft = (element._oDims[0]-element.offsetWidth)/2+'px';
+    element.style.marginTop = (element._oDims[1]-element.offsetHeight)/2+'px';
+    return element;
+  };
+  else transform = function(element){ return element; }
+
+  Element.addMethods({ transform: transform });
 })();
 
+S2.viewportOverlay = function(){
+  var viewport = document.viewport.getDimensions(),
+    offsets = document.viewport.getScrollOffsets();
+  return new Element('div').setStyle({
+    position: 'absolute',
+    left: offsets.left + 'px', top: offsets.top + 'px',
+    width: viewport.width + 'px', height: viewport.height + 'px'
+  });
+};
+S2.FX.Helpers = {
+  fitIntoRectangle: function(w, h, rw, rh){
+    var f = w/h, rf = rw/rh; return f < rf ?
+      [(rw - (w*(rh/h)))/2, 0, w*(rh/h), rh] :
+      [0, (rh - (h*(rw/w)))/2, rw, h*(rw/w)];
+  }
+};
+
+S2.FX.Operators.Zoom = Class.create(S2.FX.Operators.Style, {
+  initialize: function($super, effect, object, options) {
+    var viewport = document.viewport.getDimensions(),
+      offsets = document.viewport.getScrollOffsets(),
+      dims = object.getDimensions(),
+      f = S2.FX.Helpers.fitIntoRectangle(dims.width, dims.height,
+      viewport.width - (options.borderWidth || 0)*2,
+      viewport.height - (options.borderWidth || 0)*2);
+
+    Object.extend(options, { style: {
+      left: f[0] + (options.borderWidth || 0) + offsets.left + 'px',
+      top: f[1] + (options.borderWidth || 0) + offsets.top + 'px',
+      width: f[2] + 'px', height: f[3] + 'px'
+    }});
+    $super(effect, object, options);
+  }
+});
+
+S2.FX.Zoom = Class.create(S2.FX.Element, {
+  setup: function() {
+    this.clone = this.element.cloneWithoutIDs();
+    this.element.insert({before:this.clone});
+    this.clone.absolutize().setStyle({zIndex:9999});
+
+    this.overlay = S2.viewportOverlay();
+    if (this.options.overlayClassName)
+      this.overlay.addClassName(this.options.overlayClassName)
+    else
+      this.overlay.setStyle({backgroundColor: '#000', opacity: '0.9'});
+    $$('body')[0].insert(this.overlay);
+
+    this.animate('zoom', this.clone, {
+      borderWidth: this.options.borderWidth,
+      propertyTransitions: this.options.propertyTransitions || { }
+    });
+  },
+  teardown: function() {
+    this.clone.observe('click', function() {
+      this.overlay.remove();
+      this.clone.morph('opacity:0', {
+        duration: 0.2,
+        after: function() {
+          this.clone.remove();
+        }.bind(this)
+      })
+    }.bind(this));
+  }
+});
 
 
 S2.UI = {};
+
+S2.UI.Mixin = {};
 
 
 Object.deepExtend = function(destination, source) {
@@ -1732,8 +1677,6 @@ Object.deepExtend = function(destination, source) {
   }
   return destination;
 };
-
-S2.UI.Mixin = {};
 
 S2.UI.Mixin.Configurable = {
   setOptions: function(options) {
@@ -1779,6 +1722,30 @@ S2.UI.Mixin.Trackable = {
     }
   }
 };
+
+(function() {
+  var METHODS = $w('observe stopObserving show hide ' +
+   'addClassName removeClassName hasClassName setStyle getStyle' +
+   'writeAttribute readAttribute fire');
+
+  var E = {};
+
+  METHODS.each( function(name) {
+    E[name] = function() {
+      var element = this.toElement();
+      return element[name].apply(element, arguments);
+    };
+  });
+
+  E.on = function() {
+    if (!this.__observers) this.__observers = [];
+    var element = this.toElement();
+    var result = element.on.apply(element, arguments);
+    this.__observers.push(result);
+  };
+
+  window.S2.UI.Mixin.Element = E;
+})();
 
 
 S2.UI.Mixin.Shim = {
@@ -1850,7 +1817,7 @@ Object.extend(S2.UI, {
     var j, className;
     for (var i = 0, element; element = elements[i]; i++) {
       for (j = 0; className = classNames[j]; j++) {
-        element.addClassName(className);
+        Element.addClassName(element, className);
       }
     }
 
@@ -1869,7 +1836,7 @@ Object.extend(S2.UI, {
     var j, className;
     for (var i = 0, element; element = elements[i]; i++) {
       for (j = 0; className = classNames[j]; j++) {
-        element.removeClassName(className);
+        Element.removeClassName(element, className);
       }
     }
   },
@@ -1878,17 +1845,29 @@ Object.extend(S2.UI, {
 
   isFocusable: function(element) {
     var name = element.nodeName.toLowerCase(),
-      tabIndex = element.readAttribute('tabIndex'),
-      isFocusable = false;
+     tabIndex = element.readAttribute('tabIndex'),
+     isFocusable = false;
 
     if (S2.UI.FOCUSABLE_ELEMENTS.include(name)) {
       isFocusable = !element.disabled;
-    } else if ($w('a area').include(name)) {
+    } else if (name === 'a' || name === 'area') {
       isFocusable = element.href || (tabIndex && !isNaN(tabIndex));
     } else {
       isFocusable = tabIndex && !isNaN(tabIndex);
     }
     return !!isFocusable && S2.UI.isVisible(element);
+  },
+
+
+  makeFocusable: function(elements, shouldBeFocusable) {
+    if (Object.isElement(elements)) {
+      elements = [elements];
+    }
+
+    var value = shouldBeFocusable ? '0' : '-1';
+    for (var i = 0, element; element = elements[i]; i++) {
+      $(element).writeAttribute('tabIndex', value);
+    }
   },
 
   findFocusables: function(element) {
@@ -1926,6 +1905,12 @@ Object.extend(S2.UI, {
 
   modifierUsed: function(event) {
     return event.metaKey || event.ctrlKey || event.altKey;
+  },
+
+  getText: function(element) {
+    element = $(element);
+    return element.innerText && !window.opera ? element.innerText :
+     element.innerHTML.stripScripts().unescapeHTML().replace(/[\n\r\s]+/g, ' ');
   }
 });
 
@@ -1945,14 +1930,14 @@ Object.extend(S2.UI, {
   if (document.attachEvent) {
     document.onselectstart = _textSelectionHandler.bindAsEventListener(window);
   } else {
-    document.observe('mousedown', _textSelectionHandler);
   }
 
   Object.extend(S2.UI, {
     enableTextSelection: function(element) {
       element.setStyle({
         '-moz-user-select': '',
-        '-webkit-user-select': ''
+        '-webkit-user-select': '',
+        'user-select': ''
       });
       IGNORED_ELEMENTS = IGNORED_ELEMENTS.without(element);
       return element;
@@ -1961,7 +1946,8 @@ Object.extend(S2.UI, {
     disableTextSelection: function(element) {
       element.setStyle({
         '-moz-user-select': 'none',
-        '-webkit-user-select': 'none'
+        '-webkit-user-select': 'none',
+        'user-select': ''
       });
       if (!IGNORED_ELEMENTS.include(element)) {
         IGNORED_ELEMENTS.push(element);
@@ -2138,6 +2124,21 @@ S2.UI.Behavior.Resize = Class.create(S2.UI.Behavior, {
   }
 });
 S2.UI.Behavior.Down = Class.create(S2.UI.Behavior, {
+  _isRelevantKey: function(event) {
+    var code = event.keyCode;
+    return (code === Event.KEY_RETURN || code === Event.KEY_SPACE);
+  },
+
+  onkeydown: function(event) {
+    if (!this._isRelevantKey(event)) return;
+    this.onmousedown(event);
+  },
+
+  onkeyup: function(event) {
+    if (!this._isRelevantKey(event)) return;
+    this.onmouseup(event);
+  },
+
   onmousedown: function(event) {
     this._down = true;
     if (this.element.hasClassName('ui-state-disabled')) return;
@@ -2168,16 +2169,23 @@ S2.UI.Behavior.Down = Class.create(S2.UI.Behavior, {
   UI.Base = Class.create(UI.Mixin.Configurable, {
     NAME: "S2.UI.Base",
 
+    initialize:      Function.ABSTRACT,
+
     addObservers:    Function.ABSTRACT,
 
-    removeObservers: Function.ABSTRACT,
+    removeObservers: function() {
+      if (this.__observers) {
+        this.__observers.invoke('stop');
+        this.__observers = null;
+      }
+    },
 
     destroy: function() {
       this.removeObservers();
     },
 
     toElement: function() {
-      return this.element;
+      return this.element || null;
     },
 
     inspect: function() {
@@ -2413,63 +2421,421 @@ Object.extend(Event, {
 
 
 (function(UI) {
-  UI.Button = Class.create(UI.Base, {
+  UI.Button = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Button",
 
     initialize: function(element, options) {
       this.element = $(element);
-      this.element.store('ui.button', this);
-      var opt = this.setOptions(options);
 
-      UI.addClassNames(this.element, 'ui-state-default ui-corner-all');
-      UI.addBehavior(this.element, [UI.Behavior.Hover, UI.Behavior.Focus,
-       UI.Behavior.Down]);
+      var name = this.element.nodeName.toUpperCase(), type;
 
-      if (opt.primary) {
-        this.element.addClassName('ui-priority-primary');
+      if (name === 'INPUT') {
+        type = this.element.type;
+        if (type === 'checkbox' || type === 'radio') {
+          this.type = this.element.type;
+        } else {
+          this.type = 'input';
+        }
+      } else {
+        this.type = 'button';
       }
 
-      this.element.writeAttribute('role', 'button');
+      var opt = this.setOptions(options);
+
+      if (this._isCheckboxOrRadio()) {
+        this._handleFormWidget();
+      } else {
+        this._makeButtonElement(this.element);
+      }
+
+      this.element.store('ui.button', this);
+      if (this._buttonElement !== this.element) {
+        this._buttonElement.store('ui.button', this);
+      }
 
       this.enabled = true;
-      var enabled = (this.element.disabled === true) ||
-       !this.element.hasClassName('ui-state-disabled');
 
-      this.setEnabled(enabled);
+      var disabled = (this.element.disabled === true)
+       this.element.hasClassName('ui-state-disabled');
+
+      this.setEnabled(!disabled);
+
+      this.observers = {
+        click: this._click.bind(this),
+        keyup: this._keyup.bind(this)
+      };
+      this.addObservers();
     },
 
+    addObservers: function() {
+      this.observe('click', this.observers.click);
+      this.observe('keyup', this.observers.keyup);
+    },
+
+    removeObservers: function() {
+      this.stopObserving('click', this.observers.click);
+      this.stopObserving('keydown', this.observers.keydown);
+    },
+
+    isActive: function() {
+      if (!this._isToggleButton()) return false;
+      return this.hasClassName('ui-state-active');
+    },
+
+    _setActive: function(bool) {
+      this[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
+    },
+
+    toggle: function(bool) {
+      if (!this._isToggleButton()) return this;
+
+      var isActive = this.isActive();
+      if (Object.isUndefined(bool)) bool = !isActive;
+
+      var willChange = (bool !== isActive);
+      if (willChange) {
+        var result = this.toElement().fire('ui:button:toggle');
+        if (result.stopped) return;
+      }
+      this._buttonElement[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
+
+      return this;
+    },
+
+    _click: function(event) {
+      this.toggle(!this.isActive());
+      this.element.checked = this.isActive();
+    },
+
+    _keyup: function(event) {
+      var code = event.keyCode;
+      if (code !== Event.KEY_SPACE && code !== Event.KEY_RETURN)
+        return;
+
+      var isActive = this.isActive();
+
+      (function() {
+        if (isActive !== this.isActive()) return;
+        this.toggle(isActive);
+        this.element.checked = isActive;
+      }).bind(this).defer();
+    },
+
+    _isCheckboxOrRadio: function() {
+      return this.type === 'checkbox' || this.type === 'radio';
+    },
+
+    _isToggleButton: function() {
+      return this._isCheckboxOrRadio() || this.options.toggle;
+    },
+
+    _makeButtonElement: function(element) {
+      this._buttonElement = element;
+
+      var opt = this.options;
+      UI.addClassNames(element,
+       'ui-button ui-widget ui-state-default ui-corner-all');
+
+      var B = UI.Behavior, behaviors = [B.Hover, B.Focus, B.Down];
+      UI.addBehavior(element, behaviors);
+
+      if (opt.primary) {
+        element.addClassName('ui-priority-primary');
+      }
+
+      if (opt.text === null) {
+        opt.text = element.innerHTML || element.value;
+      }
+
+      this._interpretContent(element);
+
+      element.writeAttribute('role', 'button');
+    },
+
+    _makeIconElement: function(name, type) {
+      var classNames = 'ui-button-icon-' + type + ' ui-icon ' + name;
+      return new Element('span', { 'class': classNames });
+    },
+
+    _interpretContent: function(element) {
+      if (!this._isContainer()) return;
+
+      var opt = this.options;
+      var buttonClassName, primaryIcon, secondaryIcon;
+      var hasIcon     = !!opt.icons.primary || !!opt.icons.secondary;
+      var hasTwoIcons = !!opt.icons.primary && !!opt.icons.secondary;
+
+      if (opt.icons.primary) {
+        primaryIcon = this._makeIconElement(opt.icons.primary, 'primary');
+      }
+
+      if (opt.icons.secondary) {
+        secondaryIcon = this._makeIconElement(opt.icons.secondary, 'secondary');
+      }
+
+      if (hasIcon) {
+        if (this._hasText()) {
+          buttonClassName = hasTwoIcons ? 'ui-button-text-icons' :
+           'ui-button-text-icon';
+        } else {
+          buttonClassName = hasTwoIcons ? 'ui-button-icons-only' :
+           'ui-button-icon-only';
+        }
+      } else {
+        buttonClassName = 'ui-button-text-only';
+      }
+
+      this._wrapContentsInTextSpan(element);
+      element.addClassName(buttonClassName);
+
+      if (primaryIcon) {
+        element.insert({ top: primaryIcon });
+      }
+
+      if (secondaryIcon) {
+        element.insert({ bottom: secondaryIcon });
+      }
+    },
+
+    _wrapContentsInTextSpan: function(element) {
+      var text = new Element('span', { 'class': 'ui-button-text' });
+      for (var i = 0, node; node = element.childNodes[i]; i++) {
+        text.appendChild(node);
+      }
+      element.appendChild(text);
+    },
+
+    _hasText: function() {
+      return !!this.options.text;
+    },
+
+    _isContainer: function() {
+      var element = this.toElement(), tag = element.nodeName.toUpperCase();
+      return (tag !== 'INPUT');
+    },
+
+    _handleFormWidget: function() {
+      var opt = this.options;
+      var id = this.element.id, label;
+      if (id) {
+        label = $$('label[for="' + id + '"]')[0];
+      }
+      if (!label) {
+        label = this.element.up('label');
+      }
+
+      if (!label) {
+        opt.text = null;
+        return;
+      }
+
+
+      this.element.addClassName('ui-helper-hidden-accessible');
+      this._makeButtonElement(label);
+      UI.makeFocusable(label, true);
+      this.label = label;
+    },
 
     setEnabled: function(isEnabled) {
+      var element = this._buttonElement;
       if (this.enabled === isEnabled) return;
       this.enabled = isEnabled;
       if (isEnabled) {
-        this.element.removeClassName('ui-state-disabled');
+        element.removeClassName('ui-state-disabled');
       } else {
-        this.element.addClassName('ui-state-disabled');
+        element.addClassName('ui-state-disabled');
       }
       this.element.disabled = !isEnabled;
     },
 
     toElement: function() {
-      return this.element;
-    },
-
-    toHTML: function() {
-      return this.element.toHTML();
-    },
-
-    toString: function() {
-      return this.element.toHTML();
+      return this._buttonElement;
     },
 
     inspect: function() {
-      return this.element.inspect();
+      return this.toElement().inspect();
     }
   });
 
   Object.extend(UI.Button, {
     DEFAULT_OPTIONS: {
-      primary: false
+      primary: false,
+      text:    true,
+      toggle:  false,
+      icons: {
+        primary:   null,
+        secondary: null
+      }
+    }
+  });
+
+})(S2.UI);
+(function(UI) {
+
+  UI.ButtonSet = Class.create(UI.Base, {
+    NAME: "S2.UI.ButtonSet",
+
+    initialize: function(element, options) {
+      this.element = $(element);
+      this.element.store('ui.buttonset', this);
+      var opt = this.setOptions(options);
+
+      this.element.addClassName('ui-buttonset');
+      this.refresh();
+
+      this.observers = {
+        toggle: this._toggle.bind(this)
+      };
+      this.addObservers();
+    },
+
+    addObservers: function() {
+      this.element.observe('ui:button:toggle', this.observers.toggle);
+    },
+
+    removeObservers: function() {
+      this.element.stopObserving('ui:button:toggle', this.observers.toggle);
+    },
+
+    destroy: function() {
+      this.removeObservers();
+      this.element.removeClassName('ui-buttonset');
+      UI.removeClassNames(this.buttons, 'ui-corner-left ui-corner-right');
+
+      this.element.getStorage().unset('ui.buttonset');
+    },
+
+    _destroyButton: function(el) {
+      var instance = el.retrieve('ui.button');
+      if (instance) instance.destroy();
+    },
+
+    _toggle: function(event) {
+      var element = event.element(), instance = element.retrieve('ui.button');
+      if (!instance || instance.type !== 'radio') return;
+
+      if (instance.isActive()) {
+        event.stop();
+        return;
+      }
+
+      this.instances.each( function(b) {
+        b._setActive(false);
+      });
+    },
+
+    refresh: function() {
+      this.element.cleanWhitespace();
+
+      this.buttons = [];
+
+      this.element.descendants().each( function(el) {
+        var isButton = false;
+        if ($w('SELECT BUTTON A').include(el.nodeName.toUpperCase()))
+          isButton = true;
+        if (el.match('input') && el.type !== 'hidden') isButton = true;
+        if (el.hasClassName('ui-button')) isButton = true;
+
+        if (isButton) this.buttons.push(el);
+      }, this);
+
+      this.instances = this.buttons.map( function(el) {
+        var instance = el.retrieve('ui.button');
+        if (!instance) instance = new UI.Button(el);
+        return instance;
+      });
+
+      this.instances.each( function(b) {
+        UI.removeClassNames(b.toElement(),
+         'ui-corner-all ui-corner-left ui-corner-right');
+      });
+
+      if (this.instances.length > 0) {
+        this.instances.first().toElement().addClassName('ui-corner-left');
+        this.instances.last().toElement().addClassName('ui-corner-right');
+      }
+    }
+  });
+
+})(S2.UI);
+(function(UI) {
+
+  UI.ButtonWithMenu = Class.create(UI.Button, {
+    initialize: function($super, element, options) {
+      var opt = this.setOptions(options);
+      $super(element, options);
+
+      this.menu = new UI.Menu();
+      this.element.insert({ after: this.menu });
+
+      if (opt.choices) {
+        opt.choices.each(this.menu.addChoice, this.menu);
+      }
+
+      (function() {
+        var iLayout = this.element.getLayout();
+
+        this.menu.setStyle({
+          left: iLayout.get('left') + 'px',
+          top:  (iLayout.get('top') + iLayout.get('margin-box-height')) + 'px'
+        });
+      }).bind(this).defer();
+
+      Object.extend(this.observers, {
+        clickForMenu:  this._clickForMenu.bind(this),
+        onMenuOpen:    this._onMenuOpen.bind(this),
+        onMenuClose:   this._onMenuClose.bind(this),
+        onMenuSelect:  this._onMenuSelect.bind(this)
+      });
+
+      this.observe('mousedown', this.observers.clickForMenu);
+
+      this.menu.observe('ui:menu:after:open',  this.observers.onMenuOpen );
+      this.menu.observe('ui:menu:after:close', this.observers.onMenuClose);
+      this.menu.observe('ui:menu:selected',    this.observers.onMenuSelect);
+    },
+
+    _clickForMenu: function(event) {
+      if (this.menu.isOpen()) {
+        this.menu.close();
+      } else {
+        this.menu.open();
+      }
+    },
+
+    _onMenuOpen: function() {
+      var menuElement = this.menu.element, buttonElement = this.toElement();
+      if (!this._clickOutsideMenuObserver) {
+        this._clickOutsideMenuObserver = $(document.body).on('click', function(event) {
+          var el = event.element();
+          if (el !== menuElement && !el.descendantOf(menuElement) &&
+           el !== buttonElement && !el.descendantOf(buttonElement)) {
+            this.menu.close();
+          }
+        }.bind(this));
+      } else {
+        this._clickOutsideMenuObserver.start();
+      }
+    },
+
+    _onMenuClose: function() {
+      if (this._clickOutsideMenuObserver)
+        this._clickOutsideMenuObserver.stop();
+    },
+
+    _onMenuSelect: function(event) {
+      var element = event.element();
+      this.fire('ui:button:menu:selected', {
+        instance: this,
+        element:  event.memo.element
+      });
+    }
+  });
+
+
+  Object.extend(UI.ButtonWithMenu, {
+    DEFAULT_OPTIONS: {
+      icons: { primary: 'ui-icon-bullet', secondary: 'ui-icon-triangle-1-s' }
     }
   });
 
@@ -2713,7 +3079,7 @@ Object.extend(Event, {
 })(S2.UI);
 (function(UI) {
 
-  UI.Dialog = Class.create(UI.Base, {
+  UI.Dialog = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Dialog",
 
     initialize: function(element, options) {
@@ -2760,7 +3126,10 @@ Object.extend(Event, {
   	  this.closeButton = new Element('a', { 'href': '#' });
   	  UI.addClassNames(this.closeButton, 'ui-dialog-titlebar-close ' +
   	   'ui-corner-all');
-  	  new UI.Button(this.closeButton);
+  	  new UI.Button(this.closeButton, {
+  	    text: false,
+  	    icons: { primary: 'ui-icon-closethick' }
+  	  });
   	  this.closeButton.observe('mousedown', Event.stop);
   	  this.closeButton.observe('click', function(event) {
   	    event.stop();
@@ -2769,10 +3138,6 @@ Object.extend(Event, {
 
   	  this.titleBar.insert(this.closeButton);
 
-  	  this.closeText = new Element('span');
-  	  UI.addClassNames(this.closeText, 'ui-icon ui-icon-closethick');
-
-  	  this.closeButton.insert(this.closeText);
 
   	  this.titleText = new Element('span', { 'class': 'ui-dialog-title' });
   	  this.titleText.update(this.options.title).identify();
@@ -2838,14 +3203,11 @@ Object.extend(Event, {
 
     _position: function() {
       var vSize = document.viewport.getDimensions();
-      var dialog = this.element;
-      var dimensions = {
-        width: parseInt(dialog.getStyle('width'), 10),
-        height: parseInt(dialog.getStyle('height'), 10)
-      };
+      var dialog = this.element, layout = dialog.getLayout();
+
       var position = {
-        left: ((vSize.width / 2) - (dimensions.width / 2)).round(),
-        top: ((vSize.height / 2) - (dimensions.height / 2)).round()
+        left: ((vSize.width  / 2) - (layout.get('width')  / 2)).round(),
+        top:  ((vSize.height / 2) - (layout.get('height') / 2)).round()
       };
 
       var offsets = document.viewport.getScrollOffsets();
@@ -2870,21 +3232,28 @@ Object.extend(Event, {
 
       this.overlay = opt.modal ? new UI.Overlay() : null;
       $(document.body).insert(this.overlay);
-      $(document.body).insert(this.element);
+      $(document.body).insert(this);
 
       this.element.show();
       this._position();
 
       this.focusables = UI.findFocusables(this.element);
 
+      var forms = this.content.select('form');
+      if (this.content.match('form')) {
+        forms.push(this.content);
+      }
+
       if (!opt.submitForms) {
-        var forms = this.content.select('form');
         forms.invoke('observe', 'submit', Event.stop);
       }
 
       var f = this.focusables.without(this.closeButton);
       var focus = opt.focus, foundFocusable = false;
-      if (focus === 'first') {
+      if (focus === 'auto' && forms.length > 0) {
+        Form.focusFirstElement(forms.first());
+        foundFocusable = true;
+      } else if (focus === 'first') {
         f.first().focus();
         foundFocusable = true;
       } else if (focus === 'last') {
@@ -2930,7 +3299,7 @@ Object.extend(Event, {
 
       var memo = { dialog: this, success: success };
 
-      var form = this.content.down('form');
+      var form = this.content.match('form') ? this.content : this.content.down('form');
       if (form) {
         Object.extend(memo, { form: form.serialize({ hash: true }) });
       }
@@ -3135,10 +3504,14 @@ Object.extend(Event, {
         dim = handle.offsetHeight;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('height'), 10);
+        this._trackMargin = handle.getLayout().get('margin-top');
+        this._trackLength -= 2 * this._trackMargin;
       } else {
         dim = handle.offsetWidth;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('width'), 10);
+         this._trackMargin = handle.getLayout().get('margin-left');
+         this._trackLength -= 2 * this._trackMargin;
       }
 
       this._handleLength = length;
@@ -3285,7 +3658,7 @@ Object.extend(Event, {
 
     _valueToPx: function(value) {
       var range = this.options.value;
-      var pixels = (this._trackLength - (this._handleLength / 2)) /
+      var pixels = (this._trackLength - this._handleLength ) /
        (range.max - range.min);
       pixels *= (value - range.min);
 
@@ -3312,10 +3685,8 @@ Object.extend(Event, {
         var trackOffset = this.element.cumulativeOffset();
 
         var newPosition = {
-          x: Math.round((pointer.x - trackOffset.left) +
-           (this._handleLength / 4)),
-          y: Math.round((pointer.y - trackOffset.top) +
-           (this._handleLength / 4))
+          x: Math.round(pointer.x - trackOffset.left - this._handleLength / 2 - this._trackMargin),
+          y: Math.round(pointer.y - trackOffset.top - this._handleLength / 2 - this._trackMargin)
         };
 
         this.setValue(this._pxToValue(newPosition));
@@ -3323,20 +3694,19 @@ Object.extend(Event, {
         this.activeHandle = this.activeHandle || this.handles.first();
         handle = this.activeHandle;
         this._updateStyles();
+        this._offsets = {x: 0, y: 0};
       } else {
         handle = event.findElement('.ui-slider-handle');
         if (!handle) return;
 
         this.activeHandle = handle;
         this._updateStyles();
+        var handleOffset = handle.cumulativeOffset();
+        this._offsets = {
+          x: pointer.x - (handleOffset.left + this._handleLength / 2),
+          y: pointer.y - (handleOffset.top + this._handleLength / 2)
+        };
       }
-
-      var handleOffset = handle.cumulativeOffset();
-
-      this._offsets = {
-        x: pointer.x - handleOffset.left,
-        y: pointer.y - handleOffset.top
-      };
 
       document.observe('mousemove', this.observers.mousemove);
       document.observe('mouseup',   this.observers.mouseup);
@@ -3431,16 +3801,8 @@ Object.extend(Event, {
       var pointer = event.pointer();
       var trackOffset = this.element.cumulativeOffset();
 
-      var newPosition = {
-        x: Math.round((pointer.x - trackOffset.left) +
-         (this._handleLength / 4)),
-        y: Math.round((pointer.y - trackOffset.top) +
-         (this._handleLength / 4))
-      };
-
-      pointer.x -= (this._offsets.x + trackOffset.left);
-      pointer.y -= (this._offsets.y + trackOffset.top);
-
+      pointer.x -= (this._offsets.x + trackOffset.left + this._handleLength / 2 + this._trackMargin);
+      pointer.y -= (this._offsets.y + trackOffset.top + this._handleLength / 2 + this._trackMargin);
 
       this.setValue(this._pxToValue(pointer));
     },
@@ -3636,21 +3998,21 @@ Object.extend(Event, {
 })(S2.UI);
 
 (function(UI) {
-  UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, {
+  UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, UI.Mixin.Element, {
     NAME: "S2.UI.Menu",
 
     initialize: function(element, options) {
       this.element = $(element);
       if (!this.element) {
         var options = element;
-        this.element = new Element('ul', { 'class': 'ui-helper-hidden' });
+        this.element = new Element('ul');
       }
 
       this.activeId = this.element.identify() + '_active';
       var opt = this.setOptions();
 
-      UI.addClassNames(this.element, 'ui-widget ui-widget-content ' +
-       'ui-menu ui-corner-' + opt.corner);
+      UI.addClassNames(this.element, 'ui-helper-hidden ui-widget ' +
+       'ui-widget-content ui-menu ui-corner-' + opt.corner);
 
       this.choices = this.element.select('li');
 
@@ -3676,13 +4038,13 @@ Object.extend(Event, {
     },
 
     addObservers: function() {
-      this.element.observe('mouseover', this.observers.mouseover);
-      this.element.observe('mousedown', this.observers.click);
+      this.observe('mouseover', this.observers.mouseover);
+      this.observe('mousedown', this.observers.click);
     },
 
     removeObservers: function() {
-      this.element.stopObserving('mouseover', this.observers.mouseover);
-      this.element.stopObserving('mousedown', this.observers.click);
+      this.stopObserving('mouseover', this.observers.mouseover);
+      this.stopObserving('mousedown', this.observers.click);
     },
 
     clear: function() {
@@ -3779,18 +4141,37 @@ Object.extend(Event, {
 
     open: function() {
 
-      var result = this.element.fire('ui:menu:opened', { instance: this });
+      var result = this.element.fire('ui:menu:before:open', { instance: this });
         this.element.removeClassName('ui-helper-hidden');
         this._highlightedIndex = -1;
 
       if (Prototype.Browser.IE) {
         this.adjustShim();
       }
+
+      if (this.options.closeOnOutsideClick) {
+        this._outsideClickObserver = $(this.element.ownerDocument).on('click', function(event) {
+          var element = event.element();
+          if (element !== this.element && !element.descendantOf(this.element)) {
+            this.close();
+          }
+        }.bind(this));
+      }
+
+      this.element.fire('ui:menu:after:open', { instance: this });
     },
 
     close: function() {
-      var result = this.element.fire('ui:menu:closed', { instance: this });
+      var result = this.element.fire('ui:menu:before:close', { instance: this });
         this.element.addClassName('ui-helper-hidden');
+
+      this.element.fire('ui:menu:after:close', { instance: this });
+
+      if (this._outsideClickObserver) {
+        this._outsideClickObserver.stop();
+        this._outsideClickObserver = null;
+      }
+
       return this;
     },
 
@@ -3801,7 +4182,8 @@ Object.extend(Event, {
 
   Object.extend(UI.Menu, {
     DEFAULT_OPTIONS: {
-      corner: 'all'
+      corner: 'all',
+      closeOnOutsideClick: true
     }
   });
 
@@ -3861,7 +4243,7 @@ Object.extend(Event, {
       this.input.observe('keyup',   this.observers.keyup);
       this.input.observe('keydown', this.observers.keydown);
 
-      this.menu.element.observe('ui:menu:selected',
+      this.menu.observe('ui:menu:selected',
        this.observers.selected);
     },
 
@@ -3963,7 +4345,7 @@ Object.extend(Event, {
       for (var i = 0, result, li, text; result = results[i]; i++) {
         text = opt.highlightSubstring ?
          result.replace(needle, "<b>$&</b>") :
-         text;
+         result;
 
         li = new Element('li').update(text);
         li.store('ui.autocompleter.value', result);
@@ -4005,7 +4387,16 @@ Object.extend(Event, {
 
     _selected: function(event) {
       var memo = event.memo, li = memo.element;
-      if(li) this._setInput(li.retrieve('ui.autocompleter.value'));
+
+      if (li) {
+        var value = li.retrieve('ui.autocompleter.value');
+        var result = this.element.fire('ui:autocompleter:selected', {
+          instance: this,
+          value:    value
+        });
+        if (result.stopped) return;
+        this._setInput(value);
+      }
       this.menu.close();
     },
 
@@ -4133,20 +4524,24 @@ document.observe('dom:loaded',function(){
 
   function setupBridgedEvent(){
     var element, rotation, scale, panX, panY, active = false;
-    b.observe('manipulatestart', function(event){
 
+    b.observe('touchstart', function(event){
+      event.preventDefault();
+    });
+
+    b.observe('transformactionstart', function(event){
       event.stop();
 
       element = event.element();
       initElementData(element);
       active = true;
     });
-    b.observe('manipulatemove', function(event){
+    b.observe('transformactionupdate', function(event){
       element = event.element();
-      rotation = element._rotation + event.rotation;
+      rotation = element._rotation + event.rotate;
       scale = element._scale * event.scale;
-      panX = element._panX + event.panX;
-      panY = element._panY + event.panY;
+      panX = element._panX + event.translateX;
+      panY = element._panY + event.translateY;
 
       fireEvent(element, {
         rotation: rotation, scale: scale,
@@ -4155,28 +4550,28 @@ document.observe('dom:loaded',function(){
       });
       event.stop();
     }, false);
-    b.observe('manipulateend', function(event){
+    b.observe('transformactionend', function(event){
       element = event.element();
       if(element) setElementData(element, rotation, scale, panX, panY);
       active = false;
 
-      var speed = Math.sqrt(event.panSpeedX*event.panSpeedX +
-          event.panSpeedY*event.panSpeedY);
+      var speed = Math.sqrt(event.translateSpeedX*event.translateSpeedX +
+          event.translateSpeedY*event.translateSpeedY);
 
       if(speed>25){
         element.fire('manipulate:flick', {
           speed: speed,
-          direction: Math.atan2(event.panSpeedY,event.panSpeedX)
+          direction: Math.atan2(event.translateSpeedY,event.translateSpeedX)
         });
       }
     });
-    b.observe('mousemove', function(event){
+    b.on('mousemove', function(event){
       event.stop();
     });
-    b.observe('mousedown', function(event){
+    b.on('mousedown', function(event){
       event.stop();
     });
-    b.observe('mouseup', function(event){
+    b.on('mouseup', function(event){
       event.stop();
     });
   }
@@ -4237,17 +4632,8 @@ document.observe('dom:loaded',function(){
     b.observe('dragstart', function(event){ event.stop(); });
   }
 
-  if(navigator.userAgent.match(/SLBrowser/))
-    return setupBridgedEvent();
-
-  if(navigator.userAgent.match(/QtLauncher/))
-    return setupBridgedEvent();
-
-  if(navigator.userAgent.match(/Starlight/))
-    return setupBridgedEvent();
-
   try {
-    document.createEvent("ManipulateEvent");
+    document.createEvent("TransformActionEvent");
     return setupBridgedEvent();
   } catch(e) {}
 
@@ -4257,154 +4643,4 @@ document.observe('dom:loaded',function(){
   } catch(e) {}
 
   return setupGenericEvent();
-});
-
-Element.__scrollTo = Element.scrollTo;
-Element.addMethods({
-  scrollTo: function(element, to, options){
-    if(arguments.length == 1) return Element.__scrollTo(element);
-    new S2.FX.Scroll(element, Object.extend(options || {}, { to: to })).play();
-    return element;
-  }
-});
-
-Element.addMethods({
-  effect: function(element, effect, options){
-    if (Object.isFunction(effect))
-      effect = new effect(element, options);
-    else if (Object.isString(effect))
-      effect = new S2.FX[effect.capitalize()](element, options);
-    effect.play(element, options);
-    return element;
-  },
-
-  morph: function(element, style, options){
-    options = S2.FX.parseOptions(options);
-    if(!options.queue){
-      options.queue = element.retrieve('S2.FX.Queue');
-      if(!options.queue)
-        element.store('S2.FX.Queue', options.queue = new S2.FX.Queue());
-    }
-    if(!options.position) options.position = 'end';
-    return element.effect('morph', Object.extend(options, {style: style}));
-  }.optionize(),
-
-  appear: function(element, options){
-    return element.effect('morph', Object.extend({
-      before: function(){ element.show().setStyle({opacity: 0}); },
-      style:  'opacity:1'
-    }, options));
-  },
-
-  fade: function(element, options){
-    return element.effect('morph', Object.extend({
-      style: 'opacity:0',
-      after: element.hide.bind(element)
-    }, options));
-  },
-
-  cloneWithoutIDs: function(element) {
-    element = $(element);
-    var clone = element.cloneNode(true);
-    clone.id = '';
-    $(clone).select('*[id]').each(function(e) { e.id = ''; });
-    return clone;
-  }
-});
-
-(function(){
-  var transform;
-
-  if(window.CSSMatrix) transform = function(element, transform){
-    element.style.transform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
-    return element;
-  };
-  else if(window.WebKitCSSMatrix) transform = function(element, transform){
-    element.style.webkitTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
-    return element;
-  };
-  else if(Prototype.Browser.Gecko) transform = function(element, transform){
-    element.style.MozTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
-    return element;
-  };
-  else if(Prototype.Browser.IE) transform = function(element, transform){
-    if(!element._oDims)
-      element._oDims = [element.offsetWidth, element.offsetHeight];
-    var c = Math.cos(transform.rotation||0) * 1, s = Math.sin(transform.rotation||0) * 1,
-        filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11="+c+",M12="+(-s)+",M21="+s+",M22="+c+")";
-    element.style.filter = filter;
-    element.style.marginLeft = (element._oDims[0]-element.offsetWidth)/2+'px';
-    element.style.marginTop = (element._oDims[1]-element.offsetHeight)/2+'px';
-    return element;
-  };
-  else transform = function(element){ return element; }
-
-  Element.addMethods({ transform: transform });
-})();
-
-
-S2.viewportOverlay = function(){
-  var viewport = document.viewport.getDimensions(),
-    offsets = document.viewport.getScrollOffsets();
-  return new Element('div').setStyle({
-    position: 'absolute',
-    left: offsets.left + 'px', top: offsets.top + 'px',
-    width: viewport.width + 'px', height: viewport.height + 'px'
-  });
-};
-S2.FX.Helpers = {
-  fitIntoRectangle: function(w, h, rw, rh){
-    var f = w/h, rf = rw/rh; return f < rf ?
-      [(rw - (w*(rh/h)))/2, 0, w*(rh/h), rh] :
-      [0, (rh - (h*(rw/w)))/2, rw, h*(rw/w)];
-  }
-};
-
-S2.FX.Operators.Zoom = Class.create(S2.FX.Operators.Style, {
-  initialize: function($super, effect, object, options) {
-    var viewport = document.viewport.getDimensions(),
-      offsets = document.viewport.getScrollOffsets(),
-      dims = object.getDimensions(),
-      f = S2.FX.Helpers.fitIntoRectangle(dims.width, dims.height,
-      viewport.width - (options.borderWidth || 0)*2,
-      viewport.height - (options.borderWidth || 0)*2);
-
-    Object.extend(options, { style: {
-      left: f[0] + (options.borderWidth || 0) + offsets.left + 'px',
-      top: f[1] + (options.borderWidth || 0) + offsets.top + 'px',
-      width: f[2] + 'px', height: f[3] + 'px'
-    }});
-    $super(effect, object, options);
-  }
-});
-
-S2.FX.Zoom = Class.create(S2.FX.Element, {
-  setup: function() {
-    this.clone = this.element.cloneWithoutIDs();
-    this.element.insert({before:this.clone});
-    this.clone.absolutize().setStyle({zIndex:9999});
-
-    this.overlay = S2.viewportOverlay();
-    if (this.options.overlayClassName)
-      this.overlay.addClassName(this.options.overlayClassName)
-    else
-      this.overlay.setStyle({backgroundColor: '#000', opacity: '0.9'});
-    $$('body')[0].insert(this.overlay);
-
-    this.animate('zoom', this.clone, {
-      borderWidth: this.options.borderWidth,
-      propertyTransitions: this.options.propertyTransitions || { }
-    });
-  },
-  teardown: function() {
-    this.clone.observe('click', function() {
-      this.overlay.remove();
-      this.clone.morph('opacity:0', {
-        duration: 0.2,
-        after: function() {
-          this.clone.remove();
-        }.bind(this)
-      })
-    }.bind(this));
-  }
 });

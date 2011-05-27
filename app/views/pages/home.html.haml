@@ -2,37 +2,54 @@
   %span= t 'home.headline'
 
 #latest_work
-  .box.sublimevideo
-    %h4
-      = "SublimeVideo"
-      %em= "World's first HTML5 Video Player Service"
-    = link_to "Learn more", "http://sublimevideo.net", :class => "view_btn"
-    .what_they_say
-      = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
-        %span= "Daring Fireball"
-      = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
-        %span= "Wired"
-      = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
-        %span= "Read Write Web"
-      = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
-        %span= "Mashable"
+  .wrap
+    .box.aelios
+      %h4
+        = "Aelios for iPad"
+        %em= "Explore the World’s Weather Forecasts!"
+      = link_to "Learn more", "http://aeliosapp.com", :class => "view_btn"
+      .quote
+        %blockquote= "“Amazing new iPad weather app Aelios has the most unique interface I've ever seen.”"
+        %p.author
+          = "Mike Rundle."
+          = link_to "May 23, 2011", "http://twitter.com/flyosity/status/72666043230859264"
+      = link_to "http://gizmodo.com/5805650/aelios-weather-for-ipad", :class => "gizmodo" do
+        %span= "Gizmodo - App of the day"
+      = link_to "http://www.tuaw.com/2011/05/23/aelios-is-a-new-way-to-get-the-weather-on-your-ipad/", :class => "tuaw" do
+        %span= "Tuaw"
+    .box.sublimevideo
+      %h4
+        = "SublimeVideo"
+        %em= "World's first HTML5 Video Player Service"
+      = link_to "Learn more", "http://sublimevideo.net", :class => "view_btn"
+      .what_they_say
+        = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
+          %span= "Daring Fireball"
+        = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
+          %span= "Wired"
+        = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
+          %span= "Read Write Web"
+        = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
+          %span= "Mashable"
+          
 
 #content.home
   .section.what_we_do
     %h3.title.what_we_do
       %span= "What we do"
     %ul
-      %li.sublimevideo
-        %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:139px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:159px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:165px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:157px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
-        %div{ :style => "float:left;clear:left;height:28px;width:85px;" }
+      %li
+        -# %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
+        -# %div{ :style => "float:left;clear:left;height:28px;width:139px;" }
+        -# %div{ :style => "float:left;clear:left;height:28px;width:159px;" }
+        -# %div{ :style => "float:left;clear:left;height:28px;width:165px;" }
+        -# %div{ :style => "float:left;clear:left;height:28px;width:157px;" }
+        -# %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
+        -# %div{ :style => "float:left;clear:left;height:18px;width:75px;" }
         -# %div{ :style => "float:left;clear:left;height:46px;width:45px;" }
-        %p
+        %p{:style => "padding:10px 0 0 0"}
           = raw "#{link_to "SublimeVideo", "http://sublimevideo.net"} is the world's first cloud-based HTML5 video player. The universal video player solution that your web audience deserves, effortlessly and consistently delivering the benefits of HTML5, today."
+        %p{:style => "padding:10px 0 20px"}= raw "#{link_to "Aelios", "http://aeliosapp.com"} is a unique weather app for iPad. It lets users explore the world, intuitively select locations and view easy to understand weather forecasts."
         -# %p{:style => "padding-top:0px"}= link_to "Learn more", "http://sublimevideo.net", :class => "learn_more"
   .section.people
     %h3.title.people

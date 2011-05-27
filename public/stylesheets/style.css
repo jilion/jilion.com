@@ -137,8 +137,15 @@ h2.headline {
   width:910px;
   height:390px;
   margin:0 auto 30px;
-/*  position:relative;
-  overflow:hidden;*/
+  position:relative;
+  overflow:hidden;
+}
+
+#latest_work .wrap {
+  width:1820px;
+  position:absolute;
+  top:0;
+  left:0;
 }
 
 #latest_work .box {
@@ -147,14 +154,86 @@ h2.headline {
   font-size:14px;
   font-weight:400;
   text-shadow:#ccc 0 1px 0;
-  background:url(/images/embed/home/helvetiq.png) no-repeat;
   position:relative;
+  float:left;
 /*  position:absolute;
   top:0;
   left:0;*/
 }
 
 #latest_work h4 {display:none;}
+
+#latest_work .box.aelios {
+  background:url(/images/embed/home/aelios/aelios_for_ipad.png) no-repeat;
+}
+
+#latest_work .box.aelios a.view_btn {
+  display:block;
+  background:url(/images/embed/home/dark_blue_btn.png) no-repeat;
+  width:124px;
+  height:36px;
+  padding:13px 0 0 17px;
+  font-weight:500;
+  font-size:18px;
+  color:#e4efff;
+  text-shadow:#000 0 -1px 0;
+  position:absolute;
+  top:192px;
+  left:150px;
+}
+
+#latest_work .box.aelios a.view_btn:active {background-position:0 -49px;}
+
+#latest_work .box.aelios .quote {
+  width:230px;
+  height:80px;
+  position:absolute;
+  left:44px;
+  bottom:25px;
+  color:#435064;
+  text-shadow:rgba(255,255,255,0.45) 0 1px 0;
+}
+
+#latest_work .box.aelios blockquote {
+  font-family:"chaparral-pro-1","chaparral-pro-2", Georgia, Times, serif;
+  font-size:16px;
+  font-style:italic;
+  line-height:20px;
+}
+
+#latest_work .box.aelios .quote p.author {
+  font-size:11px;
+  text-align:right;
+  padding-right:10px;
+  position:relative;
+  top:-2px;
+}
+
+#latest_work .box.aelios .quote p.author a {
+  color:#5a6f90;
+  border-bottom: 1px solid #8ca0c1;
+}
+
+#latest_work .box.aelios a.gizmodo {
+  display:block;
+  position:absolute;
+  width:118px;
+  height:85px;
+  bottom:24px;
+  left:312px;
+}
+
+#latest_work .box.aelios a.tuaw {
+  display:block;
+  position:absolute;
+  width:78px;
+  height:50px;
+  bottom:24px;
+  left:461px;  
+}
+
+#latest_work .box.aelios a.gizmodo span, #latest_work .box.aelios a.tuaw span {display:none;}
+
 
 #latest_work .box.sublimevideo {
   background:url(/images/embed/home/sublimevideo.png) no-repeat;
@@ -250,12 +329,12 @@ h2.headline {
   list-style-type:none;
 }
 
-#content .section.what_we_do li.sublimevideo {
+/*#content .section.what_we_do li.sublimevideo {
   background:url(/images/embed/home/sublimevideo_cloud.png) no-repeat;
   padding:0 0 10px;
   margin-left:-45px;
 }
-
+*/
 #content .section p {
 /*  padding:3px 0;*/
   line-height:28px;
@@ -624,6 +703,7 @@ button::-moz-focus-inner { border: 0; }
 ::selection {
   background:rgba(24,127,247,.2);
   color:#fff;
+  text-shadow:none;
 }
 
 ::-moz-selection {

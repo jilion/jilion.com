@@ -187,7 +187,7 @@ GEM
       rubyzip
     settingslogic (2.0.6)
     shoulda (2.11.3)
-    spork (0.9.0.rc7)
+    spork (0.9.0.rc8)
     steak (1.0.0.rc.2)
       rspec
     term-ansicolor (1.0.5)

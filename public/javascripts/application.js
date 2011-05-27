@@ -1,37 +1,37 @@
 Element.addMethods({
   shake: function(element, options) {
-    S2.Extensions.webkitCSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
-    
+    S2.Extensions.CSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
+     
     element = $(element);
     var originalLeft = parseFloat(element.getStyle('left') || '0');
     var oldStyle = { left:originalLeft };
     element.makePositioned();
-    
+     
     var opts = { distance:15, duration:0.5 };
     Object.extend(opts, options);
     var distance = opts.distance;
     var duration = opts.duration;
-    
+     
     var split = parseFloat(duration) / 10.0;
-    
-    var shakeEffect = element.morph('left:' + (originalLeft+distance) + 'px', { duration:split 
+     
+    element.addClassName("shaking");
+    var shakeEffect = element.morph('left:' + (originalLeft+distance) + 'px', { duration:split
       }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
         }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
           }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
             }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
               }).morph('left:' + (originalLeft) + 'px', { duration:split*2, after: function() {
                 element.undoPositioned().setStyle(oldStyle);
+                element.removeClassName("shaking");
                 }});
-                
+                 
     return shakeEffect;
-  },
-  pulsate: function(element, options) {
   }
 });
 
 document.observe("dom:loaded", function() {
   // Windows Disable Typekit
-  if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
+  // if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
   
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
@@ -173,6 +173,10 @@ document.observe("dom:loaded", function() {
       });
     }
   });
+  
+  // Home Slideshow (pause duration, animation duration)
+  animateSlideShow(10,1.4);
+  
 });
 
 function validateEmail(email) {
@@ -254,6 +258,20 @@ function bodyClick(event) {
     $('map_background').stopObserving("click", bodyClick);
     event.stop();
   }
+}
+
+function animateSlideShow(pause, speed) {
+  var pauseDuration = pause *1000;
+  S2.Extensions.CSSTransitions = true;
+  var slideShowWrapper = $$('#latest_work .wrap')[0];
+  
+  setTimeout(function(){
+    slideShowWrapper.morph('left:-910px', {duration:speed});
+    setTimeout(function(){
+      slideShowWrapper.morph('left:0px', {duration:speed});
+      animateSlideShow(pause, speed);
+    },pauseDuration);
+  },pauseDuration);
 }
 
 function ddd(){console.log.apply(console, arguments);}
