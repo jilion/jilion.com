@@ -175,7 +175,7 @@ document.observe("dom:loaded", function() {
   });
   
   // Home Slideshow (pause duration, animation duration)
-  animateSlideShow(10,1.4);
+  animateSlideShow(15,1.4);
   
 });
 
