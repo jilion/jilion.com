@@ -209,7 +209,7 @@ Slideshow = Class.create({
       var position = index*910;
       this.slideShowWrapper.morph('left:-'+position+'px', {duration:this.speed});
       this.activeBoxIndex = index;
-      this.updateActiveClasses(this.slideNames[index]);      
+      this.updateActiveClasses(this.slideNames[index]);
     }
   },
   updateActiveClasses: function(name) {
