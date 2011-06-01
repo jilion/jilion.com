@@ -3,7 +3,7 @@
 
 #latest_work
   .wrap
-    .box.aelios
+    .box.aelios.active
       %h4
         = "Aelios for iPad"
         %em= "Explore the World’s Weather Forecasts!"
@@ -31,7 +31,11 @@
           %span= "Read Write Web"
         = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
           %span= "Mashable"
-          
+#latest_work_navigation
+  = link_to "", :class => "aelios active" do
+    %span= "Aelios for iPad"
+  = link_to "", :class => "sublimevideo" do
+    %span= "SublimeVideo"
 
 #content.home
   .section.what_we_do
@@ -47,7 +51,7 @@
         -# %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
         -# %div{ :style => "float:left;clear:left;height:18px;width:75px;" }
         -# %div{ :style => "float:left;clear:left;height:46px;width:45px;" }
-        %p{:style => "padding:10px 0 0 0"}
+        %p
           = raw "#{link_to "SublimeVideo", "http://sublimevideo.net"} is the world's first cloud-based HTML5 video player. The universal video player solution that your web audience deserves, effortlessly and consistently delivering the benefits of HTML5, today."
         %p{:style => "padding:10px 0 20px"}= raw "#{link_to "Aelios", "http://aeliosapp.com"} is a unique weather app for iPad. It lets users explore the world, intuitively select locations and view easy to understand weather forecasts."
         -# %p{:style => "padding-top:0px"}= link_to "Learn more", "http://sublimevideo.net", :class => "learn_more"

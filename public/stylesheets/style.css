@@ -299,6 +299,26 @@ h2.headline {
   left:520px;
 }
 
+#latest_work_navigation {
+  width:42px;
+  margin:0 auto;
+  position:relative;
+  top:-12px;
+}
+
+#latest_work_navigation a {
+  display:block;
+  background:url(/images/embed/home/navigation_dot.png) no-repeat;
+  width:13px;
+  height:13px;
+  float:left;
+  margin:0 4px;
+}
+
+#latest_work_navigation a.active {background:url(/images/embed/home/navigation_dot_active.png) no-repeat;}
+
+#latest_work_navigation a span {display:none;}
+
 #content {
   padding:0 45px 16px;
 }

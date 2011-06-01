@@ -174,9 +174,60 @@ document.observe("dom:loaded", function() {
     }
   });
   
+  slideshow  = new Slideshow(3,1.4);
   // Home Slideshow (pause duration, animation duration)
-  animateSlideShow(15,1.4);
+  // animateSlideShow(15,1.4);
   
+});
+
+Slideshow = Class.create({
+  initialize: function(pause,speed) {
+    this.pauseDuration = pause *1000;
+    this.speed = speed;
+    S2.Extensions.CSSTransitions = true;
+    this.slideShowWrapper = $$('#latest_work .wrap')[0];
+    
+    this.slideNames = [];
+    $$('#latest_work .wrap .box').each(function(element){
+      this.slideNames.push(this.getBoxName(element));
+    }.bind(this));
+    
+    this.activeBoxIndex = 0;
+    this.startTimer();
+    this.setupObservers();
+  },
+  getBoxName: function(element) {
+    return element.className.gsub(/(box|active|\s)/, '');
+  },
+  startTimer: function() {
+    this.timer = setInterval(function(){
+      this.nextSlide((this.activeBoxIndex+1)%(this.slideNames.length));
+    }.bind(this), this.pauseDuration);
+  },
+  nextSlide: function(index) {
+    if (this.activeBoxIndex != index) {
+      var position = index*910;
+      this.slideShowWrapper.morph('left:-'+position+'px', {duration:this.speed});
+      this.activeBoxIndex = index;
+      this.updateActiveClasses(this.slideNames[index]);      
+    }
+  },
+  updateActiveClasses: function(name) {
+    $$('#latest_work .wrap .box.active').invoke('removeClassName','active');
+    $$('#latest_work_navigation a').invoke('removeClassName','active');
+    $$('#latest_work .wrap .box.'+name).invoke('addClassName','active');
+    $$('#latest_work_navigation a.'+name).invoke('addClassName','active');
+  },
+  setupObservers: function() {
+    $$('#latest_work_navigation a').each(function(element){
+      element.observe("click", function(e) {
+        if (this.timer) clearInterval(this.timer);
+        index = this.slideNames.indexOf(this.getBoxName(element));
+        this.nextSlide(index);
+        e.preventDefault();
+      }.bind(this));
+    }.bind(this));
+  }
 });
 
 function validateEmail(email) {
@@ -260,18 +311,18 @@ function bodyClick(event) {
   }
 }
 
-function animateSlideShow(pause, speed) {
-  var pauseDuration = pause *1000;
-  S2.Extensions.CSSTransitions = true;
-  var slideShowWrapper = $$('#latest_work .wrap')[0];
-  
-  setTimeout(function(){
-    slideShowWrapper.morph('left:-910px', {duration:speed});
-    setTimeout(function(){
-      slideShowWrapper.morph('left:0px', {duration:speed});
-      animateSlideShow(pause, speed);
-    },pauseDuration);
-  },pauseDuration);
-}
+// function animateSlideShow(pause, speed) {
+//   var pauseDuration = pause *1000;
+//   S2.Extensions.CSSTransitions = true;
+//   var slideShowWrapper = $$('#latest_work .wrap')[0];
+//   
+//   setTimeout(function(){
+//     slideShowWrapper.morph('left:-910px', {duration:speed});
+//     setTimeout(function(){
+//       slideShowWrapper.morph('left:0px', {duration:speed});
+//       animateSlideShow(pause, speed);
+//     },pauseDuration);
+//   },pauseDuration);
+// }
 
 function ddd(){console.log.apply(console, arguments);}
