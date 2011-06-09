@@ -184,8 +184,16 @@ Slideshow = Class.create({
   initialize: function(pause,speed) {
     this.pauseDuration = pause *1000;
     this.speed = speed;
-    S2.Extensions.CSSTransitions = true;
     this.slideShowWrapper = $$('#latest_work .wrap')[0];
+    if (Modernizr.csstransitions) {
+      this.slideShowWrapper.style[Modernizr.prefixed('transitionDuration')] = this.speed+"s";
+      // this.slideShowWrapper.style[Modernizr.prefixed('transitionTimingFunction')] = "cubic-bezier(0, 0, 0.25, 1)";
+      if (Modernizr.csstransforms) {
+        this.slideShowWrapper.style[Modernizr.prefixed('transitionProperty')] = this.prefixedCSSValue("transform");
+      } else {
+        this.slideShowWrapper.style[Modernizr.prefixed('transitionProperty')] = "left";
+      }
+    }
     
     this.slideNames = [];
     $$('#latest_work .wrap .box').each(function(element){
@@ -207,10 +215,24 @@ Slideshow = Class.create({
   nextSlide: function(index) {
     if (this.activeBoxIndex != index) {
       var position = index*910;
-      this.slideShowWrapper.morph('left:-'+position+'px', {duration:this.speed});
+      if (Modernizr.csstransitions && Modernizr.csstransforms) {
+        if (Modernizr.csstransforms3d) {
+          this.slideShowWrapper.style[Modernizr.prefixed('transform')] = "translate3d(-" + position + "px, 0, 0)";
+        } else {
+          this.slideShowWrapper.style[Modernizr.prefixed('transform')] = "translate(-" + position + "px, 0)";
+        }
+      } else if (Modernizr.csstransitions) {
+        this.slideShowWrapper.style.left = "left:-" + position + "px";
+      } else {        
+        this.slideShowWrapper.morph('left:-'+position+'px', {duration:this.speed});
+      }
+      
       this.activeBoxIndex = index;
       this.updateActiveClasses(this.slideNames[index]);
     }
+  },
+  prefixedCSSValue: function(value) {
+    return Modernizr.prefixed(value).replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
   },
   updateActiveClasses: function(name) {
     $$('#latest_work .wrap .box.active').invoke('removeClassName','active');
