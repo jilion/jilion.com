@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'rake',          '0.8.7'
-gem 'bundler',       '1.0.13'
+gem 'bundler',       '1.0.15'
 
 gem 'rails',         '3.0.7'
 gem 'haml',          '3.1.1'
