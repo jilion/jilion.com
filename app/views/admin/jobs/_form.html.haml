@@ -1,0 +1,20 @@
+= form_for [:admin, job] do |f|
+  #job_title
+    = f.label :title
+    %br
+    = f.text_field :title, :size => 60
+
+  #job_summary
+    = f.label :summary
+    %br
+    = f.text_area :summary, :cols => 120, :rows => 6
+
+  #job_description
+    = f.label :description
+    %br
+    = f.text_area :description, :cols => 120, :rows => 30
+
+  = f.submit (job.persisted? ? "Update" : "Create") + " job"
+  or 
+  = link_to "Cancel", admin_jobs_path
+  

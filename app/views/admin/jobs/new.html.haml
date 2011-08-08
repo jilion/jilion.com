@@ -1,14 +1,3 @@
-= form_for [:admin, @job], :html => { :method => :post } do |f|
-  #job_title
-    = f.label :title
-    = f.text_field :title
+%h2 New job offer
 
-  #job_summary
-    = f.label :summary
-    = f.text_area :summary
-
-  #job_description
-    = f.label :description
-    = f.text_area :description
-
-  = f.submit "Create job"
+= render 'form', :job => @job

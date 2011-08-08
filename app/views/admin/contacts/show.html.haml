@@ -8,25 +8,26 @@
     = ", replied on"
     %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, :format => :long)}"
 
-.contact
-  -#- if @contact.job_id?
-  -#  %li
-  -#    %strong= "Job ref:"
-  -#    = link_to @contact.job_id, admin_job_path(@contact.job_id)
-
   %p
     %strong{ :style => "font-weight:600;" }= "From:"
     = mail_to(@contact.email)
-  %br
 
-  = RedCloth.new(@contact.message).to_html.html_safe
-  %br
+  - if @contact.job_id?
+    - job = Job.find(@contact.job_id)
+    %p
+      %strong{ :style => "font-weight:600;" }= "Application for:"
+      = link_to job.title, admin_job_path(job)
 
   - if @contact.file.present?
-    %li
-      %strong= "Attachment:"
+    %p
+      %strong{ :style => "font-weight:600;" }= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
+%br
 
+.contact
+  = RedCloth.new(@contact.message).to_html.html_safe
+
+%br
 %p= reply_link(@contact)
 %br
 
