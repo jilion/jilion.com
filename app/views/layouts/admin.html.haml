@@ -26,11 +26,11 @@
                 %strong
                   %span.icon= 'Contacts'
                 %span.corner
-            -#%li.job
-            -#  = link_to admin_jobs_path do
-            -#    %strong
-            -#      %span.icon= 'Jobs'
-            -#    %span.corner
+            %li.job
+              = link_to admin_jobs_path do
+                %strong
+                  %span.icon= 'Jobs'
+                %span.corner
         #admin= yield
         .spacer
     #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"
