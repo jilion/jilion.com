@@ -1,8 +1,5 @@
 source :rubygems
 
-gem 'rake',          '0.8.7'
-gem 'bundler',       '1.0.15'
-
 gem 'rails',         '3.0.7'
 gem 'haml',          '3.1.1'
 gem 'jammit',        '0.6.0'

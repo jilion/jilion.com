@@ -12,7 +12,7 @@
     %strong{ :style => "font-weight:600;" }= "From:"
     = mail_to(@contact.email)
 
-  - if @contact.job_id?
+  - if @contact.is_a?(Contact::Job) && @contact.job_id?
     - job = Job.find(@contact.job_id)
     %p
       %strong{ :style => "font-weight:600;" }= "Application for:"
