@@ -103,6 +103,7 @@ GEM
       rest-client (~> 1.6.1)
       rubyzip
       term-ansicolor (~> 1.0.5)
+    heroku_tasks (0.1.4)
     i18n (0.5.0)
     jammit (0.6.3)
       yui-compressor (>= 0.9.3)
@@ -213,6 +214,7 @@ DEPENDENCIES
   guard-spork
   haml (~> 3.1.1)
   heroku
+  heroku_tasks
   jammit (~> 0.6.0)
   mongo (~> 1.4.0)
   mongoid (~> 2.2.0)

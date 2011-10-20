@@ -31,6 +31,7 @@ end
 group :development do
   gem 'wirble'
   gem 'heroku'
+  gem 'heroku_tasks'
 
   gem 'growl'
   gem 'rb-fsevent'
