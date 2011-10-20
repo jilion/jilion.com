@@ -1,8 +1,8 @@
 package_assets: on
 embed_assets: on
 javascript_compressor: closure
-compressor_options:
-  compilation_level: "SIMPLE_OPTIMIZATIONS"
+# compressor_options:
+#   compilation_level: "SIMPLE_OPTIMIZATIONS"
 
 stylesheets:
   style:

@@ -61,6 +61,6 @@ Spork.each_run do
 
   RSpec.configure do |config|
     config.include Shoulda::ActionController::Matchers
-    config.include Capybara
+    config.include Capybara::DSL
   end
 end

@@ -1,5 +1,6 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
+  config.middleware.insert_before(Rack::Lock, Rack::NoWWW)
   config.middleware.use(Rack::SslEnforcer, :only => [%r{^/admin}] )
   config.middleware.use(Rack::GoogleAnalytics, :tracker => 'UA-10280941-1')
 
