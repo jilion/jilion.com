@@ -72,7 +72,7 @@ body.win {font-family:Arial, sans-serif;}
 
 #header h1 a span, #steve_ribbon span {display:none;}
 
-#steve_ribbon {
+/*#steve_ribbon {
   display:block;
   width:322px;
   height:322px;
@@ -82,7 +82,7 @@ body.win {font-family:Arial, sans-serif;}
   right:-10px;
   z-index:2;
 }
-
+*/
 #menu {
   list-style-type:none;
   position:absolute;
