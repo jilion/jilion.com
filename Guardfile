@@ -1,12 +1,5 @@
 group 'frontend' do
 
-  guard 'passenger' do
-    watch('config/application.rb')
-    watch('config/environment.rb')
-    watch(%r{^config/environments/.+\.rb})
-    watch(%r{^config/initializers/.+\.rb})
-  end
-
   guard 'livereload' do
     watch(%r{^app/.+\.(erb|haml)})
     watch(%r{^app/helpers/.+\.rb})

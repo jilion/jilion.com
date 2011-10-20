@@ -1,4 +1,4 @@
-require 'carrierwave/orm/mongoid'
+require 'will_paginate/array'
 
 class Contact
   include Mongoid::Document
@@ -13,7 +13,7 @@ class Contact
   field :replied_at, :type => DateTime
 
   # CarrierWave
-  mount_uploader :file, FileUploader
+  mount_uploader :file, FileUploader, mount_on: :file_filename
 
   RegEmailName   = '[\w\.%\+\-]+'
   RegDomainHead  = '(?:[A-Z0-9\-]+\.)+'
