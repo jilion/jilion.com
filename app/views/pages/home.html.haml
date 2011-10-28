@@ -3,20 +3,6 @@
 
 #latest_work
   .wrap
-    .box.aelios.active
-      %h4
-        = "Aelios for iPad"
-        %em= "Explore the World’s Weather Forecasts!"
-      = link_to "Learn more", "http://aeliosapp.com", :class => "view_btn"
-      .quote
-        %blockquote= "“Amazing new iPad weather app Aelios has the most unique interface I've ever seen.”"
-        %p.author
-          = "Mike Rundle."
-          = link_to "May 23, 2011", "http://twitter.com/flyosity/status/72666043230859264"
-      = link_to "http://gizmodo.com/5805650/aelios-weather-for-ipad", :class => "gizmodo" do
-        %span= "Gizmodo - App of the day"
-      = link_to "http://www.tuaw.com/2011/05/23/aelios-is-a-new-way-to-get-the-weather-on-your-ipad/", :class => "tuaw" do
-        %span= "Tuaw"
     .box.sublimevideo
       %h4
         = "SublimeVideo"
@@ -31,6 +17,20 @@
           %span= "Read Write Web"
         = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
           %span= "Mashable"
+    .box.aelios.active
+      %h4
+        = "Aelios for iPad"
+        %em= "Explore the World’s Weather Forecasts!"
+      = link_to "Learn more", "http://aeliosapp.com", :class => "view_btn"
+      .quote
+        %blockquote= "“Amazing new iPad weather app Aelios has the most unique interface I've ever seen.”"
+        %p.author
+          = "Mike Rundle."
+          = link_to "May 23, 2011", "http://twitter.com/flyosity/status/72666043230859264"
+      = link_to "http://gizmodo.com/5805650/aelios-weather-for-ipad", :class => "gizmodo" do
+        %span= "Gizmodo - App of the day"
+      = link_to "http://www.tuaw.com/2011/05/23/aelios-is-a-new-way-to-get-the-weather-on-your-ipad/", :class => "tuaw" do
+        %span= "Tuaw"
 #latest_work_navigation
   = link_to "", :class => "aelios active" do
     %span= "Aelios for iPad"
