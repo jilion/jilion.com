@@ -5,6 +5,7 @@ Jilion::Application.routes.draw do
     match 'ie', :page => 'ie'
     match 'team', :page => 'team'
     match 'pr/2011-03-30', :page => 'press_2011_03_30'
+    match 'press/sublimevideo', :page => 'press_sublimevideo'
     root :page => 'home'
   end
   match ':p', :p => /pr|press/, :to => redirect('/pr/2011-03-30') #temporary
