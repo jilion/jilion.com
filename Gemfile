@@ -1,10 +1,11 @@
 source :rubygems
 
-gem 'rails',               '3.0.10'
+gem 'rails',               '3.0.11'
 
 gem 'haml',                '~> 3.1.1'
 gem 'jammit',              '~> 0.6.0'
-gem 'RedCloth',            '~> 4.2.3'
+gem 'RedCloth',            '~> 4.2.9'
+gem 'redcarpet',           '~> 1.17.2'
 gem 'will_paginate',       '~> 3.0.0'
 gem 'formtastic',          '~> 1.2.3'
 gem 'fog',                 '~> 1.0.0'
@@ -32,6 +33,8 @@ group :development do
   gem 'wirble'
   gem 'heroku'
   gem 'heroku_tasks'
+
+  gem 'rack-livereload'
 
   gem 'growl'
   gem 'rb-fsevent'

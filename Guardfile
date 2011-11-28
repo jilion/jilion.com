@@ -1,6 +1,6 @@
 group 'frontend' do
 
-  guard 'livereload' do
+  guard 'livereload', host: 'jilion.dev' do
     watch(%r{^app/.+\.(erb|haml)})
     watch(%r{^app/helpers/.+\.rb})
     watch(%r{^public/javascripts/.+\.js})
