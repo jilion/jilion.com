@@ -4,14 +4,14 @@
     %title= t 'title'
 
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
-    ==<![if !(lte IE 7)]>
+    ==<![if !(lte IE 9)]>
     %meta{ "http-equiv" => "Refresh", :content => "0;url=/" }
     %style{ :type => "text/css", :media => "screen" }
       == body {
       ==   display:none;
       == }
     ==<![endif]>
-    /[if lte IE 6]
+    /[if lte IE 8]
       %style{ :type => "text/css", :media => "screen" }
         == body {
         ==   font-family:Arial, sans-serif;
@@ -40,11 +40,11 @@
   %body
     #main
       %h2= "Unsupported browser."
-      %p= "Internet Explorer 6 and lower have known compatibility issues with modern web standards. We chose to stop supporting your browser as many other websites (like YouTube, Facebook or Twitter) are doing."
+      %p= "Internet Explorer 8 and lower have known compatibility issues with modern web standards. We chose to stop supporting your browser as many other websites (like YouTube, Facebook or Twitter) are doing."
       %p= "We recommend one of the following supported browsers:"
       %ul
         %li
-          %a{ :href => "http://www.microsoft.com/windows/internet-explorer/default.aspx" }= "Internet Explorer 7 or 8"
+          %a{ :href => "http://www.microsoft.com/windows/internet-explorer/default.aspx" }= "Internet Explorer 9"
         %li
           %a{ :href => "http://www.mozilla.com/firefox/" }= "Firefox"
         %li
@@ -52,4 +52,4 @@
         %li
           %a{ :href => "http://apple.com/safari/download" }= "Safari"
 
-      #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"
+      #footer= "Copyright © 2009-#{Time.now.utc.year} Jilion® SA"
