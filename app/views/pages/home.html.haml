@@ -6,17 +6,22 @@
     .box.sublimevideo
       %h4
         = "SublimeVideo"
-        %em= "World's first HTML5 Video Player Service"
+      .desc
+        %p= "The World's First Cloud-based HTML5 Video Player."
+        %p= "Now with Integrated, Universal Real-Time Statistics."
       = link_to "Learn more", "http://sublimevideo.net", :class => "view_btn"
       .what_they_say
-        = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo", :class => "daringfireball" do
-          %span= "Daring Fireball"
-        = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/", :class => "wired" do
-          %span= "Wired"
         = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
-          %span= "Read Write Web"
-        = link_to "http://mashable.com/2010/04/29/apple-flash-html5/", :class => "mashable" do
-          %span= "Mashable"
+          %span= "Read Write Web - Top Trends Of 2011"
+        .wired
+          %blockquote
+            = "“Solutions like this are what the web needs”"
+          = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/" do
+            %span= "Wired"
+        .daringfireball
+          %blockquote= "“Better in every single regard than any video player ever made with Flash.”"
+          = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo" do
+            %span= "Daring Fireball"
     .box.aelios.active
       %h4
         = "Aelios for iPad"
@@ -43,14 +48,6 @@
       %span= "What we do"
     %ul
       %li
-        -# %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
-        -# %div{ :style => "float:left;clear:left;height:28px;width:139px;" }
-        -# %div{ :style => "float:left;clear:left;height:28px;width:159px;" }
-        -# %div{ :style => "float:left;clear:left;height:28px;width:165px;" }
-        -# %div{ :style => "float:left;clear:left;height:28px;width:157px;" }
-        -# %div{ :style => "float:left;clear:left;height:28px;width:125px;" }
-        -# %div{ :style => "float:left;clear:left;height:18px;width:75px;" }
-        -# %div{ :style => "float:left;clear:left;height:46px;width:45px;" }
         %p
           = raw "#{link_to "SublimeVideo", "http://sublimevideo.net"} is the world's first cloud-based HTML5 video player. The universal video player solution that your web audience deserves, effortlessly and consistently delivering the benefits of HTML5, today."
         %p{:style => "padding:10px 0 20px"}= raw "#{link_to "Aelios", "http://aeliosapp.com"} is a unique weather app for iPad. It lets users explore the world, intuitively select locations and view easy to understand weather forecasts."
@@ -60,36 +57,43 @@
       %span= "People"
     %ul.photos
       %li
-        = image_tag "/images/embed/people/andrea_small.jpg", :alt => "Andrea Coiro", :size => "56x56"
+        = image_tag "/images/embed/people/mehdi_small.jpg", :alt => "Mehdi Aminian", :size => "56x56"
         .details_box
-          = image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coiro"
-          %h4= "Andrea Coiro"
-      %li
-        = image_tag "/images/embed/people/remy_small.jpg", :alt => "Rémy Coutable", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
-          %h4= "Rémy Coutable"
-      %li
-        = image_tag "/images/embed/people/octave_small.jpg", :alt => "Octave Zangs", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
-          %h4= "Octave Zangs"
-      %li
-        = image_tag "/images/embed/people/thibaud_small.jpg", :alt => "Thibaud Guillaume-Gentil", :size => "56x56"
-        .details_box.double_line
-          = image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
-          %h4= "Thibaud Guillaume-Gentil"
+          = image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
+          %h4= "Mehdi Aminian"
       %li
         = image_tag "/images/embed/people/zeno_small.jpg", :alt => "Zeno Crivelli", :size => "56x56"
         .details_box
           = image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
           %h4= "Zeno Crivelli"
       %li
-        = image_tag "/images/embed/people/mehdi_small.jpg", :alt => "Mehdi Aminian", :size => "56x56"
+        = image_tag "/images/embed/people/thibaud_small.jpg", :alt => "Thibaud Guillaume-Gentil", :size => "56x56"
+        .details_box.double_line
+          = image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
+          %h4= "Thibaud Guillaume-Gentil"
+      %li
+        = image_tag "/images/embed/people/octave_small.jpg", :alt => "Octave Zangs", :size => "56x56"
         .details_box
-          = image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
-          %h4= "Mehdi Aminian"
-    .spacer    
+          = image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
+          %h4= "Octave Zangs"
+      %li
+        = image_tag "/images/embed/people/remy_small.jpg", :alt => "Rémy Coutable", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
+          %h4= "Rémy Coutable"
+      %li
+        = image_tag "/images/embed/people/andrea_small.jpg", :alt => "Andrea Coiro", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coiro"
+          %h4= "Andrea Coiro"
+      %li
+        = image_tag "/images/embed/people/aidan_small.jpg", :alt => "Aidan Hornsby", :size => "56x56"
+        .details_box
+          = image_tag "/images/embed/people/aidan.jpg", :alt => "Aidan Hornsby"
+          %h4= "Aidan Hornsby"
+      %li
+      %li
+    
     %p= "Jilion is a small and passionate team striving to create well-crafted and innovative software. We are based in Lausanne, Switzerland."
     -# %p{:style => "padding-top:10px"}= link_to "Learn more", "/team", :class => "learn_more"
     -# .photo

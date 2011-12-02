@@ -174,7 +174,7 @@ document.observe("dom:loaded", function() {
     }
   });
   
-  slideshow  = new Slideshow(10,1.4);
+  if ($('latest_work')) slideshow  = new Slideshow(10,1.4);
   // Home Slideshow (pause duration, animation duration)
   // animateSlideShow(15,1.4);
   

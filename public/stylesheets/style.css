@@ -168,6 +168,7 @@ h2.headline {
   text-shadow:#ccc 0 1px 0;
   position:relative;
   float:left;
+  -webkit-font-smoothing:antialiased;
 /*  position:absolute;
   top:0;
   left:0;*/
@@ -251,68 +252,101 @@ h2.headline {
   background:url(/images/embed/home/sublimevideo.png) no-repeat;
 }
 
+#latest_work .box.sublimevideo .desc {
+  position:absolute;
+  width:300px;
+  font-size:20px;
+  font-weight:600;
+  color:#c1d3f0;
+  text-shadow:#001330 0 1px 6px;
+  text-align:center;
+  top:142px;
+  right:85px;
+}
+
+#latest_work .box.sublimevideo .desc p {
+  padding:5px 0;
+}
+
 #latest_work .box.sublimevideo a.view_btn {
   display:block;
   background:url(/images/embed/home/blue_btn.png) no-repeat;
-  width:124px;
-  height:36px;
-  padding:13px 0 0 17px;
-  font-weight:500;
-  font-size:18px;
-  color:#e4efff;
+  width:149px;
+  height:45px;
+  padding:15px 0 0 22px;
+  font-weight:600;
+  font-size:21px;
+  color:#e7f1ff;
   text-shadow:#000 0 -1px 0;
   position:absolute;
-  top:250px;
-  right:167px;
+  top:305px;
+  right:27px;
 }
 
-#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -49px;}
+#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -60px;}
 
 #latest_work .box.sublimevideo .what_they_say {
   position:absolute;
-  top:345px;
-  left:145px;
-  width:390px;
-  height:96px;
+  top:290px;
+  left:248px;
+  width:465px;
+  height:90px;
 }
 
-#latest_work .box.sublimevideo .what_they_say a {display:block;position:absolute;}
+#latest_work .box.sublimevideo .what_they_say a {display:block;}
 #latest_work .box.sublimevideo .what_they_say a span {display:none;}
 
-#latest_work .box.sublimevideo a.daringfireball {
-  width:136px;
-  height:24px;
-  background:url(/images/embed/home/logos/daringfireball.png) no-repeat;
-  top:0;
-  left:0;
-}
-
-#latest_work .box.sublimevideo a.wired {
-  width:86px;
-  height:19px;
-  background:url(/images/embed/home/logos/wired.png) no-repeat;
-  top:2px;
-  left:190px;
+#latest_work .box.sublimevideo .what_they_say blockquote {
+  font-family:"chaparral-pro-1","chaparral-pro-2", Georgia, Times, serif;
+  font-size:13px;
+  font-style:italic;
+  color:#212430;
+  line-height:14px;
+  text-align:center;
+  text-shadow:rgba(255,255,255,0.2) 0 1px 0;
+  padding-bottom:7px;
 }
 
 #latest_work .box.sublimevideo a.readwriteweb {
-  width:140px;
-  height:17px;
+  position:absolute;
+  width:129px;
+  height:37px;
   background:url(/images/embed/home/logos/readwriteweb.png) no-repeat;
-  top:3px;
-  left:328px;
+  top:22px;
+  left:0px;
 }
 
-#latest_work .box.sublimevideo a.mashable {
-  width:90px;
-  height:18px;
-  background:url(/images/embed/home/logos/mashable.png) no-repeat;
-  top:1px;
-  left:520px;
+#latest_work .box.sublimevideo .wired {
+  width:126px;
+  position:absolute;
+  top:11px;
+  left:150px;
+}
+
+#latest_work .box.sublimevideo .wired a {
+  width:86px;
+  height:19px;
+  margin:0 auto;
+  background:url(/images/embed/home/logos/wired.png) no-repeat;
+}
+
+#latest_work .box.sublimevideo .daringfireball {
+  width:150px;
+  position:absolute;
+  top:0;
+  left:290px;
+}
+
+#latest_work .box.sublimevideo .daringfireball a {
+  width:124px;
+  height:22px;
+  margin:0 auto;
+  background:url(/images/embed/home/logos/daringfireball.png) no-repeat;
 }
 
 #latest_work_navigation {
   width:42px;
+  height:13px;
   margin:0 auto;
   position:relative;
   top:-12px;
@@ -332,12 +366,11 @@ h2.headline {
 #latest_work_navigation a span {display:none;}
 
 #content {
-  padding:0 45px 16px;
+  padding:0 0 16px;
 }
 
 #content .section {
   padding:0 0 20px;
-/*  text-align:justify;*/
   font-size:18px;
 }
 
@@ -345,49 +378,32 @@ h2.headline {
   padding-bottom:5px;
 }
 
-/*#content .section.jilion {
-  font-size:20px;
-  letter-spacing:1px;
-  line-height:38px;
-}
-*/
 #content .section.what_we_do {
   float:left;
-  width:47%;
-  padding-right:3%;
+  width:420px;
+  padding:0 20px 20px 40px;
 }
 
 #content .section.what_we_do ul {
   list-style-type:none;
 }
 
-/*#content .section.what_we_do li.sublimevideo {
-  background:url(/images/embed/home/sublimevideo_cloud.png) no-repeat;
-  padding:0 0 10px;
-  margin-left:-45px;
-}
-*/
 #content .section p {
-/*  padding:3px 0;*/
   line-height:28px;
-}
-
-#content .section a.learn_more {
-  background:url(/images/embed/link_arrow.png) no-repeat 100% 6px;
-  padding:0 20px 0 0;
 }
 
 #content .section.people {
   line-height:28px;
-  padding:0 0 40px 3%;
-  width:47%;
+  padding:0 40px 0 20px;
+  width:420px;
   float:left;
 }
 
 #content .section.people ul.photos {
+  width:220px;
   float:left;
   padding:16px 0 0;
-  margin:0 -20px 16px 0;
+  margin:0 0 16px 0;
   list-style-type:none;
   line-height:0;
 }
@@ -397,8 +413,9 @@ h2.headline {
   height:56px;
   float:left;
   display:block;
-  margin:0 15px 0 0;
+  margin:0 15px 15px 0;
   position:relative;
+  background:#000;
 }
 
 #content .section.people ul.photos li .details_box {
@@ -448,6 +465,10 @@ h2.headline {
   text-align:center;
   padding:10px 0 4px;
   text-shadow:rgba(0,0,0,0.4) 0 -1px 0;
+}
+
+#content .section.people p {
+  padding-top:16px;
 }
 
 /*#content .section.jobs {
@@ -1189,27 +1210,30 @@ ul#contact_topics .form_box .intro a {
 
 #contact #flash.notice a.remove span {display:none;}
 
-#press_release {
-  padding:40px 190px;
-  line-height:28px;
-  color:#818fa5;
+.content_wrap {
+  margin:50px 0 0;
+  padding-bottom:50px;
   position:relative;
 }
 
-#press_release a.download_kit {
+#sidebar {
+  width:200px;
+  padding:0 40px 0 0;
+  float:left;
+}
+
+#sidebar a.download_kit {
   display:block;
   width:166px;
   height:100px;
+  margin:20px auto 10px;
   background:url(/images/embed/download_press_kit_button.png) no-repeat;
-  position:absolute;
-  top:30px;
-  left:10px;
   text-shadow:rgba(0,0,0,0.6) 0 -1px 0;
 }
 
-#press_release a.download_kit strong {
+#sidebar a.download_kit strong {
   display:block;
-  padding:11px 0 4px 42px;
+  padding:17px 0 9px 42px;
   font-size:15px;
   font-weight:500;
   text-transform:uppercase;
@@ -1217,7 +1241,7 @@ ul#contact_topics .form_box .intro a {
   color:#dbeaff;
 }
 
-#press_release a.download_kit em {
+#sidebar a.download_kit em {
   display:block;
   font-size:15px;
   color:#788fb0;
@@ -1227,19 +1251,58 @@ ul#contact_topics .form_box .intro a {
   font-style:normal;
 }
 
-#press_release h3 {
-  color:#d6e0f1;
-  font-size:22px;
-  font-weight:500;
-  padding-bottom:20px;
+#sidebar p.kit_note {
+  font-size:13px;
+  padding:0 30px;
+  line-height:20px;
 }
 
-#press_release p {
+.main_col_right {
+  float:left;
+  width:680px;
+  padding:0 40px 0 0;
+  line-height:28px;
+  color:#818fa5;
+  position:relative;
+}
+
+.main_col_right h2 {
+  color:#d6e0f1;
+  font-size:38px;
+  font-weight:500;
+  padding-bottom:10px;
+}
+
+.main_col_right h3 {
+  color:#d6e0f1;
+  font-size:28px;
+  font-weight:500;
+  padding:10px 0;
+  border-bottom:1px solid #2e343e;
+  margin:15px 0 20px;
+}
+
+.main_col_right p {
   padding:15px 0;
 }
 
-#press_release strong {
+.main_col_right p.big {
+  font-size:24px;
+  line-height:36px;
+  padding-bottom:15px;
+}
+
+.main_col_right strong {
   font-weight:bold;
+}
+
+.main_col_right ul {
+  padding:0 20px 10px;
+  line-height:30px;
+}
+
+.main_col_right a {
+  border-bottom:1px solid #2e343e;
 }
 
 #job_page {
