@@ -9,7 +9,7 @@
 	url   = git@jime1.epfl.ch:jilion.com.git
   fetch = +refs/heads/*:refs/remotes/origin/*
 [remote "production"]
-  url   = git@heroku.com:jilion.git
+  url   = git@heroku.com:jilion-www.git
   fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
 
