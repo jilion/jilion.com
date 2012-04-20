@@ -15,14 +15,15 @@ gem 'mongo',               '~> 1.4.0'
 gem 'mongoid',             '~> 2.2.0'
 
 gem 'carrierwave',         '~> 0.5.7'
-gem 'carrierwave-mongoid', '~> 0.1.1', :require => 'carrierwave/mongoid'
+gem 'carrierwave-mongoid', '~> 0.1.1', require: 'carrierwave/mongoid'
 
 gem 'settingslogic', '2.0.6'
+gem 'ratom', require: 'atom'
 
 group :production do
   gem 'rack-ssl-enforcer'
   gem 'rack-no-www'
-  gem 'rack-google-analytics', '0.9.2', :require => 'rack/google-analytics'
+  gem 'rack-google-analytics', '0.9.2', require: 'rack/google-analytics'
 end
 
 group :development, :test do
@@ -50,5 +51,5 @@ group :test do
   gem 'capybara'
 
   gem 'shoulda'
-  gem 'factory_girl_rails', :require => false # loaded in spec_helper Spork.each_run
+  gem 'factory_girl_rails', require: false # loaded in spec_helper Spork.each_run
 end

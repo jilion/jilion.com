@@ -43,6 +43,13 @@
 -#     %span= "Aelios for iPad"
 
 #content.home
+  %ul.news
+    - cached_latest_sublimevideo_news(3).each do |news|
+      %li
+        = link_to news.title, news.url
+        %em.date= l news.date, format: :date
+        = link_to "Read article", news.url
+
   .section.what_we_do
     %h3.title.what_we_do
       %span= "What we do"
