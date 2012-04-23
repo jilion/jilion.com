@@ -139,15 +139,15 @@ body.win {font-family:Arial, sans-serif;}
 h2.headline {
   text-indent:-99999px;
   display:block;
-  width:381px;
-  height:28px;
+  width:500px;
+  height:36px;
   background:url(/images/embed/headline.png) no-repeat;
-  margin:9px auto 35px;
+  margin:9px auto 25px;
 }
 
 #latest_work {
   width:910px;
-  height:390px;
+  height:460px;
   margin:0 auto 30px;
   position:relative;
   overflow:hidden;
@@ -162,7 +162,7 @@ h2.headline {
 
 #latest_work .box {
   width:910px;
-  height:390px;
+  height:460px;
   font-size:14px;
   font-weight:400;
   text-shadow:#ccc 0 1px 0;
@@ -176,7 +176,7 @@ h2.headline {
 
 #latest_work h4 {display:none;}
 
-#latest_work .box.aelios {
+/*#latest_work .box.aelios {
   background:url(/images/embed/home/aelios/aelios_for_ipad.png) no-repeat;
 }
 
@@ -245,7 +245,7 @@ h2.headline {
   left:461px;  
 }
 
-#latest_work .box.aelios a.gizmodo span, #latest_work .box.aelios a.tuaw span {display:none;}
+#latest_work .box.aelios a.gizmodo span, #latest_work .box.aelios a.tuaw span {display:none;}*/
 
 
 #latest_work .box.sublimevideo {
@@ -255,12 +255,13 @@ h2.headline {
 #latest_work .box.sublimevideo .desc {
   position:absolute;
   width:300px;
-  font-size:20px;
+  font-size:26px;
+  line-height:35px;
   font-weight:600;
   color:#c1d3f0;
   text-shadow:#001330 0 1px 6px;
   text-align:center;
-  top:142px;
+  top:158px;
   right:85px;
 }
 
@@ -271,19 +272,19 @@ h2.headline {
 #latest_work .box.sublimevideo a.view_btn {
   display:block;
   background:url(/images/embed/home/blue_btn.png) no-repeat;
-  width:149px;
-  height:45px;
-  padding:15px 0 0 22px;
+  width:143px;
+  height:37px;
+  padding:10px 0 0 14px;
   font-weight:600;
   font-size:21px;
   color:#e7f1ff;
   text-shadow:#000 0 -1px 0;
   position:absolute;
   top:305px;
-  right:27px;
+  right:32px;
 }
 
-#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -60px;}
+#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -47px;}
 
 #latest_work .box.sublimevideo .what_they_say {
   position:absolute;
@@ -344,6 +345,33 @@ h2.headline {
   background:url(/images/embed/home/logos/daringfireball.png) no-repeat;
 }
 
+#latest_work .box.sublimevideo ul.awards {
+/*  width:910px;*/
+  position:absolute;
+  left:154px;
+  bottom:0;
+  list-style-type:none;
+}
+
+#latest_work .box.sublimevideo ul.awards li {
+  float:left;
+  width:255px;
+  height:65px;
+  padding:21px 0 0 49px;
+  background:url(/images/embed/home/award_star.png) no-repeat;
+}
+
+#latest_work .box.sublimevideo ul.awards li.perl {
+  width:200px;
+}
+
+#latest_work .box.sublimevideo ul.awards li a {
+  font-size:15px;
+  font-weight:bold;
+  color:#212430;
+  text-shadow:rgba(255,255,255,0.2) 0 1px 0;
+}
+
 #latest_work_navigation {
   width:42px;
   height:13px;
@@ -361,7 +389,7 @@ h2.headline {
   margin:0 4px;
 }
 
-#latest_work_navigation a.active {background:url(/images/embed/home/navigation_dot_active.png) no-repeat;}
+#latest_work_navigation a.active {background:url(/images/embed/home/navigation_dot_active.png) no-repeat}
 
 #latest_work_navigation a span {display:none;}
 
@@ -378,32 +406,95 @@ h2.headline {
   padding-bottom:5px;
 }
 
-#content .section.what_we_do {
-  float:left;
-  width:420px;
-  padding:0 20px 20px 40px;
+#content .section p {
+  line-height:28px;
 }
 
-#content .section.what_we_do ul {
+#content .section.main_description {
+  padding:0 40px;
+  font-size:20px;
+}
+
+#content .section.news {
+  padding:20px 40px;
+}
+
+#content .section.news ul.articles {
   list-style-type:none;
 }
 
-#content .section p {
-  line-height:28px;
+#content .section.news ul.articles li {
+  padding:4px 0 20px 60px;
+  background:url(/images/embed/home/news_icon.png) no-repeat;
+}
+
+#content .section.news ul.articles li h3 {
+  font-size:18px;
+}
+
+#content .section.news ul.articles li em.date {
+  font-size:15px;
+  font-style:normal;
+  margin-right:10px;
+}
+
+#content .section.news ul.articles li a.read {
+  font-size:16px;
+  padding:0 20px 3px 0;
+  background:url(/images/embed/link_arrow.png) no-repeat 100% 4px;
+}
+
+#content .section.student_project {
+  width:420px;
+  float:left;
+  padding:0 40px;
+}
+
+#content .section.student_project .left {
+  float:left;
+  width:100px;
+  text-align:center;
+}
+
+#content .section.student_project .left a.more {
+  font-size:16px;
+  padding:0 20px 3px 0;
+  background:url(/images/embed/link_arrow.png) no-repeat 100% 4px;
+}
+
+#content .section.student_project .right {
+  float:left;
+  width:300px;
+  padding:0 0 0 20px;
+}
+
+#content .section.box .right h3 {
+  font-size:26px;
+  padding-bottom:10px;
+}
+
+#content .section.open_source {
+  width:420px;
+  float:left;
+}
+
+#content .section.break {
+  width:910px;
+  height:2px;
+  margin:30px auto 15px;
+  background:url(/images/embed/home/break.png) no-repeat center;
 }
 
 #content .section.people {
   line-height:28px;
   padding:0 40px 0 20px;
-  width:420px;
-  float:left;
+/*  width:420px;*/
 }
 
 #content .section.people ul.photos {
-  width:220px;
-  float:left;
+  width:504px;
   padding:16px 0 0;
-  margin:0 0 16px 0;
+  margin:0 auto 16px;
   list-style-type:none;
   line-height:0;
 }
@@ -413,7 +504,7 @@ h2.headline {
   height:56px;
   float:left;
   display:block;
-  margin:0 15px 15px 0;
+  margin:0 8px 15px;
   position:relative;
   background:#000;
 }
@@ -468,7 +559,10 @@ h2.headline {
 }
 
 #content .section.people p {
-  padding-top:16px;
+  padding:16px 0 40px;
+  width:600px;
+  margin:0 auto;
+  text-align:center;
 }
 
 /*#content .section.jobs {
@@ -662,11 +756,11 @@ h3.title.latest_work {
   font-weight:600;
 }
 
-h3.title.what_we_do, .what_we_do span.highlight {color:#3bbbf0;}
-/*h3.title.what_we_do, .what_we_do span.highlight {color:#a944f4;}*/
-h3.title.our_strength {color:#ff4fd6;}
+h3.title.news, .what_we_do span.highlight {color:#3bbbf0;}
+/*h3.title.what_we_do, .what_we_do span.highlight {color:#ff4fd6;}*/
+h3.title.student_project {color:#a944f4;}
 h3.title.people, .people span.highlight {color:#f14363;}
-h3.title.jobs, .jobs span.highlight {color:#ef6641;}
+h3.title.open_source {color:#ef6641;}
 h3.title.contact {color:#a7b1c1;}
 
 @media screen and (-webkit-min-device-pixel-ratio:0){
@@ -685,25 +779,25 @@ h3.title.contact {color:#a7b1c1;}
     -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
   }
   
-  h3.title.what_we_do:after {content:'What we do';}
-  h3.title.what_we_do {color:#0097e3;}
-  h3.title.what_we_do span {color:#6bcbf9;}
+  h3.title.news:after {content:'Latest news';}
+  h3.title.news {color:#0097e3;}
+  h3.title.news span {color:#6bcbf9;}
   
-/*  h3.title.what_we_do:after {content:'What we do';}
-  h3.title.what_we_do {color:#530090;}
-  h3.title.what_we_do span {color:#cc86ff;}*/
+  h3.title.student_project:after {content:'Student project';}
+  h3.title.student_project {color:#530090;}
+  h3.title.student_project span {color:#cc86ff;}
   
-  h3.title.our_strength:after {content:'Our strength';}
+/*  h3.title.our_strength:after {content:'Our strength';}
   h3.title.our_strength {height:25px;color:#910070;}
   h3.title.our_strength span {color:#ff72df;}
-  
+*/  
   h3.title.people:after {content:'People';}
   h3.title.people {height:25px;color:#d9002f;}
   h3.title.people span {color:#ff4c6e;}
   
-  h3.title.jobs:after {content:'Jobs';}
-  h3.title.jobs {height:25px;color:#e14400;}
-  h3.title.jobs span {color:#fc8247;}
+  h3.title.open_source:after {content:'Open-source';}
+  h3.title.open_source {color:#e14400;}
+  h3.title.open_source span {color:#fc8247;}
   
   h3.title.contact:after {content:'Get in touch';}
   h3.title.contact {height:25px;color:#737a85;}
