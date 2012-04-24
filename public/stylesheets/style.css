@@ -142,7 +142,7 @@ h2.headline {
   width:500px;
   height:36px;
   background:url(/images/embed/headline.png) no-repeat;
-  margin:9px auto 25px;
+  margin:9px auto 29px;
 }
 
 #latest_work {
@@ -416,7 +416,7 @@ h2.headline {
 }
 
 #content .section.news {
-  padding:20px 40px;
+  padding:30px 40px 20px;
 }
 
 #content .section.news ul.articles {
