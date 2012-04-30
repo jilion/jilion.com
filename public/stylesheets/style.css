@@ -491,12 +491,12 @@ h2.headline {
   padding:6px 0 8px;
 }
 
-#content .section.open_source span.downloads strong {
+#content .section.open_source span.downloads a {
   font-size:15px;
   display:block;
 /*  line-height:10px;*/
 /*  padding:4px 0 0;*/
-  color:#d6e0f1;
+/*  color:#d6e0f1;*/
 }
 
 #content .section.break {
