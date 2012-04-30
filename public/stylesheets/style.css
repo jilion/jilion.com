@@ -450,19 +450,26 @@ h2.headline {
   padding:0 40px;
 }
 
-#content .section.student_project .left {
+#content .section.box .left {
   float:left;
   width:100px;
   text-align:center;
 }
 
-#content .section.student_project .left a.more {
+#content .section.student_project .left span.ratings {
+  background:url(/images/embed/home/aelios/stars.png) no-repeat center top;
+  display:block;
+  padding:17px 0 20px;
+  font-size:12px;
+}
+
+#content .section.box .left a.more {
   font-size:16px;
   padding:0 20px 3px 0;
   background:url(/images/embed/link_arrow.png) no-repeat 100% 4px;
 }
 
-#content .section.student_project .right {
+#content .section.box .right {
   float:left;
   width:300px;
   padding:0 0 0 20px;
@@ -476,6 +483,20 @@ h2.headline {
 #content .section.open_source {
   width:420px;
   float:left;
+}
+
+#content .section.open_source span.downloads {
+  font-size:12px;
+  display:block;
+  padding:6px 0 8px;
+}
+
+#content .section.open_source span.downloads strong {
+  font-size:15px;
+  display:block;
+/*  line-height:10px;*/
+/*  padding:4px 0 0;*/
+  color:#d6e0f1;
 }
 
 #content .section.break {
