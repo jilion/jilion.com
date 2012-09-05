@@ -31,7 +31,7 @@
       #main
         #header
           %h1
-            = link_to "http://jilion.com" do
+            = link_to root_url do
               %span= 'Jilion'
           %ul#menu
             -# %li.about
@@ -51,8 +51,6 @@
                 %span.corner
         = yield
         .spacer
-        -# %a#steve_ribbon{ :href => "http://blog.jilion.com/2011/10/06/such-a-huge-void" }
-        -#   %span= "Such a Huge Void"
     #footer= "Copyright © 2009-#{Time.now.utc.year} Jilion® SA"
     #map_global{ :style => "display:none" }
       #map_background
@@ -72,4 +70,4 @@
           }
           w.addEventListener?w.addEventListener("load",gs,false):w.attachEvent("onload",gs);
       })(window);
-    
+

@@ -13,10 +13,9 @@
     = mail_to(@contact.email)
 
   - if @contact.is_a?(Contact::Job) && @contact.job_id?
-    - job = Job.find(@contact.job_id)
     %p
       %strong{ :style => "font-weight:600;" }= "Application for:"
-      = link_to job.title, admin_job_path(job)
+      = link_to @contact.job.title, admin_job_path(@contact.job)
 
   - if @contact.file.present?
     %p

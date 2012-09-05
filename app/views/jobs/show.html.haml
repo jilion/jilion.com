@@ -2,11 +2,11 @@
 #job_page
   %h2= @job.title
   .desc
-    = @job.description
+    = raw @job.description
 
 #contact
   %ul#contact_topics
     %li.expanded
-      %a.title.static{ :href => "", :onclick => "return false" }
+      %a.title.static{ href: "", onclick: "return false" }
         %strong= "Apply"
-      = render '/contacts/job', :job => @job
+      = render '/contacts/job', job: @job

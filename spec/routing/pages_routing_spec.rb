@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe PagesController do
 
-  it { should route(:get, "/n/thankyou").to(:controller => "pages", :action => :show, :page => 'home', :n => 'thankyou') }
-  it { should route(:get, "/n/confirmed").to(:controller => "pages", :action => :show, :page => 'home', :n => 'confirmed') }
-  it { should route(:get, "/n/unsubscribed").to(:controller => "pages", :action => :show, :page => 'home', :n => 'unsubscribed') }
+  it { get('/n/thankyou').should route_to('pages#show', page: 'home', n: 'thankyou') }
+  it { get('/n/confirmed').should route_to('pages#show', page: 'home', n: 'confirmed') }
+  it { get('/n/unsubscribed').should route_to('pages#show', page: 'home', n: 'unsubscribed') }
+  it { get('/ie').should route_to('pages#show', page: 'ie') }
 
 end

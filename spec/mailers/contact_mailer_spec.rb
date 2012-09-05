@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe ContactMailer do
-  subject { Factory.create(:contact) }
+  subject { create(:contact) }
 
-  before(:each) do
+  before do
     subject
     ActionMailer::Base.deliveries.clear
   end
 
   describe "#notification" do
-    before(:each) do
+    before do
       ContactMailer.notification(subject).deliver
       @last_delivery = ActionMailer::Base.deliveries.last
     end

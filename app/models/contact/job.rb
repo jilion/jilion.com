@@ -6,4 +6,6 @@ class Contact::Job < Contact
   validates_presence_of :message
   validates_presence_of :file
 
+  belongs_to :job
+
 end

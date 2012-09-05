@@ -12,6 +12,8 @@
     %th
     %th= "Issue"
     %th= "Type"
+    - if params[:type] == 'Job'
+      %th= "Job"
     %th= "Email"
     %th= "Date"
     %th= "Replied"

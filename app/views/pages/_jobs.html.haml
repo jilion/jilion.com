@@ -1,0 +1,11 @@
+- if jobs = Job.published and jobs.present?
+  .section#jobs
+    %h3.title.jobs
+      -#%span= "Jobs"
+      %span= "We're hiring!"
+      -# %p= "We have one open position at the moment:"
+    %ul
+      - jobs.each do |job|
+        %li
+          %h4= link_to job.title, job_path(job)
+

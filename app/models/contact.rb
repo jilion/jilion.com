@@ -4,27 +4,23 @@ class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  attr_accessor :replied
+  attr_accessible :email, :replied
 
-  field :email,      :type => String
-  field :state,      :type => String,  :default => 'new'
-  field :replied,    :type => Boolean, :default => false
-  field :issue,      :type => Integer
-  field :replied_at, :type => DateTime
+  field :email,      type: String
+  field :state,      type: String,  default: 'new'
+  field :replied,    type: Boolean, default: false
+  field :issue,      type: Integer
+  field :replied_at, type: DateTime
 
   # CarrierWave
   mount_uploader :file, FileUploader, mount_on: :file_filename
 
-  RegEmailName   = '[\w\.%\+\-]+'
-  RegDomainHead  = '(?:[A-Z0-9\-]+\.)+'
-  RegDomainTLD   = '(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)'
-  RegEmailOk     = /\A#{RegEmailName}@#{RegDomainHead}#{RegDomainTLD}\z/i
   TYPES = %w[Contact::Job Contact::Press Contact::Request Contact::TeamUp]
   STATES = %w[new archived]
 
-  validates_presence_of :email,                        :message => "can't be blank"
-  validates_length_of   :email, :within => 6..100,     :message => "is too short"
-  validates_format_of   :email, :with   => RegEmailOk, :message => "is not valid"
+  validates :email, presence: { message: "can't be blank" }
+  validates :email, length: { within: 6..100, message: "is too short" }
+  validates :email, email_format: { message: "is not valid" }
 
   before_create :set_issue
   after_create :deliver_notification
@@ -35,8 +31,14 @@ class Contact
     end
   end
 
+  STATES.each do |s|
+    define_method "#{s}?" do
+      self.state == s
+    end
+  end
+
   def replied=(replied)
-    self.replied_at = Time.now.utc if replied
+    self.replied_at = Time.now.utc if replied == '1'
   end
 
   def replied?
@@ -45,10 +47,6 @@ class Contact
 
   def type_name
     self.class.name.gsub(/Contact::/, '').underscore
-  end
-
-  def archived?
-    state == "archived"
   end
 
   def filename

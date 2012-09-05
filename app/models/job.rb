@@ -2,24 +2,22 @@ class Job
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :title,       :type => String
-  field :summary,     :type => String
-  field :description, :type => String
-  field :state,       :type => String, :default => 'new'
-  field :issue,       :type => Integer
+  field :title,       type: String
+  field :summary,     type: String
+  field :description, type: String
+  field :state,       type: String, default: 'new'
+  field :issue,       type: Integer
 
-  validates_presence_of :title,       :message => "can't be blank"
-  validates_presence_of :summary,     :message => "can't be blank"
-  validates_presence_of :description, :message => "can't be blank"
+  validates :title, :description, presence: { message: "can't be blank" }
 
   before_create :set_issue
 
   def self.published
-    where(:state => 'published').desc(:created_at)
+    where(state: 'published').desc(:created_at)
   end
 
   def self.search(params)
-    where(:state => params[:state] || 'new').desc(:created_at).paginate({ :page => params[:page] || 1, :per_page => 25 })
+    where(state: params[:state] || 'new').desc(:created_at).paginate({ page: params[:page] || 1, per_page: 25 })
   end
 
   def to_param
@@ -27,7 +25,7 @@ class Job
   end
 
   def method_missing(method, *args, &block)
-    if /^(is_)?(.+)\?$/.match(method.to_s).present?
+    if /^(is_)?(.+)\?$/ =~ method.to_s
       state == $2
     end
   end

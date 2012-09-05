@@ -123,23 +123,9 @@
         .details_box
           = image_tag "/images/embed/people/arnaud.jpg", :alt => "Arnaud Dufour"
           %h4= "Arnaud Dufour"
-    .spacer          
+    .spacer
     %p= "Jilion is a software development team passionate about Web technologies, striving to make life easier for both Web publishers and users."
   .spacer
+  = render "jobs"
   = render "get_in_touch"
-  -# - jobs = Job.published
-  -# - if jobs.present?
-  -#   .section.jobs
-  -#     %h3.title.jobs
-  -#       %span= "Jobs"
-  -#     -# %p= "We have one open position at the moment:"
-  -#     %ul
-  -#       - jobs.each do |job|
-  -#         %li
-  -#           %h4
-  -#             %em= "Open Position:"
-  -#             = job.title
-  -#           %p
-  -#             = job.summary
-  -#             = raw "#{link_to "apply here", job_path(job)}."
   .hw_enabler
