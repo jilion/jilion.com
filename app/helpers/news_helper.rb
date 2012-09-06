@@ -1,3 +1,5 @@
+require 'news'
+
 module NewsHelper
 
   def cached_latest_sublimevideo_news(count)

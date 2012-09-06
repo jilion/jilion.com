@@ -3,11 +3,6 @@ require 'spec_helper'
 
 feature "Redirects page" do
 
-  scenario "redirects /jobs to /#jobs" do
-    visit '/jobs'
-    current_url.should eq "http://jilion.dev/"
-  end
-
   %w[pr press].each do |page|
     scenario "redirects /#{page} to /pr/2011-03-30" do
       visit "/#{page}"
