@@ -1,5 +1,3 @@
-require 'will_paginate/array'
-
 class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -56,7 +54,7 @@ class Contact
   def self.search(params)
     where = {}
     where[:_type] = "Contact::#{params[:type]}" if params[:type].present?
-    where(where.merge(:state => params[:state] || 'new')).desc(:created_at).paginate({ :page => params[:page] || 1, :per_page => 25 })
+    where(where.merge(:state => params[:state] || 'new')).desc(:created_at).page(params[:page] || 1).per(25)
   end
 
 protected

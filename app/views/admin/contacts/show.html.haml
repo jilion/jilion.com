@@ -3,10 +3,10 @@
 %p
   %strong{ :style => "font-weight:600;" }= "Issue ##{@contact.issue}"
   = "(#{@contact.state.humanize}), received on"
-  %span{ :style => "font-weight:600;" }= "#{l(@contact.created_at, :format => :long)}"
+  %span{ :style => "font-weight:600;" }= "#{l(@contact.created_at, format: :full)}"
   - if @contact.replied?
     = ", replied on"
-    %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, :format => :long)}"
+    %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, format: :full)}"
 
   %p
     %strong{ :style => "font-weight:600;" }= "From:"

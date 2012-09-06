@@ -17,7 +17,7 @@ class Job
   end
 
   def self.search(params)
-    where(state: params[:state] || 'new').desc(:created_at).paginate({ page: params[:page] || 1, per_page: 25 })
+    where(state: params[:state] || 'new').desc(:created_at).page(params[:page] || 1).per(25)
   end
 
   def to_param

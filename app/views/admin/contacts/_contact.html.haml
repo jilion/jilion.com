@@ -1,7 +1,7 @@
 %tr{ :class => cycle("alt", "") }
   %td
     - if contact.file?
-      - link_to admin_contact_path(contact), :class => "attachment" do
+      - link_to admin_contact_path(contact), class: "attachment" do
         %span="Attachment"
   %td
     = link_to "##{contact.issue}", admin_contact_path(contact)
@@ -9,6 +9,6 @@
   - if params[:type] == 'Job' && contact.is_a?(Contact::Job) && contact.job_id?
     %td= link_to contact.job.title, admin_job_path(contact.job)
   %td= mail_to contact.email
-  %td= l contact.created_at, :format => :long
+  %td= l contact.created_at, format: :full
   %td
     %em= contact.replied? ? "Replied" : "-"
