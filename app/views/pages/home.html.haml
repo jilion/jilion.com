@@ -1,131 +1,19 @@
 %h2.headline
   %span= t 'home.headline'
 
-#latest_work
-  .wrap
-    .box.sublimevideo
-      %h4
-        = "SublimeVideo"
-      .desc
-        %p= "The Web's Most Reliable HTML5 Video Player"
-      = link_to "Learn more", "http://sublimevideo.net", :class => "view_btn"
-      .what_they_say
-        = link_to "http://www.readwriteweb.com/archives/sublimevideo_demoing_the_future_of_html5_video.php", :class => "readwriteweb" do
-          %span= "Read Write Web - Top Trends Of 2011"
-        .wired
-          %blockquote
-            = "“Solutions like this are what the web needs”"
-          = link_to "http://www.webmonkey.com/2010/02/sublimevideo_hopes_to_simplify_html5_web_video/" do
-            %span= "Wired"
-        .daringfireball
-          %blockquote= "“Better in every single regard than any video player ever made with Flash.”"
-          = link_to "http://daringfireball.net/linked/2010/02/01/sublimevideo" do
-            %span= "Daring Fireball"
-      %ul.awards
-        %li.vivendi= link_to 'AWARD: Vivendi "Coup de Coeur" Prize MIPCube Lab 2012', "http://blog.jilion.com/2012/04/03/vivendi-awards-sublimevideo-its-coup-de-coeur-prize-at-mipcube-lab-2012"
-        %li.mipcube= link_to 'AWARD: Most Promising Disruptive TV Start-up MIPCube Lab 2012', "http://blog.jilion.com/2012/04/02/sublimevideo-awarded-most-promising-disruptive-tv-start-up-at-mipcube-lab-2012"
-        -# %li.perl= link_to 'AWARD: Trophées PERL 2012 1st Prize', "http://blog.jilion.com/2012/04/05/sublimevideo-awarded-1st-prize-of-the-trophees-perl-2012"
-    -# .box.aelios.active
-    -#   %h4
-    -#     = "Aelios for iPad"
-    -#     %em= "Explore the World’s Weather Forecasts!"
-    -#   = link_to "Learn more", "http://aeliosapp.com", :class => "view_btn"
-    -#   .quote
-    -#     %blockquote= "“Amazing new iPad weather app Aelios has the most unique interface I've ever seen.”"
-    -#     %p.author
-    -#       = "Mike Rundle."
-    -#       = link_to "May 23, 2011", "http://twitter.com/flyosity/status/72666043230859264"
-    -#   = link_to "http://gizmodo.com/5805650/aelios-weather-for-ipad", :class => "gizmodo" do
-    -#     %span= "Gizmodo - App of the day"
-    -#   = link_to "http://www.tuaw.com/2011/05/23/aelios-is-a-new-way-to-get-the-weather-on-your-ipad/", :class => "tuaw" do
-    -#     %span= "Tuaw"
--# #latest_work_navigation
--#   = link_to "", :class => "sublimevideo active" do
--#     %span= "SublimeVideo"
--#   = link_to "", :class => "aelios" do
--#     %span= "Aelios for iPad"
+#latest_work= render 'latest_work'
 
 #content.home
-  .section.main_description
-    %p= "SublimeVideo is the world's first cloud-based HTML5 Video player; a pioneering solution that provides Web publishers with a fast, pain-free way to truly embrace and enable HTML5 and allows their videos to play flawlessly on any device, browser and web page."
-  .section.news
-    %h3.title.news
-      %span= "Latest news"
-    %ul.articles
-      - cached_latest_sublimevideo_news(3).each do |news|
-        %li
-          %h3= link_to news.title, news.url
-          %em.date= l news.date, format: :date
-          = link_to "Read article", news.url, :class => "read"
-  .section.student_project.box
-    %h3.title.student_project
-      %span= "Student Project"
-    .left
-      = link_to "http://aeliosapp.com" do
-        = image_tag "/images/embed/home/aelios/aelios_icon.png", alt: "Aelios for iPad"
-      %span.ratings= "450+ ratings"
-      = link_to "More", "http://aeliosapp.com", :class => "more"
-    .right
-      %h3= link_to "Aelios for iPad", "http://aeliosapp.com"
-      %p.desc= "Beginning as a Computer Science Bachelor project to recruit new talent, Aelios is a unique and well regarded weather app for iPad that lets you explore the world's weather forecasts."
-  .section.open_source.box
-    %h3.title.open_source
-      %span= "Open-Source"
-    .left
-      = link_to "https://github.com/guard/guard" do
-        = image_tag "/images/embed/home/guard_icon.png", alt: "Guard"
-      %span.downloads
-        = "more than"
-        = link_to "500,000", "https://rubygems.org/gems/guard"
-        = "downloads"
-      = link_to "More", "https://github.com/guard/guard", :class => "more"
-    .right
-      %h3= link_to "Guard", "https://github.com/guard/guard"
-      %p.desc= "We strongly support the development of Guard, a highly popular open-source tool created and maintained by our team to easily trigger events on file system modifications."
+  = render 'main_description'
+  = render 'news'
+  = render 'student_project'
+  = render 'open_source'
   .spacer
   .section.break
-  .section.people
-    -# %h3.title.people
-    -#   %span= "People"
-    %ul.photos
-      %li
-        = image_tag "/images/embed/people/thibaud_small.jpg", :alt => "Thibaud Guillaume-Gentil", :size => "56x56"
-        .details_box.double_line
-          = image_tag "/images/embed/people/thibaud.jpg", :alt => "Thibaud Guillaume-Gentil"
-          %h4= "Thibaud Guillaume-Gentil"
-      %li
-        = image_tag "/images/embed/people/octave_small.jpg", :alt => "Octave Zangs", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/octave.jpg", :alt => "Octave Zangs"
-          %h4= "Octave Zangs"
-      %li
-        = image_tag "/images/embed/people/zeno_small.jpg", :alt => "Zeno Crivelli", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/zeno.jpg", :alt => "Zeno Crivelli"
-          %h4= "Zeno Crivelli"
-      %li
-        = image_tag "/images/embed/people/mehdi_small.jpg", :alt => "Mehdi Aminian", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/mehdi.jpg", :alt => "Mehdi Aminian"
-          %h4= "Mehdi Aminian"
-      %li
-        = image_tag "/images/embed/people/remy_small.jpg", :alt => "Rémy Coutable", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/remy.jpg", :alt => "Rémy Coutable"
-          %h4= "Rémy Coutable"
-      %li
-        = image_tag "/images/embed/people/andrea_small.jpg", :alt => "Andrea Coiro", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/andrea.jpg", :alt => "Andrea Coiro"
-          %h4= "Andrea Coiro"
-      %li
-        = image_tag "/images/embed/people/arnaud_small.jpg", :alt => "Arnaud Dufour", :size => "56x56"
-        .details_box
-          = image_tag "/images/embed/people/arnaud.jpg", :alt => "Arnaud Dufour"
-          %h4= "Arnaud Dufour"
-    .spacer
-    %p= "Jilion is a software development team passionate about Web technologies, striving to make life easier for both Web publishers and users."
+  = render 'people'
   .spacer
-  = render "jobs"
-  = render "get_in_touch"
+  .section.break
+  = render 'jobs'
+  .spacer
+  = render 'get_in_touch'
   .hw_enabler

@@ -8,7 +8,7 @@
           %span.icon= 'Contact'
         %span.corner
     %li.map
-      = link_to "http://bit.ly/h4GQ0l", :title => "Show map", :id => "show_location" do
+      = link_to "http://bit.ly/h4GQ0l", title: "Show map", id: "show_location" do
         %strong
           %span.icon= 'Map'
         %span.corner
@@ -19,7 +19,7 @@
         %span.corner
   .newsletter
     - if %w[thankyou confirmed unsubscribed].include?(params[:n])
-      #email_flash{ :class => params[:n] }= t("home.email_flash.#{params[:n]}")
-      = render :partial => 'subscribe_form', :locals => { :style => 'display:none' }
+      #email_flash{ class: params[:n] }= t("home.email_flash.#{params[:n]}")
+      = render partial: 'subscribe_form', locals: { style: 'display:none' }
     - else
-      = render :partial => 'subscribe_form'
+      = render partial: 'subscribe_form'
