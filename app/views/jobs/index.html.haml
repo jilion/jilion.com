@@ -1,11 +1,15 @@
-- if @jobs.any?
-  .section#jobs
-    %h3.title.jobs
-      %span= "We're hiring!"
-      -# %p= "We have one open position at the moment:"
+= title "Jobs"
+
+.section#jobs_list.jobs_content
+  %h2 Work at Jilion
+  - if @jobs.any?
+    %p.intro
+      Jilion® SA is a startup based in Lausanne, Switzerland at the Swiss Federal Institute of Technology (EPFL) and in Le Noirmont. We are a pioneer in the field of HTML5 Video. In January 2010 we showcased SublimeVideo®, the first HTML5 Video Player with custom controls. After a phenomenal response - including over a million unique visitors, more than eight thousand Twitter followers and praise from the Web community - Jilion focused on turning SublimeVideo into the world's first cloud-based, next-generation video player solution. Today, SublimeVideo provides Web publishers with a fast, reliable and pain-free way to truly embrace HTML5 and allows their videos to play flawlessly on any device, browser and Web page.
+    %p
+      %strong= "We have #{pluralize(@jobs.length, 'open position')} at the moment:"
     %ul
       - @jobs.each do |job|
         %li
           %h4= link_to job.title, job_path(job)
-- else
-  %p We don't have any position available right now.
+  - else
+    %p We don't have any position available right now.

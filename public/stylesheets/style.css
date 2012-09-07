@@ -1420,22 +1420,62 @@ ul#contact_topics .form_box .intro a {
   border-bottom:1px solid #2e343e;
 }
 
-#job_page {
+.jobs_content {
   padding:0 45px;
 }
 
-#job_page h2 {
+.jobs_content h2 {
   font-size:32px;
   font-weight:300;
   color:#D6E0F1;
   padding:10px 0 20px;
 }
 
-#job_page .desc {
-  line-height:28px;
-  font-size:17px;
+.jobs_content .desc {
+  line-height:26px;
+  font-size:16px;
 }
 
-#job_page .desc p {
-  padding:4px 0;
+.jobs_content .desc p {
+  padding:6px 0;
+}
+
+.jobs_content strong {
+  font-weight:bold;
+}
+
+#jobs_list p.intro {
+  line-height:28px;
+  font-size:17px;
+  padding:0 0 20px;
+}
+
+#jobs_list ul {
+  font-size:20px;
+  line-height:36px;
+  padding:10px 20px 40px;
+}
+
+#job_page p.intro {
+  display:none;
+}
+
+@media print {
+  #job_page p.intro {
+    display:block;
+  }
+}
+
+#job_page ul {
+  padding:0 20px 10px;
+  line-height:23px;
+}
+
+#job_page ul li {
+  padding:6px 0;
+}
+
+#job_page .bottom_note {
+  text-align:center;
+  padding:15px 0;
 }
