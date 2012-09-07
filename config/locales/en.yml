@@ -15,6 +15,7 @@ en:
     formats:
       date: "%b %d, %Y"
       full: "%b %d, %Y %H:%M"
+      full_small: "%d/%m/%y %H:%M"
       small: "%m/%d/%Y"
   date:
     formats:

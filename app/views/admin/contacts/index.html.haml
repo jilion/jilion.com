@@ -1,22 +1,22 @@
 %ul.filter
-  %li{ :class => (params[:state] == "new") || (params[:state] != "archived") ? "active": "" }= link_to "Recent", url_for(params.merge(:state => "new"))
-  %li{ :class => params[:state] == "archived" ? "active": "" }= link_to "Archived", url_for(params.merge(:state => "archived"))
+  %li{ class: !(params[:replied] || params[:archived]) ? "active": nil }= link_to "Recent", url_for(with_state: "new")
+  %li{ class: params[:archived] ? "active": nil }= link_to "Archived", url_for(archived: true)
   %li
     = form_tag url_for(params), :method => :get do
       = hidden_field_tag :state, params[:state] || "new"
-      = select_tag :type, options_for_select([["All", nil]] + Contact::TYPES.map { |t| t.to_s.gsub("Contact::", '') }, params[:type]), { :onchange => 'this.form.submit();' }
+      = select_tag :with_type, options_for_select([["All", nil]] + Contact::TYPES, params[:with_type]), { onchange: 'this.form.submit();' }
 .spacer
 
 %table
   %tr
     %th
-    %th= "Issue"
-    %th= "Type"
-    - if params[:type] == 'Job'
-      %th= "Job"
+    %th= link_to_sort :issue
+    %th= link_to_sort :type
+    - if params[:with_type] == 'Job'
+      %th= link_to_sort :job
     %th= "Email"
-    %th= "Date"
-    %th= "Replied"
-  = render :partial => "contact", :collection => @contacts
+    %th= link_to_sort :created_at, label: 'Date'
+    %th= link_to_sort :replied_at, label: 'Replied'
+  = render partial: "contact", :collection => @contacts
 
 = paginate @contacts

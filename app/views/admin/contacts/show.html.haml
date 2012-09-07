@@ -31,16 +31,19 @@
 %br
 
 %p
-  %strong{ :style => "font-weight:600;" }= "Archive this message"
+  %strong{ :style => "font-weight:600;" }= "Update this message"
 
-- unless @contact.archived?
-  - form_for :contact, @contact, :url => admin_contact_path(@contact), :html => { :method => :put } do |f|
+= form_for @contact, as: :contact, url: admin_contact_path(@contact), html: { method: :put } do |f|
+  .entry
+    = f.label :comment, "Comment"
+    = f.text_area :comment
     .entry
-      = f.label :replied, "Mark as replied?"
-      = f.check_box :replied
-      = f.hidden_field :state, :value => "archived"
-    .entry
-    = f.submit "Archive"
+      = f.label :replied, "Archived:"
+      = f.check_box :archived, checked: @contact.archived?
+  .entry
+    = f.label :replied, "Replied:"
+    = f.check_box :replied, checked: @contact.replied?
+  .entry= f.submit "Update"
 
 %br
 %hr

@@ -5,7 +5,7 @@
     %p= raw "If you have a question related to SublimeVideo, please visit #{link_to "sublimevideo.net", "http://sublimevideo.net"}."
     %p= "For any other question or request, please use the form below:"
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
-    = f.hidden_field :type, :value => 'Contact::Request'
+    = f.hidden_field :type, :value => 'Request'
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"

@@ -70,6 +70,7 @@ $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/guard-bundler-1.0.0/lib"
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/guard-livereload-1.0.0/lib")
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/guard-rspec-1.2.1/lib")
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/haml-3.1.7/lib")
+$:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/has_scope-0.5.1/lib")
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/launchy-2.1.2/lib")
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/netrc-0.7.7/lib")
 $:.unshift File.expand_path("#{path}/../ruby/1.9.1/gems/rest-client-1.6.7/lib")

@@ -13,7 +13,7 @@
       -#        = link_to("know more and apply...", job_path(job))
       %p= "For any spontaneous job application or internship proposal, please use the following form:"
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
-    = f.hidden_field :type, :value => 'Contact::Job'
+    = f.hidden_field :type, :value => 'Job'
     - if job
       = f.hidden_field :job_id, :value => job.id
     .entry

@@ -2,29 +2,43 @@ class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  attr_accessible :email, :replied
+  attr_accessible :email, :type, :message, :file, :replied, :archived, :comment
 
-  field :email,      type: String
-  field :state,      type: String,  default: 'new'
-  field :replied,    type: Boolean, default: false
-  field :issue,      type: Integer
-  field :replied_at, type: DateTime
+  field :email,       type: String
+  field :message,     type: String
+  field :state,       type: String,  default: 'new'
+  field :replied,     type: Boolean, default: false
+  field :issue,       type: Integer
+  field :replied_at,  type: DateTime
+  field :archived_at, type: DateTime
+  field :comment,     type: String
 
   # CarrierWave
   mount_uploader :file, FileUploader, mount_on: :file_filename
 
-  TYPES = %w[Contact::Job Contact::Press Contact::Request Contact::TeamUp]
-  STATES = %w[new archived]
+  TYPES = %w[Job Press Request TeamUp]
+  STATES = %w[new]
 
   validates :email, presence: { message: "can't be blank" }
   validates :email, length: { within: 6..100, message: "is too short" }
   validates :email, email_format: { message: "is not valid" }
+  validates :message, presence: true
 
   before_create :set_issue
   after_create :deliver_notification
 
+  scope :replied,       where(:replied_at.ne => nil)
+  scope :archived,      where({ state: 'archived' } || { :archived_at.ne => nil })
+  scope :with_state,    ->(state) { where(state: state) }
+  scope :with_type,     ->(type) { where(type: "Contact::#{type}") }
+  scope :by_issue,      ->(way = :desc) { order_by([:issue, way]) }
+  scope :by_type,       ->(way = :asc) { order_by([:type, way]) }
+  scope :by_job,        ->(way = :asc) { order_by([:job_id, way]) }
+  scope :by_created_at, ->(way = :asc) { order_by([:created_at, way]) }
+  scope :by_replied_at, ->(way = :asc) { order_by([:replied_at, way]) }
+
   TYPES.each do |klass|
-    define_method "#{klass.gsub(/Contact::/, '').underscore}?" do
+    define_method "#{klass.underscore}?" do
       self.class.name == klass
     end
   end
@@ -39,6 +53,14 @@ class Contact
     self.replied_at = Time.now.utc if replied == '1'
   end
 
+  def archived=(archived)
+    self.archived_at = Time.now if archived == '1'
+  end
+
+  def archived?
+    archived_at? || state == 'archived?'
+  end
+
   def replied?
     replied_at?
   end
@@ -49,12 +71,6 @@ class Contact
 
   def filename
     file? ? file.file.filename : ""
-  end
-
-  def self.search(params)
-    where = {}
-    where[:_type] = "Contact::#{params[:type]}" if params[:type].present?
-    where(where.merge(:state => params[:state] || 'new')).desc(:created_at).page(params[:page] || 1).per(25)
   end
 
 protected

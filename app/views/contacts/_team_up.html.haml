@@ -5,7 +5,7 @@
     %p= "If your organization is interested in teaming-up with us, we would love to hear from you:"
 
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
-    = f.hidden_field :type, :value => 'Contact::TeamUp'
+    = f.hidden_field :type, :value => 'TeamUp'
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"

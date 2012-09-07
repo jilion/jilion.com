@@ -1,10 +1,10 @@
 class Contact::Job < Contact
 
-  field :message, :type => String
-  field :job_id,  :type => String
+  attr_accessible :job_id
 
-  validates_presence_of :message
-  validates_presence_of :file
+  field :job_id, type: String
+
+  validates :file, presence: true
 
   belongs_to :job
 

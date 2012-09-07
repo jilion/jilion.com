@@ -7,6 +7,7 @@ gem 'bundler', '~> 1.2.0'
 gem 'rails',                     '3.2.8'
 gem 'validates_email_format_of', '~> 1.5.3'
 
+gem 'has_scope',           '~> 0.5.1'
 gem 'haml',                '~> 3.1.1'
 gem 'jammit',              '~> 0.6.0'
 gem 'RedCloth',            '~> 4.2.9'

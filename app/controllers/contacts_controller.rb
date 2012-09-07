@@ -23,7 +23,7 @@ private
 
   def contact_class
     if params[:contact] && Contact::TYPES.include?(params[:contact][:type])
-      class_eval(params[:contact][:type])
+      Contact.const_get(params[:contact][:type])
     else
       Contact
     end
