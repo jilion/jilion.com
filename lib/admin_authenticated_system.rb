@@ -11,7 +11,7 @@ private
   end
 
   def admin_authorized?
-    admin? || Rails.env.staging?
+    Rails.env.staging? || admin?
   end
 
   def admin?
