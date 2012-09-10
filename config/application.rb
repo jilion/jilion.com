@@ -21,6 +21,12 @@ module Jilion
     #   config.autoload_paths += [dir] if config.autoload_paths.exclude?(dir)
     # end
 
+    # Enable the asset pipeline
+    config.assets.enabled = true
+
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
+
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
     config.assets.precompile += %w( style.css admin.css ie.css curvycorners.js )
 
@@ -49,11 +55,5 @@ module Jilion
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
   end
 end
