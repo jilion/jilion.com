@@ -13,13 +13,13 @@ en:
 
   time:
     formats:
-      date: "%b %d, %Y"
-      full: "%b %d, %Y %H:%M"
+      date: "%B %d, %Y"
+      full: "%B %d, %Y %H:%M"
       full_small: "%d/%m/%y %H:%M"
       small: "%m/%d/%Y"
   date:
     formats:
-      default: "%b %d, %Y"
+      default: "%B %d, %Y"
       small: "%m/%d/%Y"
 
   views:

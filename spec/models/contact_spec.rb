@@ -12,7 +12,9 @@ describe Contact do
     its(:filename)   { should be_blank }
     its(:file?)      { should be_false }
 
-    it { should be_new }
+    it { should_not be_replied }
+    it { should_not be_archived }
+    it { should_not be_trashed }
     it { should be_valid }
   end
 

@@ -12,7 +12,6 @@ describe Contact::Request do
     its(:message) { should == "A message" }
 
     it { should be_request }
-    it { should be_new }
     it { should be_valid }
   end
 

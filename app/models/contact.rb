@@ -29,24 +29,24 @@ class Contact
   before_create :set_issue
   after_create :deliver_notification
 
-  scope :recent,        where({ :state.ne => 'archived', archived_at: nil })
-  scope :replied,       where(:replied_at.ne => nil)
-  scope :archived,      any_of({ state: 'archived' }, { :archived_at.ne => nil })
-  scope :trashed,       where(:trashed_at.ne => nil)
-  scope :with_state,    ->(state) { where(state: state) }
-  scope :with_type,     ->(type) { type == 'all' ? where(:type.in => TYPES.map { |t| "Contact::#{t}" }) : where(type: "Contact::#{type}") }
-  scope :by_issue,      ->(way = :desc) { order_by([:issue, way]) }
-  scope :by_type,       ->(way = :asc) { order_by([:type, way]) }
-  scope :by_email,      ->(way = :asc) { order_by([:email, way]) }
-  scope :by_job,        ->(way = :asc) { order_by([:job_id, way]) }
-  scope :by_created_at, ->(way = :asc) { order_by([:created_at, way]) }
-  scope :by_replied_at, ->(way = :asc) { order_by([:replied_at, way]) }
+  scope :recent,         where({ :state.ne => 'archived', archived_at: nil })
+  scope :replied,        where(:replied_at.ne => nil)
+  scope :archived,       any_of({ state: 'archived' }, { :archived_at.ne => nil })
+  scope :trashed,        where(:trashed_at.ne => nil)
+  scope :with_state,     ->(state) { where(state: state) }
+  scope :with_type,      ->(type) { type == 'all' ? where(:type.in => TYPES.map { |t| "Contact::#{t}" }) : where(type: "Contact::#{type}") }
+  scope :by_issue,       ->(way = :desc) { order_by([:issue, way]) }
+  scope :by_type,        ->(way = :asc) { order_by([:type, way]) }
+  scope :by_email,       ->(way = :asc) { order_by([:email, way]) }
+  scope :by_job,         ->(way = :asc) { order_by([:job_id, way]) }
+  scope :by_created_at,  ->(way = :asc) { order_by([:created_at, way]) }
+  scope :by_replied_at,  ->(way = :asc) { order_by([:replied_at, way]) }
   scope :by_archived_at, ->(way = :asc) { order_by([:archived_at, way]) }
-  scope :by_trashed_at, ->(way = :asc) { order_by([:trashed_at, way]) }
+  scope :by_trashed_at,  ->(way = :asc) { order_by([:trashed_at, way]) }
 
   TYPES.each do |klass|
     define_method "#{klass.underscore}?" do
-      self.class.name == klass
+      self.class.name == "Contact::#{klass}"
     end
   end
 

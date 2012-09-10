@@ -12,7 +12,6 @@ describe Contact::Press do
     its(:message) { should == "A message" }
 
     it { should be_press }
-    it { should be_new }
     it { should be_valid }
   end
 
