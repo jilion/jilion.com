@@ -24,6 +24,8 @@ module Jilion
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
     config.assets.precompile += %w( style.css admin.css ie.css curvycorners.js )
 
+    config.assets.initialize_on_precompile = false
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
