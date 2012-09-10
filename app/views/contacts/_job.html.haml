@@ -1,4 +1,4 @@
-- contact = contact(Contact::Job)
+- contact = contact('Job')
 .form_box#job{ :style => contact.errors.empty? && !job ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Job
   - unless job

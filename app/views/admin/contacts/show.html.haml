@@ -17,32 +17,41 @@
       %strong{ :style => "font-weight:600;" }= "Application for:"
       = link_to @contact.job.title, admin_job_path(@contact.job)
 
-  - if @contact.file.present?
+  - if @contact.file?
     %p
       %strong{ :style => "font-weight:600;" }= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
 %br
 
 .contact
-  = RedCloth.new(@contact.message).to_html.html_safe
+  = RedCloth.new(strip_tags(@contact.message)).to_html.html_safe
 
 %br
-%p= reply_link(@contact)
-%br
-
 %p
-  %strong{ :style => "font-weight:600;" }= "Update this message"
+  = mail_to(@contact.email, 'Reply', body: "\n\n#{@contact.message}")
+  = " | "
+  = mail_to('', 'Forward', body: "\n\n#{@contact.message}")
+%br
 
 = form_for @contact, as: :contact, url: admin_contact_path(@contact), html: { method: :put } do |f|
   .entry
-    = f.label :comment, "Comment"
-    = f.text_area :comment
-    .entry
-      = f.label :replied, "Archived:"
-      = f.check_box :archived, checked: @contact.archived?
+    = f.label :comment, "Comment:"
+    %br
+    = f.text_area :comment, rows: 5
   .entry
-    = f.label :replied, "Replied:"
     = f.check_box :replied, checked: @contact.replied?
+    = f.label :replied, "Replied?"
+  .entry
+    = f.check_box :archived, checked: @contact.archived?
+    = f.label :replied, "Archived?"
+  .entry
+    = f.check_box :trashed, checked: @contact.trashed?
+    = f.label :trashed, "Trashed?"
+  .entry
+    = f.label :new_type, "Change type from #{content_tag(:em, @contact.type)} to ".html_safe
+    = f.select :new_type, options_for_select(Contact::TYPES - [@contact.type], @contact.type)
+
+  %br
   .entry= f.submit "Update"
 
 %br

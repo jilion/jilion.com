@@ -1,10 +1,10 @@
 module ContactsHelper
 
   def contact(klass)
-    if params[:contact] && params[:contact][:type] == klass.to_s
+    if params[:contact] && params[:contact][:type] == klass
       @contact
     else
-      klass.new
+      Contact.const_get(klass).new
     end
   end
 

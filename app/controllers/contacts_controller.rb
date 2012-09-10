@@ -22,8 +22,9 @@ class ContactsController < ApplicationController
 private
 
   def contact_class
-    if params[:contact] && Contact::TYPES.include?(params[:contact][:type])
-      Contact.const_get(params[:contact][:type])
+    type = params[:contact].delete(:type)
+    if params[:contact] && Contact::TYPES.include?(type)
+      Contact.const_get(type)
     else
       Contact
     end
