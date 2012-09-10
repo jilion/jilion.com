@@ -13,7 +13,7 @@ Jilion::Application.routes.draw do
   get '/sublime/video/flash' => redirect('http://sublimevideo.net/features')
   get '/sublime(/:id)'       => redirect('http://sublimevideo.net')
 
-  # resources :jobs,     only: [:index, :show]
+  resources :jobs,     only: [:index, :show]
   resources :contacts, only: :create
 
   get '/contact' => 'contacts#new', via: 'get', as: :new_contact

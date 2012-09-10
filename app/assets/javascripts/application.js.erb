@@ -1,19 +1,23 @@
+//= require 'modernizr'
+//= require 'prototype'
+//= require 's2'
+
 Element.addMethods({
   shake: function(element, options) {
     S2.Extensions.CSSTransitions = false; //essential, cause webkit transitions in this case are less smooth
-     
+
     element = $(element);
     var originalLeft = parseFloat(element.getStyle('left') || '0');
     var oldStyle = { left:originalLeft };
     element.makePositioned();
-     
+
     var opts = { distance:15, duration:0.5 };
     Object.extend(opts, options);
     var distance = opts.distance;
     var duration = opts.duration;
-     
+
     var split = parseFloat(duration) / 10.0;
-     
+
     element.addClassName("shaking");
     var shakeEffect = element.morph('left:' + (originalLeft+distance) + 'px', { duration:split
       }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
@@ -24,7 +28,7 @@ Element.addMethods({
                 element.undoPositioned().setStyle(oldStyle);
                 element.removeClassName("shaking");
                 }});
-                 
+
     return shakeEffect;
   }
 });
@@ -32,7 +36,7 @@ Element.addMethods({
 document.observe("dom:loaded", function() {
   // Windows Disable Typekit
   // if ((navigator.userAgent.indexOf("Windows")!=-1)) $(document.body).addClassName('win');
-  
+
   //Curvy Corners (IE)
   // if (Prototype.Browser.IE || Prototype.Browser.Opera) {
   if (Prototype.Browser.IE) {
@@ -47,7 +51,7 @@ document.observe("dom:loaded", function() {
     curvyCorners(settings, divObj);
     divObj.style.filter="alpha(opacity=70)";
   }
-  
+
   //Google Map
   if (Prototype.Browser.MobileSafari) {
     if ($('show_location'))
@@ -57,10 +61,11 @@ document.observe("dom:loaded", function() {
     if ($('show_location'))
       $('show_location').observe("click", showMap);
   }
-  
+
   var dropPin = new Image();
-  dropPin.src = "/images/embed/map_drop_pin.png";
-  
+  dropPin.src = '<%= asset_path "embed/map_drop_pin.png" %>';
+  // dropPin.src = "/images/embed/map_drop_pin.png";
+
   //Newsletter
   var emailField = $('subscriber_email');
   var emailFlash = $('email_flash');
@@ -68,7 +73,7 @@ document.observe("dom:loaded", function() {
     var placeholder = $('email_placeholder');
     if ($F(emailField).blank()) placeholder.show(); //the "if" is for freaking FF (when reloading page with the field filled)
     emailField.observe("focus", function(e){ placeholder.hide(); });
-    emailField.observe("blur", function(e){ 
+    emailField.observe("blur", function(e){
       if ($F(emailField).blank()) placeholder.show();
     });
     placeholder.observe("click", function(e){ emailField.focus(); });
@@ -76,23 +81,23 @@ document.observe("dom:loaded", function() {
       if (!validateEmail($F(emailField))) {
         // $('email_field_wrap').shake({distance:15, duration:0.6});
         // $('email_field_wrap').shake({distance:35, duration:2.6});
-        
+
         // ===========================================
         // = Implementing Shake effect with scripty2 =
-        
+
         $('email_field_wrap').shake();
-        
+
         // var emailFieldWrap = $('email_field_wrap');
         // var originalLeft = parseFloat(emailFieldWrap.getStyle('left') || '0');
         // var oldStyle = { left:originalLeft };
         // emailFieldWrap.makePositioned();
-        // 
+        //
         // var distance = 15;
         // var duration = 0.6;
-        // 
+        //
         // var split = parseFloat(duration) / 10.0;
-        // 
-        // emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split 
+        //
+        // emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split
         //   }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
         //     }).morph('left:' + (originalLeft+distance) + 'px', { duration:split*2
         //       }).morph('left:' + (originalLeft-distance) + 'px', { duration:split*2
@@ -100,7 +105,7 @@ document.observe("dom:loaded", function() {
         //           }).morph('left:' + (originalLeft) + 'px', { duration:split, after: function() {
         //             emailFieldWrap.undoPositioned().setStyle(oldStyle);
         //             }});
-        
+
         // emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split, after: function() {
         //   emailFieldWrap.morph('left:' + (originalLeft-distance) + 'px', { duration:split*2, after: function() {
         //     emailFieldWrap.morph('left:' + (originalLeft+distance) + 'px', { duration:split*2, after: function() {
@@ -120,19 +125,19 @@ document.observe("dom:loaded", function() {
     });
   }
   if (emailFlash) {
-    setTimeout(function(){ 
+    setTimeout(function(){
       emailFlash.scrollTo();
       emailFlash.pulsate({pulses:3, duration:1.4});
     }, 500);
-    
+
     // if unsubscribed... make email_field re-appear ;-)
     if (emailFlash.hasClassName('unsubscribed')) {
-      setTimeout(function(){ 
+      setTimeout(function(){
         emailFlash.fade({ afterFinish: function(){ $('new_subscriber').appear(); } });
       }, 3000);
     }
   }
-  
+
   $$('input[type=file]').each(function(input){
     input.observe('change', function(e){
       input.previous().down('.fake_file_input_value').update(input.value);
@@ -141,7 +146,7 @@ document.observe("dom:loaded", function() {
     //   fakeFileInputButton.addClassName('active');
     // });
   });
-  
+
   $$("#contact_topics li a.title").each(function(a){
     if (!a.hasClassName('static')) {
       if (a.next('.form_box').hasClassName('errors')) a.up().addClassName('expanded');
@@ -150,21 +155,21 @@ document.observe("dom:loaded", function() {
         if (form_box.visible()) {
           a.up().removeClassName('expanded');
           form_box.hide();
-        
+
           if (Prototype.Browser.IE) {
             curvyCorners.redraw();
           }
-        
+
         } else {
           $$("#contact_topics li .form_box").invoke("hide");
           $$("#contact_topics li").invoke("removeClassName", "expanded");
           a.up().addClassName('expanded');
           form_box.setStyle({display:"block"});
-        
+
           if (Prototype.Browser.IE) {
             curvyCorners.redraw();
           }
-        
+
           var elementToScrollTo = a.up();
           var scrollPos = elementToScrollTo.cumulativeOffset().top;
           scrollTo(0,scrollPos-11);
@@ -173,11 +178,11 @@ document.observe("dom:loaded", function() {
       });
     }
   });
-  
+
   if ($('latest_work')) slideshow  = new Slideshow(10,1.4);
   // Home Slideshow (pause duration, animation duration)
   // animateSlideShow(15,1.4);
-  
+
 });
 
 Slideshow = Class.create({
@@ -194,12 +199,12 @@ Slideshow = Class.create({
         this.slideShowWrapper.style[Modernizr.prefixed('transitionProperty')] = "left";
       }
     }
-    
+
     this.slideNames = [];
     $$('#latest_work .wrap .box').each(function(element){
       this.slideNames.push(this.getBoxName(element));
     }.bind(this));
-    
+
     this.activeBoxIndex = 0;
     this.startTimer();
     this.setupObservers();
@@ -223,10 +228,10 @@ Slideshow = Class.create({
         }
       } else if (Modernizr.csstransitions) {
         this.slideShowWrapper.style.left = "left:-" + position + "px";
-      } else {        
+      } else {
         this.slideShowWrapper.morph('left:-'+position+'px', {duration:this.speed});
       }
-      
+
       this.activeBoxIndex = index;
       this.updateActiveClasses(this.slideNames[index]);
     }
@@ -265,7 +270,7 @@ function googleMapInitialize() {
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
   var map = new google.maps.Map(document.getElementById("map_wrap"), myOptions);
-  
+
   var image = '/images/embed/map_drop_pin.png';
   var marker = new google.maps.Marker({
       position: myLatlng,
@@ -273,16 +278,16 @@ function googleMapInitialize() {
       title:"Jilion",
       icon: image
   });
-  
+
   var contentString = '<div id="popbox">'+
       '<p><a href="http://bit.ly/h4GQ0l">EPFL Innovation Square <br /> PSE-D<br />1015 Lausanne <br /> Switzerland</a></p>'+
       '</div>';
-      
+
   var infowindow = new google.maps.InfoWindow({
       content: contentString,
       disableAutoPan: true
   });
-  
+
   infowindow.open(map,marker);
 }
 
@@ -295,7 +300,7 @@ function showMap(event) {
   else {
     mapOverlay.show();
     // mapOverlay.setStyle({opacity:"1"});
-    
+
     var scrollPositionY =  window.pageYOffset
                         || document.documentElement.scrollTop
                         || document.body.scrollTop
@@ -310,7 +315,7 @@ function showMap(event) {
 
 function hideGArrow() {
   var GArrows = $$('img[src="http://maps.gstatic.com/intl/en_us/mapfiles/iw_close.gif"]');
-  
+
   if (GArrows.size() > 0) {
     GArrows.invoke('remove');
   }
@@ -324,7 +329,7 @@ function hideMap() {
 
 function bodyClick(event) {
   var el = event.element();
-  
+
   var clickInsideMap = el.match('#map_overlay') || el.up('#map_overlay');
   if (!clickInsideMap) {
     hideMap();
@@ -337,7 +342,7 @@ function bodyClick(event) {
 //   var pauseDuration = pause *1000;
 //   S2.Extensions.CSSTransitions = true;
 //   var slideShowWrapper = $$('#latest_work .wrap')[0];
-//   
+//
 //   setTimeout(function(){
 //     slideShowWrapper.morph('left:-910px', {duration:speed});
 //     setTimeout(function(){
