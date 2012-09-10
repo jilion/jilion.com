@@ -48,8 +48,8 @@
     = f.check_box :trashed, checked: @contact.trashed?
     = f.label :trashed, "Trashed?"
   .entry
-    = f.label :new_type, "Change type from #{content_tag(:em, @contact.type)} to ".html_safe
-    = f.select :new_type, options_for_select(Contact::TYPES - [@contact.type], @contact.type)
+    = f.label :new_type, "Change type from #{content_tag(:em, short_contact_type(@contact))} to ".html_safe
+    = f.select :new_type, options_for_select(Contact::TYPES - [short_contact_type(@contact)], short_contact_type(@contact))
 
   %br
   .entry= f.submit "Update"

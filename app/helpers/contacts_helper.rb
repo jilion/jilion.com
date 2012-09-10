@@ -8,4 +8,8 @@ module ContactsHelper
     end
   end
 
+  def short_contact_type(contact)
+    contact.class.name.gsub(/Contact::/, '')
+  end
+
 end
