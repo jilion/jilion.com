@@ -1,8 +1,8 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
   config.middleware.insert_before(Rack::Lock, Rack::NoWWW)
-  config.middleware.use(Rack::SslEnforcer, :only => [%r{^/admin}] )
-  config.middleware.use(Rack::GoogleAnalytics, :tracker => 'UA-10280941-1')
+  config.middleware.use(Rack::SslEnforcer, only: [%r{^/admin}] )
+  config.middleware.use(Rack::GoogleAnalytics, tracker: 'UA-10280941-1')
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
@@ -32,7 +32,7 @@ Jilion::Application.configure do
 
   # Disable Rails's static asset server
   # In production, Apache or nginx will already do this
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
