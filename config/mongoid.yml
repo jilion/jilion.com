@@ -17,5 +17,12 @@ staging:
   persist_in_safe_mode: true
 
 production:
+<% if ARGV.join.include? 'assets:precompile' %>
+  # make rake asset:precompile work
+  preload_models: false
+  host: localhost
+  database: jilion_dev<%= suffix %>
+<% else %>
   uri: <%= ENV['MONGOHQ_URL'] %>
   persist_in_safe_mode: true
+<% end %>
