@@ -1,7 +1,7 @@
 module ContactsHelper
 
   def contact(klass)
-    if params[:contact] && params[:contact][:type] == klass
+    if @contact && @contact.type_name == klass.underscore
       @contact
     else
       Contact.const_get(klass).new
