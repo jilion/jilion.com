@@ -4,7 +4,7 @@ Jilion::Application.configure do
     [u, p] == ['jilion', ENV['PRIVATE_CODE']]
   end
   config.middleware.insert_before Rack::Lock, Rack::NoWWW
-  config.middleware.use Rack::SslEnforcer, only: [%r{^/admin}]
+  config.middleware.insert_before Rack::Lock, Rack::SslEnforcer, only: %r{^/admin}
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests

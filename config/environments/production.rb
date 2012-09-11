@@ -1,8 +1,8 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
-  config.middleware.insert_before(Rack::Lock, Rack::NoWWW)
-  config.middleware.use(Rack::SslEnforcer, only: [%r{^/admin}] )
-  config.middleware.use(Rack::GoogleAnalytics, tracker: 'UA-10280941-1')
+  config.middleware.insert_before Rack::Lock, Rack::NoWWW
+  config.middleware.insert_before Rack::Lock, Rack::SslEnforcer, only: %r{^/admin}
+  config.middleware.use Rack::GoogleAnalytics, tracker: 'UA-10280941-1'
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
@@ -36,6 +36,9 @@ Jilion::Application.configure do
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
+
+  # Heroku logs config
+  config.action_controller.logger = Logger.new(STDOUT)
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
