@@ -50,7 +50,7 @@
     = f.label :trashed, "Trashed?"
   .entry
     = f.label :new_type, "Change type from #{content_tag(:em, short_contact_type(@contact))} to ".html_safe
-    = f.select :new_type, options_for_select(Contact::TYPES - [short_contact_type(@contact)], short_contact_type(@contact))
+    = f.select :new_type, options_for_select(Contact::TYPES, short_contact_type(@contact))
 
   %br
   .entry= f.submit "Update"
