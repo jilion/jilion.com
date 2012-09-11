@@ -18,6 +18,7 @@
       = link_to @contact.job.title, admin_job_path(@contact.job)
 
   - if @contact.file?
+    %br
     %p
       %strong{ :style => "font-weight:600;" }= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
@@ -30,7 +31,7 @@
 %p
   = mail_to(@contact.email, 'Reply', body: "\n\n#{@contact.message}")
   = " | "
-  = mail_to('', 'Forward', body: "\n\n#{@contact.message}")
+  = mail_to('', 'Forward', body: admin_contact_url(@contact, protocol: 'https'))
 %br
 
 = form_for @contact, as: :contact, url: admin_contact_path(@contact), html: { method: :put } do |f|

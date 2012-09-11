@@ -52,8 +52,6 @@ end
 group :development do
   gem 'wirble'
   gem 'heroku'
-  gem 'heroku_tasks'
-
   gem 'rack-livereload'
 
   # Guard
