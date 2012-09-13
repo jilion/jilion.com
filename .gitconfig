@@ -15,6 +15,11 @@
   url   = git@jime1.epfl.ch:jilion.com.git
   fetch = +refs/heads/*:refs/remotes/origin/*
 
+[remote "staging"]
+  url   = git@heroku.com:jilion-www-staging.git
+  fetch = +refs/heads/master:refs/remotes/staging/master
+  push  = HEAD:master
+
 [remote "production"]
   url   = git@heroku.com:jilion-www.git
   fetch = +refs/heads/master:refs/remotes/production/master
