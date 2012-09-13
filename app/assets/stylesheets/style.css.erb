@@ -128,12 +128,12 @@ body.win {font-family:Arial, sans-serif;}
 
 #menu li.jobs span.note {
   display:block;
-  width:127px;
-  height:66px;
-  background:url(/images/embed/jobs_menu_highlight.png) no-repeat 0;
+  width:82px;
+  height:44px;
+  background:url(<%= asset_path "embed/jobs_menu_highlight.png" %>) no-repeat 0;
   position:absolute;
-  top:-11px;
-  left:-112px;
+  top:-16px;
+  left:-66px;
   text-indent:250%;
   white-space:nowrap;
   overflow:hidden;
@@ -1309,10 +1309,14 @@ ul#contact_topics .form_box .intro a {
   font-weight:bold;
 }
 
-#jobs_list p.intro {
+#jobs_list .intro p {
   line-height:28px;
   font-size:17px;
   padding:0 0 20px;
+}
+
+#jobs_list span.light {
+  color:#D6E0F1;
 }
 
 #jobs_list ul {

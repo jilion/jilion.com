@@ -3,10 +3,18 @@
 .section#jobs_list.jobs_content
   %h2 Work at Jilion
   - if @jobs.any?
-    %p.intro
-      Jilion® SA is a startup based in Lausanne, Switzerland at the Swiss Federal Institute of Technology (EPFL) and in Le Noirmont. We are a pioneer in the field of HTML5 Video. In January 2010 we showcased SublimeVideo®, the first HTML5 Video Player with custom controls. After a phenomenal response - including over a million unique visitors, more than eight thousand Twitter followers and praise from the Web community - Jilion focused on turning SublimeVideo into the world's first cloud-based, next-generation video player solution. Today, SublimeVideo provides Web publishers with a fast, reliable and pain-free way to truly embrace HTML5 and allows their videos to play flawlessly on any device, browser and Web page.
+    .intro
+      :textile
+        Jilion® SA is a startup based in Switzerland and a spin-off from the Swiss Federal Institute of Technology ("EPFL":http://www.epfl.ch).
+        
+        Jilion is a pioneer in the field of HTML5 Video. In January 2010 they showcased "SublimeVideo":http://sublimevideo.net, the first HTML5 Video Player with custom controls. After a phenomenal response – including over a million unique visitors, more than eight thousand Twitter followers and praise from the Web community – Jilion focused on turning SublimeVideo into the world’s first cloud-based, next-generation video player solution.
+        
+        Today, SublimeVideo provides Web publishers with a fast, reliable and pain-free way to truly embrace *HTML5* and allows their videos to play flawlessly on any device, browser and in any Web page.
+        
+        We are currently working hard on some important and exciting HTML5 technology. Let us know who you are, how you think you can contribute and why you’re cool to work with.
     %p
-      %strong= "We have #{pluralize(@jobs.length, 'open position')} at the moment:"
+      %strong
+        %span.light= "We have #{pluralize(@jobs.length, 'open position')} at the moment:"
     %ul
       - @jobs.each do |job|
         %li
