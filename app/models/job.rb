@@ -13,7 +13,7 @@ class Job
   before_create :set_issue
 
   def self.published
-    where(state: 'published').desc(:created_at)
+    where(state: 'published').asc(:created_at)
   end
 
   def self.search(params)
