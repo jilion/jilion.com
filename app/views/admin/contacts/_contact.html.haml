@@ -6,9 +6,11 @@
   %td
     = link_to "##{contact.issue}", admin_contact_path(contact)
   %td= contact.class.to_s.demodulize
-  - if params[:with_type] == 'Job' && contact.is_a?(Contact::Job) && contact.job_id?
-    %td
+  %td
+    - if params[:with_type] == 'Job' && contact.is_a?(Contact::Job) && contact.job_id?
       %small= link_to contact.job.title, admin_job_path(contact.job)
+    - else
+      %small Spontaneous application.
   %td= mail_to contact.email
   %td
     %small= l contact.created_at, format: :full_small
