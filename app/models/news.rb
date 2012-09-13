@@ -16,7 +16,7 @@ class News
     feed    = Atom::Feed.load_feed(URI.parse(ATOM_URL))
     entries = feed.entries.select { |entry|
       categories = entry.categories.map(&:term)
-      categories.include?('sublimevideo') && categories.exclude?('sublimevideo-showcase')
+      (categories & %w[sublimevideo company]).any? && categories.exclude?('sublimevideo-showcase')
     }
     entries.first(count).map { |entry| News.new(entry) }
   end
