@@ -3,45 +3,57 @@
 %p
   %strong{ :style => "font-weight:600;" }= "Issue ##{@contact.issue}"
   = "(#{@contact.state.humanize}), received on"
-  %span{ :style => "font-weight:600;" }= "#{l(@contact.created_at, :format => :long)}"
+  %span{ :style => "font-weight:600;" }= "#{l(@contact.created_at, format: :full)}"
   - if @contact.replied?
     = ", replied on"
-    %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, :format => :long)}"
+    %span{ :style => "font-weight:600;" }= "#{l(@contact.replied_at, format: :full)}"
 
   %p
     %strong{ :style => "font-weight:600;" }= "From:"
     = mail_to(@contact.email)
 
   - if @contact.is_a?(Contact::Job) && @contact.job_id?
-    - job = Job.find(@contact.job_id)
     %p
       %strong{ :style => "font-weight:600;" }= "Application for:"
-      = link_to job.title, admin_job_path(job)
+      = link_to @contact.job.title, admin_job_path(@contact.job)
 
-  - if @contact.file.present?
+  - if @contact.file?
+    %br
     %p
       %strong{ :style => "font-weight:600;" }= "Attachment:"
       = link_to @contact.file_filename, @contact.file_url
 %br
 
 .contact
-  = RedCloth.new(@contact.message).to_html.html_safe
+  = RedCloth.new(strip_tags(@contact.message)).to_html.html_safe
 
 %br
-%p= reply_link(@contact)
-%br
-
 %p
-  %strong{ :style => "font-weight:600;" }= "Archive this message"
+  = mail_to(@contact.email, 'Reply', body: "\n\n#{@contact.message}")
+  = " | "
+  = mail_to('', 'Forward', body: admin_contact_url(@contact, protocol: 'https'))
+%br
 
-- unless @contact.archived?
-  - form_for :contact, @contact, :url => admin_contact_path(@contact), :html => { :method => :put } do |f|
-    .entry
-      = f.label :replied, "Mark as replied?"
-      = f.check_box :replied
-      = f.hidden_field :state, :value => "archived"
-    .entry
-    = f.submit "Archive"
+= form_for @contact, as: :contact, url: admin_contact_path(@contact), html: { method: :put } do |f|
+  .entry
+    = f.label :comment, "Comment:"
+    %br
+    = f.text_area :comment, rows: 5
+  .entry
+    = f.check_box :replied, checked: @contact.replied?
+    = f.label :replied, "Replied?"
+  .entry
+    = f.check_box :archived, checked: @contact.archived?
+    = f.label :replied, "Archived?"
+  .entry
+    = f.check_box :trashed, checked: @contact.trashed?
+    = f.label :trashed, "Trashed?"
+  .entry
+    = f.label :new_type, "Change type from #{content_tag(:em, short_contact_type(@contact))} to ".html_safe
+    = f.select :new_type, options_for_select(Contact::TYPES, short_contact_type(@contact))
+
+  %br
+  .entry= f.submit "Update"
 
 %br
 %hr

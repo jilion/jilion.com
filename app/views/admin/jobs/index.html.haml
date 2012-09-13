@@ -1,10 +1,11 @@
-%ul.filter
-  %li{ :class => (params[:state] == "new") || (!params[:state]) ? "active": "" }= link_to "Draft", url_for(params.merge(:state => "new"))
-  %li{ :class => (params[:state] == "published") ? "active": "" }= link_to "Published", url_for(params.merge(:state => "published"))
-  %li{ :class => params[:state] == "archived" ? "active": "" }= link_to "Archived", url_for(params.merge(:state => "archived"))
+%ul.filter#jobs_filter
+  %li{ :class => (params[:state] == "new") || (!params[:state]) ? "active": nil }= link_to "Draft", url_for(state: "new")
+  %li{ :class => (params[:state] == "published") ? "active": nil }= link_to "Published", url_for(state: "published")
+  %li{ :class => params[:state] == "archived" ? "active": nil }= link_to "Archived", url_for(state: "archived")
 .spacer
 
-= link_to "New job offer", new_admin_job_path
+%p= link_to "New job offer", new_admin_job_path
+%br
 
 %table
   %tr
@@ -13,6 +14,6 @@
     %th= "Summary"
     %th= "State"
     %th= "Publication Date"
-  = render :partial => "job", :collection => @jobs
+  = render @jobs
 
-= will_paginate @jobs
+= paginate @jobs

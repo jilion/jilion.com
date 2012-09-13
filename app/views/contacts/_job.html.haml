@@ -1,19 +1,12 @@
-- contact = contact(Contact::Job)
+- contact = contact('Job')
 .form_box#job{ :style => contact.errors.empty? && !job ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Job
   - unless job
     .intro
       %p= "We really enjoy working together at Jilion. The quality of our team is always going to be what matters most to us. A good team spirit is what makes quality and creativity possible."
-      -#- if Job.published.count > 0
-      -#  %p= "At the moment we are looking to fill the following positions:"
-      -#  %ul
-      -#    - Job.published.each do |job|
-      -#      %li
-      -#        = "#{job.title}, "
-      -#        = link_to("know more and apply...", job_path(job))
       %p= "For any spontaneous job application or internship proposal, please use the following form:"
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :method => :post, :multipart => true }, :builder => CustomFormBuilder do |f|
-    = f.hidden_field :type, :value => 'Contact::Job'
+    = f.hidden_field :type, :value => 'Job'
     - if job
       = f.hidden_field :job_id, :value => job.id
     .entry
@@ -34,6 +27,6 @@
     .entry.submit
       = submit_tag 'Submit', :onclick => "this.next('.spinner').show();"
       .spinner{ :style => "display:none" }
-        = image_tag "/images/embed/contact/spinner.gif", :alt => ""
+        = image_tag "embed/contact/spinner.gif", :alt => ""
       .spacer
   .required_mention= raw "<abbr title='required'>*</abbr> required"

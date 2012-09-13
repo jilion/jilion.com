@@ -1,11 +1,15 @@
 module ContactsHelper
 
   def contact(klass)
-    if params[:contact] && params[:contact][:type] == klass.to_s
+    if @contact && @contact.type_name == klass.underscore
       @contact
     else
-      klass.new
+      Contact.const_get(klass).new
     end
+  end
+
+  def short_contact_type(contact)
+    contact.class.name.gsub(/Contact::/, '')
   end
 
 end

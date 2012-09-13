@@ -1,8 +1,13 @@
 class Admin::ContactsController < Admin::AdminController
 
+  has_scope :replied, :recent, :replied, :archived, :trashed, type: :boolean
+  has_scope :with_type, :by_issue, :by_type, :by_email, :by_job, :by_created_at, :by_replied_at, :by_archived_at, :by_trashed_at
+
   # GET /admin/contacts
   def index
-    @contacts = Contact.search(params)
+    params[:recent]   = true unless params[:replied] || params[:archived] || params[:trashed] || params[:with_type]
+    params[:by_issue] = 'desc' unless params.keys.detect { |k| k =~ /^by_/ }
+    @contacts = apply_scopes(Contact).page(params[:page] || 1).per(25)
   end
 
   # GET /admin/contacts/:id

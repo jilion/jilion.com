@@ -1,11 +1,11 @@
-- contact = contact(Contact::TeamUp)
+- contact = contact('TeamUp')
 .form_box#team_up{ :style => contact.errors.empty? ? 'display:none' : 'display:block', :class => contact.errors.empty? ? '' : 'errors' }
   %h2 Team Up
   .intro
     %p= "If your organization is interested in teaming-up with us, we would love to hear from you:"
 
   = form_for contact, :as => :contact, :url => contacts_path, :html => { :multipart => true }, :builder => CustomFormBuilder do |f|
-    = f.hidden_field :type, :value => 'Contact::TeamUp'
+    = f.hidden_field :type, :value => 'TeamUp'
     .entry
       = f.label :email, "Your email", :require => true
       = f.text_field :email, :class => "text"

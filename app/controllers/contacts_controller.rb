@@ -9,9 +9,9 @@ class ContactsController < ApplicationController
     @contact = contact_class.new(params[:contact])
 
     if @contact.save
-      flash[:notice] = 'Thank you for your message.'
+      flash[:notice] = "Thank you for your #{job_application? ? 'application' : 'message'}."
       redirect_to new_contact_url
-    elsif params[:contact][:job_id]
+    elsif job_application?
       @job = Job.find(params[:contact][:job_id])
       render '/jobs/show'
     else
@@ -22,11 +22,16 @@ class ContactsController < ApplicationController
 private
 
   def contact_class
-    if params[:contact] && Contact::TYPES.include?(params[:contact][:type])
-      class_eval(params[:contact][:type])
+    type = params[:contact].delete(:type)
+    if params[:contact] && Contact::TYPES.include?(type)
+      Contact.const_get(type)
     else
       Contact
     end
+  end
+
+  def job_application?
+    params[:contact].key?(:job_id)
   end
 
 end

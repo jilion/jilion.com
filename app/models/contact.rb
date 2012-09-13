@@ -1,64 +1,95 @@
-require 'will_paginate/array'
-
 class Contact
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  attr_accessor :replied
+  attr_accessor :new_type
+  attr_accessible :email, :new_type, :message, :file, :file_cache, :replied, :archived, :trashed, :comment
 
-  field :email,      :type => String
-  field :state,      :type => String,  :default => 'new'
-  field :replied,    :type => Boolean, :default => false
-  field :issue,      :type => Integer
-  field :replied_at, :type => DateTime
+  field :email,       type: String
+  field :message,     type: String
+  field :state,       type: String,  default: 'new'
+  field :replied,     type: Boolean, default: false
+  field :issue,       type: Integer
+  field :replied_at,  type: DateTime
+  field :archived_at, type: DateTime
+  field :trashed_at,  type: DateTime
+  field :comment,     type: String
 
   # CarrierWave
   mount_uploader :file, FileUploader, mount_on: :file_filename
 
-  RegEmailName   = '[\w\.%\+\-]+'
-  RegDomainHead  = '(?:[A-Z0-9\-]+\.)+'
-  RegDomainTLD   = '(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)'
-  RegEmailOk     = /\A#{RegEmailName}@#{RegDomainHead}#{RegDomainTLD}\z/i
-  TYPES = %w[Contact::Job Contact::Press Contact::Request Contact::TeamUp]
-  STATES = %w[new archived]
+  TYPES  = %w[Job Press Request TeamUp]
+  STATES = %w[new]
 
-  validates_presence_of :email,                        :message => "can't be blank"
-  validates_length_of   :email, :within => 6..100,     :message => "is too short"
-  validates_format_of   :email, :with   => RegEmailOk, :message => "is not valid"
+  validates :email, presence: { message: "can't be blank" }
+  validates :email, length: { within: 6..100, message: "is too short" }
+  validates :email, email_format: { message: "is not valid" }
+  validates :message, presence: true
 
   before_create :set_issue
   after_create :deliver_notification
 
+  scope :recent,         where({ :state.ne => 'archived', archived_at: nil })
+  scope :replied,        where(:replied_at.ne => nil)
+  scope :archived,       any_of({ state: 'archived' }, { :archived_at.ne => nil })
+  scope :trashed,        where(:trashed_at.ne => nil)
+  scope :with_state,     ->(state) { where(state: state) }
+  scope :with_type,      ->(type) { type == 'all' ? where(:_type.in => TYPES.map { |t| "Contact::#{t}" }) : where(_type: "Contact::#{type}") }
+  scope :by_issue,       ->(way = :desc) { order_by([:issue, way]) }
+  scope :by_type,        ->(way = :asc) { order_by([:_type, way]) }
+  scope :by_email,       ->(way = :asc) { order_by([:email, way]) }
+  scope :by_job,         ->(way = :asc) { order_by([:job_id, way]) }
+  scope :by_created_at,  ->(way = :asc) { order_by([:created_at, way]) }
+  scope :by_replied_at,  ->(way = :asc) { order_by([:replied_at, way]) }
+  scope :by_archived_at, ->(way = :asc) { order_by([:archived_at, way]) }
+  scope :by_trashed_at,  ->(way = :asc) { order_by([:trashed_at, way]) }
+
   TYPES.each do |klass|
-    define_method "#{klass.gsub(/Contact::/, '').underscore}?" do
-      self.class.name == klass
+    define_method "#{klass.underscore}?" do
+      self.class.name == "Contact::#{klass}"
     end
   end
 
+  STATES.each do |s|
+    define_method "#{s}?" do
+      self.state == s
+    end
+  end
+
+  def new_type=(new_type)
+    self._type = "Contact::#{new_type}" if TYPES.include?(new_type)
+  end
+
   def replied=(replied)
-    self.replied_at = Time.now.utc if replied
+    self.replied_at = Time.now.utc if replied == '1'
+  end
+
+  def archived=(archived)
+    self.archived_at = Time.now if archived == '1'
+  end
+
+  def trashed=(trashed)
+    self.trashed_at = Time.now if trashed == '1'
   end
 
   def replied?
     replied_at?
   end
 
+  def archived?
+    archived_at? || state == 'archived'
+  end
+
+  def trashed?
+    trashed_at?
+  end
+
   def type_name
     self.class.name.gsub(/Contact::/, '').underscore
   end
 
-  def archived?
-    state == "archived"
-  end
-
   def filename
     file? ? file.file.filename : ""
-  end
-
-  def self.search(params)
-    where = {}
-    where[:_type] = "Contact::#{params[:type]}" if params[:type].present?
-    where(where.merge(:state => params[:state] || 'new')).desc(:created_at).paginate({ :page => params[:page] || 1, :per_page => 25 })
   end
 
 protected

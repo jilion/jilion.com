@@ -4,6 +4,9 @@ development:
 test:
   user: fake
   pass: fake
+staging:
+  user: staging
+  pass: staging
 production:
   user: admin
   pass: "8Nd@ZCb%EVq9(R:Y4Ds{3yaU7]o#px29$6^hJMnLu4;mftc2zK"

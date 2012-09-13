@@ -13,9 +13,9 @@
     %strong{ :style => "font-weight:600;" }= "State:"
     = @job.state
 
-  - if @job.new?
+  - if @job.is_new?
     = render("action_button", :job => @job, :state => 'published', :action => 'publish')
-  - elsif @job.published?
+  - elsif @job.is_published?
     = render("action_button", :job => @job, :state => 'archived', :action => 'archive')
   %br
 

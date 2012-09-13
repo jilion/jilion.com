@@ -1,12 +1,20 @@
 = title "Jobs - #{@job.title}"
-#job_page
+
+#job_page.jobs_content
+  %p.intro
+    Jilion® SA is a startup based in Lausanne, Switzerland at the Swiss Federal Institute of Technology (EPFL) and in Le Noirmont. We are a pioneer in the field of HTML5 Video. In January 2010 we showcased SublimeVideo®, the first HTML5 Video Player with custom controls. After a phenomenal response - including over a million unique visitors, more than eight thousand Twitter followers and praise from the Web community - Jilion focused on turning SublimeVideo into the world's first cloud-based, next-generation video player solution. Today, SublimeVideo provides Web publishers with a fast, reliable and pain-free way to truly embrace HTML5 and allows their videos to play flawlessly on any device, browser and Web page.
+  %p.intro
+    We have an open position for:
+  
   %h2= @job.title
-  .desc
-    = @job.description
+  .desc= raw @job.description
+
+  %p.bottom_note
+    %em No recruiters or agencies please.
 
 #contact
   %ul#contact_topics
     %li.expanded
-      %a.title.static{ :href => "", :onclick => "return false" }
+      %a.title.static{ href: "", onclick: "return false" }
         %strong= "Apply"
-      = render '/contacts/job', :job => @job
+      = render '/contacts/job', job: @job

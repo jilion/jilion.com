@@ -1,0 +1,9 @@
+.section.news
+  %h3.title.news
+    %span Latest news
+  %ul.articles
+    - cached_latest_sublimevideo_news(3).each do |news|
+      %li
+        %h3= link_to news.title, news.url
+        %em.date= l news.date, format: :date
+        = link_to 'Read article', news.url, class: 'read'

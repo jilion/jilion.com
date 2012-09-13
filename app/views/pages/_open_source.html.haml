@@ -1,0 +1,14 @@
+.section.open_source.box
+  %h3.title.open_source
+    %span= "Open-Source"
+  .left
+    = link_to "https://github.com/guard/guard" do
+      = image_tag "embed/home/guard_icon.png", alt: "Guard"
+    %span.downloads
+      = "more than"
+      = link_to "900,000", "https://rubygems.org/gems/guard"
+      = "downloads"
+    = link_to "More", "https://github.com/guard/guard", :class => "more"
+  .right
+    %h3= link_to "Guard", "https://github.com/guard/guard"
+    %p.desc= "We strongly support the development of Guard, a highly popular open-source tool created and maintained by our team to easily trigger events on file system modifications."

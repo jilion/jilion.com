@@ -1,16 +1,15 @@
-!!! strict
+!!! 5
 %html{ "xmlns" => "http://www.w3.org/1999/xhtml", "xml:lang" => "en", "lang" => "en" }
   %head
     %title Jilion Admin
 
     %meta{ "http-equiv" => "Content-Type", :content => "text/html;charset=UTF-8" }
 
-    = include_stylesheets :style
-    %link{ :href => "/stylesheets/admin.css", :type => "text/css", :media => "screen", :rel => "stylesheet" }
+    = stylesheet_link_tag 'style', 'admin'
 
     %link{ :rel => "shortcut icon", :href => "/favicon.ico", :type => "image/x-icon" }
-    == <script type="text/javascript" src="#{request.protocol}use.typekit.com/ibz5qib.js"></script>
-    == <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    = javascript_include_tag "//use.typekit.com/ibz5qib.js"
+    = javascript_tag "try{Typekit.load();}catch(e){}"
   %body
     #global
       #logo_backlights
@@ -35,4 +34,4 @@
         .spacer
     #footer= "Copyright © #{Time.now.utc.year} Jime® SA — Jilion® is the consulting group of Jime® SA"
 
-    = include_javascripts :application
+    = javascript_include_tag 'application'

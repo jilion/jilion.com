@@ -17,16 +17,7 @@ group 'backend' do
     watch('Gemfile')
   end
 
-  guard 'spork', :wait => 40 do
-    watch('Gemfile')
-    watch('config/application.rb')
-    watch('config/environment.rb')
-    watch(%r{^config/environments/.+\.rb})
-    watch(%r{^config/initializers/.+\.rb})
-    watch('spec/spec_helper.rb')
-  end
-
-  guard 'rspec', :version => 2, :cli => "--color --drb", :bundler => false do
+  guard :rspec, bundler: false, version: 2, all_after_pass: false, all_on_start: false, keep_failed: false do
     watch('spec/spec_helper.rb')                                  { "spec" }
     watch('app/controllers/application_controller.rb')            { "spec/controllers" }
     watch('config/routes.rb')                                     { "spec/routing" }

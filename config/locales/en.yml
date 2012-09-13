@@ -14,9 +14,18 @@ en:
   time:
     formats:
       date: "%B %d, %Y"
-      full: "%m/%d/%Y %I:%M %p"
+      full: "%B %d, %Y %H:%M"
+      full_small: "%d/%m/%y %H:%M"
       small: "%m/%d/%Y"
   date:
     formats:
       default: "%B %d, %Y"
       small: "%m/%d/%Y"
+
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "← Previous"
+      next: "Next →"
+      truncate: "..."
