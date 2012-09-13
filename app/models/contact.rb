@@ -29,7 +29,7 @@ class Contact
   before_create :set_issue
   after_create :deliver_notification
 
-  scope :recent,         where({ :state.ne => 'archived', archived_at: nil })
+  scope :recent,         where({ :state.ne => 'archived', archived_at: nil, trashed_at: nil })
   scope :replied,        where(:replied_at.ne => nil)
   scope :archived,       any_of({ state: 'archived' }, { :archived_at.ne => nil })
   scope :trashed,        where(:trashed_at.ne => nil)
