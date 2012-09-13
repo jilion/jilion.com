@@ -4,13 +4,17 @@
 
 #admin ul.filter {
   list-style-type:none;
-  width:360px;
+  width:600px;
   margin:0 0 20px;
   float:left;
   text-align:center;
   background:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
   border:1px solid #000;
   -webkit-border-radius:8px;
+}
+
+#admin ul.filter#jobs_filter {
+  width:360px;
 }
 
 #admin ul.filter li {
@@ -81,7 +85,7 @@
   width:16px;
   height:16px;
   margin:0 auto;
-  background:url(/images/embed/contact/attach.png) no-repeat;
+  background:url(<%= asset_path "embed/contact/attach.png" %>) no-repeat;
 }
 #admin a.attachment span {display:none;}
 

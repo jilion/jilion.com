@@ -12,7 +12,6 @@ describe Contact::TeamUp do
     its(:message) { should == "A message" }
 
     it { should be_team_up }
-    it { should be_new }
     it { should be_valid }
   end
 

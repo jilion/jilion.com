@@ -9,7 +9,6 @@ gem 'validates_email_format_of', '~> 1.5.3'
 
 gem 'has_scope',           '~> 0.5.1'
 gem 'haml',                '~> 3.1.1'
-gem 'jammit',              '~> 0.6.0'
 gem 'RedCloth',            '~> 4.2.9'
 gem 'redcarpet',           '~> 1.17.2'
 gem 'kaminari',            '~> 0.14.0'
@@ -28,9 +27,22 @@ gem 'settingslogic', '2.0.6'
 gem 'ratom', require: 'atom'
 
 group :production do
+  gem 'rack-google-analytics', '0.9.2', require: 'rack/google-analytics'
+end
+
+group :staging, :production do
+  gem 'thin'
+  gem 'dalli'
+  gem 'rack-cache'
   gem 'rack-ssl-enforcer'
   gem 'rack-no-www'
-  gem 'rack-google-analytics', '0.9.2', require: 'rack/google-analytics'
+  gem 'newrelic_rpm'
+end
+
+group :assets do
+  gem 'sass-rails',   '~> 3.2.5'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier'
 end
 
 group :development, :test do
@@ -40,8 +52,6 @@ end
 group :development do
   gem 'wirble'
   gem 'heroku'
-  gem 'heroku_tasks'
-
   gem 'rack-livereload'
 
   # Guard

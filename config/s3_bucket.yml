@@ -2,5 +2,7 @@ development:
   bucket: dev.jilion.com
 test:
   bucket: dev.jilion.com
+staging:
+  bucket: dev.jilion.com
 production:
   bucket: jilion.com

@@ -1,10 +1,13 @@
 %ul.filter
-  %li{ class: !(params[:replied] || params[:archived]) ? "active": nil }= link_to "Recent", url_for(with_state: "new")
-  %li{ class: params[:archived] ? "active": nil }= link_to "Archived", url_for(archived: true)
+  %li{ class: params[:recent] ? "active" : nil }= link_to "Recent", url_for(recent: true)
+  %li{ class: params[:replied] ? "active" : nil }= link_to "Replied", url_for(replied: true)
+  %li{ class: params[:archived] ? "active" : nil }= link_to "Archived", url_for(archived: true)
+  %li{ class: params[:trashed] ? "active" : nil }= link_to "Trashed", url_for(trashed: true)
   %li
-    = form_tag url_for(params), :method => :get do
-      = hidden_field_tag :state, params[:state] || "new"
-      = select_tag :with_type, options_for_select([["All", nil]] + Contact::TYPES, params[:with_type]), { onchange: 'this.form.submit();' }
+    = form_tag admin_contacts_path, method: 'get' do
+      - %w[recent replied archived trashed].each do |state|
+        = hidden_field_tag state, params[state] if params[state]
+      = select_tag :with_type, options_for_select([['All', 'all']] + Contact::TYPES, params[:with_type]), { prompt: 'By type', onchange: 'this.form.submit();' }
 .spacer
 
 %table
@@ -14,9 +17,11 @@
     %th= link_to_sort :type
     - if params[:with_type] == 'Job'
       %th= link_to_sort :job
-    %th= "Email"
-    %th= link_to_sort :created_at, label: 'Date'
+    %th= link_to_sort :email
+    %th= link_to_sort :created_at, label: 'Received'
     %th= link_to_sort :replied_at, label: 'Replied'
-  = render partial: "contact", :collection => @contacts
+    %th= link_to_sort :archived_at, label: 'Archived'
+    %th= link_to_sort :trashed_at, label: 'Trashed'
+  = render partial: 'contact', collection: @contacts
 
 = paginate @contacts
