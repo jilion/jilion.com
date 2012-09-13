@@ -34,9 +34,9 @@ class Contact
   scope :archived,       any_of({ state: 'archived' }, { :archived_at.ne => nil })
   scope :trashed,        where(:trashed_at.ne => nil)
   scope :with_state,     ->(state) { where(state: state) }
-  scope :with_type,      ->(type) { type == 'all' ? where(:type.in => TYPES.map { |t| "Contact::#{t}" }) : where(type: "Contact::#{type}") }
+  scope :with_type,      ->(type) { type == 'all' ? where(:_type.in => TYPES.map { |t| "Contact::#{t}" }) : where(_type: "Contact::#{type}") }
   scope :by_issue,       ->(way = :desc) { order_by([:issue, way]) }
-  scope :by_type,        ->(way = :asc) { order_by([:type, way]) }
+  scope :by_type,        ->(way = :asc) { order_by([:_type, way]) }
   scope :by_email,       ->(way = :asc) { order_by([:email, way]) }
   scope :by_job,         ->(way = :asc) { order_by([:job_id, way]) }
   scope :by_created_at,  ->(way = :asc) { order_by([:created_at, way]) }
