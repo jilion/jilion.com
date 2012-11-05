@@ -2,7 +2,7 @@
   "folders":
   [
     {
-      "path": "~/Jilion/Products/Jilion.com/jilion.com",
+      "path": "~/Code/Jilion/Products/Jilion.com/jilion.com",
       "folder_exclude_patterns": ["vendor/cache", "vendor/ruby"]
     }
   ]
