@@ -24,8 +24,8 @@ body.win {font-family:Arial, sans-serif;}
 #back {
   width:960px;
   margin:0 auto;
-  background:#000 url(<%= asset_path "embed/texture.png" %>);
-  opacity:0.7;
+  background:#080d15 url(<%= asset_path "embed/texture.png" %>);
+/*  opacity:0.7;*/
   position:absolute;
   left:0;
   right:0;
@@ -151,7 +151,7 @@ h2.headline {
 #latest_work {
   width:910px;
   height:460px;
-  margin:0 auto 30px;
+  margin:0 auto 20px;
   position:relative;
   overflow:hidden;
 }
@@ -174,130 +174,16 @@ h2.headline {
   -webkit-font-smoothing:antialiased;
 }
 
-#latest_work h4 {display:none;}
+#latest_work h3, #latest_work h4 {display:none;}
 
-#latest_work .box.sublimevideo {
-  background:url(<%= asset_path "embed/home/sublimevideo.png" %>) no-repeat;
+#latest_work .box.horizon {
+  background:url(<%= asset_path "embed/home/horizon.png" %>) no-repeat;  
 }
 
-#latest_work .box.sublimevideo .desc {
-  position:absolute;
-  width:300px;
-  font-size:26px;
-  line-height:35px;
-  font-weight:600;
-  color:#c1d3f0;
-  text-shadow:#001330 0 1px 6px;
-  text-align:center;
-  top:158px;
-  right:85px;
-}
-
-#latest_work .box.sublimevideo .desc p {
-  padding:5px 0;
-}
-
-#latest_work .box.sublimevideo a.view_btn {
+#latest_work .box.horizon a {
   display:block;
-  background:url(<%= asset_path "embed/home/blue_btn.png" %>) no-repeat;
-  width:143px;
-  height:37px;
-  padding:10px 0 0 14px;
-  font-weight:600;
-  font-size:21px;
-  color:#e7f1ff;
-  text-shadow:#000 0 -1px 0;
-  position:absolute;
-  top:305px;
-  right:32px;
-}
-
-#latest_work .box.sublimevideo a.view_btn:active {background-position:0 -47px;}
-
-#latest_work .box.sublimevideo .what_they_say {
-  position:absolute;
-  top:290px;
-  left:248px;
-  width:465px;
-  height:90px;
-}
-
-#latest_work .box.sublimevideo .what_they_say a {display:block;}
-#latest_work .box.sublimevideo .what_they_say a span {display:none;}
-
-#latest_work .box.sublimevideo .what_they_say blockquote {
-  font-family:"chaparral-pro-1","chaparral-pro-2", Georgia, Times, serif;
-  font-size:13px;
-  font-style:italic;
-  color:#212430;
-  line-height:14px;
-  text-align:center;
-  text-shadow:rgba(255,255,255,0.2) 0 1px 0;
-  padding-bottom:7px;
-}
-
-#latest_work .box.sublimevideo a.readwriteweb {
-  position:absolute;
-  width:129px;
-  height:37px;
-  background:url(<%= asset_path "embed/home/logos/readwriteweb.png" %>) no-repeat;
-  top:22px;
-  left:0px;
-}
-
-#latest_work .box.sublimevideo .wired {
-  width:126px;
-  position:absolute;
-  top:11px;
-  left:150px;
-}
-
-#latest_work .box.sublimevideo .wired a {
-  width:86px;
-  height:19px;
-  margin:0 auto;
-  background:url(<%= asset_path "embed/home/logos/wired.png" %>) no-repeat;
-}
-
-#latest_work .box.sublimevideo .daringfireball {
-  width:150px;
-  position:absolute;
-  top:0;
-  left:290px;
-}
-
-#latest_work .box.sublimevideo .daringfireball a {
-  width:124px;
-  height:22px;
-  margin:0 auto;
-  background:url(<%= asset_path "embed/home/logos/daringfireball.png" %>) no-repeat;
-}
-
-#latest_work .box.sublimevideo ul.awards {
-/*  width:910px;*/
-  position:absolute;
-  left:154px;
-  bottom:0;
-  list-style-type:none;
-}
-
-#latest_work .box.sublimevideo ul.awards li {
-  float:left;
-  width:255px;
-  height:65px;
-  padding:21px 0 0 49px;
-  background:url(<%= asset_path "embed/home/award_star.png" %>) no-repeat;
-}
-
-#latest_work .box.sublimevideo ul.awards li.perl {
-  width:200px;
-}
-
-#latest_work .box.sublimevideo ul.awards li a {
-  font-size:15px;
-  font-weight:bold;
-  color:#212430;
-  text-shadow:rgba(255,255,255,0.2) 0 1px 0;
+  width:910px;
+  height:460px;
 }
 
 #latest_work_navigation {
@@ -338,9 +224,73 @@ h2.headline {
   line-height:28px;
 }
 
+#content .section.press {
+  padding-top:10px;
+}
+
+#content .section.press ul {
+  list-style-type:none;
+  padding:0 0 0 30px;
+}
+
+#content .section.press ul li {
+  float:left;
+  height:74px;
+  margin:0 20px 0 0;
+/*  width:100px;*/
+}
+
+#content .section.press ul li a {
+  display:block;
+}
+
+#content .section.press ul li.readwriteweb a {
+  width:135px;
+  height:42px;
+  margin-top:10px;
+  background:url(<%= asset_path "embed/home/logos/readwriteweb.png" %>) no-repeat;
+}
+
+#content .section.press ul li.wired a {
+  width:117px;
+  height:61px;
+  margin-top:5px;
+  background:url(<%= asset_path "embed/home/logos/wired.png" %>) no-repeat;
+}
+
+#content .section.press ul li.daringfireball a {
+  width:150px;
+  height:74px;
+  background:url(<%= asset_path "embed/home/logos/daringfireball.png" %>) no-repeat;
+}
+
+#content .section.press ul li.award a {
+  width:205px;
+  font-size:15px;
+  font-weight:600;
+  text-align:center;
+  line-height:20px;
+}
+
+#content .section.press ul li.award a span.star {
+  width:26px;
+  height:26px;
+  display:inline-block;
+  margin:0 -3px -7px 0;
+  background:url(<%= asset_path "embed/home/award_star.png" %>) no-repeat;
+}
+
+#content .section.press ul li span.text {
+  display:none;
+}
+
 #content .section.main_description {
-  padding:0 40px;
+  padding:0 30px;
   font-size:20px;
+}
+
+#content .section.main_description p {
+  padding:10px 0;
 }
 
 #content .section.news {
