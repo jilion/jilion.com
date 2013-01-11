@@ -2,9 +2,9 @@ source :rubygems
 
 ruby '1.9.3'
 
-gem 'bundler', '~> 1.2.0'
+gem 'bundler'
 
-gem 'rails',                     '3.2.8'
+gem 'rails',                     '3.2.11'
 gem 'validates_email_format_of', '~> 1.5.3'
 
 gem 'has_scope',           '~> 0.5.1'

@@ -25,7 +25,7 @@ feature "Redirects page" do
     current_url.should eq "http://sublimevideo.net/"
   end
 
-  scenario "redirects /sublime/foo to http://sublimevideo.net/" do
+  pending "redirects /sublime/foo to http://sublimevideo.net/" do
     visit '/sublime/foo'
     current_url.should eq "http://sublimevideo.net/"
   end

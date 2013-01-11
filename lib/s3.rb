@@ -1,6 +1,5 @@
 module S3
   class << self
-    extend ActiveSupport::Memoizable
 
     def access_key_id
       yml[:access_key_id] == 'heroku_env' ? ENV['S3_ACCESS_KEY_ID'] : yml[:access_key_id]
@@ -15,9 +14,8 @@ module S3
     end
 
     def client
-      Aws::S3.new(access_key_id, secret_access_key)
+      @client ||= Aws::S3.new(access_key_id, secret_access_key)
     end
-    memoize :client
 
   private
 
