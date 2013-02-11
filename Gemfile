@@ -4,7 +4,7 @@ ruby '1.9.3'
 
 gem 'bundler'
 
-gem 'rails',                     '3.2.11'
+gem 'rails',                     '3.2.12'
 gem 'validates_email_format_of', '~> 1.5.3'
 
 gem 'has_scope',           '~> 0.5.1'
@@ -14,6 +14,7 @@ gem 'redcarpet',           '~> 1.17.2'
 gem 'kaminari',            '~> 0.14.0'
 gem 'formtastic',          '~> 1.2.3'
 gem 'fog',                 '~> 1.0.0'
+gem 'json'
 
 gem 'bson_ext',            '1.6.2'
 gem 'bson',                '1.6.2'
