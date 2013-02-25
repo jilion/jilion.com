@@ -149,7 +149,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-ssh (2.1.4)
     netrc (0.7.7)
-    newrelic_rpm (3.5.6.46)
+    newrelic_rpm (3.5.7.59)
     nokogiri (1.5.6)
     polyglot (0.3.3)
     pry (0.9.11.4)
