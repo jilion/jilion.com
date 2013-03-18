@@ -4,7 +4,7 @@ ruby '1.9.3'
 
 gem 'bundler'
 
-gem 'rails',                     '3.2.12'
+gem 'rails',                     '3.2.13'
 gem 'validates_email_format_of', '~> 1.5.3'
 
 gem 'has_scope',           '~> 0.5.1'
