@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 ruby '1.9.3'
 
@@ -56,10 +56,7 @@ group :development do
   gem 'rack-livereload'
 
   # Guard
-  gem 'terminal-notifier-guard'
-  platforms :ruby do
-    gem 'coolline'
-  end
+  gem 'growl'
   gem 'rb-fsevent'
 
   gem 'guard-bundler'
