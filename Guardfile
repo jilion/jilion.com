@@ -1,5 +1,4 @@
-group 'frontend' do
-
+group :frontend do
   guard 'livereload', host: 'jilion.dev' do
     watch(%r{^app/.+\.(erb|haml)})
     watch(%r{^app/helpers/.+\.rb})
@@ -8,15 +7,9 @@ group 'frontend' do
     watch(%r{^public/.+\.html})
     watch(%r{^config/locales/.+\.yml})
   end
-
 end
 
-group 'backend' do
-
-  guard 'bundler' do
-    watch('Gemfile')
-  end
-
+group :backend do
   guard :rspec, bundler: false, version: 2, all_after_pass: false, all_on_start: false, keep_failed: false do
     watch('spec/spec_helper.rb')                                  { "spec" }
     watch('app/controllers/application_controller.rb')            { "spec/controllers" }
@@ -29,5 +22,4 @@ group 'backend' do
     watch(%r{^app/(.+)\.rb}) { |m| "spec/#{m[1]}_spec.rb" }
     watch(%r{^lib/(.+)\.rb}) { |m| "spec/lib/#{m[1]}_spec.rb" }
   end
-
 end

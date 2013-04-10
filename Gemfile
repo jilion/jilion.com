@@ -1,28 +1,26 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
-
-gem 'bundler'
+ruby '2.0.0'
 
 gem 'rails',                     '3.2.13'
-gem 'validates_email_format_of', '~> 1.5.3'
 
-gem 'has_scope',           '~> 0.5.1'
-gem 'haml',                '~> 3.1.1'
-gem 'RedCloth',            '~> 4.2.9'
-gem 'redcarpet',           '~> 1.17.2'
-gem 'kaminari',            '~> 0.14.0'
-gem 'formtastic',          '~> 1.2.3'
-gem 'fog',                 '~> 1.0.0'
-gem 'json'
+gem 'validates_email_format_of'
+gem 'has_scope'
+gem 'haml'
+gem 'haml-contrib'
+gem 'RedCloth'
+gem 'kaminari'
+gem 'formtastic'
+gem 'fog'
+gem 'oj'
 
 gem 'bson_ext',            '1.6.2'
 gem 'bson',                '1.6.2'
 gem 'mongo',               '1.6.2'
 gem 'mongoid',             '~> 2.4.7'
 
-gem 'carrierwave',         '~> 0.5.7'
-gem 'carrierwave-mongoid', '~> 0.1.1', require: 'carrierwave/mongoid'
+gem 'carrierwave'
+gem 'carrierwave-mongoid', '~> 0.2.2', require: 'carrierwave/mongoid'
 
 gem 'settingslogic', '2.0.6'
 gem 'ratom', require: 'atom'
@@ -32,7 +30,7 @@ group :production do
 end
 
 group :staging, :production do
-  gem 'thin'
+  gem 'unicorn'
   gem 'dalli'
   gem 'rack-cache'
   gem 'rack-ssl-enforcer'
@@ -41,25 +39,22 @@ group :staging, :production do
 end
 
 group :assets do
-  gem 'sass-rails',   '~> 3.2.5'
-  gem 'coffee-rails', '~> 3.2.2'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'uglifier'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.11.0'
+  gem 'rspec-rails'
 end
 
 group :development do
-  gem 'wirble'
-  gem 'heroku'
   gem 'rack-livereload'
 
   # Guard
   gem 'growl'
   gem 'rb-fsevent'
 
-  gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-livereload'
 end
