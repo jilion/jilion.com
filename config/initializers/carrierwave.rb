@@ -4,6 +4,7 @@ CarrierWave.configure do |config|
     config.cache_dir       = Rails.root.join('tmp/uploads')
     config.storage         = :fog
     config.fog_public      = false
+    config.fog_directory   = S3Bucket.bucket
     config.fog_attributes  = {}
     config.fog_credentials = {
       provider:              'AWS',
