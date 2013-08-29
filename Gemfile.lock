@@ -108,7 +108,7 @@ GEM
     http_parser.rb (0.5.3)
     i18n (0.6.1)
     journey (1.0.4)
-    json (1.7.7)
+    json (1.8.0)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -252,6 +252,7 @@ DEPENDENCIES
   haml
   haml-contrib
   has_scope
+  json (~> 1.8.0)
   kaminari
   mongo (= 1.6.2)
   mongoid (~> 2.4.7)

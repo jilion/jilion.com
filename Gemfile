@@ -13,6 +13,7 @@ gem 'kaminari'
 gem 'formtastic'
 gem 'fog'
 gem 'oj'
+gem 'json', '~> 1.8.0'
 
 gem 'bson_ext',            '1.6.2'
 gem 'bson',                '1.6.2'
