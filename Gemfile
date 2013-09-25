@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '3.2.14'
+gem 'rails_12factor'
 
 gem 'validates_email_format_of'
 gem 'has_scope'
