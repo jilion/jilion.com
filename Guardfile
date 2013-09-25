@@ -10,7 +10,7 @@ group :frontend do
 end
 
 group :backend do
-  guard :rspec, bundler: false, version: 2, all_after_pass: false, all_on_start: false, keep_failed: false do
+  guard :rspec, bundler: false, all_after_pass: false, all_on_start: false, keep_failed: false do
     watch('spec/spec_helper.rb')                                  { "spec" }
     watch('app/controllers/application_controller.rb')            { "spec/controllers" }
     watch('config/routes.rb')                                     { "spec/routing" }

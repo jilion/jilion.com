@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails',                     '3.2.13'
+gem 'rails', '3.2.14'
 
 gem 'validates_email_format_of'
 gem 'has_scope'
@@ -15,10 +15,10 @@ gem 'fog'
 gem 'oj'
 gem 'json', '~> 1.8.0'
 
-gem 'bson_ext',            '1.6.2'
-gem 'bson',                '1.6.2'
-gem 'mongo',               '1.6.2'
-gem 'mongoid',             '~> 2.4.7'
+gem 'bson_ext',            '1.8.4'
+gem 'bson',                '1.8.4'
+gem 'mongo',               '1.8.4'
+gem 'mongoid',             '~> 2.7.0'
 
 gem 'carrierwave'
 gem 'carrierwave-mongoid', '~> 0.2.2', require: 'carrierwave/mongoid'
@@ -26,17 +26,22 @@ gem 'carrierwave-mongoid', '~> 0.2.2', require: 'carrierwave/mongoid'
 gem 'settingslogic', '2.0.6'
 gem 'ratom', require: 'atom'
 
+gem 'rack-status'
+gem 'newrelic_rpm'
+gem 'honeybadger'
+
 group :production do
   gem 'rack-google-analytics', '0.9.2', require: 'rack/google-analytics'
 end
 
 group :staging, :production do
   gem 'unicorn'
+  gem 'lograge'
+  gem 'memcachier'
   gem 'dalli'
   gem 'rack-cache'
   gem 'rack-ssl-enforcer'
   gem 'rack-no-www'
-  gem 'newrelic_rpm'
 end
 
 group :assets do

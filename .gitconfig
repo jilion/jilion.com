@@ -2,7 +2,6 @@
   name  = YOUR NAME
   email = YOUR EMAIL
 
-
 [core]
   repositoryformatversion = 0
   filemode                = true
@@ -10,9 +9,8 @@
   logallrefupdates        = true
   ignorecase              = true
 
-
 [remote "origin"]
-  url   = git@jime1.epfl.ch:jilion.com.git
+  url   = git@github.com:jilion/jilion.com.git
   fetch = +refs/heads/*:refs/remotes/origin/*
 
 [remote "staging"]
@@ -25,10 +23,8 @@
   fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
 
-
 [heroku]
   remote = production
-
 
 [branch "master"]
   remote = origin
