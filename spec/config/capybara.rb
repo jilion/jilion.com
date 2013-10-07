@@ -1,8 +1,23 @@
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
 
-Capybara.javascript_driver = :webkit
-Capybara.server_port = 2999
+# http://docs.tddium.com/troubleshooting/browser-based-integration-tests/
+def find_available_port
+  server = TCPServer.new('lvh.me', 0)
+  server.addr[1]
+ensure
+  server.close if server
+end
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, debug: false, timeout: 60)
+end
+Capybara.javascript_driver = :poltergeist
+
+# Capybara.server_boot_timeout = 30
+Capybara.server_port = find_available_port
+Capybara.ignore_hidden_elements = false
 
 RSpec.configure do |config|
   config.before do

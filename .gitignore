@@ -14,8 +14,11 @@ doc/js/
 vendor/ruby
 vendor/bundler
 !.bundle
-.env
+!.env
+.env.*
 uploads
 .tddium*
 *.sublime-project
 !.sublime-project
+public/test.html
+routes.txt
