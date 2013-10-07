@@ -2,8 +2,13 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '3.2.14'
+gem 'rails', '3.2.15.rc2'
 gem 'rails_12factor'
+
+gem 'bson_ext',            '1.8.4'
+gem 'bson',                '1.8.4'
+gem 'mongo',               '1.8.4'
+gem 'mongoid',  '~> 2.7.0'
 
 gem 'validates_email_format_of'
 gem 'has_scope'
@@ -12,19 +17,14 @@ gem 'haml-contrib'
 gem 'RedCloth'
 gem 'kaminari'
 gem 'formtastic'
-gem 'fog'
 gem 'oj'
-gem 'json', '~> 1.8.0'
+# gem 'json', '~> 1.8.0'
 
-gem 'bson_ext',            '1.8.4'
-gem 'bson',                '1.8.4'
-gem 'mongo',               '1.8.4'
-gem 'mongoid',             '~> 2.7.0'
 
-gem 'carrierwave'
-gem 'carrierwave-mongoid', '~> 0.2.2', require: 'carrierwave/mongoid'
+gem 'fog'
+gem 'carrierwave', require: ['carrierwave', 'carrierwave/processing/mime_types']
+gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
-gem 'settingslogic', '2.0.6'
 gem 'ratom', require: 'atom'
 
 gem 'rack-status'
@@ -32,7 +32,7 @@ gem 'newrelic_rpm'
 gem 'honeybadger'
 
 group :production do
-  gem 'rack-google-analytics', '0.9.2', require: 'rack/google-analytics'
+  gem 'rack-google-analytics', '~> 0.11.0'
 end
 
 group :staging, :production do
@@ -52,18 +52,17 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rspec-rails'
+
+  # Guard
+  gem 'ruby_gntp', require: false
+  gem 'guard-livereload', require: false
+  gem 'guard-rspec', require: false
 end
 
 group :development do
   gem 'rack-livereload'
-
-  # Guard
-  gem 'growl'
-  gem 'rb-fsevent'
-
-  gem 'guard-rspec'
-  gem 'guard-livereload'
 end
 
 group :test do
