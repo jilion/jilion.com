@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '3.2.15.rc2'
+gem 'rails', '~> 3.2.15.rc2'
 gem 'rails_12factor'
 
-gem 'bson_ext',            '1.8.4'
-gem 'bson',                '1.8.4'
-gem 'mongo',               '1.8.4'
+gem 'bson_ext', '~> 1.9'
+gem 'bson',     '~> 1.9'
+gem 'mongo',    '~> 1.9'
 gem 'mongoid',  '~> 2.7.0'
 
 gem 'validates_email_format_of'
@@ -18,8 +18,6 @@ gem 'RedCloth'
 gem 'kaminari'
 gem 'formtastic'
 gem 'oj'
-# gem 'json', '~> 1.8.0'
-
 
 gem 'fog'
 gem 'carrierwave', require: ['carrierwave', 'carrierwave/processing/mime_types']
@@ -32,7 +30,7 @@ gem 'newrelic_rpm'
 gem 'honeybadger'
 
 group :production do
-  gem 'rack-google-analytics', '~> 0.11.0'
+  gem 'rack-google-analytics', '~> 0.12'
 end
 
 group :staging, :production do
@@ -68,6 +66,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'capybara'
+  gem 'poltergeist'
 
   gem 'shoulda'
   gem 'factory_girl'
