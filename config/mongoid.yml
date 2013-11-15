@@ -1,23 +1,25 @@
+development_and_test_sessions: &development_and_test_sessions
+  hosts:
+    - localhost:27017
+  options:
+    preload_models: true
+    retry_interval: 0
+    max_retries: 1
+    use_utc: true
+
 development:
   sessions:
     default:
+      <<: *development_and_test_sessions
       database: jilion-development
-      hosts:
-        - localhost:27017
-      options:
-        preload_models: true
-        use_utc: true
+
 test:
   sessions:
     default:
+      <<: *development_and_test_sessions
       database: jilion-test
-      hosts:
-        - localhost:27017
-      options:
-        preload_models: true
-        retry_interval: 0
-        max_retries: 1
-production:
+
+production: &production
   sessions:
     default:
       uri: <%= ENV['MONGOHQ_URL'] %>
@@ -28,3 +30,6 @@ production:
         pool_size: 10
         use_utc: true
         safe: true
+
+staging:
+  <<: *production
