@@ -1,10 +1,10 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.middleware.insert_after Rack::Lock, "::Rack::Auth::Basic", "Staging" do |u, p|
+  config.middleware.insert_after Rack::Cache, Rack::Auth::Basic, "Staging" do |u, p|
     [u, p] == ['jilion', ENV['PRIVATE_CODE']]
   end
-  config.middleware.insert_before Rack::Lock, Rack::NoWWW
-  config.middleware.insert_before Rack::Lock, Rack::SslEnforcer, only: %r{^/admin}
+  config.middleware.insert_before Rack::Cache, Rack::NoWWW
+  config.middleware.insert_before Rack::Cache, Rack::SslEnforcer, only: %r{^/admin}
 
   # Code is not reloaded between requests.
   config.cache_classes = true
