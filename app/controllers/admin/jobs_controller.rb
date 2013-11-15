@@ -18,7 +18,7 @@ class Admin::JobsController < Admin::AdminController
 
   # POST /admin/jobs
   def create
-    @job = Job.new(params[:job])
+    @job = Job.new(_job_params)
 
     if @job.save
       redirect_to(admin_jobs_path, notice: "Saved.")
@@ -41,6 +41,12 @@ class Admin::JobsController < Admin::AdminController
     else
       render :edit
     end
+  end
+
+  private
+
+  def _job_params
+    params.require(:job).permit!
   end
 
 end

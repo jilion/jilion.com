@@ -1,5 +1,4 @@
 class Admin::ContactsController < Admin::AdminController
-
   has_scope :replied, :recent, :replied, :archived, :trashed, type: :boolean
   has_scope :with_type, :by_issue, :by_type, :by_email, :by_job, :by_created_at, :by_replied_at, :by_archived_at, :by_trashed_at
 
@@ -19,12 +18,18 @@ class Admin::ContactsController < Admin::AdminController
   def update
     @contact = Contact.find(params[:id])
 
-    if @contact.update_attributes(params[:contact])
+    if @contact.update_attributes(_contact_params)
       flash[:notice] = 'Updated.'
       redirect_to admin_contacts_path
     else
       render :show
     end
+  end
+
+  private
+
+  def _contact_params
+    params.require(:contact).permit!
   end
 
 end

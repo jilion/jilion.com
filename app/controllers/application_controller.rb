@@ -1,4 +1,5 @@
+require 'custom_form_builder'
+
 class ApplicationController < ActionController::Base
-  include AdminAuthenticatedSystem
   protect_from_forgery
 end
