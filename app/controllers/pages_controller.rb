@@ -1,8 +1,8 @@
 class PagesController < ApplicationController
-  caches_page :show
   layout :appropriate_layout
 
   def show
+    expires_in 5.minutes, public: true
     render params[:page] if fresh_required?
   end
 

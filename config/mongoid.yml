@@ -1,21 +1,30 @@
-<%
-  # http://mislav.uniqpath.com/rails/branching-the-database-along-with-your-code/
-  branch = `git symbolic-ref HEAD 2>/dev/null`.chomp.sub('refs/heads/', '')
-  suffix = `git config --bool branch.#{branch}.database`.chomp == 'true' ? "_#{branch}" : ""
-%>
-
 development:
-  host: localhost
-  database: jilion_dev<%= suffix %>
-
+  sessions:
+    default:
+      database: jilion-development
+      hosts:
+        - localhost:27017
+      options:
+        preload_models: true
+        use_utc: true
 test:
-  host: localhost
-  database: jilion_test<%= suffix %>
-
-staging:
-  uri: <%= ENV['MONGOHQ_URL'] %>
-  persist_in_safe_mode: true
-
+  sessions:
+    default:
+      database: jilion-test
+      hosts:
+        - localhost:27017
+      options:
+        preload_models: true
+        retry_interval: 0
+        max_retries: 1
 production:
-  uri: <%= ENV['MONGOHQ_URL'] %>
-  persist_in_safe_mode: true
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+      options:
+        identity_map_enabled: false
+        skip_version_check: true
+        preload_models: true
+        pool_size: 10
+        use_utc: true
+        safe: true

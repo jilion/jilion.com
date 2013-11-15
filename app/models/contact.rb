@@ -3,7 +3,6 @@ class Contact
   include Mongoid::Timestamps
 
   attr_accessor :new_type
-  attr_accessible :email, :new_type, :message, :file, :file_cache, :replied, :archived, :trashed, :comment
 
   field :email,       type: String
   field :message,     type: String

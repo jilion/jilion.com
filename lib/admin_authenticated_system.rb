@@ -1,6 +1,6 @@
 module AdminAuthenticatedSystem
 
-private
+  private
 
   def admin_required
     admin_authorized? || admin_access_denied
