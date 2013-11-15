@@ -11,7 +11,6 @@ describe Contact::Press do
     its(:issue)   { should be_nil }
     its(:message) { should == "A message" }
 
-    it { should be_press }
     it { should be_valid }
   end
 

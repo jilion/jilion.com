@@ -11,7 +11,6 @@ describe Contact::Request do
     its(:issue)   { should be_nil }
     its(:message) { should == "A message" }
 
-    it { should be_request }
     it { should be_valid }
   end
 

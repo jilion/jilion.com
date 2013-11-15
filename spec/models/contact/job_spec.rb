@@ -13,7 +13,6 @@ describe Contact::Job do
     its(:job_id)  { should == "abc123" }
     its(:message) { should == "A message" }
 
-    it { should be_job }
     it { should be_valid }
   end
 

@@ -18,7 +18,6 @@ class Contact
   mount_uploader :file, FileUploader, mount_on: :file_filename
 
   TYPES  = %w[Job Press Request TeamUp]
-  STATES = %w[new]
 
   validates :email, presence: { message: "can't be blank" }
   validates :email, length: { within: 6..100, message: "is too short" }
@@ -42,18 +41,6 @@ class Contact
   scope :by_replied_at,  ->(way = :asc) { order_by([:replied_at, way]) }
   scope :by_archived_at, ->(way = :asc) { order_by([:archived_at, way]) }
   scope :by_trashed_at,  ->(way = :asc) { order_by([:trashed_at, way]) }
-
-  TYPES.each do |klass|
-    define_method "#{klass.underscore}?" do
-      self.class.name == "Contact::#{klass}"
-    end
-  end
-
-  STATES.each do |s|
-    define_method "#{s}?" do
-      self.state == s
-    end
-  end
 
   def new_type=(new_type)
     self._type = "Contact::#{new_type}" if TYPES.include?(new_type)
