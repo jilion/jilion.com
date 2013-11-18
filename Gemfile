@@ -5,7 +5,8 @@ ruby '2.0.0'
 gem 'rails', '~> 4.0.1'
 
 gem 'mongoid', github: 'mongoid'
-gem 'moped', github: 'mongoid/moped', branch: 'auth_connection_pool'
+gem 'moped', github: 'mongoid/moped'
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 
 gem 'validates_email_format_of'
 gem 'has_scope'

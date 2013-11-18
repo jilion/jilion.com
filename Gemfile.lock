@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/ahoward/mongoid-grid_fs.git
+  revision: 059012a2c2a9e0a5d6e67137752c3e918689c88a
+  specs:
+    mongoid-grid_fs (1.9.0)
+      mime-types (~> 1.19)
+      mongoid (>= 3.0, < 5.0)
+
+GIT
   remote: git://github.com/leehambley/rack-google-analytics.git
   revision: ad0d20c0a471f9d019c0724eceaf54a460c51c49
   specs:
@@ -6,7 +14,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/mongoid.git
-  revision: ad9000a7e5b099c957a6e6a9b1758e0461148f8e
+  revision: 1dfcb14e60b80f5e48a835399c6b384d35e94943
   specs:
     mongoid (4.0.0)
       activemodel (~> 4.0.0)
@@ -16,8 +24,7 @@ GIT
 
 GIT
   remote: git://github.com/mongoid/moped.git
-  revision: 413c858fab9e642372f715dc3598281ac5848f15
-  branch: auth_connection_pool
+  revision: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
   specs:
     moped (2.0.0.beta3)
       bson (~> 2.0.0.rc3)
@@ -70,9 +77,10 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
-    carrierwave-mongoid (0.1.0)
-      carrierwave
-      mongoid
+    carrierwave-mongoid (0.6.3)
+      carrierwave (>= 0.8.0, < 0.10.0)
+      mongoid (>= 3.0, < 5.0)
+      mongoid-grid_fs (~> 1.3)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     cliver (0.2.2)
@@ -119,7 +127,7 @@ GEM
     formatador (0.2.4)
     formtastic (2.2.1)
       actionpack (>= 3.0)
-    guard (2.2.3)
+    guard (2.2.4)
       formatador (>= 0.2.4)
       listen (~> 2.1)
       lumberjack (~> 1.0)
@@ -177,7 +185,7 @@ GEM
     newrelic_rpm (3.6.9.171)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
-    oj (2.2.0)
+    oj (2.2.2)
     optionable (0.1.1)
     origin (1.1.0)
     poltergeist (1.4.1)
@@ -317,6 +325,7 @@ DEPENDENCIES
   lograge
   memcachier
   mongoid!
+  mongoid-grid_fs!
   moped!
   newrelic_moped
   newrelic_rpm
