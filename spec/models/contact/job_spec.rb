@@ -10,7 +10,7 @@ describe Contact::Job do
     its(:replied) { should be_false }
     its(:issue)   { should be_nil }
     its(:file)    { should be_present }
-    its(:job_id)  { should == "abc123" }
+    its(:job)     { should be_a(Job)  }
     its(:message) { should == "A message" }
 
     it { should be_valid }

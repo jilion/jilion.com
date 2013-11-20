@@ -7,15 +7,15 @@
     = form_tag admin_contacts_path, method: 'get' do
       - %w[recent replied archived trashed].each do |state|
         = hidden_field_tag state, params[state] if params[state]
-      = select_tag :with_type, options_for_select([['All', 'all']] + Contact::TYPES, params[:with_type]), { prompt: 'By type', onchange: 'this.form.submit();' }
+      = select_tag :_with_type, options_for_select([['All', 'all']] + Contact::TYPES, params[:_with_type]), { prompt: 'By type', onchange: 'this.form.submit();' }
 .spacer
 
 %table
   %tr
     %th
     %th= link_to_sort :issue
-    %th= link_to_sort :type
-    - if params[:with_type] == 'Job'
+    %th= link_to_sort :_with_type
+    - if params[:_with_type] == 'Job'
       %th= link_to_sort :job
     %th= link_to_sort :email
     %th= link_to_sort :created_at, label: 'Received'

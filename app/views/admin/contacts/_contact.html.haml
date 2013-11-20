@@ -6,7 +6,7 @@
   %td
     = link_to "##{contact.issue}", admin_contact_path(contact)
   %td= contact.class.to_s.demodulize
-  - if params[:with_type] == 'Job'
+  - if params[:_with_type] == 'Job'
     %td
       - if contact.is_a?(Contact::Job) && contact.job_id?
         %small= link_to contact.job.title, admin_job_path(contact.job)

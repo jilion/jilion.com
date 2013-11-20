@@ -12,8 +12,8 @@ FactoryGirl.define do
   end
 
   factory :contact_job, :class => Contact::Job, parent: :contact do
-    file    { File.new(Rails.root.join('spec/fixtures/How to Name Gems.pdf')) }
-    job_id  "abc123"
+    file { File.new(Rails.root.join('spec/fixtures/How to Name Gems.pdf')) }
+    job
   end
 
   factory :press, :class => Contact::Press, parent: :contact do
