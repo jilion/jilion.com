@@ -8,6 +8,8 @@ class Job
   field :state,       type: String, default: 'new'
   field :issue,       type: Integer
 
+  has_many :contacts, class_name: 'Contact::Job'
+
   validates :title, :description, presence: { message: "can't be blank" }
 
   before_create :set_issue

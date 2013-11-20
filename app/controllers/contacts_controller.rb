@@ -35,7 +35,7 @@ private
   end
 
   def _contact_params
-    params.require(:contact).permit(:email, :new_type, :message, :file, :file_cache, :replied, :archived, :trashed, :comment, :job_id)
+    params.require(:contact).permit(:email, :message, :file, :file_cache, :job_id)
   end
 
 end

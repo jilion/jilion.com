@@ -36,7 +36,7 @@ class Admin::JobsController < Admin::AdminController
   def update
     @job = Job.where(issue: params[:id].to_i).first
 
-    if @job.update_attributes(params[:job])
+    if @job.update_attributes(_job_params)
       redirect_to(admin_jobs_path(state: @job.state), notice: "Updated.")
     else
       render :edit
