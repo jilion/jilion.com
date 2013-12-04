@@ -23,7 +23,6 @@ production: &production
       uri: <%= ENV['MONGOHQ_URL'] %>
       options:
         pool_size: 10
-        safe: true
 
 staging:
   <<: *production
