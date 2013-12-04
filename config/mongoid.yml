@@ -2,10 +2,8 @@ development_and_test_sessions: &development_and_test_sessions
   hosts:
     - localhost:27017
   options:
-    preload_models: true
     retry_interval: 0
     max_retries: 1
-    use_utc: true
 
 development:
   sessions:
@@ -24,11 +22,7 @@ production: &production
     default:
       uri: <%= ENV['MONGOHQ_URL'] %>
       options:
-        identity_map_enabled: false
-        skip_version_check: true
-        preload_models: true
         pool_size: 10
-        use_utc: true
         safe: true
 
 staging:
