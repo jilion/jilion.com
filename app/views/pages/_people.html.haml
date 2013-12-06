@@ -31,4 +31,26 @@
         = image_tag "embed/people/andrea.jpg", :alt => "Andrea Coiro"
         %h4= "Andrea Coiro"
   .spacer
-  %p= raw "Jilion is a software development team passionate about Web technologies, striving to make life easier for both Web publishers and users. #{link_to 'Learn more', "http://sublimevideo.net/about"}."
+  %p= raw "Jilion is a software development team passionate about Web technologies, striving to make life easier for both Web publishers and users."
+  %h5= "Jilion is supported by:"
+  %ul.supporters
+    %li
+      = link_to "http://vpiv.epfl.ch/page-22998-en.html", :title => "EPFL - Swiss Federal Institute of Technology of Lausanne" do
+        = image_tag "embed/supporters/epfl.png", :alt => "EPFL"
+    %li
+      = link_to "http://www.kti.admin.ch/index.html?lang=en", :title => "Commission for Technology and Innovation CTI" do
+        = image_tag "embed/supporters/swiss_confederation.png", :alt => "Commission for Technology and Innovation CTI"
+    %li
+      = link_to "http://eco.jura.ch/en/index.html", :title => "Canton of Jura" do
+        = image_tag "embed/supporters/jura.png", :alt => "Canton of Jura"
+    %li
+      = link_to "http://www.vaud.ch/en/our-services/companies/starting-up-developing/", :title => "Canton of Vaud" do
+        = image_tag "embed/supporters/vaud.png", :alt => "Canton of Vaud"
+    %li
+      = link_to "http://www.fondation-fit.ch", :title => "Foundation for Technology Innovation" do
+        = image_tag "embed/supporters/fit.jpg", :alt => "Foundation for Technology Innovation"
+    %li
+      = link_to "http://venturekick.ch", :title => "venture kick" do
+        = image_tag "embed/supporters/venture_kick.png", :alt => "venture kick"
+  .spacer
+  %p= link_to 'Learn more', "http://sublimevideo.net/about", :class => "more"

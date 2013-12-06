@@ -454,10 +454,39 @@ h2.headline {
 }
 
 #content .section.people p {
-  padding:16px 0 40px;
+  padding:16px 0 20px;
   width:600px;
   margin:0 auto;
   text-align:center;
+}
+
+#content .section.people h5 {
+  font-size:18px;
+  font-weight:normal;
+  text-align:center;
+  padding:0 0 20px;
+}
+
+#content .section.people a.more {
+  padding:0 20px 3px 0;
+  background:url(<%= asset_path "embed/link_arrow.png" %>) no-repeat 100% 5px;
+}
+
+#content ul.supporters {
+  list-style-type:none;
+  width:420px;
+  margin:0 auto 16px;
+}
+
+#content ul.supporters li {
+  width:50px;
+  float:left;
+  margin:0 10px;
+}
+
+#content ul.supporters li img {
+  width:100%;
+  border-radius:2px;
 }
 
 #content .section.contact {
