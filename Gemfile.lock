@@ -12,6 +12,25 @@ GIT
   specs:
     rack-google-analytics (0.12.0)
 
+GIT
+  remote: git://github.com/mongoid/mongoid.git
+  revision: bbc0df51f9c1fec19dd15e4c5d478d6474adefdc
+  specs:
+    mongoid (4.0.0.alpha1)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.beta4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.37)
+
+GIT
+  remote: git://github.com/mongoid/moped.git
+  revision: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
+  ref: da92f1b4e935e2831986d26e8d89bf7edaf8c02a
+  specs:
+    moped (2.0.0.beta3)
+      bson (~> 2.0.0.rc3)
+      optionable (~> 0.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -74,7 +93,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    connection_pool (1.2.0)
     dalli (2.6.4)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
@@ -157,15 +175,6 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
-    mongoid (4.0.0.alpha1)
-      activemodel (~> 4.0.0)
-      moped (~> 2.0.beta4)
-      origin (~> 1.0)
-      tzinfo (~> 0.3.37)
-    moped (2.0.0.beta4)
-      bson (~> 2.0)
-      connection_pool (~> 1.2)
-      optionable (~> 0.2.0)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     net-scp (1.1.2)
@@ -178,7 +187,7 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     oj (2.4.0)
-    optionable (0.2.0)
+    optionable (0.1.1)
     origin (1.1.0)
     poltergeist (1.4.1)
       capybara (~> 2.1.0)
@@ -316,8 +325,9 @@ DEPENDENCIES
   kaminari
   lograge
   memcachier
-  mongoid (~> 4.0.0.alpha1)
+  mongoid!
   mongoid-grid_fs!
+  moped!
   newrelic_moped
   newrelic_rpm
   oj

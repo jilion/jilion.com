@@ -4,7 +4,8 @@ ruby '2.0.0'
 
 gem 'rails', '~> 4.0.2'
 
-gem 'mongoid', '~> 4.0.0.alpha1'
+gem 'mongoid', github: 'mongoid'
+gem 'moped', github: 'mongoid/moped', ref: 'da92f1b4e935e2831986d26e8d89bf7edaf8c02a'
 gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 
 gem 'validates_email_format_of'
