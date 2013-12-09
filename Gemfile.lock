@@ -12,25 +12,6 @@ GIT
   specs:
     rack-google-analytics (0.12.0)
 
-GIT
-  remote: git://github.com/mongoid/mongoid.git
-  revision: f8b439dd9a59b769389aff81a42502cd857cf7fa
-  specs:
-    mongoid (4.0.0.alpha1)
-      activemodel (~> 4.0.0)
-      moped (~> 2.0.beta4)
-      origin (~> 1.0)
-      tzinfo (~> 0.3.37)
-
-GIT
-  remote: git://github.com/mongoid/moped.git
-  revision: 3a4b630e5d31a918b322e08a59adfe9e38939ffa
-  specs:
-    moped (2.0.0.beta4)
-      bson (~> 2.0)
-      connection_pool (~> 1.2)
-      optionable (~> 0.2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -139,16 +120,16 @@ GEM
       em-websocket (~> 0.5)
       guard (~> 2.0)
       multi_json (~> 1.8)
-    guard-rspec (4.1.1)
+    guard-rspec (4.2.0)
       guard (>= 2.1.1)
-      rspec (~> 2.14)
+      rspec (>= 2.14, < 4.0)
     haml (4.1.0.alpha.2)
       tilt
     haml-contrib (1.0.0.1)
       haml (>= 3.2.0.alpha.13)
     has_scope (0.5.1)
     hike (1.2.3)
-    honeybadger (1.9.4)
+    honeybadger (1.9.5)
       faraday (~> 0.7)
       json
     http_parser.rb (0.5.3)
@@ -159,7 +140,7 @@ GEM
       activesupport (>= 3.0.0)
     kgio (2.8.1)
     libxml-ruby (2.6.0)
-    listen (2.3.1)
+    listen (2.4.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -176,6 +157,15 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
+    mongoid (4.0.0.alpha1)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.beta4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.37)
+    moped (2.0.0.beta4)
+      bson (~> 2.0)
+      connection_pool (~> 1.2)
+      optionable (~> 0.2.0)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     net-scp (1.1.2)
@@ -187,7 +177,7 @@ GEM
     newrelic_rpm (3.6.9.171)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
-    oj (2.3.0)
+    oj (2.4.0)
     optionable (0.2.0)
     origin (1.1.0)
     poltergeist (1.4.1)
@@ -326,9 +316,8 @@ DEPENDENCIES
   kaminari
   lograge
   memcachier
-  mongoid!
+  mongoid (~> 4.0.0.alpha1)
   mongoid-grid_fs!
-  moped!
   newrelic_moped
   newrelic_rpm
   oj
