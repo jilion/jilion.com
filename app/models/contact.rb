@@ -27,10 +27,10 @@ class Contact
   before_create :set_issue
   after_create :deliver_notification
 
-  scope :recent,         where({ :state.ne => 'archived', archived_at: nil, trashed_at: nil })
-  scope :replied,        where(:replied_at.ne => nil)
-  scope :archived,       any_of({ state: 'archived' }, { :archived_at.ne => nil })
-  scope :trashed,        where(:trashed_at.ne => nil)
+  scope :recent,         -> { where({ :state.ne => 'archived', archived_at: nil, trashed_at: nil }) }
+  scope :replied,        -> { where(:replied_at.ne => nil) }
+  scope :archived,       -> { any_of({ state: 'archived' }, { :archived_at.ne => nil }) }
+  scope :trashed,        -> { where(:trashed_at.ne => nil) }
   scope :with_state,     ->(state) { where(state: state) }
   scope :_with_type,     ->(type) { type == 'all' ? where(:_type.in => TYPES.map { |t| "Contact::#{t}" }) : where(_type: "Contact::#{type}") }
   scope :by_issue,       ->(way = :desc) { order_by([:issue, way]) }
