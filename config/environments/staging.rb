@@ -3,7 +3,6 @@ Jilion::Application.configure do
   config.middleware.insert_after Rack::Cache, Rack::Auth::Basic, "Staging" do |u, p|
     [u, p] == ['jilion', ENV['PRIVATE_CODE']]
   end
-  config.middleware.insert_before Rack::Cache, Rack::NoWWW
   config.middleware.insert_before Rack::Cache, Rack::SslEnforcer, only: %r{^/admin}
 
   # Code is not reloaded between requests.

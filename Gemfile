@@ -42,7 +42,6 @@ group :staging, :production do
   gem 'unicorn', require: false
   gem 'rails_12factor'
   gem 'rack-ssl-enforcer'
-  gem 'rack-no-www'
   gem 'memcachier'
   gem 'dalli'
   gem 'rack-cache'

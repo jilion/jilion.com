@@ -1,7 +1,6 @@
 Jilion::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.middleware.insert_before Rack::Cache, Rack::SslEnforcer, only: %r{^/admin}
-  config.middleware.insert_before Rack::SslEnforcer, Rack::NoWWW
   config.middleware.use Rack::GoogleAnalytics, tracker: 'UA-10280941-1'
 
   # Code is not reloaded between requests.

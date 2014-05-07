@@ -193,7 +193,6 @@ GEM
       activesupport
     rack-livereload (0.3.15)
       rack
-    rack-no-www (0.0.2)
     rack-ssl-enforcer (0.2.6)
     rack-status (1.0.0)
     rack-test (0.6.2)
@@ -321,7 +320,6 @@ DEPENDENCIES
   rack-cache
   rack-google-analytics
   rack-livereload
-  rack-no-www
   rack-ssl-enforcer
   rack-status
   rails (= 4.0.5)
