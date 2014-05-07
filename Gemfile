@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '~> 4.0.3'
+gem 'rails', '4.0.5'
 
 gem 'mongoid', '4.0.0.beta1'
 gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
